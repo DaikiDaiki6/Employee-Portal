@@ -35,6 +35,8 @@ class UserSeeder extends Seeder
         $employee->employee_type = 'Casual';
         $employee->department_name = 'College of Engineering';
         $employee->employee_role = 2;
+        $employee->department_id = 1;
+        $employee->dean_id = 1;
         $employee->first_name = 'Juan';
         $employee->middle_name = 'Dela';
         $employee->last_name = 'Cruz';

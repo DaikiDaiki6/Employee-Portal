@@ -17,6 +17,7 @@ return new class extends Migration
             $table->longText('employee_type');
             $table->longText('department_name');
             $table->integer('department_id');
+            $table->integer('dean_id');
             $table->decimal('employee_role');
             $table->string('first_name');
             $table->string('middle_name');

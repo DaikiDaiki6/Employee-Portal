@@ -33,7 +33,7 @@
             <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Approve Document Requests</h2>
   
             <br> <br>
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white pb-4">
+            <div class="overflow-x-auto shadow-md sm:rounded-lg bg-white pb-4">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-4">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -142,30 +142,30 @@
                                       {{-- <a onclick="location.href='{{ route('ipcredit', ['index' => $documentrequest->id]) }}'"  class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
                                         {{-- <a href="{{route('ipcredit', $documentrequest)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
                                         {{-- <a wire:click="removeIpcr({{$documentrequest->id}})" class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a> --}}
-                                    <td class="text-center mr-4">
+                                    {{-- <td class="text-center mr-4">
                                         <a onclick="location.href='{{ route('ApproveRequestDocumentForm', ['index' => $documentrequest->id]) }}'"  class="block py-2 text-green-500 cursor-pointer hover:underline underline-offset-4 text-lg rounded-lg font-semibold ">EDIT</a>
-                                    </td>
-                                        {{-- <td class="relative items-center text-center py-4">
-                                            <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                                </svg>
-                                            </button>
-                                            <div class="hidden absolute top-0 right-0 mt-2 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    <li>
-                                                        <a onclick="location.href='{{ route('ApproveRequestDocumentForm', ['index' => $documentrequest->id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                    </li>
-                                                    <li>
-                                                        <a onclick="location.href='{{ route('RequestDocumentPdf', ['index' => $documentrequest->id]) }}'" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PDF</a>
-                                                    </li>
-                                                </ul>
-                                                <div class="py-2">
-                                                    <a wire:click="removeRequestDocument({{$documentrequest->id}})" wire:confirm="Are you sure you want to delete this post?" class="block px-4 py-2 text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                                                </div>
+                                    </td> --}}
+                                    <td class="items-center text-center py-4">
+                                        <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                            </svg>
+                                        </button>
+                                        <div class="hidden top-0 right-0 mt-2 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                            <!-- Dropdown content -->
+                                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                <li>
+                                                    <a onclick="location.href='{{ route('ApproveRequestDocumentForm', ['index' => $documentrequest->id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href='{{ route('RequestDocumentPdf', ['index' => $documentrequest->id]) }}'" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PDF</a>
+                                                </li>
+                                            </ul>
+                                            <div class="py-2">
+                                                <a wire:click="removeRequestDocument({{$documentrequest->id}})" wire:confirm="Are you sure you want to delete this post?" class="block px-4 py-2 text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
                                             </div>
-                                        </td> --}}
+                                        </div>
+                                    </td>
 
                                         {{-- Previous Dropdown --}}
                                         {{-- <td class="items-center px-6 py-4">

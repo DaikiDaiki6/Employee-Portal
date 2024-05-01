@@ -228,7 +228,6 @@ class ApproveStudyPermitForm extends Component
                             if($studypermitdata->$field != null && $ctr <= $ctrField){
                                 Storage::delete($studypermitdata->$field[$index]);
                             }
-                            $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'StudyPermit', 'Signed', $studypermitdata->id, $signedIn));
                         }
                     }
                 }
