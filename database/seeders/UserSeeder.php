@@ -160,32 +160,37 @@ class UserSeeder extends Seeder
         $employee->save();
 
 
-        // $employee = new Employee();
-        // $employee->employee_id = '202151232';
-        // $employee->employee_type = 'Casual';
-        // $employee->department_name = 'College of Engineering';
-        // $employee->employee_role = 2;
-        // $employee->first_name = 'Juan';
-        // $employee->middle_name = 'Dela';
-        // $employee->last_name = 'Cruz';
-        // $employee->age = 25;
-        // $employee->gender = 'Male';
-        // $employee->personal_email = 'juandelacruz@gmail.com';
-        // $employee->phone = '09323123232';
-        // $employee->birth_date = '2023-12-06';
-        // $employee->address = 'Sampaloc, Manila';
-        // $employee->current_position = 'Part-time';
-        // $employee->salary = 510;
-        // $employee->department_head = 'Raymund Dioses';
-        // $employee->faculty_or_not = true;
-        // $employee->school_email = 'comsci@plm.edu.ph';
-        // // $employee->addMedia('public\storage\photos\demofiles\med-cert.jpg')
-        // //     ->preservingOriginal()
-        // //     ->toMediaCollection('avatar');
-        // // $employee->addMedia('public\storage\photos\demofiles\diploma.png')
-        // //     ->preservingOriginal()
-        // //     ->toMediaCollection('diploma');
-        // $employee->save();
+        $employee = new Employee();
+        $employee->employee_id = '202151232';
+        $employee->employee_type = 'Casual';
+        $employee->department_name = 'College of Engineering';
+        $employee->employee_role = 2;
+            $employee->department_id = 1;
+            $employee->dean_id = 1;
+        $employee->first_name = 'Juan';
+        $employee->middle_name = 'Dela';
+        $employee->last_name = 'Cruz';
+        $employee->age = 25;
+        $employee->gender = 'Male';
+        $employee->personal_email = 'juandelacruz@gmail.com';
+        $employee->phone = '09323123232';
+        $employee->birth_date = '2023-12-06';
+        $employee->address = 'Sampaloc, Manila';
+        $employee->current_position = 'Part-time';
+        $employee->salary = 510;
+        $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
+        $employee->end_of_employment = Carbon::createFromDate(2024, 4, 9);
+        $employee->faculty_or_not = true;
+        $employee->department_head = 'Raymund Dioses';
+        $employee->faculty_or_not = true;
+        $employee->school_email = 'comsci@plm.edu.ph';
+        $employee->addMedia('public\storage\photos\demofiles\med-cert.jpg')
+            ->preservingOriginal()
+            ->toMediaCollection('avatar');
+        $employee->addMedia('public\storage\photos\demofiles\diploma.png')
+            ->preservingOriginal()
+            ->toMediaCollection('diploma');
+        $employee->save();
 
 
         // $employee = Employee::create([

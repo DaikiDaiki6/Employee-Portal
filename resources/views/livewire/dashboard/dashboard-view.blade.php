@@ -1,26 +1,34 @@
 <div class="grid grid-cols-3 gap-4 ">
     <style>
         .swiper {
-        
-        width: 100%;
-        max-width: 1150px;
+
+        /* max-width: 1150px; */
         /* Optionally, set a minimum height */
-        max-height: 300px;
-        object-fit: fill;
+        /* max-height: 300px; */
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-wrapper{
+        width:100%;
     }
     .swiper-slider{
         border-width: 1px;
         --tw-border-opacity: 1;
         border-color: rgb(63 131 248 / var(--tw-border-opacity));
-        object-fit: fill;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        height: 100%;
+        width: 100%;
     }
     .swiper-slide img{
-      object-fit: fill;
+        object-fit: cover;
         border-radius: 0.5rem;
+        height: 100%;
+        width: 100%;
     }
     .swiper-button-prev{
         outline: 2px solid transparent;
-        outline-offset: 2px;
+        /* outline-offset: 2px; */
     }
     </style>
 
@@ -28,12 +36,11 @@
 <div class="bg-white  border col-span-3 border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mb-4 ">
     <div class="swiper w-full object-contain">
         <!-- Additional required wrapper -->
-        <div class="swiper-wrapper ">
+        <div class="swiper-wrapper p-1 ">
             @foreach ($activities as $activity)
                 <div class="swiper-slide">
-                    <a href="{{route('ActivitiesView', ['index' => $activity->id])}}"><img src="{{ asset('storage/' . $activity->poster) }}" class="w-full h-full object-contain" alt="..."></a>
+                    <a href="{{route('ActivitiesView', ['index' => $activity->id])}}"><img src="{{ asset('storage/' . $activity->poster) }}" class="h-full w-full object-cover" alt="..."></a>
                 </div>
-                
             @endforeach
         </div>
         <!-- If we need pagination -->
@@ -41,7 +48,7 @@
       
         <!-- If we need navigation buttons -->
         <div class=" swiper-button-prev absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div>
-        <div class="swiper-button-next"></div>
+        <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div>
       
         <!-- If we need scrollbar -->
         <div class="swiper-scrollbar"></div>
@@ -121,10 +128,10 @@ const options = {
       enabled: false,
     },
     padding: {
-        left: 100, // Adjust the left padding to create more space for the y-axis labels
-        right: 50, // Adjust the right padding if needed
-        top: 20, // Adjust the top padding if needed
-        bottom: 20 // Adjust the bottom padding if needed
+        // left: 100, // Adjust the left padding to create more space for the y-axis labels
+        // right: 50, // Adjust the right padding if needed
+        // top: 20, // Adjust the top padding if needed
+        // bottom: 20 // Adjust the bottom padding if needed
     },
     dropShadow: {
       enabled: false,
@@ -136,7 +143,7 @@ const options = {
   tooltip: {
     enabled: true,
     x: {
-      show: false,
+      show: true,
     },
   },
   fill: {

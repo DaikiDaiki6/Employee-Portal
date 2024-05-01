@@ -82,6 +82,8 @@ class DashboardView extends Component
     $monthlyCountsArray = [];
     $weeklyCountsArray = [];
 
+    // dd($weeklyCounts);
+
     // Process monthly counts
     for ($i = 1; $i <= 12; $i++) {
         $found = false;

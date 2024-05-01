@@ -1,11 +1,10 @@
 <?php
 
-namespace Enums;
+namespace App\Enums;
 
-use App\Enums;
 
-enum DeanNames : string { 
-    case COLLEGE = 'College of Education';
+enum DeanNamesEnum : string { 
+    case one = 'College of Education';
     case COLLEGE_OF_ENGINEERING_AND_TECHNOLOGY = 'College of Engineering and Technology';
     case INFORMATION_SYSTEMS_AND_TECHNOLOGY_MANAGEMENT = 'Information Systems and Technology Management';
     case COLLEGE_OF_HUMANITIES_ARTS_AND_SOCIAL_SCIENCES = 'College of Humanities, Arts, and Social Sciences';

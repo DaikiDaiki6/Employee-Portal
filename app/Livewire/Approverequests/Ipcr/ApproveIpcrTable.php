@@ -3,15 +3,13 @@
 namespace App\Livewire\Approverequests\Ipcr;
 
 use App\Models\Ipcr;
-use Illuminate\Validation\Rules\Enum;
 use Livewire\Component;
 use App\Models\Employee;
-// use Barryvdh\DomPDF\PDF;
+use App\Enums\DeanNamesEnum;
 use Livewire\WithPagination;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Enums\DeanNameEnums;
-use Enums\DeanNames;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Validation\Rules\Enum;
 
 class ApproveIpcrTable extends Component
 {
@@ -36,6 +34,11 @@ class ApproveIpcrTable extends Component
         $this->resetPage();
     }
 
+    // public                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      function mount(){
+    //     $names = DeanNamesEnum::COLLEGE->value;
+    //     dd($names);
+    // }
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -43,12 +46,21 @@ class ApproveIpcrTable extends Component
 
     public function render()
     {   
-        $loggedInUser = auth()->user();
-       
-        // $ipcrs = Ipcr::paginate(5)
-        // return view('livewire.ipcrtable');
+        $loggedInUser = auth()->user()->employeeId;
+        $id = Employee::Select('dean_id', 'department_id')->where('employee_id', $loggedInUser)->get();
+        dd(DeanNamesEnum::cases());
+        $ipcrRecord = Ipcr::where('employee_id', $loggedInUser->employeeId);
+        $ipcrRecords = Ipcr::join('employees', 'employees.employee_id', 'ipcrs.employee_id')
+                        ->where('employees.department_id', $id[0]->dean_id)
+                        ->where('employees.dean_id', $id[0]->department_id)
+                        ->paginate(10);
+                        
+        // dd($ipcrRecords);
+        
         return view('livewire.approverequests.ipcr.approve-ipcr-table', [
-            'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employeeId)->paginate(10),
+            'ipcrs' => $ipcrRecords,
+            // 'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employeeId)->paginate(10),
+
         ]);
     }
 

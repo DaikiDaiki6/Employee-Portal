@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id');
             $table->string('status')->default('Pending');
+            // $table->integer('dean_id');
+            // $table->integer('department_id');
             $table->string('ipcr_type');
             $table->date('date_of_filling');
             $table->string('position');
