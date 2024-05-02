@@ -58,7 +58,7 @@
 <div class=" w-full col-span-2 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
     <div class="flex justify-between ">
       <div>
-        <p class=" text-2xl font-bold text-gray-800 dark:text-gray-400">Attendance</p>
+        <p class=" text-2xl font-bold text-gray-800 dark:text-gray-400">Attendance Chart</p>
       </div>
       <div
         class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
@@ -103,14 +103,14 @@
   <div class="block  p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
     <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Leave Credits</h5>
     <div class="mb-4">
-      <a href="#" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <a href="{{route('LeaveRequestTable')}}" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Vacation Credits</h5>
       <p class="font-normal text-3xl text-gray-700 dark:text-gray-400">{{$vacationCredits}}</p>
       </a>
     </div>
     <br>
     <div>
-      <a href="#" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+      <a href="{{route('LeaveRequestTable')}}" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
       <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Sick Credits</h5>
       <p class="font-normal text-3xl text-gray-700 dark:text-gray-400">{{$sickCredits}}</p>
       </a>

@@ -54,8 +54,7 @@
 
             
 
-            <div class="shadow-md overflow-x-auto sm:rounded-lg bg-white pb-4 w-full" >
-
+            <div class="shadow-md overflow-x-auto rounded-t-lg bg-white pb-4 w-full" >
                 <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-4" style="overflow-y:hidden;" >
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -219,7 +218,7 @@
                 </table>
 
             </div>
-            <div class="p-4 bg-gray-100 w-full">
+            <div class="p-4 bg-gray-100 w-full rounded-b-lg">
                 {{ $LeaveRequestData->links('vendor.pagination.default') }}
             </div>
             

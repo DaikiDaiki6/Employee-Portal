@@ -28,7 +28,8 @@
                        Notifications
                    </div>
                    <div>
-                    @foreach (auth()->user()->notifications->take(7) as $notification)
+                    @if (auth()->user()->notifications)
+                        @foreach (auth()->user()->notifications->take(7) as $notification)
                         @php
                             $notificationType = $notification->data['type'];
                             $notificationId = $notification->data['file_id'];
@@ -48,7 +49,7 @@
                             <div class="flex-shrink-0">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-11 h-11 ">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
-                                  </svg>      
+                                </svg>      
                         @elseif ($notificationType === 'LeaveRequest')
                             <a href="{{ route('LeaveRequestPdf', ['index' => $notificationId]) }}" class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600">
                             <div class="flex-shrink-0">
@@ -78,7 +79,7 @@
                                     <svg class="w-6 h-6 text-green-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Z"/>
                                         <path fill-rule="evenodd" d="M11 7V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm4.707 5.707a1 1 0 0 0-1.414-1.414L11 14.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
-                                      </svg>                                      
+                                    </svg>                                      
                                 </div>
                                 </div>
                                 <div class="pl-3 w-full">
@@ -86,16 +87,14 @@
                                     <div class="text-xs font-medium text-primary-700 dark:text-primary-400">{{$timeDifference}} ago</div>
                                 </div>
                             </a>
-                        
-                       
-                    @endforeach
-                  
-                   
-                
-                  
-                
-                   </div>
-                  
+                        @endforeach
+                    @else
+                        @php
+                            dd('test');
+                        @endphp
+                        <p>Nothing to show.</p>
+                    @endif
+                   </div>          
                </div>
                <!-- Apps -->
                {{-- <button type="button" data-dropdown-toggle="apps-dropdown"  class="p-2  text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
@@ -259,17 +258,15 @@
             </ul>
             </li>
             <li class="bg-white rounded">
-                <a href="{{route('ipcrtable')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <a href="{{route('IpcrTable')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                       </svg>
-                      
-                  
                    <span class="flex-1 ms-3 whitespace-nowrap">IPCR</span>
                 </a>
              </li>
              <li class="bg-white rounded">
-               <a href="{{route('opcrtable')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               <a href="{{route('OpcrTable')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
                    </svg>                   

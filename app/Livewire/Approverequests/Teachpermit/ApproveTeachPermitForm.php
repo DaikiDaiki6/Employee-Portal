@@ -3,11 +3,13 @@
 namespace App\Livewire\Approverequests\Teachpermit;
 
 use Carbon\Carbon;
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Teachpermit;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\SignedNotifcation;
 
 class ApproveTeachPermitForm extends Component
 {
@@ -144,6 +146,8 @@ class ApproveTeachPermitForm extends Component
         // $teachpermitdata->total_units_enrolled = $this->total_units_enrolled;
         // $teachpermitdata->available_units = $this->available_units;
 
+      
+
         $dates = [
             'date_of_signature_of_head_office',
             'date_of_signature_of_human_resource',
@@ -157,7 +161,12 @@ class ApproveTeachPermitForm extends Component
             }
         }
 
+        $Names = Employee::select('first_name', 'middle_name', 'last_name')
+        ->where('employee_id', $loggedInUser->employeeId)
+        ->first();
+        $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
 
+        $targetUser = User::where('employeeId', $$teachpermitdata->employee_id)->first();
 
         $properties = [
             'applicant_signature' => 'mimes:jpg,png|extensions:jpg,png',
@@ -175,6 +184,9 @@ class ApproveTeachPermitForm extends Component
                 $teachpermitdata->$propertyName = $this->$propertyName;
             } else {
                 // If it's an uploaded file, store it and apply validation rules
+                if($this->$propertyName){
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'TeachPermit', 'Signed', $teachpermitdata->id, $signedIn));
+                }
                 $teachpermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/teachpermit/' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);
             }

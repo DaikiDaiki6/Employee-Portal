@@ -3,11 +3,13 @@
 namespace App\Livewire\Approverequests\Requestdocument;
 
 use Carbon\Carbon;
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
 use App\Models\Documentrequest;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\SignedNotifcation;
 
 class ApproveRequestDocumentForm extends Component
 {
@@ -133,12 +135,12 @@ class ApproveRequestDocumentForm extends Component
         $documentrequestdata->other_request = $this->other_request;
         $documentrequestdata->purpose = $this->purpose;
 
-        // if(is_string($this->signature_requesting_party)){
-        //     $documentrequestdata->signature_requesting_party = $this->signature_requesting_party;
-        // } else{
-        //     $documentrequestdata->signature_requesting_party =  $this->signature_requesting_party->store('photos/teachpermit/applicant_signature', 'local');
-        //     $this->validate(['signature_requesting_party' => 'mimes:jpg,png|extensions:jpg,png']);
-        // }
+        $Names = Employee::select('first_name', 'middle_name', 'last_name')
+        ->where('employee_id', $loggedInUser->employeeId)
+        ->first();
+        $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
+
+        $targetUser = User::where('employeeId', $documentrequestdata->employee_id)->first();
 
         $properties = [
             'signature_requesting_party' => 'mimes:jpg,png|extensions:jpg,png',
@@ -158,6 +160,9 @@ class ApproveRequestDocumentForm extends Component
                 $documentrequestdata->$propertyName = $this->$propertyName;
             } else {
                 // If it's an uploaded file, store it and apply validation rules
+                if($this->$propertyName){
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'RequestDocument', 'Signed', $documentrequestdata->id, $signedIn));
+                }
                 $documentrequestdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/documentrequest/' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);
             }

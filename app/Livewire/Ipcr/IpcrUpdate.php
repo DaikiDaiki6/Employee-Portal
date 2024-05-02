@@ -1,17 +1,14 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Ipcr;
 
-use the;
-use Exception;
-use Carbon\Carbon;
 use App\Models\Ipcr;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 
-class Ipcrupdate extends Component
+class IpcrUpdate extends Component
 {
     use WithFileUploads;
     
@@ -284,4 +281,5 @@ class Ipcrupdate extends Component
         return view('livewire.ipcr.ipcr-update')->extends('layouts.app');
 
     }
+    
 }

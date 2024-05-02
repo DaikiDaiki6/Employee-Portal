@@ -48,11 +48,11 @@ class ApproveIpcrTable extends Component
     {   
         $loggedInUser = auth()->user()->employeeId;
         $id = Employee::Select('dean_id', 'department_id')->where('employee_id', $loggedInUser)->get();
-        dd(DeanNamesEnum::cases());
-        $ipcrRecord = Ipcr::where('employee_id', $loggedInUser->employeeId);
+        // dd($id[0]->dean_id);
+        // dd(DeanNamesEnum::cases());
         $ipcrRecords = Ipcr::join('employees', 'employees.employee_id', 'ipcrs.employee_id')
-                        ->where('employees.department_id', $id[0]->dean_id)
-                        ->where('employees.dean_id', $id[0]->department_id)
+                        ->orwhere('employees.department_id', $id[0]->dean_id)
+                        // ->orwhere('employees.dean_id', $id[0]->department_id)
                         ->paginate(10);
                         
         // dd($ipcrRecords);

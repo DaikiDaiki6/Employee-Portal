@@ -49,7 +49,7 @@ class IpcrController extends Controller
         $images['assessed_by'] = Storage::disk('local')->get($ipcr[0]['assessed_by']);
         $images['final_rating_by'] = Storage::disk('local')->get($ipcr[0]['final_rating_by']);
         $pdf = Pdf::setOption(['dpi' => 150, 'defaultFont' => 'arial']); // Set PDF settings
-        $pdf = PDF::loadView('ipcr.Ipcrpdf', ['ipcrs' => $ipcr, 'employees' => $employee, 'images' => $images]); // Pass data to the blade file
+        $pdf = PDF::loadView('livewire.ipcr.ipcr-pdf', ['ipcrs' => $ipcr, 'employees' => $employee, 'images' => $images]); // Pass data to the blade file
         $pdf->setPaper('A4', 'landscape'); // Set paper type and orientation
         return $pdf->stream();
     }

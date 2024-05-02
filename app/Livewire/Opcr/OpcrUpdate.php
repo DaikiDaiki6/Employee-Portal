@@ -1,28 +1,21 @@
 <?php
 
-namespace App\Livewire\Approverequests\Opcr;
+namespace App\Livewire\Opcr;
 
 use Carbon\Carbon;
 use App\Models\Ipcr;
 use App\Models\Opcr;
-use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Locked;
 use Illuminate\Support\Facades\Storage;
-use App\Notifications\SignedNotifcation;
 
-class ApproveOpcrForm extends Component
+class OpcrUpdate extends Component
 {
     use WithFileUploads;
     
     public $employeeRecord;
     public $employeeRecordDate; 
-
-    public $index;
-
-    // #[Locked]
     public $coreFunctions;
     public $supportiveFunctions;
     public $opcrIndex;
@@ -128,7 +121,7 @@ class ApproveOpcrForm extends Component
                     ->get();
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->department_head = $this->employeeRecord[0]->department_head;
-        $this->index = $index;
+
         $this->opcrIndex = $index;
         $opcrData = $this->editOpcr($index);
         $dateToday = Carbon::now()->toDateString();
@@ -217,7 +210,7 @@ class ApproveOpcrForm extends Component
 
         // $this->validate();
         $loggedInUser = auth()->user();
-        $opcr = Opcr::findOrFail($this->index);
+        $opcr = new Opcr();
         $opcr->employee_id = $loggedInUser->employeeId;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
@@ -231,20 +224,11 @@ class ApproveOpcrForm extends Component
         $opcr->final_average_rating = $this->final_average_rating;
         $opcr->comments_and_reco = $this->comments_and_reco;
 
-
         $properties = [
             'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
             'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
             'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
         ];
-
-        $Names = Employee::select('first_name', 'middle_name', 'last_name')
-            ->where('employee_id', $loggedInUser->employeeId)
-            ->first();
-        $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
-
-        $targetUser = User::where('employeeId', $opcr->employee_id)->first();
- 
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
             // Check if the current property value is a string or an uploaded file
@@ -252,11 +236,9 @@ class ApproveOpcrForm extends Component
                 // If it's a string, assign it directly
                 $opcr->$propertyName = $this->$propertyName;
             } else {
-                if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Opcr', 'Signed', $opcr->id, $signedIn));
-                }
+                // If it's an uploaded file, store it and apply validation rules
+                $opcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/opcr' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);
-                $opcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/opcr/' . $propertyName, 'local') : '';
             }
         }
 
@@ -335,15 +317,14 @@ class ApproveOpcrForm extends Component
         // Ipcr::create($opcr);
         $opcr->update();
 
-        return redirect()->to(route('ApproveOpcrTable'));
+        return redirect()->to(route('opcrtable'));
 
     }
+    
     public function render()
-    {   
-       
-        
-        return view('livewire.approverequests.opcr.approve-opcr-form')->extends('layouts.app');
+    {
+        return view('livewire.opcr.opcr-update')->extends('layouts.app');
     }
 
-
+   
 }

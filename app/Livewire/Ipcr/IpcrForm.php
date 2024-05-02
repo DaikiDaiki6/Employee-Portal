@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Ipcr;
 
 use Carbon\Carbon;
 use App\Models\Ipcr;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
-use Dotenv\Exception\ValidationException;
 
-class Ipcrform extends Component
+class IpcrForm extends Component
 {
     use WithFileUploads;
     
@@ -374,4 +373,6 @@ class Ipcrform extends Component
         
         return view('livewire.ipcr.ipcr-form')->extends('layouts.app');
     }
+
+    
 }

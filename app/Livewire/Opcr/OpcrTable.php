@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Opcr;
 
 use App\Models\Opcr;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
 
-class Opcrtable extends Component
+class OpcrTable extends Component
 {
     use WithPagination, WithoutUrlPagination;
 
@@ -26,7 +26,7 @@ class Opcrtable extends Component
         $loggedInUser = auth()->user();
         // $ipcrs = Opcr::paginate(5)
         // return view('livewire.ipcrtable');
-        return view('livewire.opcrtable', [
+        return view('livewire.opcr.opcr-table', [
             'opcrs' => Opcr::where('employee_id', $loggedInUser->employeeId)->paginate(5),
         ]);
     }
@@ -43,5 +43,5 @@ class Opcrtable extends Component
         return redirect()->route('opcrtable');
     }
 
-  
+    
 }

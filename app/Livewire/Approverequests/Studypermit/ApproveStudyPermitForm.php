@@ -223,6 +223,9 @@ class ApproveStudyPermitForm extends Component
                             $fileNames[] = $file;
                         }
                         else{ 
+                            if($this->$field){
+                                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'StudyPermit', 'Signed', $studypermitdata->id, $signedIn));
+                            }
                             $itemName = $file->store("photos/studypermit/$field", 'local');
                             $fileNames[] = $itemName;
                             if($studypermitdata->$field != null && $ctr <= $ctrField){

@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         for($i = 0; $i <= 30; $i++){
             Dailytimerecord::create([
                 'employee_id' => '202132321',
-                'attendance_date' => Carbon::createFromDate(2024, 4, $i),
+                'attendance_date' => Carbon::createFromDate(2024, 5, $i),
                 'time_in' => $i.':00',
                 'time_out' => $i.':'.$i,
                 'late' => 1,
@@ -212,18 +212,7 @@ class UserSeeder extends Seeder
         //     'faculty_or_not' => True,
         // ]);
 
-        $role = Roles::create([
-                'name' => 'Admin',
-                'permissions' => '[{"1":"Everything"}]',
-        ]);
-        $role = Roles::create([
-                'name' => 'Employee',
-                'permissions' => '[{"1": "Edit"}, {"2": "Create"}, {"3": "Delete"}, {"4": "View"}]',
-        ]);
-        $role = Roles::create([
-                'name' => 'Admin',
-                'permissions' => '[{"1": "Edit"}, {"2": "Create"}, {"3": "Delete"}, {"4": "View"}, {"5":"Approve"}]',
-        ]);
+       
 
         $user = User::create([
             'name'     => 'Admin',

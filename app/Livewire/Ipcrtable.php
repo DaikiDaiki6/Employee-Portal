@@ -42,7 +42,7 @@ class Ipcrtable extends Component
         $loggedInUser = auth()->user();
         // $ipcrs = Ipcr::paginate(5)
         // return view('livewire.ipcrtable');
-        return view('livewire.ipcrtable', [
+        return view('livewire.ipcr.ipcr-table', [
             'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employeeId)->paginate(10),
         ]);
     }
@@ -54,6 +54,6 @@ class Ipcrtable extends Component
     public function removeIpcr($id){
         $ipcrToBeDeleted = Ipcr::findOrFail($id);
         $ipcrToBeDeleted->delete();
-        return redirect()->route('ipcrtable');
+        return redirect()->route('IpcrTable');
     }
 }

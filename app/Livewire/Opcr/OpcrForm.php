@@ -1,32 +1,22 @@
 <?php
 
-namespace App\Livewire\Approverequests\Opcr;
+namespace App\Livewire\Opcr;
 
 use Carbon\Carbon;
 use App\Models\Ipcr;
 use App\Models\Opcr;
-use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
-use Livewire\Attributes\Locked;
-use Illuminate\Support\Facades\Storage;
-use App\Notifications\SignedNotifcation;
 
-class ApproveOpcrForm extends Component
+class OpcrForm extends Component
 {
     use WithFileUploads;
     
     public $employeeRecord;
     public $employeeRecordDate; 
-
-    public $index;
-
-    // #[Locked]
     public $coreFunctions;
     public $supportiveFunctions;
-    public $opcrIndex;
-    public $opcrData;
 
     public $employee_id;
     public $opcr_type;
@@ -121,56 +111,26 @@ class ApproveOpcrForm extends Component
         $this->final_average_rating = $this->final_rating;
     }
 
-    public function mount($index){
+    public function mount($type){
+        $dateToday = Carbon::now()->toDateString();
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('department_head', 'department_name')
                     ->where('employee_id', $loggedInUser->employeeId)
                     ->get();
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->department_head = $this->employeeRecord[0]->department_head;
-        $this->index = $index;
-        $this->opcrIndex = $index;
-        $opcrData = $this->editOpcr($index);
-        $dateToday = Carbon::now()->toDateString();
-       
-        $this->opcr_type = $opcrData->opcr_type;
-        $this->date_of_filling = $opcrData->date_of_filling;
-        $this->ratee = $opcrData->ratee;
-        $this->start_period = $opcrData->start_period;
-        $this->end_period = $opcrData->end_period;
-        $coreData = json_decode($opcrData->core_functions, true);
-        $suppData = json_decode($opcrData->supp_admin_functions, true);
-        $this->coreFunctions = $coreData;
-        $this->core_rating = $opcrData->core_rating;
-        $this->supportiveFunctions = $suppData;
-        $this->supp_admin_rating = $opcrData->supp_admin_rating;
-        $this->final_average_rating = $opcrData->final_average_rating;
-        $this->comments_and_reco = $opcrData->comments_and_reco;
-        $this->discussed_with = $opcrData->discussed_with;
-        $this->disscused_with_date = $opcrData->disscused_with_date;
-        $this->assessed_by = $opcrData->assessed_by;
-        $this->assessed_by_date =  $opcrData->assessed_by_date;
-        $this->final_rating = $opcrData->final_rating;
-        $this->final_rating_by = $opcrData->final_rating_by;
-        $this->final_rating_by_date = $opcrData->final_rating_by_date;
-    }
-
-    public function getDiscussedWith(){
-        return Storage::disk('local')->get($this->discussed_with);
-    }
-
-    public function getAssessedBy(){
-        return Storage::disk('local')->get($this->assessed_by);
-    }
-
-    public function getFinalRatingBy(){
-        return Storage::disk('local')->get($this->final_rating_by);
-    }
-
-    public function editOpcr($index){
-        $opcr = Opcr::findOrFail($index);
-        $this->opcrData = $opcr;
-        return Opcr::findOrFail($index);
+        $this->date_of_filling = $dateToday;
+        $this->opcr_type = $type;
+        $this->start_period = $dateToday;
+        $this->disscused_with_date = $dateToday;
+        $this->assessed_by_date = $dateToday;
+        $this->final_rating_by_date = $dateToday;
+        $this->coreFunctions = [
+            ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => '']
+        ];
+        $this->supportiveFunctions = [
+            ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => '']
+        ];
     }
    
 
@@ -193,9 +153,12 @@ class ApproveOpcrForm extends Component
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
         'comments_and_reco' => 'required|min:10|max:2048', 
+        'discussed_with' => 'required|mimes:jpg,png|extensions:jpg,png',
         'disscused_with_date' => 'required|date',
+        'assessed_by' => 'required|mimes:jpg,png|extensions:jpg,png',
         'assessed_by_date' => 'required|date',
         'final_rating' => 'required|numeric',
+        'final_rating_by' => 'required|mimes:jpg,png|extensions:jpg,png',
         'final_rating_by_date' => 'required|date',
     ];
 
@@ -215,9 +178,9 @@ class ApproveOpcrForm extends Component
 
     public function submit(){
 
-        // $this->validate();
+        $this->validate();
         $loggedInUser = auth()->user();
-        $opcr = Opcr::findOrFail($this->index);
+        $opcr = new Opcr();
         $opcr->employee_id = $loggedInUser->employeeId;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
@@ -230,39 +193,12 @@ class ApproveOpcrForm extends Component
         $opcr->supp_admin_rating = $this->supp_admin_rating;
         $opcr->final_average_rating = $this->final_average_rating;
         $opcr->comments_and_reco = $this->comments_and_reco;
-
-
-        $properties = [
-            'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
-        ];
-
-        $Names = Employee::select('first_name', 'middle_name', 'last_name')
-            ->where('employee_id', $loggedInUser->employeeId)
-            ->first();
-        $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
-
-        $targetUser = User::where('employeeId', $opcr->employee_id)->first();
- 
-        // Iterate over the properties
-        foreach ($properties as $propertyName => $validationRule) {
-            // Check if the current property value is a string or an uploaded file
-            if (is_string($this->$propertyName)) {
-                // If it's a string, assign it directly
-                $opcr->$propertyName = $this->$propertyName;
-            } else {
-                if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Opcr', 'Signed', $opcr->id, $signedIn));
-                }
-                $this->validate([$propertyName => $validationRule]);
-                $opcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/opcr/' . $propertyName, 'local') : '';
-            }
-        }
-
+        $opcr->discussed_with = $this->discussed_with->store('photos', 'local');
         $opcr->disscused_with_date = $this->disscused_with_date;
+        $opcr->assessed_by = $this->assessed_by->store('photos', 'local');
         $opcr->assessed_by_date = $this->assessed_by_date;
         $opcr->final_rating = $this->final_rating;
+        $opcr->final_rating_by = $this->final_rating_by->store('photos', 'local');
         $opcr->final_rating_by_date = $this->final_rating_by_date;
         
         $jsonCoreData = [];
@@ -333,16 +269,15 @@ class ApproveOpcrForm extends Component
         // session()->flash('status', 'Ipcr successfully submitted.');
 
         // Ipcr::create($opcr);
-        $opcr->update();
+        $opcr->save();
 
-        return redirect()->to(route('ApproveOpcrTable'));
+        return redirect()->to(route('opcrtable'));
 
     }
+
     public function render()
     {   
-       
-        
-        return view('livewire.approverequests.opcr.approve-opcr-form')->extends('layouts.app');
+        return view('livewire.opcr.opcr-form')->extends('layouts.app');
     }
 
 

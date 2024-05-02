@@ -1,17 +1,14 @@
 <?php
 
-use Faker\Guesser\Name;
-use App\Livewire\Ipcrpdf;
-use App\Livewire\Ipcrform;
-use App\Livewire\OpcrTable;
 use App\Livewire\Auth\Login;
-use App\Livewire\Ipcrupdate;
-use App\Livewire\OpcrCreate;
-use App\Livewire\Opcrupdate;
-use App\Models\Leaverequest;
 use App\Livewire\Auth\Verify;
 use App\Livewire\Auth\Register;
-use App\Livewire\Forms\OpcrForm;
+use App\Livewire\Ipcr\IpcrForm;
+use App\Livewire\Opcr\OpcrForm;
+use App\Livewire\Ipcr\IpcrTable;
+use App\Livewire\Opcr\OpcrTable;
+use App\Livewire\Ipcr\IpcrUpdate;
+use App\Livewire\Opcr\OpcrUpdate;
 use App\Livewire\Employeeinformation;
 use App\Livewire\Payroll\PayrollView;
 use Illuminate\Support\Facades\Route;
@@ -25,24 +22,20 @@ use App\Livewire\Trainings\TrainingForm;
 use App\Livewire\Trainings\TrainingView;
 use App\Livewire\Dashboard\DashboardView;
 use App\Livewire\Trainings\TrainingUpdate;
-use App\Http\Controllers\PrivateController;
 use App\Http\Controllers\ProfileController;
 use App\Livewire\Activities\ActivitiesForm;
 use App\Livewire\Activities\ActivitiesView;
 use App\Livewire\Trainings\TrainingGallery;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PayrolPdfController;
 use App\Livewire\Activities\ActivitiesUpdate;
 use App\Livewire\Studypermit\StudyPermitForm;
 use App\Livewire\Teachpermit\TeachPermitForm;
 use App\Livewire\Activities\ActivitiesGallery;
-use App\Livewire\Opcrform as LivewireOpcrform;
 use App\Livewire\Studypermit\StudyPermitTable;
 use App\Livewire\Teachpermit\TeachPermitTable;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\StudyPermitController;
 use App\Http\Controllers\TeachPermitController;
-use App\Livewire\Dailytimerecord\AttendancePdf;
 use App\Livewire\Leaverequest\LeaveRequestForm;
 use App\Livewire\Studypermit\StudyPermitUpdate;
 use App\Livewire\Teachpermit\TeachPermitUpdate;
@@ -61,9 +54,7 @@ use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\Auth\EmailVerificationController;
-use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequest;
 use App\Livewire\Approverequests\Studypermit\ApproveStudyPermitForm;
 use App\Livewire\Approverequests\Teachpermit\ApproveTeachPermitForm;
 use App\Livewire\Approverequests\Studypermit\ApproveStudyPermitTable;
@@ -86,9 +77,9 @@ use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
 
 
 
-// Route::get('/', function(){
-//     return redirect()->route('login');
-// });
+Route::get('/', function(){
+    return redirect()->route('dashboard');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
@@ -132,14 +123,13 @@ Route::middleware('auth')->group(function (){
 
     Route::get("/profile", [ProfileController::class, 'view'])->name('profile');
 
-    Route::view('/', 'dashboardview')->name('home');
+    // Route::view('/', 'dashboardview')->name('home');
 
     Route::get('/profile/{file}', [Employeeinformation::class, 'download'])->name('downloadFile');
 
     Route::get('/profile/{media}/{filename}', [Employeeinformation::class, 'privateStorage'])->name('privateStorage');
 
     Route::get('/changeinformation', ChangeInformation::class)->name('changeInformation');
-    
 
 });
 
@@ -148,20 +138,19 @@ Route::middleware('auth')->group(function (){
 
 
 Route::middleware('auth')->group(function () {
-    Route::get("/ipcr", [IpcrController::class, 'view'])->name("ipcrtable");
+    Route::get("/ipcr", IpcrTable::class)->name("IpcrTable");
 
-    Route::get("/ipcr/form/{type}", Ipcrform::class)->name('ipcrform');
+    Route::get("/ipcr/form/{type}", IpcrForm::class)->name('IpcrForm');
 
-    Route::get("/submitipcr", [IpcrController::class, 'submit'])->name("submitipcr");
+    // Route::get("/submitipcr", [IpcrController::class, 'submit'])->name("submitipcr");
 
-    Route::get("/ipcr/edit/{index}", Ipcrupdate::class)->name('ipcredit');
+    Route::get("/ipcr/edit/{index}", IpcrUpdate::class)->name('IpcrEdit');
 
-    Route::get("ipcr/pdf/{index}", [IpcrController::class, 'turnToPdf'])->name('ipcrpdf');
+    Route::get("ipcr/pdf/{index}", [IpcrController::class, 'turnToPdf'])->name('IpcrPdf');
 
     Route::get("/ipcr/approve/{index}", ApproveIpcrForm::class)->name('ApproveIpcrForm');
 
     Route::get("/ipcr/requests/", ApproveIpcrTable::class)->name('ApproveIpcrTable');
-
 
     // Route::get("ipcr/{path}", PrivateController::class)->name('ipcrimage');
 
@@ -173,22 +162,17 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get("/opcr", [OpcrController::class, 'view'])->name("opcrtable");
+    Route::get("/opcr", OpcrTable::class)->name("OpcrTable");
 
-    Route::get("/opcr/form/{type}", LivewireOpcrform::class)->name('opcrform');
+    Route::get("/opcr/form/{type}", OpcrForm::class)->name('OpcrForm');
 
-    Route::get("/opcr/edit/{index}", Opcrupdate::class)->name('opcredit');
+    Route::get("/opcr/edit/{index}", OpcrUpdate::class)->name('OpcrEdit');
 
-    Route::get("/opcr/pdf/{index}", [OpcrController::class, 'turnToPdf'])->name('opcrpdf');
+    Route::get("/opcr/pdf/{index}", [OpcrController::class, 'turnToPdf'])->name('OpcrPdf');
 
     Route::get("/opcr/request/", ApproveOpcrTable::class)->name('ApproveOpcrTable');
 
     Route::get("/opcr/approve/{index}", ApproveOpcrForm::class)->name('ApproveOpcrForm');
-
-
-    // Route::get("/submitipcr", [IpcrController::class, 'submit'])->name("submitipcr");
-
-    // Route::get("/ipcr/edit/{index}", Ipcrupdate::class)->name('ipcredit');
 
 });
 
