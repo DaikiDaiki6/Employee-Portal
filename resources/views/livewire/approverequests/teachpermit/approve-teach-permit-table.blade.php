@@ -17,7 +17,7 @@
                     <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                     </svg>
-                    <a href="{{route('StudyPermitTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Approve Requests</a>
+                    <a href="{{route('StudyPermitTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Approve Teach Permit Requests</a>
                     </div>
                 </li>
                 {{-- <li aria-current="page">
@@ -32,7 +32,8 @@
             </nav>
             <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Approve Teach Permit Requests</h2>
             <br><br>
-            <div class="overflow-x-auto shadow-md sm:rounded-lg bg-white pb-4">
+            
+            <div class="overflow-x-auto shadow-md rounded-t-lg bg-white pb-4">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-4">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -191,7 +192,7 @@
                 </table>
                 
             </div>
-            <div class="p-4 bg-gray-100 overflow-x-auto w-full">
+            <div class="p-4 bg-gray-100 overflow-x-auto w-full rounded-b-lg" >
                 {{ $TeachPermitData->links('vendor.pagination.default') }}
             </div>
             

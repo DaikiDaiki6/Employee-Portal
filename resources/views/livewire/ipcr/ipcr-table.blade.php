@@ -213,7 +213,7 @@
                 </table>
                 
             </div>
-            <div class="p-4 bg-gray-100 overflow-x-auto w-full">
+            <div class="p-4 bg-gray-100 overflow-x-auto rounded-b-lg w-full">
                 {{ $ipcrs->links('vendor.pagination.default') }}
             </div>
             

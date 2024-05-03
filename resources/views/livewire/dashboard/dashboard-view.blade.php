@@ -27,13 +27,22 @@
         width: 100%;
     }
     .swiper-button-prev{
-        outline: 2px solid transparent;
+        outline: 10px solid transparent;
         /* outline-offset: 2px; */
     }
+
     </style>
 
  
-<div class="bg-white  border col-span-3 border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mb-4 ">
+<div wire:ignore class="bg-white  border col-span-3 border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mb-4 ">
+  @if ($activities->isEmpty())
+  <div class="flex items-center justify-center text-center h-full">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
+    </svg>
+     <span class="text-blue-500 font-semibold items-center ml-3"> No Events Available. Stay tuned for Future Events</span>
+  </div>
+@else
     <div class="swiper w-full object-contain">
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper p-1 ">
@@ -47,15 +56,19 @@
         <div class="swiper-pagination text-bold"></div>
       
         <!-- If we need navigation buttons -->
-        <div class=" swiper-button-prev absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div>
-        <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div>
+        <div class="swiper-button-prev absolute top-0 start-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
+        <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
+        
+        {{-- <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div> --}}
       
         <!-- If we need scrollbar -->
         <div class="swiper-scrollbar"></div>
     </div>
+@endif
+
 </div>
 
-<div class=" w-full col-span-2 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+<div wire:ignore class=" w-full col-span-2 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
     <div class="flex justify-between ">
       <div>
         <p class=" text-2xl font-bold text-gray-800 dark:text-gray-400">Attendance Chart</p>
@@ -77,7 +90,7 @@
           id="dropdownDefaultButton"
           data-dropdown-toggle="lastDaysdropdown"
           data-dropdown-placement="bottom"
-          class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
+          class="text-sm font-medium text-gray-900 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
           type="button">
           <p class="text-capitalize"> {{$filter}}</p>
           <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -86,9 +99,9 @@
         </button>
         <!-- Dropdown menu -->
         <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+            <ul class="py-2 text-sm text-gray-900 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
-                <a wire:click.prevent="setFilter('weekly')" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Weekly</a>
+                <a wire:click.prevent="setFilter('weekly')" class="block px-4 py-2  hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Weekly</a>
               </li>
               <li>
                 <a wire:click.prevent="setFilter('monthly')" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Yearly</a>
@@ -100,22 +113,50 @@
     </div>
   </div>
 
-  <div class="block  p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+  <div class="grid grid-cols-1 p-4  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div class="text-center mb-4 flex flex-col items-center">
+        <div>
+          <span class="text-2xl font-semibold text-blue-500">Good {{$period}}, {{$firstName}}. </span>
+          <br>
+          <span span class="text-base">Ready to Start your Day?</span>
+        </div>
+        <br>
+        <div class="mb-4"> 
+          @if ($gender == "Female")
+            <img src="{{asset('storage\EmployeeImages\girl.png')}}" class="h-64 w-72 justify-self-center" alt="...">
+          @else
+              <img src="{{asset('storage\EmployeeImages\boy.png')}}"  class="h-64 w-72 justify-self-center" alt="...">
+          @endif
+        </div>
+        <div wire:poll.1s class="text-xl p-0 font-semibold text-blue-700">
+          <br>
+          @php
+            $currentTime = \Illuminate\Support\Carbon::now()
+          @endphp
+            {{$currentTime}}
+        </div>
+    </div>
+</div>
+
+{{-- 
+  <div class="block p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
     <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Leave Credits</h5>
-    <div class="mb-4">
-      <a href="{{route('LeaveRequestTable')}}" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-      <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Vacation Credits</h5>
-      <p class="font-normal text-3xl text-gray-700 dark:text-gray-400">{{$vacationCredits}}</p>
-      </a>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="mb-4">
+        <a href="{{route('LeaveRequestTable')}}" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Vacation Credits</h5>
+          <p class="font-normal text-3xl text-gray-700 dark:text-gray-400">{{ number_format($vacationCredits ?? 0, 2)}}</p>
+        </a>
+      </div>
+      <div>
+        <a href="{{route('LeaveRequestTable')}}" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Sick Credits</h5>
+          <p class="font-normal text-3xl text-gray-700 dark:text-gray-400">{{ number_format($vacationCredits ?? 0, 2) }}</p>
+        </a>
+      </div>
     </div>
-    <br>
-    <div>
-      <a href="{{route('LeaveRequestTable')}}" class="block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-      <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Sick Credits</h5>
-      <p class="font-normal text-3xl text-gray-700 dark:text-gray-400">{{$sickCredits}}</p>
-      </a>
-    </div>
-  </div>
+  </div> --}}
+</div>
 
 <script>
 const options = {

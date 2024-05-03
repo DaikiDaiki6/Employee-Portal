@@ -21,6 +21,14 @@ class DashboardView extends Component
 
     public $filter = "Weekly";
 
+    public $period;
+
+    public $firstName;
+
+    public $gender;
+
+    public $currentHourMinuteSecond;
+
     public function search()
     {
         $this->resetPage();
@@ -34,12 +42,32 @@ class DashboardView extends Component
     public function mount(){
         $loggedInUser = auth()->user()->employeeId;
         $employeeInformation = Employee::where('employee_id', $loggedInUser)
-                                ->select('department_name', 'sick_credits', 'vacation_credits')->get();
+                                ->select('department_name', 'sick_credits', 'vacation_credits', 'first_name', 'gender')->get();
+        $this->firstName = $employeeInformation[0]->first_name;
         $this->vacationCredits = $employeeInformation[0]->vacation_credits;
         $this->sickCredits = $employeeInformation[0]->sick_credits;
+        $this->gender = $employeeInformation[0]->gender;
         $this->activities = Activities::whereJsonContains('visible_to_list', $employeeInformation[0]->department_name)->get();
         $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
+        $this->currentHourMinuteSecond = Carbon::now();
+        $currentTime = Carbon::now();
+        // Set the start and end times for each period
+        $morningStart = Carbon::createFromTime(6, 0, 0); // 6:00 AM
+        $afternoonStart = Carbon::createFromTime(12, 0, 0); // 12:00 PM (noon)
+        $eveningStart = Carbon::createFromTime(18, 0, 0); // 6:00 PM
 
+        // Compare the current time with the defined periods
+        if ($currentTime->between($morningStart, $afternoonStart)) {
+            // Current time is in the morning
+            $this->period = 'Morning';
+        } elseif ($currentTime->between($afternoonStart, $eveningStart)) {
+            // Current time is in the afternoon
+            $this->period = 'Afternoon';
+        } else {
+            // Current time is in the evening
+            $this->period = 'Evening';
+        }
+        // dd($this->period);
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
 
@@ -98,21 +126,27 @@ class DashboardView extends Component
             $this->monthlyCountsArray[$i] = 0;
         }
     }
-    // foreach ($monthlyCounts as $count) {
-        
-    // }
 
-    // Process weekly counts
-    // foreach ($weeklyCounts as $count) {
-    //     $weeklyCountsArray[] = $count->count;
-    // }
+    for ($i = 1; $i <= 5; $i++) {
+        $found = false;
+        foreach ($weeklyCounts as $count) {
+            if ($count->month == $i) {
+                $this->weeklyCountsArray[$i] = $count->count;
+                $found = true;
+                break;
+            }
+        }
+        if (!$found) {
+            $this->weeklyCountsArray[$i] = 0;
+        }
+    }
 
     foreach ($weeklyCounts as $count) {
         $this->weeklyCountsArray[] = $count->count;
     }
    
 
-    $this->data = $this->weeklyCountsArray;
+    $this->data = array_values($this->weeklyCountsArray);
     
     }
 
@@ -136,7 +170,7 @@ class DashboardView extends Component
         if($filter == "weekly"){
             $this->filter = "Weekly";
             // dd($this->weeklyCountsArray);
-            $this->dispatch('refresh-weekly-chart', data: $this->weeklyCountsArray);
+            $this->dispatch('refresh-weekly-chart', data: array_values($this->weeklyCountsArray));
         }
         else{
             $this->filter = "Monthly";

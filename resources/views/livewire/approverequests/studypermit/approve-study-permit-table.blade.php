@@ -25,7 +25,7 @@
             </nav>
             <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Approve Study Permit Requests</h2>
             <br><br>
-            <div class="overflow-x-auto shadow-md sm:rounded-lg bg-white pb-4">
+            <div class="overflow-x-auto shadow-md rounded-t-lg bg-white pb-4">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-4">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -183,7 +183,7 @@
                 </table>
                 
             </div>
-            <div class="p-4 bg-gray-100 overflow-x-auto w-full">
+            <div class="p-4 bg-gray-100 overflow-x-auto w-full rounded-b-lg">
                 {{ $StudyPermitData->links('vendor.pagination.default') }}
             </div>
             
