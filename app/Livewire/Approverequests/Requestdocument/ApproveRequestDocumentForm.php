@@ -161,7 +161,7 @@ class ApproveRequestDocumentForm extends Component
             } else {
                 // If it's an uploaded file, store it and apply validation rules
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'RequestDocument', 'Signed', $documentrequestdata->id, $signedIn));
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Request Document', 'Signed', $documentrequestdata->id, $signedIn));
                 }
                 $documentrequestdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/documentrequest/' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);

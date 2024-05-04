@@ -49,7 +49,7 @@ class DashboardView extends Component
         $this->gender = $employeeInformation[0]->gender;
         $this->activities = Activities::whereJsonContains('visible_to_list', $employeeInformation[0]->department_name)->get();
         $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
-        $this->currentHourMinuteSecond = Carbon::now();
+        // $this->currentHourMinuteSecond = Carbon::now();
         $currentTime = Carbon::now();
         // Set the start and end times for each period
         $morningStart = Carbon::createFromTime(6, 0, 0); // 6:00 AM
@@ -184,7 +184,7 @@ class DashboardView extends Component
     {
         return view('livewire.dashboard.dashboard-view', [
             'data' => $this->filter($this->filter),
-        ])->extends('layouts.app');
+        ]);
 
       
     }

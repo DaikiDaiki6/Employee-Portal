@@ -1,12 +1,11 @@
-<div class="grid grid-cols-3 gap-4 ">
+<div class="grid grid-cols-3 gap-4 p-4 sm:ml-64" style="margin-top: 55px">
     <style>
         .swiper {
-
-        /* max-width: 1150px; */
+        max-width: 1200px; */
         /* Optionally, set a minimum height */
-        /* max-height: 300px; */
+        max-width: 100px;
         width: 100%;
-        height: 100%;
+        height: 100%; 
     }
     .swiper-wrapper{
         width:100%;
@@ -34,7 +33,7 @@
     </style>
 
  
-<div wire:ignore class="bg-white  border col-span-3 border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mb-4 ">
+<div wire:ignore class="bg-white border col-span-3  border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-800 dark:border-gray-700  ">
   @if ($activities->isEmpty())
   <div class="flex items-center justify-center text-center h-full">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -68,14 +67,13 @@
 
 </div>
 
-<div wire:ignore class=" w-full col-span-2 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+<div wire:ignore class="w-full col-span-2 bg-white rounded-lg shadow pb-4 dark:bg-gray-800 p-4 md:p-4" style="height: 60%; max-height:350px;">
     <div class="flex justify-between ">
       <div>
-        <p class=" text-2xl font-bold text-gray-800 dark:text-gray-400">Attendance Chart</p>
+        <p class=" text-xl font-bold text-gray-800 dark:text-gray-400">Attendance Chart</p>
       </div>
       <div
         class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-        
         <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
         </svg>
@@ -83,22 +81,21 @@
     </div>
     <div id="area-chart"></div>
     <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
-      <div class="flex justify-between items-center pt-5">
-        
+      <div class="flex justify-between items-center" >
         <!-- Button -->
         <button
           id="dropdownDefaultButton"
           data-dropdown-toggle="lastDaysdropdown"
           data-dropdown-placement="bottom"
-          class="text-sm font-medium text-gray-900 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-          type="button">
+          class="text-sm font-medium text-gray-900  dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white mt-2"
+          type="button" >
           <p class="text-capitalize"> {{$filter}}</p>
           <svg class="w-2.5 m-2.5 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
           </svg>
         </button>
         <!-- Dropdown menu -->
-        <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+        <div id="lastDaysdropdown" class="z-50 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
             <ul class="py-2 text-sm text-gray-900 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
               <li>
                 <a wire:click.prevent="setFilter('weekly')" class="block px-4 py-2  hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Weekly</a>
@@ -113,28 +110,33 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 p-4  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-    <div class="text-center mb-4 flex flex-col items-center">
-        <div>
-          <span class="text-2xl font-semibold text-blue-500">Good {{$period}}, {{$firstName}}. </span>
-          <br>
-          <span span class="text-base">Ready to Start your Day?</span>
+  <div style="margin-bottom:150px; height:100%; max-height:230px" class="grid grid-cols-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div class="grid grid-cols-5  mb-4  items-center">
+        <div class="h-full col-span-2">
+          <p class=" font-semibold text-blue-500 text-lg min-[1475px]:text-2xl whitespace-nowrap">Good {{$period}}, {{$firstName}}. </p>
+          <span class="text-base whitespace-nowrap  ">Ready to Start your Day?</span>
+          <p class="text-sm whitespace-nowrap mt-4">"<span class="text-blue-500">Tough times</span> never last,</p>
+          <span class="text-sm whitespace-nowrap">but <span class="text-blue-700">tough people</span> do"</span>
+          <div wire:poll.1s class="text-xl p-0 font-semibold text-blue-700">
+            <br> 
+            @php
+              $currentDate = \Illuminate\Support\Carbon::now()->toDateString(); // Get current date in YYYY-MM-DD format
+              $currentTime = \Illuminate\Support\Carbon::now()->toTimeString();
+              // $currentTime = \Illuminate\Support\Carbon::now()
+            @endphp
+              <p class="text-blue-500 text-sm">Date: <span class="text-gray-900">{{$currentDate}}</span></p>  
+              <p class="text-blue-500 text-sm">Time: <span class="text-gray-900">{{$currentTime}}</span></p> 
+            </div>
         </div>
-        <br>
-        <div class="mb-4"> 
+       
+        <div class="mb-4 ml-8 col-span-3"> 
           @if ($gender == "Female")
-            <img src="{{asset('storage\EmployeeImages\girl.png')}}" class="h-64 w-72 justify-self-center" alt="...">
+            <img src="{{asset('storage\EmployeeImages\girl.png')}}"  style="width:500px ;height: 200px" alt="...">
           @else
-              <img src="{{asset('storage\EmployeeImages\boy.png')}}"  class="h-64 w-72 justify-self-center" alt="...">
+              <img src="{{asset('storage\EmployeeImages\boy.png')}}"  style="width:500px ;height: 200px" alt="...">
           @endif
         </div>
-        <div wire:poll.1s class="text-xl p-0 font-semibold text-blue-700">
-          <br>
-          @php
-            $currentTime = \Illuminate\Support\Carbon::now()
-          @endphp
-            {{$currentTime}}
-        </div>
+        
     </div>
 </div>
 
@@ -161,12 +163,12 @@
 <script>
 const options = {
   chart: {
-    height: "80%",
+    height: "75%",
     maxWidth: "100%",
     type: "area",
     fontFamily: "Inter, sans-serif",
     animations: {
-      enabled: false,
+      enabled: true,
     },
     padding: {
         // left: 100, // Adjust the left padding to create more space for the y-axis labels
@@ -203,12 +205,12 @@ const options = {
     width: 6,
   },
   grid: {
-    show: false,
+    show: true,
     strokeDashArray: 4,
     padding: {
       left: 20,
       right: 0,
-      bottom: 20,
+      bottom: 0,
       top: 0
     },
   },

@@ -1,7 +1,7 @@
 @section('title', 'Sign in to your account')
 
 <div>
-    <div class="sm:mx-auto sm:w-full sm:max-w-md text-center flex flex-col items-center">
+    {{-- <div class="sm:mx-auto sm:w-full sm:max-w-md text-center flex flex-col items-center">
         <a href="{{ route('dashboard') }}" class="inline-block">
             <img src="{{ asset('storage/plmlogo/plm.png') }}" style="height: auto; max-height: 75px;" alt="PLM Logo">
         </a>
@@ -9,18 +9,23 @@
         <h2 class="mt-6 text-3xl font-semibold text-center text-blue-700 leading-9">
             Sign in to your account
         </h2>
-        {{-- @if (Route::has('register'))
+        @if (Route::has('register'))
             <p class="mt-2 text-sm text-center text-gray-600 leading-5 max-w">
                 Or
                 <a href="{{ route('register') }}" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                     create a new account
                 </a>
             </p>
-        @endif --}}
-    </div>
+        @endif
+    </div> --}}
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
+            <div class="sm:mx-auto sm:w-full sm:max-w-md text-center flex flex-col items-center mb-10">
+                <a href="{{ route('dashboard') }}" class="inline-block">
+                    <img src="{{ asset('storage/plmlogo/plm.png') }}" style="height: auto; max-height: 75px;" alt="PLM Logo">
+                </a>
+            </div>
             <form wire:submit.prevent="authenticate">
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 leading-5">

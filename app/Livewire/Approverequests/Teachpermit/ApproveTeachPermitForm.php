@@ -185,7 +185,7 @@ class ApproveTeachPermitForm extends Component
             } else {
                 // If it's an uploaded file, store it and apply validation rules
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'TeachPermit', 'Signed', $teachpermitdata->id, $signedIn));
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Teach Permit', 'Signed', $teachpermitdata->id, $signedIn));
                 }
                 $teachpermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/teachpermit/' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);

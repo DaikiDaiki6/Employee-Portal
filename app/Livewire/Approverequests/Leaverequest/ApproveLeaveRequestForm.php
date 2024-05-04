@@ -173,7 +173,7 @@ class ApproveLeaveRequestForm extends Component
                 } else {
                     // If it's an uploaded file, store it and apply validation rules
                     if($this->$propertyName){
-                    $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'LeaveRequest', 'Signed', $leaveRequest->id, $signedIn));
+                    $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Leave Request', 'Signed', $leaveRequest->id, $signedIn));
                     }
                     $leaveRequest->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/leaverequest/' . $propertyName, 'local') : '';
                     $this->validate([$propertyName => $validationRule]);
