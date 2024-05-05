@@ -33,14 +33,14 @@ class TrainingGallery extends Component
         $departmentName = Employee::where('employee_id', $loggedInUser->employeeId)
                                 ->value('department_name');
         $this->department_name = $departmentName;
-       
-        if($this->filter != "All" || $this->filter != null){
+        if($this->filter != "All" && $this->filter != null){
             return Training::whereJsonContains('visible_to_list', $departmentName)
                         ->whereJsonContains('visible_to_list', $this->filter)
                         ->paginate(10);
+                        // dd($this->filter);
         }
-        else if($this->filter == "All"){
-            dd('seal');
+        else {
+            // dd('seal');
             return Training::whereJsonContains('visible_to_list', $departmentName)->paginate(10);
         }
 
@@ -48,7 +48,6 @@ class TrainingGallery extends Component
 
     public function fillerSetter($type){
         return $this->filter = $type;
-        
      }
 
     public function render()

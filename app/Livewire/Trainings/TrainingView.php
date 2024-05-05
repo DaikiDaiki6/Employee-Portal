@@ -19,9 +19,11 @@ class TrainingView extends Component
         $loggedInUser = auth()->user();
         $this->preTestAnswerExists = Traininganswer::where('employee_id', $loggedInUser->employeeId)
             ->whereNotNull('pre_test_answers')
+            ->where('id', $this->trainingData->id)
             ->exists();
         $this->postTestAnswerExists = Traininganswer::where('employee_id', $loggedInUser->employeeId)
             ->whereNotNull('post_test_answers')
+            ->where('id', $this->trainingData->id)
             ->exists();
         // dd($this->activityData->poster);
     }

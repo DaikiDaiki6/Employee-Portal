@@ -33,6 +33,10 @@ class LeaveRequestTable extends Component
         $this->sickCredits = $employeeInformation[0]->sick_credits;
     }
 
+    public function leaveRequestView(){
+        dd('test');
+    }
+
     public function render()
     {
         $loggedInUser = auth()->user();

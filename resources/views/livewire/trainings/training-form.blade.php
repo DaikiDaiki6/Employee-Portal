@@ -52,7 +52,7 @@
                     <div>
                         <label for="training_information" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Training Information<span class="text-red-600">*</span></label>
                         <textarea type="text"  id="training_information" name="training_information" wire:model.blur="training_information" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
-                        @error('title')
+                        @error('training_information')
                             <div class="transition transform alert alert-danger"
                                     x-init="$el.closest('form').scrollIntoView()">
                                 <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
@@ -157,7 +157,7 @@
                                 </textarea>
                                 @error('preTest.{{$index}}.question')   
                                 <div class="transition transform alert alert-danger text-sm"
-                                        x-data x-init="document.getElementById('coreFunctions_{{$index}}_question').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_question').focus();" >
+                                        x-data x-init="document.getElementById('preTest_{{$index}}_question').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('preTest_{{$index}}_question').focus();" >
                                             <span class="text-red-500 text-xs" > {{$message}}</span>
                                     </div> 
                                 @enderror
@@ -169,7 +169,7 @@
                                 </textarea>
                                 @error('preTest.{{$index}}.answer')   
                                     <div class="transition transform alert alert-danger text-sm"
-                                        x-data x-init="document.getElementById('coreFunctions_{{$index}}_answer').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_answer').focus();" >
+                                        x-data x-init="document.getElementById('preTest_{{$index}}_answer').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('preTest_{{$index}}_answer').focus();" >
                                             <span class="text-red-500 text-xs" > {{$message}}</span>
                                     </div> 
                                 @enderror
@@ -270,7 +270,7 @@
                 <div>
                     <div class="mb-4">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Host<span class="text-red-600">*</span></label>
-                        <select id="host" name="host" wire:model.blur="host"
+                        <select id="host" name="host" wire:model="host"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="College of Information System and Technology Management">College of Information System and Technology Management</option>
                             <option value="College of Engineering">College of Engineering</option>

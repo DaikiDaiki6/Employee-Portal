@@ -128,6 +128,8 @@
                         
                         $timestamp = strtotime($date);
                         $month = date("y-m", $timestamp);
+                        $monthNumber = \Illuminate\Support\Carbon::createFromFormat('Y-m', $date)->startOfMonth();
+                        $numberOfDaysPerMonth = $monthNumber->daysInMonth;
                         $daysInMonth = [];
                         $daysCounter = 0;
                         @endphp
@@ -150,11 +152,12 @@
                                 $timeins[] = date('H:i:s', strtotime($date->time_in));
                                 $timeouts[] = date('H:i:s', strtotime($date->time_out));
                                 $dates[] = $date->attendance_date;
-                                $daysCounter++;
-
+                                if($daysCounter < $numberOfDaysPerMonth){
+                                    $daysCounter++;
+                                }
                             }
-                            
                          }
+                         
                          
                          // Extract DTR information if available
                          $formattedDay = $hasDTRData ? date('d', strtotime($dtrs[$daysCounter])) : '';
@@ -174,51 +177,60 @@
                                 $minDateTwo = date('H', strtotime($timeouts[0]));
                                 $dateOne = date('H:i', strtotime($timeins[0]));
                                 $dateTwo = date('H:i', strtotime($timeouts[0]));
-
-                                
                                 $date1 = new Datetime($timeins[0]);
                                 $date2 = new Datetime($timeouts[0]);
                                 $interval = $date1->diff($date2);
                             }
+                            else{
+                                $minDateOne = $minDateTwo =  $dateOne =  $dateTwo = $interval = Null;
+                            }
                         @endphp
                         <td class="days-cell">{{ $day }}</td>
                         <td class="days-cell">
-                            @if (isset($dates) && $day === (int)$time && (int)$minDateOne < 12)
-                            {{ $dateOne}}
+                            @if (isset($dates) && $day === (int)$time && $minDateOne != Null )
+                                @if ((int)$minDateOne < 12)
+                                    {{ $dateOne}}
+                                @endif
                             @else
                                 -
                             @endif
                         </td>
                          <td class="days-cell">
-                            @if (isset($dates) && $day === (int)$time && (int)$minDateTwo < 12)
-                            {{ $dateTwo}}
+                            @if (isset($dates) && $day === (int)$time && $minDateOne != Null )
+                                @if ((int)$minDateTwo < 12)
+                                {{ $dateTwo}}
+                                @endif
                             @else
                                 -
                             @endif
                          </td>
                          <td class="days-cell">
-                            @if (isset($dates) && $day === (int)$time && (int)$minDateOne >= 12)
-                            {{ $dateOne}}
+                            @if (isset($dates) && $day === (int)$time && $minDateOne != Null)
+                                @if ( (int)$minDateOne >= 12)
+                                    {{ $dateOne}}
+                                @endif
                             @else
                                 -
                             @endif
                          </td>
                          <td class="days-cell">
-                            @if (isset($dates) && $day === (int)$time && (int)$minDateTwo >= 12)
-                            {{ $dateTwo}}
+                            @if (isset($dates) && $day === (int)$time && $minDateOne != Null  )
+                                @if ( (int)$minDateOne >= 12)
+                                    {{ $dateTwo}}                                
+                                @endif
                             @else
                                 -
                             @endif
                          </td>
                          <td class="days-cell">
-                            @if (isset($dates) && $day === (int)$time)
+                            @if (isset($dates[0]) && $day === (int)$time)
                             {{$interval->format('%h')}}
                             @else
                                 -
                             @endif
                          </td>
                          <td class="days-cell">
-                            @if (isset($dates) && $day === (int)$time )
+                            @if (isset($dates[0]) && $day === (int)$time )
                             @php
                                 $minutes = $interval->format('%i');
                                 if ($minutes == 0) {

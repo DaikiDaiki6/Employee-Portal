@@ -134,13 +134,13 @@
                                                     <a onclick="location.href='{{ route('ApproveOpcrForm', ['index' => $opcr->id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                 </li>
                                                 <li>
-                                                    <a onclick="location.href='{{ route('opcrpdf', ['index' => $opcr->id]) }}'" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PDF</a>
+                                                    <a onclick="location.href='{{ route('OpcrPdf', ['index' => $opcr->id]) }}'" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PDF</a>
                                                 </li>
                                                
                                                 </ul>
-                                            <div class="py-2">
+                                            {{-- <div class="py-2">
                                                 <a wire:click="removeOpcr({{$opcr->id}})"  wire:confirm="Are you sure you want to delete this post?" class="block px-4 py-2 text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </td>
 

@@ -357,7 +357,7 @@ class IpcrForm extends Component
         // Ipcr::create($ipcr);
         $ipcr->save();
 
-        return redirect()->to(route('ipcrtable'));
+        return redirect()->to(route('IpcrTable'));
 
     }
 

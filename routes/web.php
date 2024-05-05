@@ -189,7 +189,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get("leaverequest/requests/", ApproveLeaveRequestTable::class)->name('ApproveLeaveRequestTable');
 
-    Route::get("leaverequest/approve/{index}", ApproveLeaveRequestForm::class)->name('ApproveLeaveRequestForm');
+    Route::get("leaverequest/approve/{index}", ApproveLeaveRequestForm::class)->name('ApproveLeaveRequestForm'); 
 
 });
 

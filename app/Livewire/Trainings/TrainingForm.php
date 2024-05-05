@@ -57,7 +57,26 @@ class TrainingForm extends Component
         $this->postTest = array_values($this->postTest);
     }
 
+    protected $rules = [
+        'training_title' => 'required',
+        'training_information' => 'required',
+        'training_photo' => 'required',
+        'pre_test_title' => 'required',
+        'post_test_title' => 'required',
+        'preTest.*.question'  => 'required',
+        'preTest.*.answer'  => 'required',
+        'pre_test_description' => 'required',
+        'post_test_description' => 'required',
+        // 'host' => 'required',
+        'is_featured' => 'required',
+        'visible_to_list' => 'required',
+    ];
+
     public function submit(){
+        if($this->host){
+            $this->host = "College of Information System and Technology Management";
+        }
+        $this->validate();
         $trainingdata = new Training();
         $trainingdata->training_title = $this->training_title;
         $trainingdata->training_information = $this->training_information;

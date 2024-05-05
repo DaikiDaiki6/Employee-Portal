@@ -38,14 +38,14 @@
                         <div class="grid grid-cols-1 min-[900px]:grid-cols-2 mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12  bg-white dark:bg-gray-800">
                             <figure class="items-left justify-center pl-8 pt-8 text-left bg-white border-b border-gray-800 rounded-t-lg md:rounded-t-none md:rounded-ss-lg  dark:bg-gray-800 dark:border-gray-700">
                                 <blockquote class="max-w-2xl mx-auto mb-4 text-gray-900 lg:mb-8 dark:text-gray-400">
-                                    <h3 class="text-xl font-semibold text-blue-700 dark:text-white">Information: </h3>
+                                    <h3 class="text-xl font-semibold text-blue-700 dark:text-white">Employee Information: </h3>
                                     <p class="my-4"><b>Phone:</b> {{$employeeRecord->phone}} </p>
                                     <p class="my-4"><b>Sex:</b> {{$employeeRecord->gender}}</p>
                                     <p class="my-4"><b>Position:</b> {{$employeeRecord->current_position}}</p>
                                     <p class="my-4 "><b>Personal Email:</b> {{$employeeRecord->personal_email}} </p>
                                 </blockquote>
                             </figure>
-                            <figure class=" items-center justify-center pl-8 pt-8 text-left bg-white border-b border-gray-200 md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
+                            <figure class=" items-center justify-center pl-8 pt-8 text-left bg-white border-b border-gray-800  md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
                                 <blockquote class="max-w-2xl mx-auto mb-4 text-gray-900 lg:mb-8 dark:text-gray-400">
                                     <br>
                                     <p class="my-4"><b>Age:</b> {{number_format($employeeRecord->age, 0)}}</p>
@@ -55,7 +55,7 @@
 
                                 </blockquote>
                             </figure>
-                            <figure class="items-center justify-center pl-8 pt-8 text-left bg-white border-b border-gray-200 md:rounded-es-lg md:border-b-0  dark:bg-gray-800 dark:border-gray-700">
+                            <figure class="items-center justify-center pl-8 pt-8 text-left bg-white border-b border-gray-800 md:rounded-es-lg md:border-b-0  dark:bg-gray-800 dark:border-gray-700">
                                 <blockquote class="max-w-2xl mx-auto mb-4 text-gray-900 lg:mb-8  dark:text-gray-400">
                                     <h3 class="text-xl font-semibold text-blue-700 dark:text-white">Designation: </h3>
                                     <p class="my-4"><b>Department Name:</b> {{$employeeRecord->department_name}}</p>
@@ -64,7 +64,7 @@
                                     <p class="my-4"><b>Employee ID:</b> {{$employeeRecord->employee_id}} </p>
                                 </blockquote>
                             </figure>
-                            <figure class=" items-center justify-center pl-8 pt-8 text-left bg-white border-gray-200 rounded-b-lg md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
+                            <figure class=" items-center justify-center pl-8 pt-8 text-left bg-white border-gray-800  rounded-b-lg md:rounded-se-lg dark:bg-gray-800 dark:border-gray-700">
                                 <blockquote class="max-w-2xl mx-auto mb-4 text-gray-600 lg:mb-8 dark:text-gray-400">
                                     <h3 class="text-xl font-semibold text-blue-700 dark:text-white">Employee History: </h3>
                                     @if ($employeeHistory)
@@ -92,7 +92,7 @@
                             </a> --}}
                        </div>
                        <div class="flow-root">
-                            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <ul role="list" class="divide-y divide-blue-500 dark:divide-gray-700">
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
