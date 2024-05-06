@@ -44,21 +44,12 @@ class OpcrUpdate extends Component
     public $department_name;
     public $department_head;
 
-   
-
-    // public function boot(){
-    //     $this->dispatch('app:scroll-to', [
-    //         'query' => '#start_period',
-    //     ]);
-     
-    // }
-
     public function addCoreFunction(){
-        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'budget' => '', 'personsConcerned' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function addSupportiveFunction(){
-        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'budget' => '', 'personsConcerned' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function removeCoreFunction($index){
@@ -117,7 +108,7 @@ class OpcrUpdate extends Component
     public function mount($index){
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('department_head', 'department_name')
-                    ->where('employee_id', $loggedInUser->employeeId)
+                    ->where('employee_id', $loggedInUser->employee_id)
                     ->get();
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->department_head = $this->employeeRecord[0]->department_head;
@@ -141,24 +132,24 @@ class OpcrUpdate extends Component
         $this->comments_and_reco = $opcrData->comments_and_reco;
         $this->discussed_with = $opcrData->discussed_with;
         $this->disscused_with_date = $opcrData->disscused_with_date;
-        $this->assessed_by = $opcrData->assessed_by;
-        $this->assessed_by_date =  $opcrData->assessed_by_date;
-        $this->final_rating = $opcrData->final_rating;
-        $this->final_rating_by = $opcrData->final_rating_by;
-        $this->final_rating_by_date = $opcrData->final_rating_by_date;
+        // $this->assessed_by = $opcrData->assessed_by;
+        // $this->assessed_by_date =  $opcrData->assessed_by_date;
+        // $this->final_rating = $opcrData->final_rating;
+        // $this->final_rating_by = $opcrData->final_rating_by;
+        // $this->final_rating_by_date = $opcrData->final_rating_by_date;
     }
 
     public function getDiscussedWith(){
         return Storage::disk('local')->get($this->discussed_with);
     }
 
-    public function getAssessedBy(){
-        return Storage::disk('local')->get($this->assessed_by);
-    }
+    // public function getAssessedBy(){
+    //     return Storage::disk('local')->get($this->assessed_by);
+    // }
 
-    public function getFinalRatingBy(){
-        return Storage::disk('local')->get($this->final_rating_by);
-    }
+    // public function getFinalRatingBy(){
+    //     return Storage::disk('local')->get($this->final_rating_by);
+    // }
 
     public function editOpcr($index){
         $opcr = Opcr::findOrFail($index);
@@ -172,46 +163,78 @@ class OpcrUpdate extends Component
         'start_period' => 'required|before_or_equal:end_period|after_or_equal:date_of_filling',
         'end_period' => 'required|after_or_equal:start_period',
         'ratee' => 'required|min:2|max:256',
-        'coreFunctions.*.output' => 'required|min:10|max:2048',
-        'coreFunctions.*.indicator' => 'required|min:10|max:2048',
-        'coreFunctions.*.accomp' => 'required|min:10|max:2048',
-        'coreFunctions.*.weight' => 'numeric',
-        'coreFunctions.*.remark' => 'min:10|max:2048',
-        'core_rating' => 'required|numeric|min:1|max:5',
         'supportiveFunctions.*.output' => 'required|min:10|max:2048',
         'supportiveFunctions.*.indicator' => 'required|min:10|max:2048',
         'supportiveFunctions.*.accomp' => 'required|min:10|max:2048',
-        'supportiveFunctions.*.weight' => 'numeric',
-        'supportiveFunctions.*.remark' => 'min:10|max:2048',
+        'supportiveFunctions.*.weight' => 'numeric|min:1|max:100',
+        'supportiveFunctions.*.remark' => 'min:10',
+        'supportiveFunctions.*.budget' => 'numeric|min:1|max:10000000',
+        'supportiveFunctions.*.personsConcerned' => 'min:10',
+        'supportiveFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.A' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.output' => 'required|min:10|max:2048',
+        'coreFunctions.*.indicator' => 'required|min:10|max:2048',
+        'coreFunctions.*.accomp' => 'required|min:10|max:2048',
+        'coreFunctions.*.weight' => 'numeric|min:1|max:100',
+        'coreFunctions.*.remark' => 'min:10',
+        'coreFunctions.*.budget' => 'numeric|min:1|max:10000000',
+        'coreFunctions.*.personsConcerned' => 'min:10',
+        'coreFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.A' => 'required|numeric|min:1|max:5',
+        'core_rating' => 'required|numeric|min:1|max:5',
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
-        'comments_and_reco' => 'required|min:10|max:2048', 
-        'disscused_with_date' => 'required|date',
-        'assessed_by_date' => 'required|date',
-        'final_rating' => 'required|numeric',
-        'final_rating_by_date' => 'required|date',
+        // 'comments_and_reco' => 'required|min:10|max:2048', 
+        // 'discussed_with' => 'required|mimes:jpg,png|extensions:jpg,png',
+        'disscused_with_date' => 'required|date|after_or_equal:start_period',
+        // 'assessed_by' => 'required|mimes:jpg,png|extensions:jpg,png',
+        // 'assessed_by_date' => 'required|date',
+        // 'final_rating' => 'required|numeric',
+        // 'final_rating_by' => 'required|mimes:jpg,png|extensions:jpg,png',
+        // 'final_rating_by_date' => 'required|date',
     ];
 
-    // protected $validationAttributes = [
-    //     'coreFunctions.*.output' => 'core output',
-    //     'coreFunctions.*.indicator' => 'core indicator',
-    //     'coreFunctions.*.accomp' => 'core acccomplishment',
-    //     'coreFunctions.*.weight' => 'core weight',
-    //     'coreFunctions.*.remark' => 'core remark',
-    // ];
+    protected $validationAttributes = [
+        'coreFunctions.*.output' => 'Core output',
+        'coreFunctions.*.indicator' => 'Core indicator',
+        'coreFunctions.*.accomp' => 'Core acccomplishment',
+        'coreFunctions.*.weight' => 'Core weight',
+        'coreFunctions.*.remark' => 'Core remark',
+        'coreFunctions.*.budget' => 'Budget',
+        'coreFunctions.*.personsConcerned' => 'Persons concerned',
+        'coreFunctions.*.Q' => 'Q',
+        'coreFunctions.*.E' => 'E',
+        'coreFunctions.*.T' => 'T',
+        'coreFunctions.*.A' => 'A',
+        'supportiveFunctions.*.output' => 'Supportive output',
+        'supportiveFunctions.*.indicator' => 'Supportive indicator',
+        'supportiveFunctions.*.accomp' => 'Supportive accomplishment',
+        'supportiveFunctions.*.weight' => 'Supportive weight',
+        'supportiveFunctions.*.remark' => 'Supportive remark',
+        'supportiveFunctions.*.budget' => 'Budget',
+        'supportiveFunctions.*.personsConcerned' => 'Persons concerned',
+        'supportiveFunctions.*.Q' => 'Q',
+        'supportiveFunctions.*.E' => 'E',
+        'supportiveFunctions.*.T' => 'T',
+        'supportiveFunctions.*.A' => 'A',
+    ];
 
-    // protected $messages = [
-    //     'start_period.before' => 'The Start period must be a date before end period.',
-    // ];
+    protected $messages = [
+        'start_period.before' => 'The Start period must be a date before end period.',
+    ];
 
     
 
     public function submit(){
 
-        // $this->validate();
+        $this->validate();
         $loggedInUser = auth()->user();
         $opcr = new Opcr();
-        $opcr->employee_id = $loggedInUser->employeeId;
+        $opcr->employee_id = $loggedInUser->employee_id;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
         $opcr->department_name = $this->department_name;
@@ -225,8 +248,8 @@ class OpcrUpdate extends Component
         $opcr->comments_and_reco = $this->comments_and_reco;
 
         $properties = [
-            'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
+            // 'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
+            // 'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
             'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
         ];
         // Iterate over the properties
@@ -317,7 +340,7 @@ class OpcrUpdate extends Component
         // Ipcr::create($opcr);
         $opcr->update();
 
-        return redirect()->to(route('opcrtable'));
+        return redirect()->to(route('OpcrTable'));
 
     }
     

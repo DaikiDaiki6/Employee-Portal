@@ -44,9 +44,11 @@ class ApproveOpcrForm extends Component
     public $discussed_with;
     public $disscused_with_date;
     public $assessed_by;
+    public $assessed_by_verdict;
     public $assessed_by_date;
     public $final_rating;
     public $final_rating_by;
+    public $final_rating_by_verdict;    
     public $final_rating_by_date;
     public $department_name;
     public $department_head;
@@ -124,7 +126,7 @@ class ApproveOpcrForm extends Component
     public function mount($index){
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('department_head', 'department_name')
-                    ->where('employee_id', $loggedInUser->employeeId)
+                    ->where('employee_id', $loggedInUser->employee_id)
                     ->get();
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->department_head = $this->employeeRecord[0]->department_head;
@@ -149,9 +151,11 @@ class ApproveOpcrForm extends Component
         $this->discussed_with = $opcrData->discussed_with;
         $this->disscused_with_date = $opcrData->disscused_with_date;
         $this->assessed_by = $opcrData->assessed_by;
+        $this->assessed_by_verdict = $opcrData->assessed_by_verdict;
         $this->assessed_by_date =  $opcrData->assessed_by_date;
         $this->final_rating = $opcrData->final_rating;
         $this->final_rating_by = $opcrData->final_rating_by;
+        $this->final_rating_by_verdict = $opcrData->final_rating_by_verdict;
         $this->final_rating_by_date = $opcrData->final_rating_by_date;
     }
 
@@ -193,32 +197,46 @@ class ApproveOpcrForm extends Component
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
         'comments_and_reco' => 'required|min:10|max:2048', 
-        'disscused_with_date' => 'required|date',
-        'assessed_by_date' => 'required|date',
-        'final_rating' => 'required|numeric',
-        'final_rating_by_date' => 'required|date',
+        'assessed_by_verdict' => 'required|in:1,0',
+        'final_rating_by_verdict' => 'required|in:1,0',
+        // 'disscused_with_date' => 'required|date',
+        'assessed_by_date' => 'required|date|after_or_equal:start_period',
+        // 'final_rating' => 'required|numeric',
+        'final_rating_by_date' => 'required|date|after_or_equal:start_period',
     ];
 
-    // protected $validationAttributes = [
-    //     'coreFunctions.*.output' => 'core output',
-    //     'coreFunctions.*.indicator' => 'core indicator',
-    //     'coreFunctions.*.accomp' => 'core acccomplishment',
-    //     'coreFunctions.*.weight' => 'core weight',
-    //     'coreFunctions.*.remark' => 'core remark',
-    // ];
+       protected $validationAttributes = [
+        'coreFunctions.*.output' => 'core output',
+        'coreFunctions.*.indicator' => 'core indicator',
+        'coreFunctions.*.accomp' => 'core acccomplishment',
+        'coreFunctions.*.weight' => 'core weight',
+        'coreFunctions.*.remark' => 'core remark',
+        'coreFunctions.*.Q' => 'Q',
+        'coreFunctions.*.E' => 'E',
+        'coreFunctions.*.T' => 'T',
+        'coreFunctions.*.A' => 'A',
+        'supportiveFunctions.*.output' => 'supportive output',
+        'supportiveFunctions.*.indicator' => 'supportive indicator',
+        'supportiveFunctions.*.accomp' => 'supportive accomplishment',
+        'supportiveFunctions.*.weight' => 'supportive weight',
+        'supportiveFunctions.*.remark' => 'supportive remark',
+        'supportiveFunctions.*.Q' => 'Q',
+        'supportiveFunctions.*.E' => 'E',
+        'supportiveFunctions.*.T' => 'T',
+        'supportiveFunctions.*.A' => 'A',
+    ];
 
-    // protected $messages = [
-    //     'start_period.before' => 'The Start period must be a date before end period.',
-    // ];
+    protected $messages = [
+        'start_period.before' => 'The Start period must be a date before end period.',
+    ];
 
-    
 
     public function submit(){
 
-        // $this->validate();
+        $this->validate();
         $loggedInUser = auth()->user();
         $opcr = Opcr::findOrFail($this->index);
-        $opcr->employee_id = $loggedInUser->employeeId;
+        $opcr->employee_id = $loggedInUser->employee_id;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
         $opcr->department_name = $this->department_name;
@@ -233,17 +251,17 @@ class ApproveOpcrForm extends Component
 
 
         $properties = [
-            'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
+            'assessed_by' => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png',
+            'final_rating_by' => 'required_with:final_rating_by_verdict|mimes:jpg,png|extensions:jpg,png',
+            // 'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
         ];
 
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
-            ->where('employee_id', $loggedInUser->employeeId)
+            ->where('employee_id', $loggedInUser->employee_id)
             ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
 
-        $targetUser = User::where('employeeId', $opcr->employee_id)->first();
+        $targetUser = User::where('employee_id', $opcr->employee_id)->first();
  
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
@@ -253,10 +271,12 @@ class ApproveOpcrForm extends Component
                 $opcr->$propertyName = $this->$propertyName;
             } else {
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Opcr', 'Signed', $opcr->id, $signedIn));
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Opcr', 'Signed', $opcr->id, $signedIn));
                 }
-                $this->validate([$propertyName => $validationRule]);
+                $nameOfProperty = $propertyName.'_verdict';
+                $opcr->$nameOfProperty = $this->$nameOfProperty;
                 $opcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/opcr/' . $propertyName, 'local') : '';
+                $this->validate([$propertyName => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png']);
             }
         }
 

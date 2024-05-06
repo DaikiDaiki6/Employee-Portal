@@ -46,8 +46,16 @@ class IpcrController extends Controller
         $employee_id = Ipcr::query()->where('id', $index)->value('employee_id'); // Get Employee ID
         $employee = Employee::query()->where('employee_id', $employee_id)->first(); // Get Employee Records
         $images['discussed_with'] = Storage::disk('local')->get($ipcr[0]['discussed_with']);
-        $images['assessed_by'] = Storage::disk('local')->get($ipcr[0]['assessed_by']);
-        $images['final_rating_by'] = Storage::disk('local')->get($ipcr[0]['final_rating_by']);
+        if(isset($images['assessed_by'])){
+            if($images['assessed_by'] != Null){
+                $images['assessed_by'] = Storage::disk('local')->get($ipcr[0]['assessed_by']);
+            }
+        }
+        if(isset($images['final_rating_by'])){
+            if($images['final_rating_by'] != Null){
+                $images['final_rating_by'] = Storage::disk('local')->get($ipcr[0]['final_rating_by']);
+            }
+        }
         $pdf = Pdf::setOption(['dpi' => 150, 'defaultFont' => 'arial']); // Set PDF settings
         $pdf = PDF::loadView('livewire.ipcr.ipcr-pdf', ['ipcrs' => $ipcr, 'employees' => $employee, 'images' => $images]); // Pass data to the blade file
         $pdf->setPaper('A4', 'landscape'); // Set paper type and orientation

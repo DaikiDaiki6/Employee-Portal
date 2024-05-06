@@ -152,10 +152,10 @@ class ApproveLeaveRequestForm extends Component
 
         $loggedInUser = auth()->user();
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
-                ->where('employee_id', $loggedInUser->employeeId)
+                ->where('employee_id', $loggedInUser->employee_id)
                 ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
-        $targetUser = User::where('employeeId', $leaveRequest->employee_id)->first();
+        $targetUser = User::where('employee_id', $leaveRequest->employee_id)->first();
 
         $properties = [
             'auth_off_sig_a' => 'mimes:jpg,png|extensions:jpg,png',
@@ -173,7 +173,7 @@ class ApproveLeaveRequestForm extends Component
                 } else {
                     // If it's an uploaded file, store it and apply validation rules
                     if($this->$propertyName){
-                    $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Leave Request', 'Signed', $leaveRequest->id, $signedIn));
+                    $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Leave Request', 'Signed', $leaveRequest->id, $signedIn));
                     }
                     $leaveRequest->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/leaverequest/' . $propertyName, 'local') : '';
                     $this->validate([$propertyName => $validationRule]);

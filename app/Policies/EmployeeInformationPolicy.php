@@ -21,7 +21,7 @@ class EmployeeInformationPolicy
      */
     public function view(User $user, $employee): bool
     {
-        return $user->employeeId == $employee;
+        return $user->employee_id == $employee;
     }
 
     /**
@@ -29,7 +29,7 @@ class EmployeeInformationPolicy
      */
     public function create(User $user, $employee): bool
     {
-        return $user->employeeId == $employee;
+        return $user->employee_id == $employee;
     }
 
     /**

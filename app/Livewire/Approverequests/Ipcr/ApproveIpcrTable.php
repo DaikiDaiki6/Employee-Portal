@@ -46,7 +46,7 @@ class ApproveIpcrTable extends Component
 
     public function render()
     {   
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $id = Employee::Select('dean_id', 'department_id')->where('employee_id', $loggedInUser)->get();
         // dd($id[0]->dean_id);
         // dd(DeanNamesEnum::cases());
@@ -59,7 +59,7 @@ class ApproveIpcrTable extends Component
         
         return view('livewire.approverequests.ipcr.approve-ipcr-table', [
             'ipcrs' => $ipcrRecords,
-            // 'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employeeId)->paginate(10),
+            // 'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employee_id)->paginate(10),
 
         ]);
     }

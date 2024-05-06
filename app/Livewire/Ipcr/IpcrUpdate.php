@@ -169,24 +169,33 @@ class IpcrUpdate extends Component
         'start_period' => 'required|before_or_equal:end_period|after_or_equal:date_of_filling',
         'end_period' => 'required|after_or_equal:start_period',
         'ratee' => 'required|min:2|max:256',
-        'coreFunctions.*.output' => 'required|min:10|max:2048',
-        'coreFunctions.*.indicator' => 'required|min:10|max:2048',
-        'coreFunctions.*.accomp' => 'required|min:10|max:2048',
-        'coreFunctions.*.weight' => 'numeric',
-        'coreFunctions.*.remark' => 'min:10|max:2048',
-        'core_rating' => 'required|numeric|min:1|max:5',
         'supportiveFunctions.*.output' => 'required|min:10|max:2048',
         'supportiveFunctions.*.indicator' => 'required|min:10|max:2048',
         'supportiveFunctions.*.accomp' => 'required|min:10|max:2048',
-        'supportiveFunctions.*.weight' => 'numeric',
-        'supportiveFunctions.*.remark' => 'min:10|max:2048',
+        'supportiveFunctions.*.weight' => 'numeric|min:1|max:100',
+        'supportiveFunctions.*.remark' => 'min:10',
+        'supportiveFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.A' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.output' => 'required|min:10|max:2048',
+        'coreFunctions.*.indicator' => 'required|min:10|max:2048',
+        'coreFunctions.*.accomp' => 'required|min:10|max:2048',
+        'coreFunctions.*.weight' => 'numeric|min:1|max:100',
+        'coreFunctions.*.remark' => 'min:10',
+        'coreFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.A' => 'required|numeric|min:1|max:5',
+        'core_rating' => 'required|numeric|min:1|max:5',
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
-        'comments_and_reco' => 'required|min:10|max:2048', 
-        'disscused_with_date' => 'required|date',
-        'assessed_by_date' => 'required|date',
-        'final_rating' => 'required|numeric',
-        'final_rating_by_date' => 'required|date',
+        // 'comments_and_reco' => 'required|min:10|max:2048', 
+        // 'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
+        'disscused_with_date' => 'required|date|after_or_equal:start_period',
+        // 'assessed_by_date' => 'required|date',
+        // 'final_rating' => 'required|numeric',
+        // 'final_rating_by_date' => 'required|date',
     ];
 
     public function submit(){
@@ -197,7 +206,7 @@ class IpcrUpdate extends Component
 
         // dd($this->assessed_by);
         $ipcr = $this->editIpcr($this->index);
-        $ipcr->employee_id = $loggedInUser->employeeId;
+        $ipcr->employee_id = $loggedInUser->employee_id;
         $ipcr->ipcr_type = 'Target';
         $ipcr->date_of_filling = $this->date_of_filling;
         $ipcr->position = $this->employeeRecord[0]->department_name;
@@ -210,8 +219,6 @@ class IpcrUpdate extends Component
         $ipcr->comments_and_reco = $this->comments_and_reco;
         
         $properties = [
-            'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
             'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
         ];
         // Iterate over the properties
@@ -223,7 +230,7 @@ class IpcrUpdate extends Component
             } else {
                 // If it's an uploaded file, store it and apply validation rules
                 $ipcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/ipcr' . $propertyName, 'local') : '';
-                $this->validate([$propertyName => $validationRule]);
+                $this->validate([$propertyName => 'mimes:jpg,png|extensions:jpg,png']);
             }
         }
 
@@ -275,7 +282,7 @@ class IpcrUpdate extends Component
     {
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('*')
-                    ->where('employee_id', $loggedInUser->employeeId)
+                    ->where('employee_id', $loggedInUser->employee_id)
                     ->get();
         
         return view('livewire.ipcr.ipcr-update')->extends('layouts.app');

@@ -92,7 +92,7 @@
                             </a> --}}
                        </div>
                        <div class="flow-root">
-                            <ul role="list" class="divide-y divide-blue-500 dark:divide-gray-700">
+                            <ul role="list" class="divide-y divide-gray-900 dark:divide-gray-700">
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">

@@ -12,7 +12,7 @@ class ActivitiesGallery extends Component
 
     public function filterListener(){
         $loggedInUser = auth()->user();
-        $departmentName = Employee::where('employee_id', $loggedInUser->employeeId)
+        $departmentName = Employee::where('employee_id', $loggedInUser->employee_id)
                                 ->value('department_name');
         if($this->filter == "Announcement"){
                 return Activities::whereJsonContains('visible_to_list', $departmentName)

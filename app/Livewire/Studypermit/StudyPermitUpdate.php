@@ -61,7 +61,7 @@ class StudyPermitUpdate extends Component
         $this->index = $index;
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
         $this->middle_name = $this->employeeRecord[0]->middle_name;
@@ -146,10 +146,10 @@ class StudyPermitUpdate extends Component
         $studypermitdata = Studypermit::findOrFail($this->index);
 
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                ->where('employee_id', $loggedInUser->employeeId)
+                ->where('employee_id', $loggedInUser->employee_id)
                 ->get();   
 
-        $studypermitdata->employee_id = $loggedInUser->employeeId;
+        $studypermitdata->employee_id = $loggedInUser->employee_id;
         $studypermitdata->application_date = $this->application_date;
         $studypermitdata->start_period_cover = $this->start_period_cover;
         $studypermitdata->end_period_cover = $this->end_period_cover;

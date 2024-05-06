@@ -146,6 +146,13 @@ class IpcrForm extends Component
                         $index += 1;
                     }
                     $this->core_rating = $sum / ($index * 4);
+                    // if($this->ipcr_type == 'rated'){
+                    //     $weight =  $core_function['weight'] ?? 100;
+                    //     $this->core_rating = ($sum / ($index * 4)) / $weight;
+                    // }
+                    // else{
+                    //     $this->core_rating = $sum / ($index * 4);
+                    // }
                     // $this->reset('core_rating');
                     // dd($this->core_rating);
                 }
@@ -165,6 +172,15 @@ class IpcrForm extends Component
                         $index += 1;
                     }
                     $this->supp_admin_rating = $sum / ($index * 4);
+
+                    // if($this->ipcr_type == 'rated'){
+                    //     $weight =  $supp_function['weight'] ?? 100;
+                    //     $this->supp_admin_rating = ($sum / ($index * 4))  ;
+                    // }
+                    // else{
+                    //     $this->supp_admin_rating = $sum / ($index * 4);
+                    // }
+                    // $this->supp_admin_rating = $sum / ($index * 4);
                 }
             }
         }
@@ -181,27 +197,27 @@ class IpcrForm extends Component
         'supportiveFunctions.*.output' => 'required|min:10|max:2048',
         'supportiveFunctions.*.indicator' => 'required|min:10|max:2048',
         'supportiveFunctions.*.accomp' => 'required|min:10|max:2048',
-        // 'supportiveFunctions.*.weight' => 'numeric',
-        // 'supportiveFunctions.*.remark' => 'min:10',
-        'supportiveFunctions.*.Q' => 'required|numeric',
-        'supportiveFunctions.*.E' => 'required|numeric',
-        'supportiveFunctions.*.T' => 'required|numeric',
-        'supportiveFunctions.*.A' => 'required|numeric',
+        'supportiveFunctions.*.weight' => 'numeric|min:1|max:100',
+        'supportiveFunctions.*.remark' => 'min:10',
+        'supportiveFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.A' => 'required|numeric|min:1|max:5',
         'coreFunctions.*.output' => 'required|min:10|max:2048',
         'coreFunctions.*.indicator' => 'required|min:10|max:2048',
         'coreFunctions.*.accomp' => 'required|min:10|max:2048',
-        // 'coreFunctions.*.weight' => 'numeric',
-        // 'coreFunctions.*.remark' => 'min:10',
-        'coreFunctions.*.Q' => 'required|numeric',
-        'coreFunctions.*.E' => 'required|numeric',
-        'coreFunctions.*.T' => 'required|numeric',
-        'coreFunctions.*.A' => 'required|numeric',
+        'coreFunctions.*.weight' => 'numeric|min:1|max:100',
+        'coreFunctions.*.remark' => 'min:10',
+        'coreFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.A' => 'required|numeric|min:1|max:5',
         'core_rating' => 'required|numeric|min:1|max:5',
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
         // 'comments_and_reco' => 'required|min:10|max:2048', 
-        // 'discussed_with' => 'required|mimes:jpg,png|extensions:jpg,png',
-        // 'disscused_with_date' => 'required|date',
+        'discussed_with' => 'required|mimes:jpg,png|extensions:jpg,png',
+        'disscused_with_date' => 'required|date|after_or_equal:start_period',
         // 'assessed_by' => 'required|mimes:jpg,png|extensions:jpg,png',
         // 'assessed_by_date' => 'required|date',
         // 'final_rating' => 'required|numeric',
@@ -260,13 +276,13 @@ class IpcrForm extends Component
 
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('department_head', 'department_name')
-            ->where('employee_id', $loggedInUser->employeeId)
+            ->where('employee_id', $loggedInUser->employee_id)
             ->get();
 
 
         $loggedInUser = auth()->user();
         $ipcr = new Ipcr();
-        $ipcr->employee_id = $loggedInUser->employeeId;
+        $ipcr->employee_id = $loggedInUser->employee_id;
         $ipcr->ipcr_type = $this->ipcr_type;
         $ipcr->date_of_filling = $this->date_of_filling;
         $ipcr->position = $this->employeeRecord[0]->department_name;
@@ -279,8 +295,8 @@ class IpcrForm extends Component
 
         $ipcr->final_rating = $this->final_average_rating;
         // $ipcr->comments_and_reco = $this->comments_and_reco;
-        // $ipcr->discussed_with = $this->discussed_with->store('photos', 'local');
-        // $ipcr->disscused_with_date = $this->disscused_with_date;
+        $ipcr->discussed_with = $this->discussed_with->store('photos/ipcr/discussed_with', 'local');
+        $ipcr->disscused_with_date = $this->disscused_with_date;
         // $ipcr->assessed_by = $this->assessed_by->store('photos', 'local');
         // $ipcr->assessed_by_date = $this->assessed_by_date;
         // $ipcr->final_rating = $this->final_rating;
@@ -365,10 +381,10 @@ class IpcrForm extends Component
     {
         $loggedInUser = auth()->user();
         // $this->employeeRecord = Employee::select('*')
-        //             ->where('employee_id', $loggedInUser->employeeId)
+        //             ->where('employee_id', $loggedInUser->employee_id)
         //             ->get();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name')
-                        ->where('employee_id', $loggedInUser->employeeId)
+                        ->where('employee_id', $loggedInUser->employee_id)
                         ->get();
         
         return view('livewire.ipcr.ipcr-form')->extends('layouts.app');

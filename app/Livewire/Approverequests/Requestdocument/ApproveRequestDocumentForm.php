@@ -50,7 +50,7 @@ class ApproveRequestDocumentForm extends Component
         $this->index = $index;
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
         $this->middle_name = $this->employeeRecord[0]->middle_name;
@@ -121,11 +121,11 @@ class ApproveRequestDocumentForm extends Component
         $documentrequestdata = Documentrequest::findOrFail($this->index);
 
         $employee_record = Employee::select('employee_type', )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
       
 
-        $documentrequestdata->employee_id = $loggedInUser->employeeId;
+        $documentrequestdata->employee_id = $loggedInUser->employee_id;
         $documentrequestdata->date_of_filling = $this->date_of_filling;
         $documentrequestdata->ref_number = $this->ref_number;
         $documentrequestdata->employment_status = $employee_record[0]->employee_type;
@@ -136,11 +136,11 @@ class ApproveRequestDocumentForm extends Component
         $documentrequestdata->purpose = $this->purpose;
 
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
-        ->where('employee_id', $loggedInUser->employeeId)
+        ->where('employee_id', $loggedInUser->employee_id)
         ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
 
-        $targetUser = User::where('employeeId', $documentrequestdata->employee_id)->first();
+        $targetUser = User::where('employee_id', $documentrequestdata->employee_id)->first();
 
         $properties = [
             'signature_requesting_party' => 'mimes:jpg,png|extensions:jpg,png',
@@ -161,7 +161,7 @@ class ApproveRequestDocumentForm extends Component
             } else {
                 // If it's an uploaded file, store it and apply validation rules
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Request Document', 'Signed', $documentrequestdata->id, $signedIn));
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Request Document', 'Signed', $documentrequestdata->id, $signedIn));
                 }
                 $documentrequestdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/documentrequest/' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);

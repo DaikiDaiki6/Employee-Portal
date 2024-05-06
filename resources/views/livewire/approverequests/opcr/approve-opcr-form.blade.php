@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('opcrtable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">OPCR</a>
+            <a href="{{route('ApproveOpcrTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">OPCR</a>
             </div>
         </li>
         <li aria-current="page">
@@ -513,297 +513,21 @@
                         
                         </div>
                         <div class="block sm:w-1/2 md:w-1/3 min-[900px]:w-1/4 min-[1150px]:w-1/5 mt-4 col-span-1 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                            @error('supp_admin_rating') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             <label for="supp_admin_rating"
                                 class="block mb-2 text-sm font-medium  text-gray-900 dark:text-white">Support / Administrative Rating<span class="text-red-600">*</span></label>
                             <input type="number" id="supp_admin_rating" wire:model="supp_admin_rating" placeholder="{{$supp_admin_rating}}"
                                 class="bg-gray-50 font-bold border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 disabled />
+                            @error('supp_admin_rating')
+                                <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('supp_admin_rating').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supp_admin_rating').focus();" >
+                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                </div> 
+                            @enderror
                         </div>
                     </div>
 
 
-
-                    {{-- Previous Supp Function --}}
-                    {{-- <div class="block flex-wrap w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <div class="flex-none pb-4">
-                            <h2><b>Support/Administrative Functions-20%</b></h2>
-                        </div>
-                     
-                            @foreach ($supportiveFunctions as $index => $suuportiveFunction)   
-                                <div class="block w-full col-span-3 p-6 pb-8 mb-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                        <li class="">
-                                            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                            type="button" name="add" wire:click.prevent="removeCoreFunction({{$index}})" wire:confirm="Are you sure you want to delete this function?"
-                                            class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-red-500">
-                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                </svg>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                <div class="grid gap-4 sm:grid-cols-5 sm:gap-6 border border-gray-200 p-4">
-                                    <div class="grid col-span-3 gap-4 sm:grid-cols-3 sm:gap-6">
-                                        @if($ipcr_type == "target")
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Output<span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" name="supportiveFunctions[{{$index}}][output]" wire:model="supportiveFunctions.{{$index}}.output"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                </textarea>
-                                            </div>
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Success Indicators<span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" name="supportiveFunctions[{{$index}}][indicator]" wire:model="supportiveFunctions.{{$index}}.indicator"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"">
-                                                </textarea>
-                                            </div>
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Accomplishments<span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" name="supportiveFunctions[{{$index}}][accomp]" wire:model="supportiveFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                </textarea>
-                                            </div>
-                                        @else
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Output<span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="6" name="supportiveFunctions[{{$index}}][output]" wire:model="supportiveFunctions.{{$index}}.output"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                </textarea>
-                                            </div>
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Success Indicators<span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="6" name="supportiveFunctions[{{$index}}][indicator]" wire:model="supportiveFunctions.{{$index}}.indicator"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"">
-                                                </textarea>
-                                            </div>
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Accomplishments<span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="6" name="supportiveFunctions[{{$index}}][accomp]" wire:model="supportiveFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                </textarea>
-                                            </div>
-                                            <div class="col-span-3">
-                                                <div class="grid  gap-4 sm:grid-cols-2 sm:gap-6">
-                                                    <div>
-                                                        <label for="message"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight <span class="text-red-600">*</span></label>
-                                                        <input type="text" name="supportiveFunctions[{{$index}}][weight]" wire:model="supportiveFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    </div>
-                                                    <div>
-                                                        <label for="message"
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
-                                                        <input type="text" name="supportiveFunctions[{{$index}}][remark]" wire:model="supportiveFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-
-                                      
-                                    </div>
-                                    <div class="flex col-span-2">
-                                        <div class="block w-full p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                            <div class="flex-wrap">
-                                                <div class="w-full">
-                                                    <h2><b>SMTP Rating</b></h2>
-                                                </div>
-                                                <div class="flex">
-                                                    <div class="w-full pr-4 pb-10 pt-5">
-                                                        <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q<span class="text-red-600">*</span></label>
-                                                        <select id="smtpQ" name="supportiveFunctions[{{$index}}][Q]" wire:model="supportiveFunctions.{{$index}}.Q"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                            <option selected>Pick</option>
-                                                            <option value="5">5</option>
-                                                            <option value="4">4</option>
-                                                            <option value="3">3</option>
-                                                            <option value="2">2</option>
-                                                            <option value="1">1</option>
-                                                        </select>
-                                                    </div>
-                
-                                                    <div class="w-full pr-4 pb-10 pt-5 ">
-                                                        <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E<span class="text-red-600">*</span></label>
-                                                        <select id="smtpE" name="supportiveFunctions[{{$index}}][E]" wire:model="supportiveFunctions.{{$index}}.E"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                            <option selected>Pick</option>
-                                                            <option value="5">5</option>
-                                                            <option value="4">4</option>
-                                                            <option value="3">3</option>
-                                                            <option value="2">2</option>
-                                                            <option value="1">1</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-            
-                                                <div class="flex">
-                                                    <div class="w-full pr-4">
-                                                        <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                        <select id="smtpT" name="supportiveFunctions[{{$index}}][T]" wire:model="supportiveFunctions.{{$index}}.T"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                            <option selected>Pick</option>
-                                                            <option value="5">5</option>
-                                                            <option value="4">4</option>
-                                                            <option value="3">3</option>
-                                                            <option value="2">2</option>
-                                                            <option value="1">1</option>
-                                                        </select>
-                                                    </div>
-                
-                                                    <div class="w-full">
-                                                        <label
-                                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
-                                                        <select id="smtpA" name="supportiveFunctions[{{$index}}][A]" wire:model="supportiveFunctions.{{$index}}.A"
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                            <option selected>Pick</option>
-                                                            <option value="5">5</option>
-                                                            <option value="4">4</option>
-                                                            <option value="3">3</option>
-                                                            <option value="2">2</option>
-                                                            <option value="1">1</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                               
-                                            </div>
-                                          
-                                        </div>
-                                        <div class="w-1/3 mt-24">
-                                            <button name="add" wire:click.prevent="removeSupportiveFunction({{$index}})" wire:confirm="Are you sure you want to delete this function?" class="inline-flex justify-center ml-8 w-1/2 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-red-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                                                <span class="flex items-center justify-center">Remove</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                   
-                    @endforeach
-                    <div class="flex justify-center">
-                        <button type="button" name="add" wire:click.prevent="addSupportiveFunction" class="inline-flex justify-center ml-8 w-1/3 px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                            Add Support/Administrative Function</button>
-                    </div>
-                    <div class="block w-1/5 col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <label for="supprating"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Support/Administrative Rating<span class="text-red-600">*</span></label>
-                        <input type="number" id="supp_admin_rating" name="supp_admin_rating" wire:model="supp_admin_rating"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            required />
-                    </div>
-                    </div> --}}
-                    {{-- // Previous Supp FUnction --}}
-                    {{-- <div
-                        class="block flex-wrap w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <div class="flex-none pb-4">
-                            <h2><b>Support / Administrative Functions-20%</b></h2>
-                        </div>
-                        <div
-                            class="block w-full col-span-3 p-6 pb-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                            <div class="grid gap-4 sm:grid-cols-3 sm:gap-6 flex">
-                                <div>
-                                    <label for="message"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Output</label>
-                                    <textarea id="message" rows="4"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Write your thoughts here..."></textarea>
-                                </div>
-                                <div>
-                                    <label for="message"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Success
-                                        Indicators</label>
-                                    <textarea id="message" rows="4"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Write your thoughts here..."></textarea>
-                                </div>
-                                <div>
-                                    <label for="message"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Accomplishment\s</label>
-                                    <textarea id="message" rows="4"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="Write your thoughts here..."></textarea>
-                                </div>
-    
-                            </div>
-    
-                        </div>
-                        <br>
-                        <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                            <div class="grid gap-4 sm:grid-cols-6 sm:gap-6 flex">
-                                <div
-                                    class="block w-full col-span-2 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <label for="corerating"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Core
-                                        Rating</label>
-                                    <input type="corerating" id="core_rating"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        required />
-                                </div>
-                                <div
-                                    class="block w-full col-span-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <div class="flex">
-                                        <div class="w-full pr-4">
-                                            <label
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q</label>
-                                            <select id="smtpQ"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <option selected>Pick</option>
-                                                <option value="5">5</option>
-                                                <option value="4">4</option>
-                                                <option value="3">3</option>
-                                                <option value="2">2</option>
-                                                <option value="1">1</option>
-                                            </select>
-                                        </div>
-    
-                                        <div class="w-full pr-4">
-                                            <label
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E</label>
-                                            <select id="smtpE"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <option selected>Pick</option>
-                                                <option value="5">5</option>
-                                                <option value="4">4</option>
-                                                <option value="3">3</option>
-                                                <option value="2">2</option>
-                                                <option value="1">1</option>
-                                            </select>
-                                        </div>
-    
-                                        <div class="w-full pr-4">
-                                            <label
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T</label>
-                                            <select id="smtpT"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <option selected>Pick</option>
-                                                <option value="5">5</option>
-                                                <option value="4">4</option>
-                                                <option value="3">3</option>
-                                                <option value="2">2</option>
-                                                <option value="1">1</option>
-                                            </select>
-                                        </div>
-    
-                                        <div class="w-full">
-                                            <label
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A</label>
-                                            <select id="smtpA"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                <option selected>Pick</option>
-                                                <option value="5">5</option>
-                                                <option value="4">4</option>
-                                                <option value="3">3</option>
-                                                <option value="2">2</option>
-                                                <option value="1">1</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                        </div>
-    
-                    </div> --}}
     
                     <br>
                     <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
@@ -813,6 +537,12 @@
                                 <input type="number" id="final_average_rating" name="final_average_rating" wire:model="final_average_rating" placeholder="{{$final_average_rating}}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     disabled />
+                                @error('final_average_rating')
+                                    <div class="transition transform alert alert-danger"
+                                            x-init="$el.closest('form').scrollIntoView()">
+                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                    </div> 
+                                @enderror
                             </div>
                             <div>
                                 <div>
@@ -821,84 +551,25 @@
                                     <textarea id="message" rows="4" name="comments_and_reco" wire:model="comments_and_reco"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Write your thoughts here..."></textarea>
+                                    @error('comments_and_reco')
+                                    <div class="transition transform alert alert-danger"
+                                        x-init="$el.closest('form').scrollIntoView()">
+                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                    </div> 
+                                    @enderror
                                 </div>
                             </div>
     
                         </div>
                     </div>
     
-                    <br>
-                    {{-- <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <div class="grid gap-4 md:grid-cols-1 lg:grid-cols-2 sm:gap-6 ">
-                            <div>
-                                <div class="justify-left">
-                                    <label for="discussed_with" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discussed with<span class="text-red-600">*</span></label> 
-                                </div>
-                                <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8">
-                                    <div class="flex items-center justify-center w-full ">
-                                        <label for="dropzone-file1" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                                </svg>
-                                                @if($discussed_with)
-                                                <p class="mb-2 sm:text-xs  text-center text-green-500 dark:text-gray-400"><span class="font-semibold">File Uploaded</span></p>
-                                                @else
-                                                <p class="mb-2 sm:text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold text-xs">Click to upload</span></p>
-                                                <p class="sm:text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG  (MAX. 800x400px)</p>
-                                                @endif
-                                            </div>
-                                            <input id="dropzone-file1" type="file" class="hidden" wire:model="discussed_with" />
-                                        </label>
-                                    </div> 
-                                    <div class="w-full pr-4">
-                                        <label for="brand"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discussed Date<span class="text-red-600">*</span></label>
-                                        <input type="date" name="disscused_with_date" id="disscused_with_date" value="{{$employeeRecordDate}}" wire:model="disscused_with_date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Last name" required="">
-                                    </div>
-                                </div>
-    
-                            </div>
-                            <div class="block w-full p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                <div class="justify-left">
-                                    <label for="assessed_by" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed by<span class="text-red-600">*</span></label> 
-                                </div>
-                                
-                               <div class="flex">
-                                <div class="flex items-center justify-center w-full pr-8">
-                                    <label for="dropzone-file2" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                            </svg>
-                                            @if($assessed_by)
-                                            <p class="mb-2 sm:text-xs text-center text-green-500 dark:text-gray-400"><span class="font-semibold">File Uploaded</span></p>
-                                            @else
-                                            <p class="mb-2 sm:text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                            <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG  (MAX. 800x400px)</p>
-                                            @endif
-                                        </div>
-                                        <input id="dropzone-file2" type="file" class="hidden" wire:model="assessed_by" />
-                                    </label>
-                                </div> 
-                                <div class="w-full pr-4">
-                                    <label for="assessed_date"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed Date<span class="text-red-600">*</span></label>
-                                    <input type="date" name="assessed_by_date" id="assessed_by_date" value="{{$employeeRecordDate}}" wire:model="assessed_by_date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Last name" required="">
-                                </div>
-    
-                               </div>
-                            </div>
-    
-                        </div>
-                    </div> --}}
-
+                  
+<br>
                     <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="grid gap-4 grid-cols-1 sm:gap-6 ">
+                            <div class="flex-none ">
+                                <h2><b>Discussed With:</b></h2>
+                            </div>
                             <div class="grid grid-cols-1 min-[800px]:grid-cols-2 gap-8 w-full p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div >
                                     <div class="justify-left">
@@ -945,137 +616,189 @@
                                             placeholder="Last name" required="">
                                     @error('disscused_with_date')
                                             <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('label').scrollIntoView()">
+                                                    x-init="$el.closest('form').scrollIntoView()">
                                                 <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
                                             </div> 
                                     @enderror
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 min-[800px]:grid-cols-2 gap-8 w-full p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                <div >
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="grid gap-4 grid-cols-1 sm:gap-6 w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                        <div class="grid grid-cols-1 col-span-3  p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                            <div class="flex-none pb-4">
+                                <h2><b>Assessed By:</b></h2>
+                            </div>
+                            <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                <div class="grid grid-cols-2">
+                                 <div class="w-full grid grid-cols-1">
+                                     <label for="assessed_by_verdict"
+                                         class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
+                                         <div class="w-full pl-4 items-start">
+                                         <input type="radio" name="status" id="assessed_by_verdict" wire:model.live="assessed_by_verdict" value="1">
+                                         <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                         <br>
+                                         <input type="radio" id="assessed_by_verdict" name="status" wire:model.live="assessed_by_verdict" value="0">
+                                         <label for="html" class="text-sm font-semibold">Declined</label><br>
+                                         @error('assessed_by_verdict')
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('assessed_by_verdict').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by_verdict').focus();" >
+                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
+                                            </div> 
+                                         @enderror   
+                                         </div>
+                                 </div>
+                                 <div class="w-full pr-4">
+                                     <label for="assessed_date"
+                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed Date<span class="text-red-600">*</span></label>
+                                     <input type="date" name="assessed_by_date" id="assessed_by_date" value="{{$employeeRecordDate}}" wire:model="assessed_by_date"
+                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                         placeholder="Last name" >
+                                     @error('assessed_by_date')
+                                         <div class="transition transform alert alert-danger"
+                                                 x-init="$el.closest('form').scrollIntoView()">
+                                             <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                         </div> 
+                                     @enderror
+                                 </div>
+                                </div>
+ 
+                                 <div>
+                                     <label for="assessed_by"
+                                     class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Assessed By <span class="text-red-600">*</span></label>
+                                     <div class="grid grid-cols-1 items-center justify-center w-full">
+                                         @if($assessed_by)
+                                         <label for="assessed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                             @if(is_string($assessed_by) == True)
+                                                 @php
+                                                     $assessed_by = $this->getAssessedBy();
+                                                 @endphp
+                                                 <img src="data:image/gif;base64,{{ base64_encode($assessed_by) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                             @else
+                                                 <img src="{{ $assessed_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                             @endif
+                                             <input id="assessed_by" type="file" class="hidden" wire:model.live="assessed_by">
+                                         </label>
+                                         @else
+                                             <label for="assessed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                     <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                     </svg>
+                                                     <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                     <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                                 </div>
+                                                 <input id="assessed_by" type="file" class="hidden" wire:model.blur="assessed_by">
+                                             </label>
+                                         @endif
+                                         @error('assessed_by')
+                                                <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('assessed_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by').focus();" >
+                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                </div> 
+                                         @enderror
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                        <div class="grid grid-cols-1 p-6 w-full col-span-3  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                            <div class="flex-none pb-4">
+                                <h2><b>Final Rating By:</b></h2>
+                            </div>
+                            <div class="grid gap-4 sm:grid-cols-1 min-[738px]:grid-cols-2 sm:gap-6  p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                <div class="grid grid-cols-2">
+                                    <div class="w-full grid grid-cols-1">
+                                        <label for="final_rating_by_verdict"
+                                            class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
+                                            <div class="w-full pl-4 items-start">
+                                            <input type="radio" name="final_rating_by_verdict" id="final_rating_by_verdict" wire:model.live="final_rating_by_verdict" value="1">
+                                            <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                            <br>
+                                            <input type="radio" id="final_rating_by_verdict" name="final_rating_by_verdict" wire:model.live="final_rating_by_verdict" value="0">
+                                            <label for="html" class="text-sm font-semibold">Declined</label><br>
+                                            @error('final_rating_by_verdict')
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('final_rating_by_verdict').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_verdict').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                </div> 
+                                            @enderror   
+                                            </div>
+                                    </div>
+                                <div class="grid grid-cols-1 w-full gap-4 pr-4">
                                     <div>
-                                        <div class="justify-left">
-                                            <label for="assessed_by" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed by<span class="text-red-600">*</span></label> 
-                                        </div>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
-                                            @if($assessed_by)
-                                            <label for="assessed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                @if(is_string($assessed_by) == True)
-                                                    @php
-                                                        $assessed_by = $this->getAssessedBy();
-                                                    @endphp
-                                                    <img src="data:image/gif;base64,{{ base64_encode($assessed_by) }}" alt="Image Description" class="w-full h-full object-contain"> 
-                                                @else
-                                                    <img src="{{ $assessed_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
-                                                @endif
-                                                <input id="assessed_by" type="file" class="hidden" wire:model.live="assessed_by">
-                                            </label>
-                                            @else
-                                                <label for="assessed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                        <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                                        </svg>
-                                                        <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                                        <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
-                                                    </div>
-                                                    <input id="assessed_by" type="file" class="hidden" wire:model.blur="assessed_by">
-                                                </label>
-                                            @endif
-                                            @error('assessed_by')
+                                        <label for="final_rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
+                                        <input type="number" id="final_rating" name="final_rating" value={{$final_rating}}
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            placeholder="{{$final_rating}}" disabled/>
+                                        @error('final_rating')
                                             <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('label').scrollIntoView()">
+                                                    x-init="$el.closest('form').scrollIntoView()">
                                                 <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
                                             </div> 
                                         @enderror
-                                        </div>
+                                    </div>
+                                    <div class="w-full ">
+                                        <label for="brand"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
+                                        <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="Last name">
+                                        @error('final_rating_by_date')
+                                            <div class="transition transform alert alert-danger"
+                                                    x-init="$el.closest('form').scrollIntoView()">
+                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                            </div> 
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="w-full pr-4">
-                                    <label for="assessed_date"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed Date<span class="text-red-600">*</span></label>
-                                    <input type="date" name="assessed_by_date" id="assessed_by_date" value="{{$employeeRecordDate}}" wire:model="assessed_by_date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Last name" required="">
-                                    @error('assessed_by_date')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('label').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                        </div> 
-                                    @enderror
                                 </div>
+                                <div>
+                                    <label for="final_rating_by"
+                                            class="block text-sm font-medium text-gray-900 dark:text-white">Final Rating By<span class="text-red-600">*</span></label>
+                                    <div class="grid grid-cols-1 items-center justify-center w-full">
+                                        @if($final_rating_by)
+                                        <label for="final_rating_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            @if(is_string($final_rating_by) == True)
+                                                @php
+                                                    $final_rating_by = $this->getFinalRatingBy();
+                                                    
+                                                @endphp
+                                                <img src="data:image/gif;base64,{{ base64_encode($final_rating_by) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                            @else
+                                                <img src="{{ $final_rating_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                            @endif
+                                            <input id="final_rating_by" type="file" class="hidden" wire:model.live="final_rating_by">
+                                        </label>
+                                        @else
+                                            <label for="final_rating_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                    <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                    </svg>
+                                                    <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                    <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                                </div>
+                                                <input id="final_rating_by" type="file" class="hidden" wire:model.blur="final_rating_by">
+                                            </label>
+                                        @endif
+                                        @error('final_rating_by')
+                                            <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('final_rating_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by').focus();" >
+                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                </div> 
+                                        @enderror
+                                    </div>
+                                </div>
+
                             </div>
+                            
                         </div>
-                    </div>
+                </div>
                     
                     <br>
-                    <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <div class="grid gap-4 sm:grid-cols-1 lg:grid-cols-3 sm:gap-6 ">
-                            <div>
-                                <label for="corerating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
-                                <input type="number" id="final_rating" name="final_rating" wire:model="final_rating"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="{{$final_rating}}" disabled/>
-                                @error('final_rating')
-                                    <div class="transition transform alert alert-danger"
-                                            x-init="$el.closest('label').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                    </div> 
-                                @enderror
-                            </div>
-                            <div>
-                                <div class="justify-left">
-                                    <label for="final_rating_by" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by<span class="text-red-600">*</span></label> 
-                                </div>
-                                <div class="grid grid-cols-1 items-center justify-center w-full">
-                                    @if($final_rating_by)
-                                    <label for="final_rating_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                        @if(is_string($final_rating_by) == True)
-                                            @php
-                                                $final_rating_by = $this->getFinalRatingBy();
-                                            @endphp
-                                            <img src="data:image/gif;base64,{{ base64_encode($final_rating_by) }}" alt="Image Description" class="w-full h-full object-contain"> 
-                                        @else
-                                            <img src="{{ $final_rating_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
-                                        @endif
-                                        <input id="final_rating_by" type="file" class="hidden" wire:model.live="final_rating_by">
-                                    </label>
-                                    @else
-                                        <label for="final_rating_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                                </svg>
-                                                <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                                <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
-                                            </div>
-                                            <input id="final_rating_by" type="file" class="hidden" wire:model.blur="final_rating_by">
-                                        </label>
-                                    @endif
-                                    @error('final_rating_by')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('label').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                        </div>   
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="w-full pr-4">
-                                <label for="brand"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
-                                <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Last name" required="">
-                                @error('final_rating_by_date')
-                                    <div class="transition transform alert alert-danger"
-                                            x-init="$el.closest('label').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                    </div> 
-                                 @enderror
-                            </div>
-                        </div>
-                        
-                    </div>
+                   
                   
                     <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
                             Submit IPCR

@@ -31,36 +31,38 @@
 <body>
    
     <!-- Start of PDF -->
-    @foreach($ipcrs as $ipcr)
+    @foreach($opcrs as $ipcr)
     @php
-        $ipcrData = json_decode($ipcr, true);
+        $opcrData = json_decode($ipcr, true);
     @endphp
     @endforeach
-    <p style="text-align: center;"><b> Individual Performance Commitment and Review Form (IPCR)</b></p>    
-    <p>I, <u><b>{{$employees->first_name}} {{$employees->middle_name}} {{$employees->last_name}}</u></b>, <b><u>{{$ipcrData['position']}}</u></b> of the <b><u>{{$employees->department_name}}</u></b> commit to deliver and agree to be rated on the attainment of the following targets in accordance with the indicated measures for the period of <b><u>{{$ipcrData['start_period']}}</u></b> to <b><u>{{$ipcrData['end_period']}}  </u></b></p>
-    
-    @if ($ipcrData['ipcr_type'] === "target")
-        
+    <p style="text-align: center;"><b> Office Performance Commitment and Review (OPCR)</b></p>    
+    <p> The <b><u>{{$opcrData['department_name']}}</u></b> commits to deliver and agree to be rated on the attainment of the following targets in accordance with the indicated measures for the period of <b><u>{{$opcrData['start_period']}}</u></b> to <b><u>{{$opcrData['end_period']}}  </u></b></p>
     <div style="display: flex; align-items: flex-start;">
         <!-- Ratings -->
         <div style="display: inline-block; border: 1px solid #000; padding: 8px;">
             <b>5 - Outstanding 4 - Very Satisfactory 3 - Satisfactory 2 - Unsatisfactory 1 - Poor</b>
         </div>
-        <div style="display: inline-block; margin-left: auto; margin-top: 10px;">&nbsp; &nbsp;
+        <div style="display: inline-block; margin-left: auto; margin-top: 10px;">&nbsp; &nbsp; &nbsp; &nbsp;
         </div>
+        <br>
+
         <!-- RATEE and DATE fields -->
         <div style="display: inline-block; margin-left: auto; margin-top: 10px;">
             <div style="display: inline-block;">
                 <div style="margin-bottom: 2px; text-align: center;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
-                <p style="margin: 0; padding: 0;">RATEE: ___<u>{{$ipcrData['ratee']}}</u>___</p>
+                <p style="margin: 0; padding: 0;">Dean: ___<u>{{$opcrData['ratee']}}</u>___</p>
             </div>
             <div style="display: inline-block; margin-left: 20px;">
                 <div style="margin-bottom: 2px; text-align: center;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
-                <p style="margin: 0; padding: 0;">DATE: ___<u>{{$ipcrData['date_of_filling']}}</u>___</p>
+                <p style="margin: 0; padding: 0;">Vice President For Academic Affairs: ___<u>{{$opcrData['date_of_filling']}}</u>___</p>
             </div>
         </div>
-        
     </div>
+
+    @if ($opcrData['opcr_type'] === "target")
+        
+    
     <br>
 
     <div class="container">
@@ -71,18 +73,19 @@
                     <th style="width: 26%; text-align: center;">Output</th>
                     <th style="width: 26%; text-align: center;">Success Indicators</th>
                     <th style="width: 28%; text-align: center;">Actual Accomplishments</th>
-                    <th colspan="7" style="width: 20%; text-align: center; border-bottom: 1px solid black; position: relative;">SMTP Rating System</th>
-              
+                    <th style="width: 10%; text-align: center; border-bottom: 1px solid black; position: relative;">Budget</th>
+                    <th style="width: 15%; text-align: center; border-bottom: 1px solid black; position: relative;">Persons <br> Concerned</th>
+                    <th colspan="4" style="width: 15%; text-align: center; border-bottom: 1px solid black; position: relative;">SMTP Rating System</th>
                 </tr>
             </thead>
             
             <tbody>
                 <tr>
-                    <td colspan="10"><b>A. Core Functions - 80%</b></td>
+                    <td colspan="9"><b>A. Core Functions - 80%</b></td>
                 </tr>  
                 @php
-                    $coreFunctions = json_decode($ipcrData['core_functions']);
-                    $suppFunctions = json_decode($ipcrData['supp_admin_functions']);
+                    $coreFunctions = json_decode($opcrData['core_functions']);
+                    $suppFunctions = json_decode($opcrData['supp_admin_functions']);
                 @endphp
                 @foreach ($coreFunctions as  $coreFunction)
                     <!-- Core Functions -->
@@ -90,16 +93,18 @@
                         <td >{{ $coreFunction->output }}</td>
                         <td  >{{ $coreFunction->indicator }}</td>
                         <td  >{{ $coreFunction->accomp }}</td>
+                        <td  >{{ $coreFunction->budget }}</td>
+                        <td  >{{ $coreFunction->personsConcerned }}</td>
                         <td class="smtp">{{ $coreFunction->Q }}</td>
                         <td class="smtp">{{ $coreFunction->E }}</td>
                         <td class="smtp">{{ $coreFunction->T }}</td>
-                        <td class="smtp" colspan="4">{{ $coreFunction->A }}</td>
+                        <td class="smtp" >{{ $coreFunction->A }}</td>
                      
                     </tr>
                 @endforeach 
-                <tr><td colspan="10"><b>Core Function Rating: {{$ipcrData['core_rating']}}</b></td></tr>
+                <tr><td colspan="9"><b>Core Function Rating: {{$opcrData['core_rating']}}</b></td></tr>
                 <tr>
-                    <td colspan="10"><b>B. Support / Administrative Functions - 20%</b></td>
+                    <td colspan="9"><b>B. Support / Administrative Functions - 20%</b></td>
                 </tr>   
                 @foreach ($suppFunctions as $suppAdminFunction)
                   <!-- SUpport/Administrative Functions -->
@@ -107,10 +112,12 @@
                     <td >{{ $suppAdminFunction->output }}</td>
                     <td >{{ $suppAdminFunction->indicator }}</td>
                     <td>{{ $suppAdminFunction->accomp }}</td>
+                    <td  >{{ $suppAdminFunction->budget }}</td>
+                    <td  >{{ $suppAdminFunction->personsConcerned }}</td>
                     <td class="smtp">{{ $suppAdminFunction->Q }}</td>
                     <td class="smtp">{{ $suppAdminFunction->E }}</td>
                     <td class="smtp">{{ $suppAdminFunction->T }}</td>
-                    <td class="smtp" colspan="4">{{ $suppAdminFunction->A }}</td>
+                    <td class="smtp">{{ $suppAdminFunction->A }}</td>
                    
                 </tr>
                 @endforeach 
@@ -122,9 +129,9 @@
         <table>
             <thead>
                 <!--  Rating and Recommendations -->
-                <tr><td colspan="7"><b>Support / Administrative Functions Rating: </b> {{$ipcrData['core_rating']}}</td></tr>
-                <tr><td colspan="7"><b>Final Average Rating: </b> {{$ipcrData['final_average_rating']}}</td></tr>
-                <tr><td colspan="7"><b>Comments and Recommendations: </b>{{$ipcrData['comments_and_reco']}}</td></tr>   
+                <tr><td colspan="7"><b>Support / Administrative Functions Rating: </b> {{$opcrData['core_rating']}}</td></tr>
+                <tr><td colspan="7"><b>Final Average Rating: </b> {{$opcrData['final_average_rating']}}</td></tr>
+                <tr><td colspan="7"><b>Comments and Recommendations: </b>{{$opcrData['comments_and_reco']}}</td></tr>   
             </thead>
         </table>
 
@@ -147,13 +154,13 @@
                 {{-- @php
                 dd($ipc)
                 @endphp --}}
-                @foreach($ipcrs as $ipcr)
+                @foreach($opcrs as $ipcr)
                     @php
                     // dd($file);
                        
-                        $ipcrData = json_decode($ipcr, true);
+                        $opcrData = json_decode($ipcr, true);
                         // dd($ipcr);
-                        $ipcrDiscussed = $ipcrData['discussed_with'];
+                        $ipcrDiscussed = $opcrData['discussed_with'];
                         // dd($ipcrDiscussed);
                     @endphp
                   @endforeach
@@ -168,7 +175,7 @@
                     <br> __________________ <br>
                     <b>{{$employees->first_name}} {{$employees->middle_name}} {{$employees->last_name}}</b>
                     <br> <i> Employee Signature</i><br>     </td>
-                <td style="text-align: center;"> {{ $ipcrData['disscused_with_date'] }}</td>
+                <td style="text-align: center;"> {{ $opcrData['disscused_with_date'] }}</td>
                 <td style=" text-align: center;"> I certify that i discussed my assessment of the performance with the employee <br> 
                         <br>  
                         @if (isset($images['assessed_by']))
@@ -178,19 +185,19 @@
                         @endif
                         <br>  __________________ 
                         <br> Signature over Printed Name of Immediate Supervisor</td>
-                <td style="text-align: center;"> {{ $ipcrData['assessed_by_date'] }}</td>
-                <td style="text-align: center;">{{$ipcrData['final_rating']}}</td>
+                <td style="text-align: center;"> {{ $opcrData['assessed_by_date'] }}</td>
+                <td style="text-align: center;">{{$opcrData['final_rating']}}</td>
                 <td style="text-align: center;">
                     <br> 
                     @if (isset($images['final_rating_by']))
-                        <img src="data:image/gif;base64,{{ base64_encode($images['final_rating_by']) }}" alt="Image Description" width="200" height="100">
-                    @else
-                        <img src="" alt="Image Description" width="200" height="100"> 
-                    @endif 
+                    <img src="data:image/gif;base64,{{ base64_encode($images['final_rating_by']) }}" alt="Image Description" width="200" height="100">
+                @else
+                    <img src="" alt="Image Description" width="200" height="100"> 
+                @endif 
                     <br>  __________________ <br>
                     Head of Unit
                 </td>
-                <td> {{$ipcrData['final_rating_by_date']}}</td>
+                <td> {{$opcrData['final_rating_by_date']}}</td>
                 </tr>
 
 
@@ -198,7 +205,7 @@
             </tbody>
         </table>
     </div>
-    @elseif ($ipcrData['ipcr_type'] === "rated")
+    @elseif ($opcrData['opcr_type'] === "rated")
     <div class="container">
         <table>
             <thead>
@@ -207,7 +214,9 @@
                     <th style="width: 23%; text-align: center;">Output</th>
                     <th style="width: 23%; text-align: center;">Success Indicators</th>
                     <th style="width: 23%; text-align: center;">Actual Accomplishments</th>
-                    <th colspan="4" style="width: 10%; text-align: center; border-bottom: 1px solid black; position: relative;">SMTP Rating System</th>
+                    <th style="width: 10%; text-align: center; border-bottom: 1px solid black; position: relative;">Budget</th>
+                    <th style="width: 15%; text-align: center; border-bottom: 1px solid black; position: relative;">Persons <br> Concerned</th>
+                    <th colspan="4" style="width: 15%; text-align: center; border-bottom: 1px solid black; position: relative;">SMTP Rating System</th>
                     <th style="width: 7%; text-align: center;">Weight</th>
                     <th style="width: 14%; text-align: center;">Remarks</th>
                 </tr>
@@ -215,11 +224,11 @@
             
             <tbody>
                 <tr>
-                    <td colspan="9"><b>A. Core Functions - 80%</b></td>
+                    <td colspan="11"><b>A. Core Functions - 80%</b></td>
                 </tr>  
                 @php
-                    $coreFunctions = json_decode($ipcrData['core_functions']);
-                    $suppFunctions = json_decode($ipcrData['supp_admin_functions']);
+                    $coreFunctions = json_decode($opcrData['core_functions']);
+                    $suppFunctions = json_decode($opcrData['supp_admin_functions']);
                 @endphp
                 @foreach ($coreFunctions as $coreFunction)
                     <!-- Core Functions -->
@@ -227,6 +236,8 @@
                         <td >{{ $coreFunction->output ?? ' ' }}</td>
                         <td  >{{ $coreFunction->indicator ?? ' ' }}</td>
                         <td  >{{ $coreFunction->accomp ?? ' '}}</td>
+                        <td  >{{ $coreFunction->budget }}</td>
+                        <td  >{{ $coreFunction->personsConcerned }}</td>
                         <td >{{ $coreFunction->Q ?? ' '}}</td>
                         <td >{{ $coreFunction->E ?? ' '}}</td>
                         <td >{{ $coreFunction->T ?? ' '}}</td>
@@ -235,9 +246,9 @@
                         <td style="text-align: center">{{ $coreFunction->remark ?? ' ' }}</td>
                     </tr>
                 @endforeach 
-                <tr><td colspan="9"><b>Core Function Rating: {{$ipcrData['core_rating']}}</b></td></tr>
+                <tr><td colspan="11"><b>Core Function Rating: {{$opcrData['core_rating']}}</b></td></tr>
                 <tr>
-                    <td colspan="9"><b>B. Support / Administrative Functions - 20%</b></td>
+                    <td colspan="11"><b>B. Support / Administrative Functions - 20%</b></td>
                 </tr>   
                 @foreach ($suppFunctions as $suppAdminFunction)
                   <!-- SUpport/Administrative Functions -->
@@ -245,6 +256,8 @@
                     <td >{{ $suppAdminFunction->output ?? ' '}}</td>
                     <td >{{ $suppAdminFunction->indicator ?? ' ' }}</td>
                     <td >{{ $suppAdminFunction->accomp ?? ' ' }}</td>
+                    <td  >{{ $suppAdminFunction->budget }}</td>
+                    <td  >{{ $suppAdminFunction->personsConcerned }}</td>
                     <td >{{ $suppAdminFunction->Q ?? ' ' }}</td>
                     <td >{{ $suppAdminFunction->E ?? ' ' }}</td>
                     <td >{{ $suppAdminFunction->T ?? ' ' }}</td>
@@ -262,9 +275,9 @@
         <table>
             <thead>
                 <!--  Rating and Recommendations -->
-                <tr><td colspan="7"><b>Support / Administrative Functions Rating: </b> {{$ipcrData['core_rating']}}</td></tr>
-                <tr><td colspan="7"><b>Final Average Rating: </b> {{$ipcrData['final_average_rating']}}</td></tr>
-                <tr><td colspan="7"><b>Comments and Recommendations: </b>{{$ipcrData['comments_and_reco']}}</td></tr>   
+                <tr><td colspan="7"><b>Support / Administrative Functions Rating: </b> {{$opcrData['core_rating']}}</td></tr>
+                <tr><td colspan="7"><b>Final Average Rating: </b> {{$opcrData['final_average_rating']}}</td></tr>
+                <tr><td colspan="7"><b>Comments and Recommendations: </b>{{$opcrData['comments_and_reco']}}</td></tr>   
             </thead>
         </table>
 
@@ -284,9 +297,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($ipcrs as $ipcr)
+                @foreach($opcrs as $ipcr)
                     @php
-                        $ipcrData = json_decode($ipcr, true);
+                        $opcrData = json_decode($ipcr, true);
                     @endphp
                   @endforeach
                 <tr>
@@ -297,28 +310,28 @@
                     <b>{{$employees->first_name}} {{$employees->middle_name}} {{$employees->last_name}}</b>
                     <br> <i> Employee Signature</i><br>     
                 </td>
-                <td style="text-align: center;"> {{ $ipcrData['disscused_with_date'] }}</td>
+                <td style="text-align: center;"> {{ $opcrData['disscused_with_date'] }}</td>
                 <td style=" text-align: center;"> I certify that i discussed my assessment of the performance with the employee <br> 
                         <br>
                         @if (isset($images['assessed_by']))
-                            <img src="data:image/gif;base64,{{ base64_encode($images['assessed_by'])}}" alt="Image Description" width="200" height="100"> 
+                        <img src="data:image/gif;base64,{{ base64_encode($images['assessed_by'])}}" alt="Image Description" width="200" height="100"> 
                         @else
                             <img src="" alt="Image Description" width="200" height="100"> 
                         @endif
                         <br>  __________________ 
                         <br> Signature over Printed Name of Immediate Supervisor</td>
-                <td style="text-align: center;"> {{ $ipcrData['assessed_by_date'] }}</td>
-                <td style="text-align: center;">{{$ipcrData['final_rating']}}</td>
-                <td style="text-align: center;"><br>
+                <td style="text-align: center;"> {{ $opcrData['assessed_by_date'] }}</td>
+                <td style="text-align: center;">{{$opcrData['final_rating']}}</td>
+                <td style="text-align: center;"><<br> 
                     @if (isset($images['final_rating_by']))
-                        <img src="data:image/gif;base64,{{ base64_encode($images['final_rating_by']) }}" alt="Image Description" width="200" height="100">
+                    <img src="data:image/gif;base64,{{ base64_encode($images['final_rating_by']) }}" alt="Image Description" width="200" height="100">
                     @else
                         <img src="" alt="Image Description" width="200" height="100"> 
                     @endif 
                     <br>  __________________ <br>
                     Head of Unit
                    </td>
-                <td class="whitespace-nowrap"> {{$ipcrData['final_rating_by_date']}}</td>
+                <td class="whitespace-nowrap"> {{$opcrData['final_rating_by_date']}}</td>
                 </tr>
 
 

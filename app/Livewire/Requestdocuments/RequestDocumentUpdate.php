@@ -49,7 +49,7 @@ class RequestDocumentUpdate extends Component
         $this->index = $index;
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
         $this->middle_name = $this->employeeRecord[0]->middle_name;
@@ -81,11 +81,11 @@ class RequestDocumentUpdate extends Component
         $documentrequestdata = Documentrequest::findOrFail($this->index);
 
         $employee_record = Employee::select('employee_type', )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
       
 
-        $documentrequestdata->employee_id = $loggedInUser->employeeId;
+        $documentrequestdata->employee_id = $loggedInUser->employee_id;
         $documentrequestdata->date_of_filling = $this->date_of_filling;
         $documentrequestdata->ref_number = $this->ref_number;
         $documentrequestdata->employment_status = $employee_record[0]->employee_type;

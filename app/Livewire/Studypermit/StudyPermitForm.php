@@ -57,7 +57,7 @@ class StudyPermitForm extends Component
     public function mount(){
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
         $this->middle_name = $this->employeeRecord[0]->middle_name;
@@ -116,9 +116,9 @@ class StudyPermitForm extends Component
 
         $studypermitdata = new Studypermit();
 
-        $departmentName = Employee::where('employee_id', $loggedInUser->employeeId)->value('department_name');   
+        $departmentName = Employee::where('employee_id', $loggedInUser->employee_id)->value('department_name');   
 
-        $studypermitdata->employee_id = $loggedInUser->employeeId;
+        $studypermitdata->employee_id = $loggedInUser->employee_id;
         $studypermitdata->application_date = $this->application_date;
         $studypermitdata->department_name = $departmentName;
         $studypermitdata->start_period_cover = $this->start_period_cover;

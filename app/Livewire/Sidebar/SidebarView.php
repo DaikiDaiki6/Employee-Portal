@@ -13,7 +13,7 @@ class SidebarView extends Component
 
     public $employeeImage;
     public function mount(){
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $this->role = (int) Employee::where('employee_id', $loggedInUser)->value('employee_role');
         $employee = Employee::where('employee_id', $loggedInUser)->first(); 
         $this->employeeImage = $employee->emp_image;

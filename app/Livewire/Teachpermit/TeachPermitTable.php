@@ -25,7 +25,7 @@ class TeachPermitTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.teachpermit.teach-permit-table', [
-            'TeachPermitData' => Teachpermit::where('employee_id', $loggedInUser->employeeId)->paginate(10),
+            'TeachPermitData' => Teachpermit::where('employee_id', $loggedInUser->employee_id)->paginate(10),
         ]);
 
     }

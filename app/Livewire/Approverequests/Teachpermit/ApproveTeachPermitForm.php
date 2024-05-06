@@ -59,7 +59,7 @@ class ApproveTeachPermitForm extends Component
         $this->index = $index;
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
         $this->middle_name = $this->employeeRecord[0]->middle_name;
@@ -129,10 +129,10 @@ class ApproveTeachPermitForm extends Component
         $teachpermitdata = Teachpermit::findOrFail($this->index);
 
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                ->where('employee_id', $loggedInUser->employeeId)
+                ->where('employee_id', $loggedInUser->employee_id)
                 ->get();   
 
-        // $teachpermitdata->employee_id = $loggedInUser->employeeId;
+        // $teachpermitdata->employee_id = $loggedInUser->employee_id;
         // $teachpermitdata->application_date = $this->application_date;
         // $teachpermitdata->start_period_cover = $this->start_period_cover;
         // $teachpermitdata->end_period_cover = $this->end_period_cover;
@@ -162,11 +162,11 @@ class ApproveTeachPermitForm extends Component
         }
 
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
-        ->where('employee_id', $loggedInUser->employeeId)
+        ->where('employee_id', $loggedInUser->employee_id)
         ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
 
-        $targetUser = User::where('employeeId', $$teachpermitdata->employee_id)->first();
+        $targetUser = User::where('employee_id', $$teachpermitdata->employee_id)->first();
 
         $properties = [
             'applicant_signature' => 'mimes:jpg,png|extensions:jpg,png',
@@ -185,7 +185,7 @@ class ApproveTeachPermitForm extends Component
             } else {
                 // If it's an uploaded file, store it and apply validation rules
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Teach Permit', 'Signed', $teachpermitdata->id, $signedIn));
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Teach Permit', 'Signed', $teachpermitdata->id, $signedIn));
                 }
                 $teachpermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/teachpermit/' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);

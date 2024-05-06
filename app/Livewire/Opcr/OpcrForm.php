@@ -41,21 +41,12 @@ class OpcrForm extends Component
     public $department_name;
     public $department_head;
 
-   
-
-    // public function boot(){
-    //     $this->dispatch('app:scroll-to', [
-    //         'query' => '#start_period',
-    //     ]);
-     
-    // }
-
     public function addCoreFunction(){
-        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'budget' => '', 'personsConcerned' => '',  'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function addSupportiveFunction(){
-        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'budget' => '', 'personsConcerned' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function removeCoreFunction($index){
@@ -115,7 +106,7 @@ class OpcrForm extends Component
         $dateToday = Carbon::now()->toDateString();
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('department_head', 'department_name')
-                    ->where('employee_id', $loggedInUser->employeeId)
+                    ->where('employee_id', $loggedInUser->employee_id)
                     ->get();
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->department_head = $this->employeeRecord[0]->department_head;
@@ -126,10 +117,10 @@ class OpcrForm extends Component
         $this->assessed_by_date = $dateToday;
         $this->final_rating_by_date = $dateToday;
         $this->coreFunctions = [
-            ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => '']
+            ['output' => '', 'indicator' => '', 'accomp' => '', 'budget' => '', 'personsConcerned' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => '']
         ];
         $this->supportiveFunctions = [
-            ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => '']
+            ['output' => '', 'indicator' => '', 'accomp' => '', 'budget' => '', 'personsConcerned' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => '']
         ];
     }
    
@@ -139,40 +130,62 @@ class OpcrForm extends Component
         'start_period' => 'required|before_or_equal:end_period|after_or_equal:date_of_filling',
         'end_period' => 'required|after_or_equal:start_period',
         'ratee' => 'required|min:2|max:256',
-        'coreFunctions.*.output' => 'required|min:10|max:2048',
-        'coreFunctions.*.indicator' => 'required|min:10|max:2048',
-        'coreFunctions.*.accomp' => 'required|min:10|max:2048',
-        'coreFunctions.*.weight' => 'numeric',
-        'coreFunctions.*.remark' => 'min:10|max:2048',
-        'core_rating' => 'required|numeric|min:1|max:5',
         'supportiveFunctions.*.output' => 'required|min:10|max:2048',
         'supportiveFunctions.*.indicator' => 'required|min:10|max:2048',
         'supportiveFunctions.*.accomp' => 'required|min:10|max:2048',
-        'supportiveFunctions.*.weight' => 'numeric',
-        'supportiveFunctions.*.remark' => 'min:10|max:2048',
+        'supportiveFunctions.*.weight' => 'numeric|min:1|max:100',
+        'supportiveFunctions.*.remark' => 'min:10',
+        'supportiveFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'supportiveFunctions.*.A' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.output' => 'required|min:10|max:2048',
+        'coreFunctions.*.indicator' => 'required|min:10|max:2048',
+        'coreFunctions.*.accomp' => 'required|min:10|max:2048',
+        'coreFunctions.*.weight' => 'numeric|min:1|max:100',
+        'coreFunctions.*.remark' => 'min:10',
+        'coreFunctions.*.Q' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.E' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.T' => 'required|numeric|min:1|max:5',
+        'coreFunctions.*.A' => 'required|numeric|min:1|max:5',
+        'core_rating' => 'required|numeric|min:1|max:5',
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
-        'comments_and_reco' => 'required|min:10|max:2048', 
+        // 'comments_and_reco' => 'required|min:10|max:2048', 
         'discussed_with' => 'required|mimes:jpg,png|extensions:jpg,png',
-        'disscused_with_date' => 'required|date',
-        'assessed_by' => 'required|mimes:jpg,png|extensions:jpg,png',
-        'assessed_by_date' => 'required|date',
-        'final_rating' => 'required|numeric',
-        'final_rating_by' => 'required|mimes:jpg,png|extensions:jpg,png',
-        'final_rating_by_date' => 'required|date',
+        'disscused_with_date' => 'required|date|after_or_equal:start_period',
+        // 'assessed_by' => 'required|mimes:jpg,png|extensions:jpg,png',
+        // 'assessed_by_date' => 'required|date',
+        // 'final_rating' => 'required|numeric',
+        // 'final_rating_by' => 'required|mimes:jpg,png|extensions:jpg,png',
+        // 'final_rating_by_date' => 'required|date',
     ];
 
-    // protected $validationAttributes = [
-    //     'coreFunctions.*.output' => 'core output',
-    //     'coreFunctions.*.indicator' => 'core indicator',
-    //     'coreFunctions.*.accomp' => 'core acccomplishment',
-    //     'coreFunctions.*.weight' => 'core weight',
-    //     'coreFunctions.*.remark' => 'core remark',
-    // ];
+    protected $validationAttributes = [
+        'coreFunctions.*.output' => 'core output',
+        'coreFunctions.*.indicator' => 'core indicator',
+        'coreFunctions.*.accomp' => 'core acccomplishment',
+        'coreFunctions.*.weight' => 'core weight',
+        'coreFunctions.*.remark' => 'core remark',
+        'coreFunctions.*.Q' => 'Q',
+        'coreFunctions.*.E' => 'E',
+        'coreFunctions.*.T' => 'T',
+        'coreFunctions.*.A' => 'A',
+        'supportiveFunctions.*.output' => 'supportive output',
+        'supportiveFunctions.*.indicator' => 'supportive indicator',
+        'supportiveFunctions.*.accomp' => 'supportive accomplishment',
+        'supportiveFunctions.*.weight' => 'supportive weight',
+        'supportiveFunctions.*.remark' => 'supportive remark',
+        'supportiveFunctions.*.Q' => 'Q',
+        'supportiveFunctions.*.E' => 'E',
+        'supportiveFunctions.*.T' => 'T',
+        'supportiveFunctions.*.A' => 'A',
+    ];
 
-    // protected $messages = [
-    //     'start_period.before' => 'The Start period must be a date before end period.',
-    // ];
+    protected $messages = [
+        'start_period.before' => 'The Start period must be a date before end period.',
+    ];
+
 
     
 
@@ -181,7 +194,7 @@ class OpcrForm extends Component
         $this->validate();
         $loggedInUser = auth()->user();
         $opcr = new Opcr();
-        $opcr->employee_id = $loggedInUser->employeeId;
+        $opcr->employee_id = $loggedInUser->employee_id;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
         $opcr->department_name = $this->department_name;
@@ -193,13 +206,13 @@ class OpcrForm extends Component
         $opcr->supp_admin_rating = $this->supp_admin_rating;
         $opcr->final_average_rating = $this->final_average_rating;
         $opcr->comments_and_reco = $this->comments_and_reco;
-        $opcr->discussed_with = $this->discussed_with->store('photos', 'local');
+        $opcr->discussed_with = $this->discussed_with->store('photos/opcr/discussed_with', 'local');
         $opcr->disscused_with_date = $this->disscused_with_date;
-        $opcr->assessed_by = $this->assessed_by->store('photos', 'local');
-        $opcr->assessed_by_date = $this->assessed_by_date;
-        $opcr->final_rating = $this->final_rating;
-        $opcr->final_rating_by = $this->final_rating_by->store('photos', 'local');
-        $opcr->final_rating_by_date = $this->final_rating_by_date;
+        // $opcr->assessed_by = $this->assessed_by->store('photos', 'local');
+        // $opcr->assessed_by_date = $this->assessed_by_date;
+        $opcr->final_rating =  $this->final_average_rating;
+        // $opcr->final_rating_by = $this->final_rating_by->store('photos', 'local');
+        // $opcr->final_rating_by_date = $this->final_rating_by_date;
         
         $jsonCoreData = [];
         $jsonSupportiveData = [];
@@ -210,6 +223,8 @@ class OpcrForm extends Component
                     'output' => $coreFunction['output'],
                     'indicator' => $coreFunction['indicator'],
                     'accomp' => $coreFunction['accomp'],
+                    'budget' => $coreFunction['budget'],
+                    'personsConcerned' => $coreFunction['personsConcerned'],
                     'Q' => $coreFunction['Q'],
                     'E' => $coreFunction['E'],
                     'T' => $coreFunction['T'],
@@ -222,6 +237,8 @@ class OpcrForm extends Component
                     'output' => $supportiveFunction['output'],
                     'indicator' => $supportiveFunction['indicator'],
                     'accomp' => $supportiveFunction['accomp'],
+                    'budget' => $supportiveFunction['budget'],
+                    'personsConcerned' => $supportiveFunction['personsConcerned'],
                     'Q' => $supportiveFunction['Q'],
                     'E' => $supportiveFunction['E'],
                     'T' => $supportiveFunction['T'],
@@ -234,6 +251,8 @@ class OpcrForm extends Component
                     'output' => $coreFunction['output'],
                     'indicator' => $coreFunction['indicator'],
                     'accomp' => $coreFunction['accomp'],
+                    'budget' => $coreFunction['budget'],
+                    'personsConcerned' => $coreFunction['personsConcerned'],
                     'weight' => $coreFunction['weight'],
                     'remark' => $coreFunction['remark'],
                     'Q' => $coreFunction['Q'],
@@ -248,6 +267,8 @@ class OpcrForm extends Component
                     'output' => $supportiveFunction['output'],
                     'indicator' => $supportiveFunction['indicator'],
                     'accomp' => $supportiveFunction['accomp'],
+                    'budget' => $supportiveFunction['budget'],
+                    'personsConcerned' => $supportiveFunction['personsConcerned'],
                     'weight' => $supportiveFunction['weight'],
                     'remark' => $supportiveFunction['remark'],
                     'Q' => $supportiveFunction['Q'],
@@ -271,7 +292,7 @@ class OpcrForm extends Component
         // Ipcr::create($opcr);
         $opcr->save();
 
-        return redirect()->to(route('opcrtable'));
+        return redirect()->to(route('OpcrTable'));
 
     }
 

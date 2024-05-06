@@ -25,7 +25,7 @@ class ApproveStudyPermitTable extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $departmentName = Employee::where('employee_id', $loggedInUser)->value('department_name');
         return view('livewire.approverequests.studypermit.approve-study-permit-table', [
             'StudyPermitData' => Studypermit::where('department_name', $departmentName)->paginate(10),

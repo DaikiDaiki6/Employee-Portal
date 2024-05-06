@@ -26,7 +26,7 @@ class LeaveRequestTable extends Component
     }
 
     public function mount(){
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $employeeInformation = Employee::where('employee_id', $loggedInUser)
                                 ->select('department_name', 'sick_credits', 'vacation_credits')->get();
         $this->vacationCredits = $employeeInformation[0]->vacation_credits;
@@ -41,7 +41,7 @@ class LeaveRequestTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.leaverequest.leave-request-table', [
-            'LeaveRequestData' => Leaverequest::where('employee_id', $loggedInUser->employeeId)->paginate(10),
+            'LeaveRequestData' => Leaverequest::where('employee_id', $loggedInUser->employee_id)->paginate(10),
         ]);
     }
 

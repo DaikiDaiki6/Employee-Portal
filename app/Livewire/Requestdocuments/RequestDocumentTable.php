@@ -27,7 +27,7 @@ class RequestDocumentTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.requestdocuments.request-document-table', [
-            // 'DocumentRequestData' => Documentrequest::where('employee_id', $loggedInUser->employeeId)->paginate(1),
+            // 'DocumentRequestData' => Documentrequest::where('employee_id', $loggedInUser->employee_id)->paginate(1),
             'DocumentRequestData' => Documentrequest::paginate(1),
 
         ]);
@@ -43,7 +43,7 @@ class RequestDocumentTable extends Component
          }
          $requestName = str_replace(' ', '_', $request);
          $requestName = strtolower($requestName);
-         $employeeId = auth()->user()->employeeId;
+         $employee_id = auth()->user()->employee_id;
          if($documentRequest->$requestName != null){
             return Storage::disk('local')->download($documentRequest->$requestName, $request);
          }else{
@@ -55,8 +55,8 @@ class RequestDocumentTable extends Component
         $documentRequest = Documentrequest::findOrFail($index);
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
-        $employeeId = auth()->user()->employeeId;
-        if($documentRequest->$requestName && $employeeId == $documentRequest->employee_id){
+        $employee_id = auth()->user()->employee_id;
+        if($documentRequest->$requestName && $employee_id == $documentRequest->employee_id){
             return "Approved";
         }
         return "Pending";

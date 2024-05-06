@@ -40,8 +40,11 @@ class ApproveIpcrForm extends Component
     public $disscused_with_date;
     public $assessed_by;
     public $assessed_by_date;
+
+    public $assessed_by_verdict;
     public $final_rating;
     public $final_rating_by;
+    public $final_rating_by_verdict;
     public $final_rating_by_date;
     public $images;
     public $ipcrData;
@@ -68,8 +71,10 @@ class ApproveIpcrForm extends Component
         $this->disscused_with_date = $ipcrData->disscused_with_date;
         $this->assessed_by = $ipcrData->assessed_by;
         $this->assessed_by_date =  $ipcrData->assessed_by_date;
+        $this->assessed_by_verdict = $ipcrData->assessed_by_verdict;
         $this->final_rating = $ipcrData->final_rating;
         $this->final_rating_by = $ipcrData->final_rating_by;
+        $this->final_rating_by_verdict = $ipcrData->final_rating_by_verdict;
         $this->final_rating_by_date = $ipcrData->final_rating_by_date;
     
         
@@ -122,8 +127,8 @@ class ApproveIpcrForm extends Component
     public function updated($key)
     {
         $this->resetValidation($key);
-        //  $this->resetErrorBag($key);
-        // $this->validateOnly($key);
+        $this->resetErrorBag($key);
+        $this->validateOnly($key);
         
         $parts = explode('.', $key);
 
@@ -188,10 +193,12 @@ class ApproveIpcrForm extends Component
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
         'comments_and_reco' => 'required|min:10|max:2048', 
-        'disscused_with_date' => 'required|date',
-        'assessed_by_date' => 'required|date',
-        'final_rating' => 'required|numeric',
-        'final_rating_by_date' => 'required|date',
+        'assessed_by_verdict' => 'required|in:1,0',
+        'final_rating_by_verdict' => 'required|in:1,0',
+        // 'disscused_with_date' => 'required|date',
+        'assessed_by_date' => 'required|date|after_or_equal:start_period',
+        // 'final_rating' => 'required|numeric',
+        'final_rating_by_date' => 'required|date|after_or_equal:start_period',
     ];
 
     public function submit(){
@@ -202,7 +209,7 @@ class ApproveIpcrForm extends Component
 
         // dd($this->assessed_by);
         $ipcr = $this->editIpcr($this->index);
-        // $ipcr->employee_id = $loggedInUser->employeeId;
+        // $ipcr->employee_id = $loggedInUser->employee_id;
         // $ipcr->ipcr_type = 'Target';
         // $ipcr->date_of_filling = $this->date_of_filling;
         // $ipcr->position = $this->employeeRecord[0]->department_name;
@@ -215,17 +222,18 @@ class ApproveIpcrForm extends Component
         $ipcr->comments_and_reco = $this->comments_and_reco;
         
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
-                    ->where('employee_id', $loggedInUser->employeeId)
+                    ->where('employee_id', $loggedInUser->employee_id)
                     ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
         
-        $targetUser = User::where('employeeId', $ipcr->employee_id)->first();
+        $targetUser = User::where('employee_id', $ipcr->employee_id)->first();
 
         $properties = [
-            'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
+            'assessed_by'  => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png' ,
+            'final_rating_by'  => 'required_with:final_rating_by_verdict|mimes:jpg,png|extensions:jpg,png',
+            // 'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
         ];
+        
 
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
@@ -236,9 +244,11 @@ class ApproveIpcrForm extends Component
             } else {
                 // If it's an uploaded file, store it and apply validation rules
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Ipcr', 'Signed', $ipcr->id, $signedIn));
+                    $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Ipcr', 'Signed', $ipcr->id, $signedIn));
                 }
-                $ipcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/ipcr' . $propertyName, 'local') : '';
+                $nameOfProperty = $propertyName.'_verdict';
+                $ipcr->$nameOfProperty = $this->$nameOfProperty;
+                $ipcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/ipcr/' . $propertyName, 'local') : '';
                 $this->validate([$propertyName => $validationRule]);
             }
         }
@@ -246,7 +256,6 @@ class ApproveIpcrForm extends Component
         $ipcr->disscused_with_date = $this->disscused_with_date;       
         $ipcr->assessed_by_date = $this->assessed_by_date;
         $ipcr->final_rating = $this->final_rating;       
-        $ipcr->final_rating_by = $this->final_rating_by;
         $ipcr->final_rating_by_date = $this->final_rating_by_date;
 
         $jsonCoreData = [];
@@ -292,7 +301,7 @@ class ApproveIpcrForm extends Component
     {
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name')
-                        ->where('employee_id', $loggedInUser->employeeId)
+                        ->where('employee_id', $loggedInUser->employee_id)
                         ->get();
         return view('livewire.approverequests.ipcr.approve-ipcr-form')->extends('layouts.app');
     }

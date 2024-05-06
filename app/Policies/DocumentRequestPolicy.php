@@ -21,7 +21,7 @@ class DocumentRequestPolicy
      */
     public function view(User $user, Documentrequest $documentrequest): bool
     {
-        return $user->employeeId == $documentrequest->employee_id;
+        return $user->employee_id == $documentrequest->employee_id;
     }
 
     /**
@@ -37,7 +37,7 @@ class DocumentRequestPolicy
      */
     public function update(User $user, Documentrequest $documentrequest): bool
     {
-        return $user->employeeId == $documentrequest->employee_id;
+        return $user->employee_id == $documentrequest->employee_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class DocumentRequestPolicy
      */
     public function delete(User $user, Documentrequest $documentrequest): bool
     {
-        return $user->employeeId == $documentrequest->employee_id;
+        return $user->employee_id == $documentrequest->employee_id;
     }
 
     /**

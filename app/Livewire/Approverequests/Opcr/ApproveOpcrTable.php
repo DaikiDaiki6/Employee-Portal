@@ -41,7 +41,7 @@ class ApproveOpcrTable extends Component
         // $ipcrs = Opcr::paginate(5)
         // return view('livewire.ipcrtable');
         return view('livewire.approverequests.opcr.approve-opcr-table', [
-            'opcrs' => Opcr::where('employee_id', $loggedInUser->employeeId)->paginate(5),
+            'opcrs' => Opcr::where('employee_id', $loggedInUser->employee_id)->paginate(5),
         ]);
     }
 

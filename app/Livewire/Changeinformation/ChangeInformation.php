@@ -39,7 +39,7 @@ class ChangeInformation extends Component
     public $other_documents = [];
 
     public function mount(){
-        $employee_id = auth()->user()->employeeId;
+        $employee_id = auth()->user()->employee_id;
         $employee = Employee::where('employee_id', $employee_id)->first();
 
         // Employee Information
@@ -81,7 +81,7 @@ class ChangeInformation extends Component
 
 
         $employee = new ModelsChangeInformation();
-        $employee->employee_id = auth()->user()->employeeId;
+        $employee->employee_id = auth()->user()->employee_id;
         $employee->first_name = $this->first_name;
         $employee->middle_name = $this->middle_name;
         $employee->last_name = $this->last_name;

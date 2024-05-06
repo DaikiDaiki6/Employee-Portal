@@ -25,7 +25,7 @@ class PayrollView extends Component
     }
 
     private function calculateSummary(){
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $date = Carbon::createFromFormat('Y-m-d', $this->payrollData->date);
         $this->nameOfDate = $date->format('F Y');
         $month = (int) $date->format('m');
@@ -41,7 +41,7 @@ class PayrollView extends Component
 
     private function transferData(){
         $payrollData = Payroll::findOrFail($this->index);
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $employeeData = Employee::where('employee_id', $loggedInUser)->value('faculty_or_not');
         if($payrollData->employee_id == $loggedInUser){
             $this->payrollData = $payrollData;

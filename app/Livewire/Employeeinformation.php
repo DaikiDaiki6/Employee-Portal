@@ -16,8 +16,8 @@ class Employeeinformation extends Component
     public $employeeImage;
     
     public function mount(){
-        $employee_id = auth()->user()->employeeId;
-        $employee = Employee::where('employee_id', $employee_id)->first(); // Replace $employeeId with the actual employee ID
+        $employee_id = auth()->user()->employee_id;
+        $employee = Employee::where('employee_id', $employee_id)->first(); // Replace $employee_id with the actual employee ID
         $this->employeeImage = $employee->emp_image;
         $this->employeeRecord = Employee::where('employee_id', $employee_id)->first();
         if($this->employeeRecord->employee_history != null){
@@ -30,8 +30,8 @@ class Employeeinformation extends Component
     }
 
     public function download($file){
-        $employee_id = auth()->user()->employeeId;
-        $employee = Employee::where('employee_id', $employee_id)->first(); // Replace $employeeId with the actual employee ID
+        $employee_id = auth()->user()->employee_id;
+        $employee = Employee::where('employee_id', $employee_id)->first(); // Replace $employee_id with the actual employee ID
         if($file == "photo"){
             $mediaItems = $employee->getFirstMedia('avatar');
             return $mediaItems;

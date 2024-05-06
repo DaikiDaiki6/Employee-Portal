@@ -24,7 +24,7 @@ class ApproveLeaveRequestTable extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $departmentName = Employee::where('employee_id', $loggedInUser)->value('department_name');
         return view('livewire.approverequests.leaverequest.approve-leave-request-table', [
             'LeaveRequestData' => Leaverequest::where('department_name', $departmentName)->paginate(10),

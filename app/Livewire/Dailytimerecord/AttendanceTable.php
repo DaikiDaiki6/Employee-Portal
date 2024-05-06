@@ -98,7 +98,7 @@ class AttendanceTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.dailytimerecord.attendance-table', [
-            'DtrData' => Dailytimerecord::where('employee_id', $loggedInUser->employeeId)->paginate(10),
+            'DtrData' => Dailytimerecord::where('employee_id', $loggedInUser->employee_id)->paginate(10),
         ]);
         
     }

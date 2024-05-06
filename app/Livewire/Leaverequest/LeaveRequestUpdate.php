@@ -56,7 +56,7 @@ class LeaveRequestUpdate extends Component
     public function mount($index){
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'employee_id', 'current_position', 'salary', 'vacation_credits', 'sick_credits')
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->available_credits = $this->employeeRecord[0]->vacation_credits + $this->employeeRecord[0]->sick_credits;
         $this->employee_id = $this->employeeRecord[0]->employee_id;
@@ -131,7 +131,7 @@ class LeaveRequestUpdate extends Component
 
         $leaverequestdata = new Leaverequest();
 
-        $leaverequestdata->employee_id = $loggedInUser->employeeId;
+        $leaverequestdata->employee_id = $loggedInUser->employee_id;
         $leaverequestdata->status = "Pending";
         $leaverequestdata->date_of_filling = $this->date_of_filling;
         $leaverequestdata->type_of_leave = $this->type_of_leave;

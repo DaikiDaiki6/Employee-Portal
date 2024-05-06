@@ -41,7 +41,7 @@ class RequestDocumentForm extends Component
     public function mount(){
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type', 'employee_id' )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         // $this->authorize('create', $this->employeeRecord[0]->employee_id);
         $this->first_name = $this->employeeRecord[0]->first_name;
@@ -91,7 +91,7 @@ class RequestDocumentForm extends Component
         $documentrequestdata = new Documentrequest();
 
         $employee_record = Employee::select('employee_type', 'department_name')
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
       
 

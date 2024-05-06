@@ -64,7 +64,7 @@ class ApproveStudyPermitForm extends Component
         $this->index = $index;
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                                    ->where('employee_id', $loggedInUser->employeeId)
+                                    ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
         $this->middle_name = $this->employeeRecord[0]->middle_name;
@@ -149,10 +149,10 @@ class ApproveStudyPermitForm extends Component
         $studypermitdata = Studypermit::findOrFail($this->index);
 
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
-                ->where('employee_id', $loggedInUser->employeeId)
+                ->where('employee_id', $loggedInUser->employee_id)
                 ->get();   
 
-        $studypermitdata->employee_id = $loggedInUser->employeeId;
+        $studypermitdata->employee_id = $loggedInUser->employee_id;
         $studypermitdata->application_date = $this->application_date;
         $studypermitdata->start_period_cover = $this->start_period_cover;
         $studypermitdata->end_period_cover = $this->end_period_cover;
@@ -191,11 +191,11 @@ class ApproveStudyPermitForm extends Component
         // dd($this->cover_memo);
 
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
-        ->where('employee_id', $loggedInUser->employeeId)
+        ->where('employee_id', $loggedInUser->employee_id)
         ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
 
-        $targetUser = User::where('employeeId', $studypermitdata->employee_id)->first();
+        $targetUser = User::where('employee_id', $studypermitdata->employee_id)->first();
 
         $fileFields = [
             'cover_memo',
@@ -224,7 +224,7 @@ class ApproveStudyPermitForm extends Component
                         }
                         else{ 
                             if($this->$field){
-                                $targetUser->notify(new SignedNotifcation($loggedInUser->employeeId, 'Study Permit', 'Signed', $studypermitdata->id, $signedIn));
+                                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Study Permit', 'Signed', $studypermitdata->id, $signedIn));
                             }
                             $itemName = $file->store("photos/studypermit/$field", 'local');
                             $fileNames[] = $itemName;

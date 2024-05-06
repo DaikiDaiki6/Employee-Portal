@@ -40,7 +40,7 @@ class DashboardView extends Component
     }
 
     public function mount(){
-        $loggedInUser = auth()->user()->employeeId;
+        $loggedInUser = auth()->user()->employee_id;
         $employeeInformation = Employee::where('employee_id', $loggedInUser)
                                 ->select('department_name', 'sick_credits', 'vacation_credits', 'first_name', 'gender')->get();
         $this->firstName = $employeeInformation[0]->first_name;
