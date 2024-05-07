@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class LeaveRequestUpdate extends Component
 {
@@ -88,6 +89,10 @@ class LeaveRequestUpdate extends Component
         return $leaverequest;
     }
 
+    public function getApplicantSignature(){
+        return Storage::disk('local')->get($this->commutation_signature_of_appli);
+    }
+
     public function updated($keys){
         if(in_array($keys, ['inclusive_start_date', 'inclusive_end_date'])){
             $startDate = Carbon::parse($this->inclusive_start_date);
@@ -124,8 +129,20 @@ class LeaveRequestUpdate extends Component
 
     }
     
+    protected $rules = [
+        'type_of_leave' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
+        'type_of_leave_others' => 'required_if:type_of_leave,Others',
+        'type_of_leave_sub_category' => 'required|in:Within the Philippines,Abroad,In Hospital,Out Patient,Special Leave Benefits for Women,Completion of Master\'s degree,BAR/Board Examination Review,Monetization of leave credits,Terminal Leave',
+        // 'type_of_leave_description' => '',
+        'inclusive_start_date' => 'required|after_or_equal:date_of_filling|before_or_equal:inclusive_end_date',
+        'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
+        'num_of_days_work_days_applied' => 'required|lte:available_credits',
+        'commutation' => 'required|in:not requested, requested',
+        
+    ];
+
     public function submit(){
-        // $this->validate();
+        $this->validate();
 
         $loggedInUser = auth()->user();
 
@@ -145,11 +162,11 @@ class LeaveRequestUpdate extends Component
         if(is_string($this->commutation_signature_of_appli)){
             $leaverequestdata->commutation_signature_of_appli= $this->commutation_signature_of_appli;
         } else{
-            $leaverequestdata->commutation_signature_of_appli =  $this->commutation_signature_of_appli->store('photos', 'local');
-            $this->validate(['discussed_with' => 'mimes:jpg,png|extensions:jpg,png']);
+            $leaverequestdata->commutation_signature_of_appli =  $this->commutation_signature_of_appli->store('photos/leaveRequest/discussed_with', 'local');
+            $this->validate(['commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf']);
         }
         
-        $this->js("alert('Leave Request submitted!')"); 
+        $this->js("alert('Leave Request Updated!')"); 
         // session()->flash('status', 'Ipcr successfully submitted.');
 
         // Ipcr::create($ipcr);

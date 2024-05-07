@@ -276,7 +276,7 @@ class ApproveOpcrForm extends Component
                 $nameOfProperty = $propertyName.'_verdict';
                 $opcr->$nameOfProperty = $this->$nameOfProperty;
                 $opcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/opcr/' . $propertyName, 'local') : '';
-                $this->validate([$propertyName => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png']);
+                $this->validate([$propertyName => $validationRule]);
             }
         }
 

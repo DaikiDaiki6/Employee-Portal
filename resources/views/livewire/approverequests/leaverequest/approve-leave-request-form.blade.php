@@ -271,7 +271,7 @@
                                             <label for="commutation"
                                                 class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Commutation <span class="text-red-600">*</span></label>
                                                 <div class="w-full pl-4 items-start">
-                                                <input type="radio" name="commutation" id="commutation" wire:model="commutation" value="requested">
+                                                <input disabled type="radio" name="commutation" id="commutation" wire:model="commutation" value="requested">
                                                 <label for="numOfWorkDay" class="text-sm font-semibold">Requested</label>
                                                 <br>
                                                 <input disabled type="radio" id="commutation" name="commutation" wire:model="commutation" value="not requested">
@@ -295,7 +295,7 @@
                                                             $commutation_signature_of_appli = $this->getApplicantSignature();
                                                         @endphp
                                                         <img src="data:image/gif;base64,{{ base64_encode($commutation_signature_of_appli) }}" alt="Image Description" class="w-full h-full object-contain"> 
-                                                        <input id="dropzone-file1" type="file" class="hidden" wire:model.live="commutation_signature_of_appli">
+                                                        <input disabled id="dropzone-file1" type="file" class="hidden" wire:model.live="commutation_signature_of_appli">
                                                     </label>
                                                 @else
                                                     <label for="dropzone-file1" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -329,15 +329,95 @@
                     <div class="grid grid-cols-2 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                         
                             <div class="w-full grid grid-cols-1 ">
-                                <label for="status"
+                                <label for="department_head_verdict"
                                     class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
                                     <div class="w-full pl-4 items-start">
-                                    <input type="radio" name="status" id="status" wire:model.live="status" value="Approved">
+                                    <input type="radio" name="department_head_verdict" id="department_head_verdict" wire:model.live="department_head_verdict" value="Approved">
                                     <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
                                     <br>
-                                    <input type="radio" id="html" name="status" wire:model.live="status" value="Declined">
+                                    <input type="radio" id="department_head_verdict" name="department_head_verdict" wire:model.live="department_head_verdict" value="Declined">
                                     <label for="html" class="text-sm font-semibold">Declined</label><br>
-                                    @error('status')
+                                    @error('department_head_verdict')
+                                        <div class="transition transform alert alert-danger text-sm"
+                                        x-data x-init="document.getElementById('department_head_verdict').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('department_head_verdict').focus();" >
+                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                        </div> 
+                                    @enderror   
+                                    </div>
+                            </div>
+                            <div>
+                                <div class="justify-left">
+                                    <label for="auth_off_sig_b" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Signature <span class="text-red-600">*</span></label> 
+                                </div>
+                                <div class="grid grid-cols-1 items-center justify-center w-full">
+                                    @if($auth_off_sig_b)
+                                    <label for="auth_off_sig_b" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        @if (is_string($auth_off_sig_b))
+                                            @php
+                                                $auth_off_sig_b = $this->getHeadSignature();
+                                            @endphp
+                                            <img src="data:image/gif;base64,{{ base64_encode($auth_off_sig_b) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                        @else
+                                            <img src="{{ $auth_off_sig_b->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                        @endif
+                                        <input id="auth_off_sig_b" type="file" class="hidden" wire:model.live="auth_off_sig_b">
+                                    </label>
+                                    @else
+                                        <label for="auth_off_sig_b" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                </svg>
+                                                <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                            </div>
+                                            <input id="auth_off_sig_b" type="file" class="hidden" wire:model="auth_off_sig_b" />
+                                        </label>
+                                    @endif
+                                    @error('auth_off_sig_b')
+                                        <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('auth_off_sig_b').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('auth_off_sig_b').focus();" >
+                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                        </div> 
+                                    @enderror
+                                </div>  
+                        </div>
+                       
+                        @if ($department_head_verdict == "Declined")
+                            <div class="w-full grid grid-cols-1 col-span-2 ">
+                                <label for="head_disapprove_reason"
+                                class="block mb-2  text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">For Disapproval Due To: <span class="text-red-600">*</span></label>
+                                <textarea type="text" rows="5" id="head_disapprove_reason" name="head_disapprove_reason" wire:model="head_disapprove_reason"
+                                    placeholder="If chosen declined, write the reason. Otherwise, Ignore"   
+                                    class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                </textarea>
+                                    @error('head_disapprove_reason')
+                                        <div class="transition transform alert alert-danger text-sm"
+                                        x-data x-init="document.getElementById('head_disapprove_reason').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('head_disapprove_reason').focus();" >
+                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                        </div> 
+                                    @enderror   
+                            </div>
+                        @endif
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 w-full mt-4 col-span-3 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                    <h2><b>Approve the Leave Request (Authorized Officer A)</b></h2>
+                    <div class="grid grid-cols-2 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                        
+                            <div class="w-full grid grid-cols-1 ">
+                                <label for="human_resource_verdict_a"
+                                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
+                                    <div class="w-full pl-4 items-start">
+                                    <input type="radio" name="human_resource_verdict_a" id="human_resource_verdict_a" wire:model.live="human_resource_verdict_a" value="Approved">
+                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                    <br>
+                                    <input type="radio" id="human_resource_verdict_a" name="human_resource_verdict_a" wire:model.live="human_resource_verdict_a" value="Declined">
+                                    <label for="html" class="text-sm font-semibold">Declined</label><br>
+                                    @error('human_resource_verdict_a')
                                     <div class="transition transform alert alert-danger"
                                             x-init="$el.closest('form').scrollIntoView()">
                                         <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
@@ -347,23 +427,23 @@
                             </div>
                             <div>
                                 <div class="justify-left">
-                                    <label for="dropzone-file2" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Signature <span class="text-red-600">*</span></label> 
+                                    <label for="auth_off_sig_a" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Signature <span class="text-red-600">*</span></label> 
                                 </div>
                                 <div class="grid grid-cols-1 items-center justify-center w-full">
-                                    @if($auth_off_sig_b)
-                                    <label for="dropzone-file2" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                        @if ($flag == "Initial")
+                                    @if($auth_off_sig_a)
+                                    <label for="auth_off_sig_a" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        @if (is_string($auth_off_sig_a))
                                             @php
-                                                $auth_off_sig_b = $this->getHeadSignature();
+                                                $auth_off_sig_a = $this->getHumanResourceA();
                                             @endphp
-                                            <img src="data:image/gif;base64,{{ base64_encode($auth_off_sig_b) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                            <img src="data:image/gif;base64,{{ base64_encode($auth_off_sig_a) }}" alt="Image Description" class="w-full h-full object-contain"> 
                                         @else
-                                            <img src="{{ $auth_off_sig_b->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                            <img src="{{ $auth_off_sig_a->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                         @endif
-                                        <input id="dropzone-file2" type="file" class="hidden" wire:model.live="auth_off_sig_b">
+                                        <input id="auth_off_sig_a" type="file" class="hidden" wire:model.live="auth_off_sig_a">
                                     </label>
                                     @else
-                                        <label for="dropzone-file2" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        <label for="auth_off_sig_a" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                                 <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
@@ -371,28 +451,87 @@
                                                 <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
                                                 <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
                                             </div>
-                                            <input id="dropzone-file2" type="file" class="hidden" wire:model="auth_off_sig_b" />
+                                            <input id="auth_off_sig_a" type="file" class="hidden" wire:model="auth_off_sig_a" />
                                         </label>
                                     @endif
-                                    @error('auth_off_sig_b')
+                                    @error('auth_off_sig_a')
                                     <div class="transition transform alert alert-danger"
                                             x-init="$el.closest('form').scrollIntoView()">
                                         <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
                                     </div> 
                                     @enderror
+                                </div>  
+                        </div>
+                        </div>
+                </div>
+
+                <div class="grid grid-cols-1 w-full mt-4 col-span-3 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                    <h2><b>Approve the Leave Request (Authorized Officer C)</b></h2>
+                    <div class="grid grid-cols-2 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                            <div class="w-full grid grid-cols-1 ">
+                                <label for="human_resource_verdict_cd"
+                                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
+                                    <div class="w-full pl-4 items-start">
+                                    <input type="radio" name="human_resource_verdict_cd" id="human_resource_verdict_cd" wire:model.live="human_resource_verdict_cd" value="Approved">
+                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                    <br>
+                                    <input type="radio" id="human_resource_verdict_cd" name="human_resource_verdict_cd" wire:model.live="human_resource_verdict_cd" value="Declined">
+                                    <label for="html" class="text-sm font-semibold">Declined</label><br>
+                                    @error('human_resource_verdict_cd')
+                                    <div class="transition transform alert alert-danger"
+                                            x-init="$el.closest('form').scrollIntoView()">
+                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                    </div> 
+                                    @enderror   
+                                    </div>
+                            </div>
+                            <div>
+                                <div class="justify-left">
+                                    <label for="auth_off_sig_c_and_d" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Signature <span class="text-red-600">*</span></label> 
                                 </div>
-                                
+                                <div class="grid grid-cols-1 items-center justify-center w-full">
+                                    @if($auth_off_sig_c_and_d)
+                                    <label for="auth_off_sig_c_and_d" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                        @if (is_string($auth_off_sig_c_and_d))
+                                            @php
+                                                $auth_off_sig_c_and_d = $this->getHumanResourceCD();
+                                            @endphp
+                                            <img src="data:image/gif;base64,{{ base64_encode($auth_off_sig_c_and_d) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                        @else
+                                            <img src="{{ $auth_off_sig_c_and_d->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                        @endif
+                                        <input id="auth_off_sig_c_and_d" type="file" class="hidden" wire:model.live="auth_off_sig_c_and_d">
+                                    </label>
+                                    @else
+                                        <label for="auth_off_sig_c_and_d" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                </svg>
+                                                <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                            </div>
+                                            <input id="auth_off_sig_c_and_d" type="file" class="hidden" wire:model="auth_off_sig_c_and_d" />
+                                        </label>
+                                    @endif
+                                    @error('auth_off_sig_c_and_d')
+                                    <div class="transition transform alert alert-danger"
+                                            x-init="$el.closest('form').scrollIntoView()">
+                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                    </div> 
+                                    @enderror
+                                </div>  
                         </div>
                        
-                        @if ($status == "Declined")
+                        @if ($human_resource_verdict_cd == "Declined")
                             <div class="w-full grid grid-cols-1 col-span-2 ">
-                                <label for="type_of_leave_others"
+                                <label for="hr_cd_disapprove_reason"
                                 class="block mb-2  text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">For Disapproval Due To: <span class="text-red-600">*</span></label>
-                                <textarea type="text" rows="5" id="type_of_leave_others" name="type_of_leave_others" wire:model="disapprove_reason"
-                                    placeholder="If chosen others, write the type of leave. Otherwise, Ignore"   
+                                <textarea type="text" rows="5" id="hr_cd_disapprove_reason" name="hr_cd_disapprove_reason" wire:model="hr_cd_disapprove_reason"
+                                    placeholder="If chosen declined, write the reason. Otherwise, Ignore"   
                                     class="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </textarea>
-                                    @error('disapprove_reason')
+                                    @error('hr_cd_disapprove_reason')
                                         <div class="transition transform alert alert-danger"
                                                 x-init="$el.closest('form').scrollIntoView()">
                                             <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
@@ -402,10 +541,10 @@
                         @endif
                            
                         </div>
-                    </div>
                 </div>
+
                 <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                    Submit Leave Request
+                    Update Leave Request
             </button>
             </form>
         </div>
