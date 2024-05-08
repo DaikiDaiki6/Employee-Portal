@@ -74,20 +74,20 @@ class IpcrForm extends Component
     // }
 
     public function addCoreFunction(){
-        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function addSupportiveFunction(){
-        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function removeCoreFunction($index){
-        unset($this->coreFunctions[$index]);
+        // unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
     }
 
     public function removeSupportiveFunction($index){
-        unset($this->supportiveFunctions[$index]);
+        // unset($this->supportiveFunctions[$index]);
         $this->supportiveFunctions = array_values($this->supportiveFunctions);
     }
 
@@ -190,10 +190,10 @@ class IpcrForm extends Component
     }
 
     protected $rules = [
-        'date_of_filling' => 'required',
-        'start_period' => 'required|before_or_equal:end_period|after_or_equal:date_of_filling',
-        'end_period' => 'required|after_or_equal:start_period',
-        'ratee' => 'required|min:2|max:256',
+        // 'date_of_filling' => 'required',
+        // 'start_period' => 'required|before_or_equal:end_period|after_or_equal:date_of_filling',
+        // 'end_period' => 'required|after_or_equal:start_period',
+        // 'ratee' => 'required|min:2|max:256',
         'supportiveFunctions.*.output' => 'required|min:10|max:2048',
         'supportiveFunctions.*.indicator' => 'required|min:10|max:2048',
         'supportiveFunctions.*.accomp' => 'required|min:10|max:2048',
@@ -261,16 +261,12 @@ class IpcrForm extends Component
 
     public function submit(){
 
-       
-        // dd(count($this->getErrorBag()->keys()) > 9);
-        // $this->dispatch('$refresh');
-        // $this->resetErrorBag();
-        // $this->resetValidation();
-         // if ($this->errors()->any()) {
-        //     $this->hasErrors = true;
-        //     $this->dispatchBrowserEvent('scroll-to-error');
+        // dd($this->rules);
+
+        // foreach($this->rules as $field => $validationRules){
+        //     // dd($field, $validationRules);
+        //     $this->validate($field, $validationRules);
         // }
-        // dump($this->coreFunctions, $this->supportiveFunctions);
         
         $this->validate();
 

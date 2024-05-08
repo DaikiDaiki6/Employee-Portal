@@ -88,20 +88,20 @@ class ApproveIpcrForm extends Component
 
 
     public function addCoreFunction(){
-        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function addSupportiveFunction(){
-        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function removeCoreFunction($index){
-        unset($this->coreFunctions[$index]);
+        // unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
     }
 
     public function removeSupportiveFunction($index){
-        unset($this->supportiveFunctions[$index]);
+        // unset($this->supportiveFunctions[$index]);
         $this->supportiveFunctions = array_values($this->supportiveFunctions);
     }
 
@@ -207,15 +207,7 @@ class ApproveIpcrForm extends Component
 
         $loggedInUser = auth()->user();
 
-        // dd($this->assessed_by);
         $ipcr = $this->editIpcr($this->index);
-        // $ipcr->employee_id = $loggedInUser->employee_id;
-        // $ipcr->ipcr_type = 'Target';
-        // $ipcr->date_of_filling = $this->date_of_filling;
-        // $ipcr->position = $this->employeeRecord[0]->department_name;
-        // $ipcr->start_period = $this->start_period;
-        // $ipcr->end_period = $this->end_period;
-        // $ipcr->ratee = $this->ratee;
         $ipcr->core_rating = $this->core_rating;
         $ipcr->supp_admin_rating = $this->supp_admin_rating;
         $ipcr->final_average_rating = $this->final_average_rating;

@@ -380,8 +380,6 @@
                                     </div>
                                 </div>
                         @endforeach
-                              
-                      
                             <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addCoreFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Core Function</button>
                             </div>
@@ -468,7 +466,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q<span class="text-red-600">*</span></label>
-                                                            <select id="smtpQ" id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
+                                                            <select  id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected >Pick</option>
                                                                 <option value="5">5</option>
@@ -489,7 +487,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E<span class="text-red-600">*</span></label>
-                                                            <select id="smtpE" id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
+                                                            <select id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -509,7 +507,7 @@
                                                         <div class="w-full ">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                            <select id="smtpT" id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
+                                                            <select  id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -529,7 +527,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
-                                                            <select id="smtpA" id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
+                                                            <select  id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -646,59 +644,6 @@
                             </div>
                         </div>
                         </div>
-    
-                        
-                        {{-- <div class="grid gap-4 grid-cols-1 sm:gap-6 w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                            <div class="grid grid-cols-1 p-6 w-full col-span-3 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                <div class="flex-none pb-4">
-                                    <h2><b>Discussed With:</b></h2>
-                                </div>
-                                <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <div>
-                                        <label for="discussed_with"
-                                        class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Discussed With (Employee) <span class="text-red-600">*</span></label>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
-                                            @if($discussed_with)
-                                            <label for="discussed_with" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                <img src="{{ $discussed_with->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
-                                                <input id="discussed_with" type="file" class="hidden" wire:model.live="discussed_with">
-                                            </label>
-                                            @else
-                                                <label for="discussed_with" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                        <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                                        </svg>
-                                                        <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                                        <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
-                                                    </div>
-                                                    <input id="discussed_with" type="file" class="hidden" wire:model.blur="discussed_with">
-                                                </label>
-                                            @endif
-                                            @error('discussed_with')
-                                            <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                            </div> 
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="w-full pr-4">
-                                        <label for="brand"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discussed Date<span class="text-red-600">*</span></label>
-                                            <input type="date" name="disscused_with_date" id="disscused_with_date" value="{{$employeeRecordDate}}" wire:model="disscused_with_date"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                placeholder="Last name" required="">
-                                        @error('disscused_with_date')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
     
                     <br>

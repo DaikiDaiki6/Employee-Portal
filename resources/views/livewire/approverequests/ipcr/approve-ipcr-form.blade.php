@@ -72,14 +72,14 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date<span class="text-red-600">*</span></label>
                                     <input type="date" wire:model="date_of_filling" 
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Date of Filling" required disabled>
+                                        placeholder="Date of Filling"  disabled>
                                 </div>
                                 <div class="w-full">
                                     <label for="brand"
                                         class="block mb-2 sm:col-span-2  text-sm font-medium text-gray-900 dark:text-white">Ratee <span class="text-red-600">*</span></label>
                                     <input type="text" name="ratee" id="ratee" wire:model="ratee"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Ratee Name" required="" >
+                                        placeholder="Ratee Name"  disabled >
                                     @error('ratee')
                                     <div class="transition transform alert alert-danger"
                                             x-init="$el.closest('form').scrollIntoView()">
@@ -101,7 +101,7 @@
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Start Period <span class="text-red-600">*</span></label>
                                         <input type="date" name="start_period" id="start_period" wire:model="start_period" value="{{$employeeRecordDate}}"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                             required="">
+                                            disabled>
                                         {{-- @error('start_period') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror  --}}
                                         @error('start_period')
                                         <div class="transition transform alert alert-danger"
@@ -115,7 +115,7 @@
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">End Period <span class="text-red-600">*</span></label>
                                         <input type="date" name="endperiod" id="endperiod" wire:model="end_period" value="{{$employeeRecordDate}}"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                           required="">
+                                            disabled>
                                         @error('end_period')   
                                             <div class="transition transform alert alert-danger text-sm "
                                             x-init="$el.closest('form').scrollIntoView()">
@@ -141,22 +141,16 @@
                                             dd($coreFunctions[0]['accomp']);
                                 @endphp --}}
                                 <div class="block w-full col-span-3 p-6 pb-8 mb-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                        <li class="">
-                                            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                            type="button" name="add" wire:click.prevent="removeCoreFunction({{$index}})" wire:confirm="Are you sure you want to delete this function?"
-                                            class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-red-500">
-                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                </svg>
-                                            </button>
+                                    <ul class="text-sm font-medium text-left text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                        <li class="p-4 text-gray-900 font-bold">
+                                            <span>No.{{$index + 1 }} </span>
                                         </li>
                                     </ul>
                                     <div class="grid grid-cols-1 col-span-3 gap-4  border min-[1150px]:grid-cols-5 border-gray-200 p-4" >
                                         <div class="grid col-span-3 gap-4 sm:grid-cols-1 min-[900px]:grid-cols-3">
                                             <div>
                                                 <label for="coreFunctions_{{$index}}_output" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Output <span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" id="coreFunctions_{{$index}}_output" name="coreFunctions[{{$index}}][output]" wire:model.blur="coreFunctions.{{$index}}.output" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                                <textarea disabled type="text" rows="10" id="coreFunctions_{{$index}}_output" name="coreFunctions[{{$index}}][output]" wire:model.blur="coreFunctions.{{$index}}.output" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                                 {{-- @error('coreFunctions.' . $index . '.output')   
                                                     <div class="transition transform alert alert-danger text-sm"
                                                          x-data x-init="document.getElementById('coreFunctions_{{$index}}_output').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_output').focus();">
@@ -173,7 +167,7 @@
                                             <div>
                                                 <label for="coreFunctions_{{$index}}_indicator"
                                                     class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Success Indicators <span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" id="coreFunctions_{{$index}}_indicator" name="coreFunctions[{{$index}}][indicator]" wire:model.blur="coreFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <textarea  disabled type="text" rows="10" id="coreFunctions_{{$index}}_indicator" name="coreFunctions[{{$index}}][indicator]" wire:model.blur="coreFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('coreFunctions.' . $index . '.indicator')   
                                                     <div class="transition transform alert alert-danger text-sm"
@@ -185,7 +179,7 @@
                                             <div>
                                                 <label for="coreFunctions_{{$index}}_accomp"
                                                     class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Accomplishments <span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" id="coreFunctions_{{$index}}_accomp" name="coreFunctions[{{$index}}][accomp]" wire:model.blur="coreFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <textarea disabled type="text" rows="10" id="coreFunctions_{{$index}}_accomp" name="coreFunctions[{{$index}}][accomp]" wire:model.blur="coreFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('coreFunctions.' . $index . '.accomp')   
                                                     <div class="transition transform alert alert-danger text-sm"
@@ -205,7 +199,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q<span class="text-red-600">*</span></label>
-                                                            <select  id="coreFunctions_{{$index}}_Q" wire:model.change="coreFunctions.{{$index}}.Q"
+                                                            <select disabled id="coreFunctions_{{$index}}_Q" wire:model.change="coreFunctions.{{$index}}.Q"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -225,7 +219,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E<span class="text-red-600">*</span></label>
-                                                            <select  id="coreFunctions_{{$index}}_E" wire:model.change="coreFunctions.{{$index}}.E"
+                                                            <select disabled id="coreFunctions_{{$index}}_E" wire:model.change="coreFunctions.{{$index}}.E"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -245,7 +239,7 @@
                                                         <div class="w-full ">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                            <select  id="coreFunctions_{{$index}}_T" wire:model.change="coreFunctions.{{$index}}.T"
+                                                            <select disabled id="coreFunctions_{{$index}}_T" wire:model.change="coreFunctions.{{$index}}.T"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -265,7 +259,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
-                                                            <select id="coreFunctions_{{$index}}_A" wire:model.change="coreFunctions.{{$index}}.A"
+                                                            <select disabled id="coreFunctions_{{$index}}_A" wire:model.change="coreFunctions.{{$index}}.A"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -293,7 +287,7 @@
                                             <div>
                                                 <label for="message"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight <span class="text-red-600">*</span></label>
-                                                <input type="text" id="coreFunctions_{{$index}}_weight" wire:model.blur="coreFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <input disabled type="text" id="coreFunctions_{{$index}}_weight" wire:model.blur="coreFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('coreFunctions.{{$index}}.weight')   
                                                     <div class="transition transform alert alert-danger text-sm"
                                                         x-data x-init="document.getElementById('coreFunctions_{{$index}}_weight').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_weight').focus();" >
@@ -304,7 +298,7 @@
                                             <div>
                                                 <label for="message"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
-                                                <input type="text" id="coreFunctions_{{$index}}_remark" wire:model.blur="coreFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <input disabled type="text" id="coreFunctions_{{$index}}_remark" wire:model.blur="coreFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('coreFunctions.{{$index}}.remark')   
                                                     <div class="transition transform alert alert-danger text-sm"
                                                         x-data x-init="document.getElementById('coreFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_remark').focus();" >
@@ -319,11 +313,10 @@
                         
                        
                         @endforeach
-                              
                       
-                            <div class="flex justify-center">
+                            {{-- <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addCoreFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Core Function</button>
-                            </div>
+                            </div> --}}
                             <div class="block sm:w-1/2 md:w-1/3 min-[900px]:w-1/4 min-[1150px]:w-1/5 mt-4 col-span-1 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <label for="core_rating"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Core Rating<span class="text-red-600">*</span></label>
@@ -346,7 +339,7 @@
                             </div>
                                 @foreach ($supportiveFunctions as $index => $suuportiveFunction)   
                                 <div class="block w-full col-span-3 p-6 pb-8 mb-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                    {{-- <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
                                         <li class="">
                                             <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
                                             type="button" name="add" wire:click.prevent="removeSupportiveFunction({{$index}})" wire:confirm="Are you sure you want to delete this function?"
@@ -356,13 +349,18 @@
                                                 </svg>
                                             </button>
                                         </li>
+                                    </ul> --}}
+                                    <ul class="text-sm font-medium text-left text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                        <li class="p-4 text-gray-900 font-bold">
+                                            <span>No.{{$index + 1 }} </span>
+                                        </li>
                                     </ul>
                                     <div class="grid grid-cols-1 col-span-3 gap-4  border min-[1150px]:grid-cols-5 border-gray-200 p-4" >
                                         <div class="grid col-span-3 gap-4 grid-cols-1 min-[900px]:grid-cols-3">
                                             <div c>
                                                 <label for="message"
                                                     class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Output <span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10"  id="supportiveFunctions_{{$index}}_output" ame="supportiveFunctions[{{$index}}][output]" wire:model.blur="supportiveFunctions.{{$index}}.output"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <textarea disabled type="text" rows="10"  id="supportiveFunctions_{{$index}}_output" ame="supportiveFunctions[{{$index}}][output]" wire:model.blur="supportiveFunctions.{{$index}}.output"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('supportiveFunctions.' . $index . '.output')   
                                                     <div class="transition transform alert alert-danger text-sm"
@@ -375,7 +373,7 @@
                                             <div>
                                                 <label for="message"
                                                     class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Success Indicators <span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" id="supportiveFunctions_{{$index}}_indicator" wire:model.blur="supportiveFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <textarea disabled type="text" rows="10" id="supportiveFunctions_{{$index}}_indicator" wire:model.blur="supportiveFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('supportiveFunctions.'. $index . '.indicator')   
                                                     <div class="transition transform alert alert-danger text-sm"
@@ -387,7 +385,7 @@
                                             <div>
                                                 <label for="message"
                                                     class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Accomplishments <span class="text-red-600">*</span></label>
-                                                <textarea type="text" rows="10" id="supportiveFunctions_{{$index}}_accomp" wire:model.blur="supportiveFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <textarea disabled type="text" rows="10" id="supportiveFunctions_{{$index}}_accomp" wire:model.blur="supportiveFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('supportiveFunctions.' . $index . '.accomp')   
                                                     <div class="transition transform alert alert-danger text-sm"
@@ -407,7 +405,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q<span class="text-red-600">*</span></label>
-                                                            <select id="smtpQ" id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
+                                                            <select disabled id="smtpQ" id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected >Pick</option>
                                                                 <option value="5">5</option>
@@ -427,7 +425,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E<span class="text-red-600">*</span></label>
-                                                            <select id="smtpE" id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
+                                                            <select disabled id="smtpE" id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -447,7 +445,7 @@
                                                         <div class="w-full ">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                            <select id="smtpT" id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
+                                                            <select disabled id="smtpT" id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -467,7 +465,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
-                                                            <select id="smtpA" id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
+                                                            <select disabled id="smtpA" id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -520,10 +518,10 @@
                                 </div>
                        
                         @endforeach
-                            <div class="flex justify-center">
+                            {{-- <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addSupportiveFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Support / Administrative Function</button>
                             
-                            </div>
+                            </div> --}}
                             <div class="block sm:w-1/2 md:w-1/3 min-[900px]:w-1/4 min-[1150px]:w-1/5 mt-4 col-span-1 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <label for="supp_admin_rating"
                                     class="block mb-2 text-sm font-medium  text-gray-900 dark:text-white">Support / Administrative Rating<span class="text-red-600">*</span></label>
@@ -544,6 +542,72 @@
          
     
                     <br>
+                    <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                        <div class="grid gap-4 grid-cols-1 sm:gap-6 ">
+                            <div class="flex-none ">
+                                <h2><b>Discussed With:</b></h2>
+                            </div>
+                            <div class="grid grid-cols-1 min-[800px]:grid-cols-2 gap-8 w-full p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                <div >
+                                    <div class="justify-left">
+                                        <label for="discussed_with" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discussed with<span class="text-red-600">*</span></label> 
+                                    </div>
+                                    <div class="grid grid-cols-1 items-center justify-center w-full">
+                                        @if($discussed_with)
+                                        <label for="discussed_with" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            @if(is_string($discussed_with) == True)
+                                                @php
+                                                    $discussed_with = $this->getDiscussedWith();
+                                                @endphp
+                                                <img src="data:image/gif;base64,{{ base64_encode($discussed_with) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                            @else
+                                                <img src="{{ $discussed_with->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                            @endif
+                                            <input disabled id="discussed_with" type="file" class="hidden" wire:model.live="discussed_with">
+                                        </label>
+                                        @else
+                                            <label for="discussed_with" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                    <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                    </svg>
+                                                    <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                    <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                                </div>
+                                                <input  disabled id="discussed_with" type="file" class="hidden" wire:model.blur="discussed_with">
+                                            </label>
+                                        @endif
+                                        @error('discussed_with')
+                                        <div class="transition transform alert alert-danger"
+                                                x-init="$el.closest('form').scrollIntoView()">
+                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                        </div> 
+                                        @enderror
+                                    </div> 
+                                </div>
+                                <div class="w-full pr-4">
+                                    <label for="brand"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discussed Date<span class="text-red-600">*</span></label>
+                                        <input type="date" name="disscused_with_date" id="disscused_with_date" value="{{$employeeRecordDate}}" wire:model="disscused_with_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            placeholder="Last name" disabled>
+                                    @error('disscused_with_date')
+                                            <div class="transition transform alert alert-danger"
+                                                    x-init="$el.closest('form').scrollIntoView()">
+                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                            </div> 
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+
+                   <div class="p-6 pt-8 bg-gray-100 border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                    <div class=" mb-4">
+                        <h2><b>Comments and Recommendations</b></h2>
+                    </div>
                     <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="grid gap-4 sm:grid-cols-1 lg:grid-cols-2 sm:gap-6 ">
                             <div>
@@ -575,11 +639,12 @@
                             </div>
     
                         </div>
-                    </div>
+                        </div>
 
+                   </div>
                     <br>
 
-                    <div class="grid gap-4 grid-cols-1 sm:gap-6 w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                    <div class="grid gap-4 grid-cols-1 sm:gap-6 w-full col-span-3 p-6 pt-8 bg-gray-100 border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                             <div class="grid grid-cols-1 col-span-3  p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                 <div class="flex-none pb-4">
                                     <h2><b>Assessed By:</b></h2>

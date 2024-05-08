@@ -261,7 +261,7 @@
                                                     </div>
                 
                                                     <div class="w-full">
-                                                        <label
+                                                        <label for="coreFunctions_{{$index}}_A"
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
                                                         <select id="coreFunctions_{{$index}}_A" wire:model.change="coreFunctions.{{$index}}.A"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -403,7 +403,7 @@
                                                     <div class="w-full">
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q<span class="text-red-600">*</span></label>
-                                                        <select id="smtpQ" id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
+                                                        <select  id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                             <option selected >Pick</option>
                                                             <option value="5">5</option>
@@ -412,7 +412,6 @@
                                                             <option value="2">2</option>
                                                             <option value="1">1</option>
                                                         </select>
-                                                     
                                                         @error('supportiveFunctions.' . $index . '.Q')   
                                                             <div class="transition transform alert alert-danger text-sm"
                                                                 x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_Q').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_Q').focus();" >
@@ -424,7 +423,7 @@
                                                     <div class="w-full">
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E<span class="text-red-600">*</span></label>
-                                                        <select id="smtpE" id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
+                                                        <select id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                             <option selected>Pick</option>
                                                             <option value="5">5</option>
@@ -444,7 +443,7 @@
                                                     <div class="w-full ">
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                        <select id="smtpT" id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
+                                                        <select  id="supportiveFunctions_{{$index}}_T" wire:model.change="supportiveFunctions.{{$index}}.T"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                             <option selected>Pick</option>
                                                             <option value="5">5</option>
@@ -464,7 +463,7 @@
                                                     <div class="w-full">
                                                         <label
                                                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
-                                                        <select id="smtpA" id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
+                                                        <select id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                             <option selected>Pick</option>
                                                             <option value="5">5</option>
@@ -584,9 +583,9 @@
                                             </label>
                                         @endif
                                         @error('discussed_with')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                        <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('discussed_with').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('discussed_with').focus();" >
+                                                <span class="text-red-500 text-xs" > {{$message}}</span>
                                         </div> 
                                         @enderror
                                     </div>
@@ -598,10 +597,10 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Last name" required="">
                                     @error('disscused_with_date')
-                                            <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('label').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                            </div> 
+                                        <div class="transition transform alert alert-danger text-sm"
+                                        x-data x-init="document.getElementById('disscused_with_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('disscused_with_date').focus();" >
+                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                        </div> 
                                     @enderror
                                 </div>
                             </div>

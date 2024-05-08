@@ -201,8 +201,6 @@ class ApproveLeaveRequestForm extends Component
         'human_resource_verdict_cd' => 'HR Officer C',
         'head_disapprove_reason' => 'Department Head Disapprove Reason',
         'hr_cd_disapprove_reason' => 'HR Office Disapprove Reason',
-
-
     ];
 
     public function submit(){

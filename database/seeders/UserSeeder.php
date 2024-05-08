@@ -52,8 +52,11 @@ class UserSeeder extends Seeder
         $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
         $employee->end_of_employment = Carbon::createFromDate(2024, 4, 9);
         $employee->faculty_or_not = true;
+        $employee->study_available_units = 20;
+        $employee->teach_available_units = 10;
         $employee->school_email = 'comsci@plm.edu.ph'; 
         $employee->employee_history = '[{"end_date": "2024-03-02", "start_date": "2024-03-02", "prev_position": "Software Engineer", "name_of_company": "Accenture"}, {"end_date": "2023-03-02", "start_date": "2022-03-02", "prev_position": "Junior Developer", "name_of_company": "IBM"}, {"end_date": "2022-03-02", "start_date": "2021-02-07", "prev_position": "Intern Developer", "name_of_company": "EasyPC"}]';
+        
         // Emp Image
         $imageContent = file_get_contents(public_path('storage/photos/demofiles/Picture.webp'));
         $destinationPath = 'photos/avatar/Picture.webp';

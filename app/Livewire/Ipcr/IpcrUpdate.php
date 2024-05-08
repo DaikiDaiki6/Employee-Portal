@@ -55,6 +55,7 @@ class IpcrUpdate extends Component
         $suppData = json_decode($ipcrData->supp_admin_functions, true);
         $this->coreFunctions = $coreData;
         $this->core_rating = $ipcrData->core_rating;
+        // dd($this->coreFunctions);
         $this->supportiveFunctions = $suppData;
         $this->supp_admin_rating = $ipcrData->supp_admin_rating;
         $this->final_average_rating = $ipcrData->final_average_rating;
@@ -78,20 +79,20 @@ class IpcrUpdate extends Component
 
 
     public function addCoreFunction(){
-        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function addSupportiveFunction(){
-        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
+        $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
     public function removeCoreFunction($index){
-        unset($this->coreFunctions[$index]);
+        // unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
     }
 
     public function removeSupportiveFunction($index){
-        unset($this->supportiveFunctions[$index]);
+        // unset($this->supportiveFunctions[$index]);
         $this->supportiveFunctions = array_values($this->supportiveFunctions);
     }
 
@@ -204,10 +205,9 @@ class IpcrUpdate extends Component
 
         $loggedInUser = auth()->user();
 
-        // dd($this->assessed_by);
         $ipcr = $this->editIpcr($this->index);
         $ipcr->employee_id = $loggedInUser->employee_id;
-        $ipcr->ipcr_type = 'Target';
+        // $ipcr->ipcr_type = $ipcr->ipcr_type;
         $ipcr->date_of_filling = $this->date_of_filling;
         $ipcr->position = $this->employeeRecord[0]->department_name;
         $ipcr->start_period = $this->start_period;
@@ -243,29 +243,60 @@ class IpcrUpdate extends Component
         $jsonCoreData = [];
         $jsonSupportiveData = [];
         
-        foreach($this->coreFunctions as $coreFunction){
-            $jsonCoreData[] = [
-                'output' => $coreFunction['output'],
-                'indicator' => $coreFunction['indicator'],
-                'accomp' => $coreFunction['accomp'],
-                'Q' => $coreFunction['Q'],
-                'E' => $coreFunction['E'],
-                'T' => $coreFunction['T'],
-                'A' => $coreFunction['A'],
-            ];
-        }
+        if($ipcr->ipcr_type == 'target'){
+            foreach($this->coreFunctions as $coreFunction){
+                $jsonCoreData[] = [
+                    'output' => $coreFunction['output'],
+                    'indicator' => $coreFunction['indicator'],
+                    'accomp' => $coreFunction['accomp'],
+                    'Q' => $coreFunction['Q'],
+                    'E' => $coreFunction['E'],
+                    'T' => $coreFunction['T'],
+                    'A' => $coreFunction['A'],
+                ];
+            }
+    
+            foreach($this->supportiveFunctions as $supportiveFunction){
+                $jsonSupportiveData[] = [
+                    'output' => $supportiveFunction['output'],
+                    'indicator' => $supportiveFunction['indicator'],
+                    'accomp' => $supportiveFunction['accomp'],
+                    'Q' => $supportiveFunction['Q'],
+                    'E' => $supportiveFunction['E'],
+                    'T' => $supportiveFunction['T'],
+                    'A' => $supportiveFunction['A'],
+                ];
+            }
+        } else{
+            foreach($this->coreFunctions as $coreFunction){
+                $jsonCoreData[] = [
+                    'output' => $coreFunction['output'],
+                    'indicator' => $coreFunction['indicator'],
+                    'accomp' => $coreFunction['accomp'],
+                    'weight' => $coreFunction['weight'],
+                    'remark' => $coreFunction['remark'],
+                    'Q' => $coreFunction['Q'],
+                    'E' => $coreFunction['E'],
+                    'T' => $coreFunction['T'],
+                    'A' => $coreFunction['A'],
+                ];
+            }
+    
+            foreach($this->supportiveFunctions as $supportiveFunction){
+                $jsonSupportiveData[] = [
+                    'output' => $supportiveFunction['output'],
+                    'indicator' => $supportiveFunction['indicator'],
+                    'accomp' => $supportiveFunction['accomp'],
+                    'weight' => $supportiveFunction['weight'],
+                    'remark' => $supportiveFunction['remark'],
+                    'Q' => $supportiveFunction['Q'],
+                    'E' => $supportiveFunction['E'],
+                    'T' => $supportiveFunction['T'],
+                    'A' => $supportiveFunction['A'],
+                ];
+            }
 
-        foreach($this->supportiveFunctions as $supportiveFunction){
-            $jsonSupportiveData[] = [
-                'output' => $supportiveFunction['output'],
-                'indicator' => $supportiveFunction['indicator'],
-                'accomp' => $supportiveFunction['accomp'],
-                'Q' => $supportiveFunction['Q'],
-                'E' => $supportiveFunction['E'],
-                'T' => $supportiveFunction['T'],
-                'A' => $supportiveFunction['A'],
-            ];
-        }
+        }   
 
         $jsonCoreData = json_encode($jsonCoreData);
         $jsonSupportiveData = json_encode($jsonSupportiveData);

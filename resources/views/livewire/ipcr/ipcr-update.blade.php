@@ -282,7 +282,7 @@
                                         @if($ipcr_type == "rated")
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-3 min-[1150px]:col-span-5 ">
                                             <div>
-                                                <label for="message"
+                                                <label for="coreFunctions_{{$index}}_weight"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight <span class="text-red-600">*</span></label>
                                                 <input type="text" id="coreFunctions_{{$index}}_weight" wire:model.blur="coreFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('coreFunctions.' . $index . '.weight')   
@@ -293,7 +293,7 @@
                                                 @enderror
                                             </div>
                                             <div>
-                                                <label for="message"
+                                                <label for="coreFunctions_{{$index}}_remark"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
                                                 <input type="text" id="coreFunctions_{{$index}}_remark" wire:model.blur="coreFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('coreFunctions.' . $index . '.remark')   
@@ -304,7 +304,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    @endif
+                                        @endif
                                     </div>
                                 </div>
                         
@@ -398,7 +398,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q<span class="text-red-600">*</span></label>
-                                                            <select id="smtpQ" id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
+                                                            <select id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected >Pick</option>
                                                                 <option value="5">5</option>
@@ -418,7 +418,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E<span class="text-red-600">*</span></label>
-                                                            <select id="smtpE" id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
+                                                            <select id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -438,7 +438,7 @@
                                                         <div class="w-full ">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                            <select id="smtpT" id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
+                                                            <select id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -458,7 +458,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
-                                                            <select id="smtpA" id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
+                                                            <select id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>

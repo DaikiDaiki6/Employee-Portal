@@ -35,9 +35,10 @@ return new class extends Migration
             $table->json('employee_history')->nullable();
             $table->decimal('vacation_credits')->nullable();
             $table->decimal('sick_credits')->nullable();
-
-            //Documents
+            $table->integer('study_available_units')->nullable();
+            $table->integer('teach_available_units')->nullable();
             
+            //Documents
             $table->string('emp_diploma')->nullable();
             $table->string('emp_TOR')->nullable();
             $table->string('emp_cert_of_trainings_seminars')->nullable();

@@ -53,12 +53,12 @@ class OpcrUpdate extends Component
     }
 
     public function removeCoreFunction($index){
-        unset($this->coreFunctions[$index]);
+        // unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
     }
 
     public function removeSupportiveFunction($index){
-        unset($this->supportiveFunctions[$index]);
+        // unset($this->supportiveFunctions[$index]);
         $this->supportiveFunctions = array_values($this->supportiveFunctions);
     }
 
