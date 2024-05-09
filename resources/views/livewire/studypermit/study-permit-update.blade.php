@@ -19,7 +19,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 9 4-4-4-4" />
                     </svg>
-                    <a href="{{ route('ipcrtable') }}"
+                    <a href="{{ route('StudyPermitTable') }}"
                         class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">Study
                         Permit</a>
                 </div>
@@ -589,12 +589,8 @@
                                                             <input id="cover_memo" type="file" class="hidden"
                                                             wire:model.blur="cover_memo.0" multiple>
                                                     </label>
-                                                   
-                                                    {{-- @php
-                                                        dump($cover_memo);
-                                                    @endphp --}}
                                                 @endif
-                                                @error('cover_memo_container')
+                                                @error('cover_memo.' .{{$index}})
                                                     <div class="transition transform alert alert-danger text-sm" x-data
                                                         x-init="document.getElementById('cover_memo_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                         document.getElementById('cover_memo_container').focus();">
@@ -1437,7 +1433,7 @@
                                                             wire:model.blur="student_faculty_eval.0" multiple>
                                                     </label>                                                   
                                                 @endif
-                                                @error('student_faculty_eval_container')
+                                                @error('student_faculty_eval')
                                                     <div class="transition transform alert alert-danger text-sm" x-data
                                                         x-init="document.getElementById('student_faculty_eval_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                         document.getElementById('student_faculty_eval_container').focus();">
@@ -1575,10 +1571,10 @@
                                                             wire:model.blur="rated_ipcr.0" multiple>
                                                     </label>                                                   
                                                 @endif
-                                                @error('rated_ipcr_container')
+                                                @error('rated_ipcr')
                                                     <div class="transition transform alert alert-danger text-sm" x-data
-                                                        x-init="document.getElementById('rated_ipcr_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                        document.getElementById('rated_ipcr_container').focus();">
+                                                        x-init="document.getElementById('rated_ipcr').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                        document.getElementById('rated_ipcrr').focus();">
                                                         <span class="text-red-500 text-xs "> {{ $message }}</span>
                                                     </div>
                                                 @enderror

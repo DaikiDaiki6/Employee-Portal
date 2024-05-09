@@ -143,19 +143,19 @@ class StudyPermitForm extends Component
         'subjectLoad.*.days' => 'required',
         'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
         'subjectLoad.*.end_time' => 'required|after_or_equal:subjectLoad.*.start_time',
-        'subjectLoad.*.number_of_units' => 'required|min:2',
+        'subjectLoad.*.number_of_units' => 'required|min:1',
         'units_enrolled' => 'required|lte:study_available_units',
         'total_teaching_load' => 'required|numeric',
         'total_aggregate_load' => 'required|numeric',
         'applicant_signature' => 'required|mimes:jpg,bmp,png,pdf',
-        'cover_memo.*' => 'required|file|mimes:jpg,bmp,png,pdf|max:3',
-        'request_letter.*' => 'required|file|mimes:jpg,bmp,png,pdf|max:3',
-        'summary_of_schedule.*' => 'required|file|mimes:jpg,bmp,png,pdf|max:3',
-        'rated_ipcr.*' => 'required|file|mimes:jpg,bmp,png,pdf|max:3',
-        'teaching_assignment.*' => 'file|mimes:jpg,bmp,png,pdf|max:3',
-        'certif_of_grades.*' => 'file|mimes:jpg,bmp,png,pdf|max:3',
-        'study_plan.*' => 'file|mimes:jpg,bmp,png,pdf|max:3',
-        'student_faculty_eval.*' => 'file|mimes:jpg,bmp,png,pdf|max:3',        
+        'cover_memo.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        'request_letter.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        'summary_of_schedule.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        'rated_ipcr.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        'teaching_assignment.*' => 'mimes:jpg,bmp,png,pdf|max:3',
+        'certif_of_grades.*' => 'mimes:jpg,bmp,png,pdf|max:3',
+        'study_plan.*' => 'mimes:jpg,bmp,png,pdf|max:3',
+        'student_faculty_eval.*' => 'mimes:jpg,bmp,png,pdf|max:3',        
     ];
 
     protected $validationAttributes = [
@@ -166,7 +166,7 @@ class StudyPermitForm extends Component
         'subjectLoad.*.days' => 'Days',
         'subjectLoad.*.start_time' => 'Start Time',
         'subjectLoad.*.end_time' => 'End Time',
-        'subjectLoad.*.number_of_units' => 'number_of_units',
+        'subjectLoad.*.number_of_units' => 'Number of Units',
         'units_enrolled' => 'Units Enrolled',
     ];
 
@@ -264,7 +264,7 @@ class StudyPermitForm extends Component
         $studypermitdata->applicant_signature = $this->applicant_signature->store('photos/studypermit/applicant_signature', 'local');
         $studypermitdata->status = 'Pending';
         $studypermitdata->total_units_enrolled = $this->total_units_enrolled;
-        $studypermitdata->available_units = $this->available_units;
+        $studypermitdata->available_units = $this->study_available_units;
         // $studypermitdata->cover_memo = $this->cover_memo->store('photos/studypermit/cover_memo', 'local');
         // $studypermitdata->request_letter = $this->request_letter->store('photos/studypermit/request_letter', 'local');
         // $studypermitdata->summary_of_schedule = $this->summary_of_schedule->store('photos/studypermit/summary_schedule', 'local');
@@ -297,10 +297,10 @@ class StudyPermitForm extends Component
             $studypermitdata->$field = $fileNames;
         }
         
-        $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
-        $studypermitdata->date_recommended_by = $this->date_recommended_by;
-        $studypermitdata->signature_endorsed_by = $this->signature_endorsed_by->store('photos/studypermit/endorsed_by', 'local');
-        $studypermitdata->date_endorsed_by = $this->date_endorsed_by;
+        // $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
+        // $studypermitdata->date_recommended_by = $this->date_recommended_by;
+        // $studypermitdata->signature_endorsed_by = $this->signature_endorsed_by->store('photos/studypermit/endorsed_by', 'local');
+        // $studypermitdata->date_endorsed_by = $this->date_endorsed_by;
 
         foreach($this->subjectLoad as $load){
             $jsonSubjectLoad[] = [

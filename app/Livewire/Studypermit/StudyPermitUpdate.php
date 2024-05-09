@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Studypermit;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 
 class StudyPermitUpdate extends Component
@@ -137,10 +138,115 @@ class StudyPermitUpdate extends Component
         // dump($this->cover_memo);
     }
 
-    public function submit(){
-        // $this->validate();
+    protected $rules = [
+        'start_period_cover' => 'required|after_or_equal:application_date',
+        'end_period_cover' => 'required|after_or_equal:start_period_cover',
+        'degree_prog_and_school' => 'required|min:20',
+        'subjectLoad.*.subject' => 'required|min:2',
+        'subjectLoad.*.days' => 'required',
+        'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
+        'subjectLoad.*.end_time' => 'required|after_or_equal:subjectLoad.*.start_time',
+        'subjectLoad.*.number_of_units' => 'required|min:1',
+        'units_enrolled' => 'required|lte:study_available_units',
+        'total_teaching_load' => 'required|numeric',
+        'total_aggregate_load' => 'required|numeric',
+        'applicant_signature' => 'required|mimes:jpg,bmp,png,pdf',
+        // 'cover_memo.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        // 'request_letter.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        // 'summary_of_schedule.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        // 'rated_ipcr.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        // 'teaching_assignment.*' => 'mimes:jpg,bmp,png,pdf|max:3',
+        // 'certif_of_grades.*' => 'mimes:jpg,bmp,png,pdf|max:3',
+        // 'study_plan.*' => 'mimes:jpg,bmp,png,pdf|max:3',
+        // 'student_faculty_eval.*' => 'mimes:jpg,bmp,png,pdf|max:3',        
+    ];
 
-        // dd($this->days);
+    protected $validationAttributes = [
+        'application_date' => 'Application Date',
+        'start_period_cover' => 'Start Period Cover',
+        'end_period_cover' => 'End Period Cover',
+        'subjectLoad.*.subject' => 'Subject',
+        'subjectLoad.*.days' => 'Days',
+        'subjectLoad.*.start_time' => 'Start Time',
+        'subjectLoad.*.end_time' => 'End Time',
+        'subjectLoad.*.number_of_units' => 'Number of Units',
+        'units_enrolled' => 'Units Enrolled',
+    ];
+
+    public function submit(){
+        $this->validate();
+
+        $days_and_time2 = array();
+        $conflictFlag = False;
+        foreach($this->subjectLoad as $load){
+            $confirmedDate = array();
+            foreach ($load['days'] as $day){
+                $confirmedDate[] = $day.'["'.$load['start_time'].'"]'.' ["'.$load['end_time'].'"]'.'|'.$load['subject'];
+            }
+
+            $days_and_time2 = array_merge($days_and_time2, $confirmedDate);           
+        }
+        // dd($days_and_time2);
+        
+
+        foreach($this->subjectLoad as $index  => $load ){
+            $confirmedDate = array();
+            $subjectName = $load['subject'];
+
+
+            foreach($load['days'] as $day){
+                $confirmedDate[] = $day.'["'.$load['start_time'].'"]'. ' ["'.$load['end_time'].'"]'.'|'.$subjectName;
+            }
+            
+            foreach ($confirmedDate as $date){
+                $ctr = 0;
+                list($day, $timeString) = explode('["', $date, 2);
+                                                                               
+                // Add the missing '[' back to the time string
+                $timeString = '[' . $timeString;
+                // Remove the square brackets and quotes from the string
+                $timeString = str_replace(['[', ']', '"'], '', $timeString);
+                $timeString = explode("|", $timeString);
+                $dateName =  $timeString;
+                $timeString = trim($timeString[0]);
+
+                $times = explode(' ', $timeString);
+                                                                               
+                list($startTime, $endTime) = $times;
+                if ($days_and_time2){
+                    foreach ($days_and_time2 as $exist){
+                        list($day, $timeString) = explode('["', $exist, 2);
+                    
+                        // Add the missing '[' back to the time string
+                        $timeString = '[' . $timeString;
+                        
+                        // Remove the square brackets and quotes from the string
+                        $timeString = str_replace(['[', ']', '"'], '', $timeString);
+                        $timeString = explode("|", $timeString);
+                        $existsName = $timeString;
+                        $timeString = trim($timeString[0]);
+
+                        $times = explode(' ', $timeString);
+                        list($exitingTimeStart, $exitingTimeEnd) = $times;
+                        if ($exist === $date){
+                            $ctr = $ctr + 1;
+                        }
+                        else if ((($dateName === $existsName) === False) && (($startTime >= $exitingTimeStart && $startTime <= $exitingTimeEnd) || 
+                        ($endTime >= $exitingTimeStart && $endTime <= $exitingTimeEnd) ||
+                        ($startTime <= $exitingTimeStart && $endTime >= $exitingTimeEnd))) {
+                                $conflictFlag = True;
+                            }
+                        if ($ctr >= 2){ 
+                                $conflictFlag = True;
+                                // $this->addError('subjectLoad.*.start_time' , 'The selected time slot conflicts with an existing schedule. Please choose a different time.');
+                        }
+                    }
+                }                              
+                
+            }
+        }
+        $this->validate(['subjectLoad.*.start_time' => Rule::prohibitedIf($conflictFlag)]);
+
 
         $loggedInUser = auth()->user();
         $studypermitdata = Studypermit::findOrFail($this->index);
