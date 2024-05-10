@@ -148,7 +148,7 @@ class StudyPermitForm extends Component
         'total_teaching_load' => 'required|numeric',
         'total_aggregate_load' => 'required|numeric',
         'applicant_signature' => 'required|mimes:jpg,bmp,png,pdf',
-        'cover_memo.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
+        'cover_memo.*' => 'required|mimes:jpg,bmp,png,pdf|min:1|max:3',
         'request_letter.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
         'summary_of_schedule.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
         'rated_ipcr.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
@@ -168,6 +168,7 @@ class StudyPermitForm extends Component
         'subjectLoad.*.end_time' => 'End Time',
         'subjectLoad.*.number_of_units' => 'Number of Units',
         'units_enrolled' => 'Units Enrolled',
+        'cover_memo.*' => 'Cover Memo'
     ];
 
     
