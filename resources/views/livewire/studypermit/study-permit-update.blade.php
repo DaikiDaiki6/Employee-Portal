@@ -540,22 +540,11 @@
                                                                             wire:model="cover_memo.{{ $index }}.{{$insideIndex}}">
                                                                 </label>
                                                             @endif
-                                                        @error('cover_memo.'. $index . '.' . $insideIndex)
-                                                            <div class="transition transform alert alert-danger text-sm" x-data
-                                                                x-init="document.getElementById('cover_memo_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                                document.getElementById('cover_memo_container').focus();">
-                                                                <span class="text-red-500 text-xs "> {{ $message }}</span>
-                                                            </div>
-                                                        @enderror
                                                         @endforeach
                                                     @endif
-                                                    @error('cover_memo.'. $index)
-                                                        <div class="transition transform alert alert-danger text-sm" x-data
-                                                            x-init="document.getElementById('cover_memo_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                            document.getElementById('cover_memo_container').focus();">
-                                                            <span class="text-red-500 text-xs "> {{ $message }}</span>
-                                                        </div>
-                                                    @enderror
+                                                        @php
+                                                            $indexRequestLetter = $index;
+                                                        @endphp
                                                     @endforeach
                                                     <label for="cover_memo_{{ $indexRequestLetter + 1 }}"
                                                         class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -601,7 +590,7 @@
                                                             wire:model.blur="cover_memo.0" multiple>
                                                     </label>
                                                 @endif
-                                                @error('cover_memo.' .$index)
+                                                @error('cover_memo_container')
                                                     <div class="transition transform alert alert-danger text-sm" x-data
                                                         x-init="document.getElementById('cover_memo_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                         document.getElementById('cover_memo_container').focus();">
@@ -1444,7 +1433,7 @@
                                                             wire:model.blur="student_faculty_eval.0" multiple>
                                                     </label>                                                   
                                                 @endif
-                                                @error('student_faculty_eval')
+                                                @error('student_faculty_eval_container')
                                                     <div class="transition transform alert alert-danger text-sm" x-data
                                                         x-init="document.getElementById('student_faculty_eval_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                         document.getElementById('student_faculty_eval_container').focus();">
@@ -1582,10 +1571,10 @@
                                                             wire:model.blur="rated_ipcr.0" multiple>
                                                     </label>                                                   
                                                 @endif
-                                                @error('rated_ipcr')
+                                                @error('rated_ipcr_container')
                                                     <div class="transition transform alert alert-danger text-sm" x-data
-                                                        x-init="document.getElementById('rated_ipcr').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                        document.getElementById('rated_ipcrr').focus();">
+                                                        x-init="document.getElementById('rated_ipcr_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                        document.getElementById('rated_ipcr_container').focus();">
                                                         <span class="text-red-500 text-xs "> {{ $message }}</span>
                                                     </div>
                                                 @enderror

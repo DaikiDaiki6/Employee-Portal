@@ -8,6 +8,7 @@ use App\Models\Employee;
 use App\Models\Studypermit;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class StudyPermitForm extends Component
 {
@@ -57,6 +58,8 @@ class StudyPermitForm extends Component
 
     public $units_enrolled;
 
+    public $cover_memo_ctr;
+
 
     public function mount(){
         $loggedInUser = auth()->user();
@@ -93,6 +96,21 @@ class StudyPermitForm extends Component
         // $this->$requestName =  array_values($this->$requestName);
         // dump($this->cover_memo);
         
+    }
+
+    public function removeArrayImage($index, $request, $insideIndex = null){
+        // dump($this->cover_memo);
+        $requestName = str_replace(' ', '_', $request);
+        $requestName = strtolower($requestName);
+        if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
+            unset($this->$requestName[$index][$insideIndex]);
+            // dd($index, $insideIndex);
+        }
+        else{
+            unset($this->$requestName[$index]);
+            $this->$requestName =  array_values($this->$requestName);
+        }
+        // dump($this->cover_memo);
     }
 
     public function updated($key){
@@ -147,15 +165,31 @@ class StudyPermitForm extends Component
         'units_enrolled' => 'required|lte:study_available_units',
         'total_teaching_load' => 'required|numeric',
         'total_aggregate_load' => 'required|numeric',
-        'applicant_signature' => 'required|mimes:jpg,bmp,png,pdf',
-        'cover_memo.*' => 'required|mimes:jpg,bmp,png,pdf|min:1|max:3',
-        'request_letter.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
-        'summary_of_schedule.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
-        'rated_ipcr.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
-        'teaching_assignment.*' => 'mimes:jpg,bmp,png,pdf|max:3',
-        'certif_of_grades.*' => 'mimes:jpg,bmp,png,pdf|max:3',
-        'study_plan.*' => 'mimes:jpg,bmp,png,pdf|max:3',
-        'student_faculty_eval.*' => 'mimes:jpg,bmp,png,pdf|max:3',        
+        'applicant_signature' => 'required|mimes:jpg,png,pdf',
+        'cover_memo' => 'required|array|min:1|max:3',
+        'cover_memo.*' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'cover_memo.*.*' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'request_letter' => 'required|array|min:1|max:3',
+        'request_letter.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'request_letter.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'teaching_assignment' => 'nullable|array|max:3',
+        'teaching_assignment.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'teaching_assignment.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'summary_of_schedule' => 'required|array|min:1|max:3',
+        'summary_of_schedule.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'summary_of_schedule.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'rated_ipcr' => 'required|array|min:1|max:3',
+        'rated_ipcr.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'rated_ipcr.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'certif_of_grades' => 'nullable|array|max:3',
+        'certif_of_grades.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'certif_of_grades.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'study_plan' => 'nullable|array|max:3',
+        'study_plan.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'study_plan.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'student_faculty_eval' => 'nullable|array|max:3',
+        'student_faculty_eval.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'student_faculty_eval.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
     ];
 
     protected $validationAttributes = [
@@ -168,14 +202,39 @@ class StudyPermitForm extends Component
         'subjectLoad.*.end_time' => 'End Time',
         'subjectLoad.*.number_of_units' => 'Number of Units',
         'units_enrolled' => 'Units Enrolled',
-        'cover_memo.*' => 'Cover Memo'
+        // 'cover_memo' => 'Cover Memo',
+        // 'cover_memo.*' => 'Cover Memo',
+        // 'cover_memo.*.*' => 'Cover Memo',
+        'request_letter' => 'Request Letter',
+        'request_letter.*' => 'Request Letter',
+        'request_letter.*.*' => 'Request Letter',
+        'teaching_assignment' => 'Teaching Assignment',
+        'teaching_assignment.*' => 'Teaching Assignment',
+        'teaching_assignment.*.*' => 'Teaching Assignment',
+        'summary_of_schedule' => 'Summary of Schedule',
+        'summary_of_schedule.*' => 'Summary of Schedule',
+        'summary_of_schedule.*.*' => 'Summary of Schedule',
+        'rated_ipcr' => 'Rated IPCR',
+        'rated_ipcr.*' => 'Rated IPCR',
+        'rated_ipcr.*.*' => 'Rated IPCR',
+        'certif_of_grades' => 'Certificate of Grades',
+        'certif_of_grades.*' => 'Certificate of Grades',
+        'certif_of_grades.*.*' => 'Certificate of Grades',
+        'study_plan' => 'Study Plan',
+        'study_plan.*' => 'Study Plan',
+        'study_plan.*.*' => 'Study Plan',
+        'student_faculty_eval' => 'Student Faculty Evaluation',
+        'student_faculty_eval.*' => 'Student Faculty Evaluation',
+        'student_faculty_eval.*.*' => 'Student Faculty Evaluation',
     ];
 
     
 
 
     public function submit(){
+
         $this->validate();
+        // dd($this->cover_memo);
 
         $days_and_time2 = array();
         $conflictFlag = False;
@@ -288,15 +347,51 @@ class StudyPermitForm extends Component
             'study_plan',
             'student_faculty_eval',
         ];
-        
+
         foreach ($fileFields as $field) {
-            $fileNames = [];
-            foreach($this->$field as $item){
-                $itemName = $item->store("photos/studypermit/$field", 'local');
-                $fileNames[] = $itemName;
+            $fileNames = [];            
+            $ctrField = count($this->$field) - 1 ;
+            $ctr = 0;
+            foreach($this->$field as $index => $item){
+                $ctr += 1;
+                if(is_string($item)){
+                    $fileNames[] = $item;  
+                }
+                else if(is_array($item)){
+                   
+                    foreach($item as $file){
+                        if(is_string($item)){
+                            $fileNames[] = $file;
+                        }
+                        else{ 
+                            $itemName = $file->store("photos/studypermit/$field", 'local');
+                            $fileNames[] = $itemName;
+                            if($studypermitdata->$field != null && $ctr <= $ctrField){
+                                Storage::delete($studypermitdata->$field[$index]);
+                            }
+                        }
+                    }
+                }
+                // else{
+                //     $itemName = $item->store("photos/studypermit/$field", 'local');
+                //     $fileNames[] = $itemName;
+                //     Storage::delete($studypermitdata->$field[$index]);
+
+                // }
+
+                
             }
             $studypermitdata->$field = $fileNames;
         }
+        
+        // foreach ($fileFields as $field) {
+        //     $fileNames = [];
+        //     foreach($this->$field as $item){
+        //         $itemName = $item->store("photos/studypermit/$field", 'local');
+        //         $fileNames[] = $itemName;
+        //     }
+        //     $studypermitdata->$field = $fileNames;
+        // }
         
         // $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
         // $studypermitdata->date_recommended_by = $this->date_recommended_by;

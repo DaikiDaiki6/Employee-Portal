@@ -19,16 +19,16 @@ class UserSeeder extends Seeder
     public function run(): void
     { 
 
-        for($i = 0; $i <= 30; $i++){
-            Dailytimerecord::create([
-                'employee_id' => '202132321',
-                'attendance_date' => Carbon::createFromDate(2024, 5, $i),
-                'time_in' => $i.':00',
-                'time_out' => $i.':'.$i,
-                'late' => 1,
-                'status' => 1,
-            ]);
-        }
+        // for($i = 0; $i <= 30; $i++){
+        //     Dailytimerecord::create([
+        //         'employee_id' => '202132321',
+        //         'attendance_date' => Carbon::createFromDate(2024, 5, $i),
+        //         'time_in' => $i.':00',
+        //         'time_out' => $i.':'.$i,
+        //         'late' => 1,
+        //         'status' => 1,
+        //     ]);
+        // }
         
         $employee = new Employee();
         $employee->employee_id = '202132321';
