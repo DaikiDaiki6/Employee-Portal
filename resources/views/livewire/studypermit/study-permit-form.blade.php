@@ -1183,8 +1183,8 @@
                                                             wire:model.blur="study_plan.0" multiple>
                                                     </label>                                                   
                                                 @endif
-                                                @error('study_plan_container')
-                                                    <div class="transition transform alert alert-danger text-sm" x-data
+                                                @error('study_plan')
+                                                    <div class="transition transform alert alert-danger text-sm mb-1" x-data
                                                         x-init="document.getElementById('study_plan_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                         document.getElementById('study_plan_container').focus();">
                                                         <span class="text-red-500 text-xs "> {{ $message }}</span>
@@ -1204,7 +1204,6 @@
                                             <div class="grid grid-cols-1   w-full">
                                                 @if ($student_faculty_eval)
                                                     @foreach ($student_faculty_eval as $index => $item)
-                                                    @if(is_string($item) == true)
                                                         <div>
                                                             <label for="student_faculty_eval_{{ $index }}"
                                                                 class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -1230,7 +1229,6 @@
                                                                     wire:model="student_faculty_eval.{{ $index }}" multiple>
                                                             </label>
                                                         </div>
-                                                    @else
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="student_faculty_eval_{{ $index }}.{{$insideIndex}}"
@@ -1275,11 +1273,22 @@
                                                                             wire:model="student_faculty_eval.{{ $index }}.{{$insideIndex}}">
                                                                 </label>
                                                             @endif
+                                                            @error('student_faculty_eval.' . $index .  '.' .  $insideIndex)
+                                                                <div class="transition transform alert alert-danger text-sm mb-1"
+                                                                        x-data x-init="document.getElementById('student_faculty_eval_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('student_faculty_eval_container').focus();">
+                                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                                </div> 
+                                                            @enderror
                                                         @endforeach
-                                                    @endif
                                                         @php
                                                             $indexRequestLetter = $index;
                                                         @endphp
+                                                         @error('student_faculty_eval.' . $index - $insideIndex)
+                                                            <div class="transition transform alert alert-danger text-sm mb-1"
+                                                                    x-data x-init="document.getElementById('student_faculty_eval_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('student_faculty_eval_container').focus();">
+                                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                            </div> 
+                                                        @enderror
                                                     @endforeach
                                                     <label for="student_faculty_eval_{{ $indexRequestLetter + 1 }}"
                                                         class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -1325,8 +1334,8 @@
                                                             wire:model.blur="student_faculty_eval.0" multiple>
                                                     </label>                                                   
                                                 @endif
-                                                @error('student_faculty_eval_container')
-                                                    <div class="transition transform alert alert-danger text-sm" x-data
+                                                @error('student_faculty_eval')
+                                                    <div class="transition transform alert alert-danger text-sm mb-1" x-data
                                                         x-init="document.getElementById('student_faculty_eval_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                         document.getElementById('student_faculty_eval_container').focus();">
                                                         <span class="text-red-500 text-xs "> {{ $message }}</span>
@@ -1368,7 +1377,6 @@
                                                                     wire:model="rated_ipcr.{{ $index }}" multiple>
                                                             </label>
                                                         </div>
-                                                    @else
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="rated_ipcr_{{ $index }}.{{$insideIndex}}"
@@ -1413,11 +1421,22 @@
                                                                             wire:model="rated_ipcr.{{ $index }}.{{$insideIndex}}">
                                                                 </label>
                                                             @endif
+                                                            @error('rated_ipcr.' . $index .  '.' .  $insideIndex)
+                                                                <div class="transition transform alert alert-danger text-sm mb-1"
+                                                                        x-data x-init="document.getElementById('rated_ipcr_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('rated_ipcrr_container').focus();">
+                                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                                </div> 
+                                                            @enderror
                                                         @endforeach
-                                                    @endif
                                                         @php
                                                             $indexRequestLetter = $index;
                                                         @endphp
+                                                        @error('rated_ipcr.' . $index - $insideIndex)
+                                                            <div class="transition transform alert alert-danger text-sm mb-1"
+                                                                    x-data x-init="document.getElementById('rated_ipcr_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('rated_ipcr_container').focus();">
+                                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                            </div> 
+                                                        @enderror
                                                     @endforeach
                                                     <label for="rated_ipcr_{{ $indexRequestLetter + 1 }}"
                                                         class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
