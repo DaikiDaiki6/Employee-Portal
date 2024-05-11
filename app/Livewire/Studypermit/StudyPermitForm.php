@@ -100,11 +100,15 @@ class StudyPermitForm extends Component
 
     public function removeArrayImage($index, $request, $insideIndex = null){
         // dump($this->cover_memo);
+            // dump($this->$requestName, $index, $insideIndex);
+
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
         if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
             unset($this->$requestName[$index][$insideIndex]);
-            // dd($index, $insideIndex);
+            // dump($this->$requestName);
+            $this->$requestName[$index] = array_values($this->$requestName[$index]);
+            // dd($this->$requestName, $index, $insideIndex);
         }
         else{
             unset($this->$requestName[$index]);
@@ -167,29 +171,29 @@ class StudyPermitForm extends Component
         'total_aggregate_load' => 'required|numeric',
         'applicant_signature' => 'required|mimes:jpg,png,pdf',
         'cover_memo' => 'required|array|min:1|max:3',
-        'cover_memo.*' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
-        'cover_memo.*.*' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'cover_memo.*' => 'required|array',
+        'cover_memo.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
         'request_letter' => 'required|array|min:1|max:3',
-        'request_letter.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'request_letter.*' => 'array',
         'request_letter.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
         'teaching_assignment' => 'nullable|array|max:3',
-        'teaching_assignment.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'teaching_assignment.*' => 'required|array',
         'teaching_assignment.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
         'summary_of_schedule' => 'required|array|min:1|max:3',
-        'summary_of_schedule.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'summary_of_schedule.*' => 'required|array',
         'summary_of_schedule.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
-        'rated_ipcr' => 'required|array|min:1|max:3',
-        'rated_ipcr.*' => 'required|mimes:jpg,png,pdf|max:5120',
-        'rated_ipcr.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
         'certif_of_grades' => 'nullable|array|max:3',
-        'certif_of_grades.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'certif_of_grades.*' => 'required|array',
         'certif_of_grades.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
         'study_plan' => 'nullable|array|max:3',
-        'study_plan.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'study_plan.*' => 'required|array',
         'study_plan.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
         'student_faculty_eval' => 'nullable|array|max:3',
-        'student_faculty_eval.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'student_faculty_eval.*' => 'required|array',
         'student_faculty_eval.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'rated_ipcr' => 'required|array|min:1|max:3',
+        'rated_ipcr.*' => 'required|array',
+        'rated_ipcr.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
     ];
 
     protected $validationAttributes = [
@@ -232,7 +236,7 @@ class StudyPermitForm extends Component
 
 
     public function submit(){
-
+        // dd($this->cover_memo);
         $this->validate();
         // dd($this->cover_memo);
 

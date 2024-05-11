@@ -38,11 +38,11 @@
                             {{-- Application Date --}}
 
                             <div class="grid min-[1000px]:grid-cols-2  col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                <div class="w-full">
+                                <div class="">
                                     <label for="application_date"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Filling<span class="text-red-600">*</span></label>
+                                        class="block mb-2 text-sm  font-medium text-gray-900 dark:text-white">Date of Filling<span class="text-red-600">*</span></label>
                                     <input type="date" wire:model="application_date" 
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        class="bg-gray-50 border min-[600px]:w-1/3 min-[900px]:w-1/3 min-[1150px]:w-1/4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                          required disabled>
                                 </div>
                             </div>
@@ -402,7 +402,7 @@
                                                             @endif
                                                             @error('cover_memo.' . $index .  '.' .  $insideIndex)
                                                                 <div class="transition transform alert alert-danger text-sm mb-1"
-                                                                        x-data x-init="document.getElementById('request_letter_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_letter_container').focus();">
+                                                                        x-data x-init="document.getElementById('cover_memo_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('cover_memo_container').focus();">
                                                                     <span class="text-red-500 text-xs "> {{$message}}</span>
                                                                 </div> 
                                                             @enderror
@@ -412,7 +412,7 @@
                                                         @endphp
                                                         @error('cover_memo.' . $index - $insideIndex)
                                                             <div class="transition transform alert alert-danger text-sm mb-1"
-                                                                    x-data x-init="document.getElementById('request_letter_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_letter_container').focus();">
+                                                                    x-data x-init="document.getElementById('cover_memo_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('cover_memo_container').focus();">
                                                                 <span class="text-red-500 text-xs "> {{$message}}</span>
                                                             </div> 
                                                         @enderror
@@ -606,31 +606,6 @@
                                             <div class="grid grid-cols-1   w-full">
                                                 @if ($teaching_assignment)
                                                     @foreach ($teaching_assignment as $index => $item)
-                                                        <div>
-                                                            <label for="teaching_assignment_{{ $index }}"
-                                                                class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                @php
-                                                                    $image = $this->getArrayImage('teaching_assignment', $index);
-                                                                @endphp
-                                                                <button type="button"
-                                                                    wire:click="removeArrayImage({{ $index }}, 'teaching_assignment')"
-                                                                    class="absolute top-0 right-0 m-2 text-red-600 py-1 rounded">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none" viewBox="0 0 24 24"
-                                                                        stroke-width="1.5" stroke="currentColor"
-                                                                        class="w-6 h-6">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                    </svg>
-                                                                </button>
-                                                                <img src="data:image/gif;base64,{{ base64_encode($image) }}"
-                                                                    alt="Image Description"
-                                                                    class="w-full h-full object-contain p-1">
-                                                                <input id="teaching_assignment_{{ $index }}" type="file" class="hidden"
-                                                                    wire:model="teaching_assignment.{{ $index }}" multiple>
-                                                            </label>
-                                                        </div>
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="teaching_assignment_{{ $index }}.{{$insideIndex}}"
@@ -754,31 +729,6 @@
                                             <div class="grid grid-cols-1   w-full">
                                                 @if ($summary_of_schedule)
                                                     @foreach ($summary_of_schedule as $index => $item)
-                                                        <div>
-                                                            <label for="summary_of_schedule_{{ $index }}"
-                                                                class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                @php
-                                                                    $image = $this->getArrayImage('summary_of_schedule', $index);
-                                                                @endphp
-                                                                <button type="button"
-                                                                    wire:click="removeArrayImage({{ $index }}, 'summary_of_schedule')"
-                                                                    class="absolute top-0 right-0 m-2 text-red-600 py-1 rounded">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none" viewBox="0 0 24 24"
-                                                                        stroke-width="1.5" stroke="currentColor"
-                                                                        class="w-6 h-6">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                    </svg>
-                                                                </button>
-                                                                <img src="data:image/gif;base64,{{ base64_encode($image) }}"
-                                                                    alt="Image Description"
-                                                                    class="w-full h-full object-contain p-1">
-                                                                <input id="summary_of_schedule_{{ $index }}" type="file" class="hidden"
-                                                                    wire:model="summary_of_schedule.{{ $index }}" multiple>
-                                                            </label>
-                                                        </div>
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="summary_of_schedule_{{ $index }}.{{$insideIndex}}"
@@ -905,31 +855,6 @@
                                             <div class="grid grid-cols-1   w-full">
                                                 @if ($certif_of_grades)
                                                     @foreach ($certif_of_grades as $index => $item)
-                                                        <div>
-                                                            <label for="certif_of_grades_{{ $index }}"
-                                                                class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                @php
-                                                                    $image = $this->getArrayImage('certif_of_grades', $index);
-                                                                @endphp
-                                                                <button type="button"
-                                                                    wire:click="removeArrayImage({{ $index }}, 'certif_of_grades')"
-                                                                    class="absolute top-0 right-0 m-2 text-red-600 py-1 rounded">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none" viewBox="0 0 24 24"
-                                                                        stroke-width="1.5" stroke="currentColor"
-                                                                        class="w-6 h-6">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                    </svg>
-                                                                </button>
-                                                                <img src="data:image/gif;base64,{{ base64_encode($image) }}"
-                                                                    alt="Image Description"
-                                                                    class="w-full h-full object-contain p-1">
-                                                                <input id="certif_of_grades_{{ $index }}" type="file" class="hidden"
-                                                                    wire:model="certif_of_grades.{{ $index }}" multiple>
-                                                            </label>
-                                                        </div>
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="certif_of_grades_{{ $index }}.{{$insideIndex}}"
@@ -1053,31 +978,6 @@
                                             <div class="grid grid-cols-1   w-full">
                                                 @if ($study_plan)
                                                     @foreach ($study_plan as $index => $item)
-                                                        <div>
-                                                            <label for="study_plan_{{ $index }}"
-                                                                class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                @php
-                                                                    $image = $this->getArrayImage('study_plan', $index);
-                                                                @endphp
-                                                                <button type="button"
-                                                                    wire:click="removeArrayImage({{ $index }}, 'study_plan')"
-                                                                    class="absolute top-0 right-0 m-2 text-red-600 py-1 rounded">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none" viewBox="0 0 24 24"
-                                                                        stroke-width="1.5" stroke="currentColor"
-                                                                        class="w-6 h-6">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                    </svg>
-                                                                </button>
-                                                                <img src="data:image/gif;base64,{{ base64_encode($image) }}"
-                                                                    alt="Image Description"
-                                                                    class="w-full h-full object-contain p-1">
-                                                                <input id="study_plan_{{ $index }}" type="file" class="hidden"
-                                                                    wire:model="study_plan.{{ $index }}" multiple>
-                                                            </label>
-                                                        </div>
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="study_plan_{{ $index }}.{{$insideIndex}}"
@@ -1195,7 +1095,7 @@
                                     </div>
 
                                      {{-- 4th Row --}}
-                                     <div class="grid grid-cols-1 items-start min-[800px]:grid-cols-2 gap-4">
+                                    <div class="grid grid-cols-1 items-start min-[800px]:grid-cols-2 gap-4">
                                         {{-- 7 --}}
                                         <div id="student_faculty_eval_container"
                                             class="grid grid-cols-1  p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
@@ -1204,31 +1104,6 @@
                                             <div class="grid grid-cols-1   w-full">
                                                 @if ($student_faculty_eval)
                                                     @foreach ($student_faculty_eval as $index => $item)
-                                                        <div>
-                                                            <label for="student_faculty_eval_{{ $index }}"
-                                                                class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                @php
-                                                                    $image = $this->getArrayImage('student_faculty_eval', $index);
-                                                                @endphp
-                                                                <button type="button"
-                                                                    wire:click="removeArrayImage({{ $index }}, 'student_faculty_eval')"
-                                                                    class="absolute top-0 right-0 m-2 text-red-600 py-1 rounded">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none" viewBox="0 0 24 24"
-                                                                        stroke-width="1.5" stroke="currentColor"
-                                                                        class="w-6 h-6">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                    </svg>
-                                                                </button>
-                                                                <img src="data:image/gif;base64,{{ base64_encode($image) }}"
-                                                                    alt="Image Description"
-                                                                    class="w-full h-full object-contain p-1">
-                                                                <input id="student_faculty_eval_{{ $index }}" type="file" class="hidden"
-                                                                    wire:model="student_faculty_eval.{{ $index }}" multiple>
-                                                            </label>
-                                                        </div>
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="student_faculty_eval_{{ $index }}.{{$insideIndex}}"
@@ -1351,32 +1226,6 @@
                                             <div class="grid grid-cols-1   w-full">
                                                 @if ($rated_ipcr)
                                                     @foreach ($rated_ipcr as $index => $item)
-                                                    @if(is_string($item) == true)
-                                                        <div>
-                                                            <label for="rated_ipcr_{{ $index }}"
-                                                                class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                                @php
-                                                                    $image = $this->getArrayImage('rated_ipcr', $index);
-                                                                @endphp
-                                                                <button type="button"
-                                                                    wire:click="removeArrayImage({{ $index }}, 'rated_ipcr')"
-                                                                    class="absolute top-0 right-0 m-2 text-red-600 py-1 rounded">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                        fill="none" viewBox="0 0 24 24"
-                                                                        stroke-width="1.5" stroke="currentColor"
-                                                                        class="w-6 h-6">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                                    </svg>
-                                                                </button>
-                                                                <img src="data:image/gif;base64,{{ base64_encode($image) }}"
-                                                                    alt="Image Description"
-                                                                    class="w-full h-full object-contain p-1">
-                                                                <input id="rated_ipcr_{{ $index }}" type="file" class="hidden"
-                                                                    wire:model="rated_ipcr.{{ $index }}" multiple>
-                                                            </label>
-                                                        </div>
                                                         @foreach ($item as $insideIndex => $file)
                                                             @if (is_array($file))
                                                                 <label for="rated_ipcr_{{ $index }}.{{$insideIndex}}"
@@ -1482,8 +1331,8 @@
                                                             wire:model.blur="rated_ipcr.0" multiple>
                                                     </label>                                                   
                                                 @endif
-                                                @error('rated_ipcr_container')
-                                                    <div class="transition transform alert alert-danger text-sm" x-data
+                                                @error('rated_ipcr')
+                                                    <div class="transition transform alert alert-danger text-sm mb-1" x-data
                                                         x-init="document.getElementById('rated_ipcr_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
                                                         document.getElementById('rated_ipcr_container').focus();">
                                                         <span class="text-red-500 text-xs "> {{ $message }}</span>
@@ -1491,11 +1340,11 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        </div>
+                                    </div>
                             </div>
                         </div>
                         
-                        <div class="grid grid-cols-1 col-span-3 p-6 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                        {{-- <div class="grid grid-cols-1 col-span-3 p-6 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                             <h2><b>Submit Signatures</b></h2>
                             <div class="grid grid-cols-3 gap-4">
                                 <div class="w-full mt-4">
@@ -1585,7 +1434,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         </div>
                     </div>
                 </div>
