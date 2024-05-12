@@ -116,7 +116,7 @@ class TeachPermitForm extends Component
         'subjectLoad.*.days' => 'required',
         'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
         'subjectLoad.*.end_time' => 'required|after_or_equal:subjectLoad.*.start_time',
-        'subjectLoad.*.number_of_units' => 'required|min:1',
+        'subjectLoad.*.number_of_units' => 'required|min:1|numeric',
         'units_enrolled' => 'required|lte:study_available_units',
         'total_load_plm' => 'required|numeric',
         'total_load_otherunivs' => 'required|numeric',
@@ -139,13 +139,18 @@ class TeachPermitForm extends Component
     ];
 
     public function submit(){
+        foreach($this->rules as $rule => $validationRule){
+            $this->validate([$rule => $validationRule]);
+            // $this->resetErrorBag();
+            $this->resetValidation();
+        }   
 
         $loggedInUser = auth()->user();
         $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
                             ->get()->value('study_available_units');   
         $this->validate(['study_available_units' => 'lte:' . $real_available_units]);
 
-        $this->validate();
+        // $this->validate();
 
         $days_and_time2 = array();
         $conflictFlag = False;

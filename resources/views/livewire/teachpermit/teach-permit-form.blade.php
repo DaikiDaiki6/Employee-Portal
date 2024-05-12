@@ -150,10 +150,10 @@
                                                     required="">
                                                 {{-- @error('start_period') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror  --}}
                                                 @error('start_period_cover')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                            x-data x-init="document.getElementById('start_period_cover').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_period_cover').focus();">
+                                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                        </div> 
                                                 @enderror       
                                             </div>
                                             <div class="w-full">
@@ -163,9 +163,9 @@
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="">
                                                 @error('end_period_cover')   
-                                                    <div class="transition transform alert alert-danger text-sm "
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('end_period_cover').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_period_cover').focus();">
+                                                        <span class="text-red-500 text-xs "> {{$message}}</span>
                                                     </div> 
                                                 @enderror
                                             </div>
@@ -218,7 +218,7 @@
                                             <div class="grid grid-cols-1 min-[1404px]:grid-cols-2 p-6 gap-4 bg-white border border-gray-200  shadow  dark:bg-gray-800 dark:border-gray-700">
                                                 <div class="mt-5">
                                                     <label for="subjectLoad_{{$index}}_subject" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Subject <span class="text-red-600">*</span></label>
-                                                    <input type="text" rows="4" id="subjectLoad_{{$index}}_subject" name="subjectLoad[{{$index}}][subject]" wire:model.blur="subjectLoad.{{$index}}.subject" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                                    <input type="text" rows="4" id="subjectLoad_{{$index}}_subject" name="subjectLoad_{{$index}}_subject" wire:model.blur="subjectLoad.{{$index}}.subject" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                                                     @error('subjectLoad.' . $index . '.subject')   
                                                         <div class="transition transform alert alert-danger text-sm"
                                                                 x-data x-init="document.getElementById('subjectLoad_{{$index}}_subject').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subjectLoad_{{$index}}_subject').focus();">
@@ -228,7 +228,7 @@
                                                 </div>
                                                 <div >
                                                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Days<span class="text-red-600">*</span> (Hold Ctrl + Click for multiple Select)</label>
-                                                    <select multiple size="1" id="subjectLoad_{{$index}}_days" name="subjectLoad[{{$index}}][days]" wire:model.blur="subjectLoad.{{$index}}.days"
+                                                    <select multiple size="1" id="subjectLoad_{{$index}}_days" name="subjectLoad_{{$index}}_days" wire:model.blur="subjectLoad.{{$index}}.days"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                         <option value="Sunday">Sunday</option>
                                                         <option value="Monday">Monday</option>
@@ -250,7 +250,7 @@
                                                 <div class="mt-5">
                                                     <label for="subjectLoad_{{$index}}_start_time"
                                                         class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Start Period <span class="text-red-600">*</span></label>
-                                                    <input type="time" name="subjectLoad_{{$index}}_start_time" id="subjectLoad[{{$index}}][start_time]" wire:model.live="subjectLoad.{{$index}}.start_time" 
+                                                    <input type="time" name="subjectLoad_{{$index}}_start_time" id="subjectLoad_{{$index}}_start_time" wire:model.live="subjectLoad.{{$index}}.start_time" 
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                         required="">
                                                     {{-- @error('start_period') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror  --}}
@@ -264,7 +264,7 @@
                                                 <div class="mt-5">
                                                     <label for="subjectLoad_{{$index}}_end_time"
                                                         class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">End Period <span class="text-red-600">*</span></label>
-                                                    <input type="time" name="subjectLoad_{{$index}}_end_time" id="subjectLoad[{{$index}}][end_time]" wire:model.live="subjectLoad.{{$index}}.end_time" value="{{$date}}" min="{{ \Carbon\Carbon::now()->addDays()->format('Y-m-d\TH:i') }}"
+                                                    <input type="time" name="subjectLoad_{{$index}}_end_time" id="subjectLoad_{{$index}}_end_time" wire:model.live="subjectLoad.{{$index}}.end_time" value="{{$date}}" min="{{ \Carbon\Carbon::now()->addDays()->format('Y-m-d\TH:i') }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="">
                                                     @error('subjectLoad.' . $index . '.end_time')   
@@ -274,7 +274,7 @@
                                                         </div> 
                                                     @enderror
                                                 </div>
-                                                <div class="mt-5">
+                                                <div class="mt-5" id="subjectLoad_{{$index}}_number_of_units">
                                                     <label for="subjectLoad_{{$index}}_number_of_units" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Subject <span class="text-red-600">*</span></label>
                                                     <input type="text" rows="4" id="subjectLoad_{{$index}}_number_of_units" name="subjectLoad[{{$index}}][number_of_units]" wire:model.live="subjectLoad.{{$index}}.number_of_units" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                                                     @error('subjectLoad.' . $index . '.number_of_units')   
@@ -330,13 +330,13 @@
                                             <div class="w-full">
                                                 <label for="total_load_plm"
                                                     class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Total Load At PLM  <span class="text-red-600">*</span></label>
-                                                <input type="text" name="total_load_plm" id="total_load_plm"  wire:model.blur="total_load_plm"
+                                                <input type="number" name="total_load_plm" id="total_load_plm"  wire:model.blur="total_load_plm"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" >
                                                 @error('total_load_plm')   
-                                                    <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('total_load_plm').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('total_load_plm').focus();">
+                                                        <span class="text-red-500 text-xs "> {{$message}}</span>
                                                     </div> 
                                                 @enderror
                                             </div>
@@ -364,9 +364,9 @@
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" >
                                                 @error('total_aggregate_load')   
-                                                    <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('total_aggregate_load').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('total_aggregate_load').focus();">
+                                                        <span class="text-red-500 text-xs "> {{$message}}</span>
                                                     </div> 
                                                 @enderror
                                             </div>
