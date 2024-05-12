@@ -54,6 +54,8 @@ class UserSeeder extends Seeder
         $employee->faculty_or_not = true;
         $employee->study_available_units = 20;
         $employee->teach_available_units = 10;
+        $employee->vacation_credits = 20;
+        $employee->sick_credits = 20;
         $employee->school_email = 'comsci@plm.edu.ph'; 
         $employee->employee_history = '[{"end_date": "2024-03-02", "start_date": "2024-03-02", "prev_position": "Software Engineer", "name_of_company": "Accenture"}, {"end_date": "2023-03-02", "start_date": "2022-03-02", "prev_position": "Junior Developer", "name_of_company": "IBM"}, {"end_date": "2022-03-02", "start_date": "2021-02-07", "prev_position": "Intern Developer", "name_of_company": "EasyPC"}]';
         

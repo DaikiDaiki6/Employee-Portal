@@ -82,21 +82,21 @@
                                                         class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Department Name <span class="text-red-600">*</span></label>
                                                     <input type="text" name="department_name" id="department_name"  value="{{$department_name}}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="Last name" required="" disabled>
+                                                         disabled>
                                                 </div>
                                                 <div class="w-full">
                                                     <label for="employee_type"
-                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee ID <span class="text-red-600">*</span></label>
+                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee Type <span class="text-red-600">*</span></label>
                                                     <input type="text" name="employee_type" id="employee_type"  value="{{$employee_type}}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="Last name" required="" disabled>
+                                                         disabled>
                                                 </div>
                                                 <div class="w-full">
                                                     <label for="current_position"
-                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee ID <span class="text-red-600">*</span></label>
+                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Current Position <span class="text-red-600">*</span></label>
                                                     <input type="text" name="current_position" id="current_position"  value="{{$current_position}}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="Last name" required="" disabled>
+                                                        disabled>
                                                 </div>
                                             </div>
                                             
@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="grid grid-cols-1 gap-4">
                                     <div class="flex items-center mt-4 ">
-                                        <input id="request5" type="checkbox" value="MILC Certification" wire:model="requests" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <input id="request5" type="checkbox" value="MILC Certification" wire:model.live="requests" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                                         <label for="request5" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">MILC Certification</label>
                                     </div>
                                     <div class="flex items-center">
@@ -146,26 +146,42 @@
                                 </div>
                             </div>
                            
-                            @if(in_array('Others', $requests) or in_array('MILC Certification', $requests) )
+                            @if(in_array('Others', $requests) || in_array('MILC Certification', $requests))
                             <div class="grid grid-cols-2 gap-4 mt-5 ">
                                 @if (in_array('MILC Certification', $requests))
-                                <div class="grid grid-cols-1 ">
-                                    <label for="milc_certification"
-                                    class="block mb-2  text-sm font-medium  text-gray-900 dark:text-white">MILC Description<span class="text-red-600">*</span> (If chosen MILC certification)</label>
-                                    <textarea type="text" rows="2" id="milc_description" name="milc_description" wire:model="milc_description"
-                                    placeholder="Write your purpose here."  required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    </textarea>
+                                <div>
+                                    <div class="grid grid-cols-1 ">
+                                        <label for="milc_certification"
+                                        class="block mb-2  text-sm font-medium  text-gray-900 dark:text-white">MILC Description<span class="text-red-600">*</span> (If chosen MILC certification)</label>
+                                        <textarea type="text" rows="2" id="milc_description" name="milc_description" wire:model="milc_description"
+                                        placeholder="Write your purpose here."  required
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        </textarea>
+                                    </div>
+                                    @error('milc_description')   
+                                        <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('milc_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('milc_container').focus();">
+                                            <span class="text-red-500 text-xs"> {{$message}}</span>
+                                        </div> 
+                                    @enderror
                                 </div>
                                 @endif
                                 @if(in_array('Others', $requests))
-                                <div class="grid grid-cols-1 ">
-                                    <label for="other_request"
-                                    class="block mb-2  text-sm font-medium  text-gray-900 dark:text-white">Other Requests<span class="text-red-600">*</span> (If chosen Others)</label>
-                                    <textarea type="text" rows="2" id="other_request" name="other_request" wire:model="other_request"
-                                    placeholder="Write your purpose here." required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    </textarea>
+                                <div>
+                                    <div class="grid grid-cols-1 ">
+                                        <label for="other_request"
+                                        class="block mb-2  text-sm font-medium  text-gray-900 dark:text-white">Other Requests<span class="text-red-600">*</span> (If chosen Others)</label>
+                                        <textarea type="text" rows="2" id="other_request" name="other_request" wire:model="other_request"
+                                        placeholder="Write your purpose here." required
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        </textarea>
+                                    </div>
+                                    @error('other_request')   
+                                        <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('other_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('other_request_container').focus();">
+                                            <span class="text-red-500 text-xs"> {{$message}}</span>
+                                        </div> 
+                                    @enderror
                                 </div>
                                 @endif
                             </div>
@@ -177,8 +193,8 @@
                         
                         <div class="grd grid-cols-1 p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                             <h2><b>Purpose And Signature<span class="text-red-600">*</span></b></h2>
-                            <div class="grid grid-cols-2 gap-4 mt-4">
-                                <div class="grid grid-cols-1 gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                            <div class="grid grid-cols-2 gap-4 mt-4 items-start" id="purpose_container">
+                                <div class="grid grid-cols-1 gap-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                     <div>
                                         <label for="purpose"
                                         class="block mb-2  text-sm font-medium  text-gray-900 dark:text-white">Purpose <span class="text-red-600">*</span></label>
@@ -187,6 +203,12 @@
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         </textarea>
                                     </div>
+                                    @error('purpose')   
+                                        <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                            <span class="text-red-500 text-xs"> {{$message}}</span>
+                                        </div> 
+                                    @enderror
                                 </div>
                               
                                 {{-- Applicant Signature --}}
@@ -194,7 +216,7 @@
                                     <div class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <label for="signature_requesting_party"
                                         class="block text-sm font-medium text-gray-900 dark:text-white">Signature of the Requesting Party<span class="text-red-600">*</span></label>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
+                                        <div class="grid grid-cols-1 items-center justify-center w-full" id="signature_requesting_party_container">
                                             @if($signature_requesting_party)
                                                 <label for="signature_requesting_party" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                     @if(is_string($signature_requesting_party) == True)
@@ -214,18 +236,18 @@
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
                                                         </svg>
                                                         <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                                        <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                                        <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG, or PDF file (Max: 5 MB size)</p>
                                                     </div>
                                                     <input id="signature_requesting_party" type="file" class="hidden" wire:model.blur="signature_requesting_party">
                                                 </label>
                                             @endif
-                                            @error('signature_of_vp_for_academic_affair')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
-                                            @enderror
                                         </div>
+                                        @error('signature_requesting_party')
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_requesting_party_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_requesting_party_container').focus();">
+                                                    <span class="text-red-500 text-xs"> {{$message}}</span>
+                                                </div> 
+                                             @enderror
                                     </div>
                                 </div>
                             </div>

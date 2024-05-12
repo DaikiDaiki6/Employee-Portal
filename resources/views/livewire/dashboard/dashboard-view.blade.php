@@ -168,7 +168,7 @@ const options = {
     type: "area",
     fontFamily: "Inter, sans-serif",
     animations: {
-      enabled: true,
+      enabled: false,
     },
     padding: {
         // left: 100, // Adjust the left padding to create more space for the y-axis labels

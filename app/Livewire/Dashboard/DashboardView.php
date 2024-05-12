@@ -127,24 +127,32 @@ class DashboardView extends Component
         }
     }
 
-    for ($i = 1; $i <= 5; $i++) {
-        $found = false;
-        foreach ($weeklyCounts as $count) {
-            if ($count->month == $i) {
-                $this->weeklyCountsArray[$i] = $count->count;
-                $found = true;
-                break;
-            }
-        }
-        if (!$found) {
-            $this->weeklyCountsArray[$i] = 0;
-        }
-    }
+    // for ($i = 1; $i <= 5; $i++) {
+    //     $found = false;
+    //     foreach ($weeklyCounts as $count) {
+    //         if ($count->month == $i) {
+    //             $this->weeklyCountsArray[$i] = $count->count;
+    //             $found = true;
+    //             break;
+    //         }
+    //     }
+    //     if (!$found) {
+    //         $this->weeklyCountsArray[$i] = 0;
+    //     }
+    // }
+
 
     foreach ($weeklyCounts as $count) {
-        $this->weeklyCountsArray[] = $count->count;
+        if($count->count != 0){
+            $this->weeklyCountsArray[] = $count->count;
+        }else {
+            $this->weeklyCountsArray[] = 0;
+        }
     }
-   
+    while (count($this->weeklyCountsArray) < 5) {
+        $this->weeklyCountsArray[] = 0;
+    }
+    // dd($this->weeklyCountsArray);
 
     $this->data = array_values($this->weeklyCountsArray);
     
@@ -154,7 +162,7 @@ class DashboardView extends Component
 
     public function filter($filter){
         if($filter == 'weekly'){
-            return $this->weeklyCountsArray;
+            return [332, 321, 54, 32, 32];
             
         }
         else if ($filter == 'monthly'){
@@ -169,7 +177,7 @@ class DashboardView extends Component
     public function setFilter($filter){
         if($filter == "weekly"){
             $this->filter = "Weekly";
-            // dd($this->weeklyCountsArray);
+            dd($this->weeklyCountsArray);
             $this->dispatch('refresh-weekly-chart', data: array_values($this->weeklyCountsArray));
         }
         else{

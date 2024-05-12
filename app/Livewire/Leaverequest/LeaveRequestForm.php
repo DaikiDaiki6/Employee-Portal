@@ -118,7 +118,11 @@ class LeaveRequestForm extends Component
     ];
 
     public function submit(){
-        $this->validate();
+        foreach($this->rules as $rule => $validationRule){
+            $this->validate([$rule => $validationRule]);
+            $this->resetValidation();
+        }   
+        
         $loggedInUser = auth()->user();
 
         $leaverequestdata = new Leaverequest();

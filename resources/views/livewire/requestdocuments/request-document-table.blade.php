@@ -140,6 +140,7 @@
                                         @foreach ($documentrequest->requests as $request)
                                         @php
                                             $documentStatus = $this->getStatusOfDocument($documentrequest->id, $request);
+                                            // dd($documentStatus);
                                         @endphp
                                            <div class="mt-2">
                                             @if ($documentStatus == "Approved")
@@ -155,7 +156,7 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                                       </svg>                                      
-                                                    <span class="ml-2">{{$documentStatus}} </span></span> | <b>*</b> <span class="text-amber-700"><a wire:click="downloadDocument({{$documentrequest->id}}, '{{$request}}')"class="cursor-pointer hover:underline hover:underline-offset-1"> {{str_pad($request, 40,' ', STR_PAD_BOTH)}} <br></a></span>
+                                                    <span class="ml-2">{{$documentStatus}} </span></span> | <b>*</b> <span class="text-amber-700"> {{str_pad($request, 40,' ', STR_PAD_BOTH)}} <br></span>
                                                 </div>
                                             @endif
                                         @endforeach

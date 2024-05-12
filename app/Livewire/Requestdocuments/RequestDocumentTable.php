@@ -28,7 +28,7 @@ class RequestDocumentTable extends Component
         $loggedInUser = auth()->user();
         return view('livewire.requestdocuments.request-document-table', [
             // 'DocumentRequestData' => Documentrequest::where('employee_id', $loggedInUser->employee_id)->paginate(1),
-            'DocumentRequestData' => Documentrequest::paginate(1),
+            'DocumentRequestData' => Documentrequest::paginate(10),
 
         ]);
         

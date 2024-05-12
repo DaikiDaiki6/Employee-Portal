@@ -13,7 +13,7 @@ class RequestDocumentController extends Controller
     public function turnToPdf($id){
         // $pdf = PDF::loadView('workpdf', ['works' => $ipcr, 'employees' => $employee,]);
         $requestDocumentData = Documentrequest::query()->where('id', $id)->first();
-        $employee_id = auth()->user()->employeeId;
+        $employee_id = auth()->user()->employee_id;
         $employee = Employee::query()->where('employee_id', $employee_id)->first(); 
         $image = Storage::disk('local')->get($requestDocumentData['signature_requesting_party']);
         $logoUrl = Storage::disk('public')->get('plmlogo/plm-logo.png');

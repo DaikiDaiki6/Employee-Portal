@@ -73,8 +73,27 @@ class RequestDocumentUpdate extends Component
         return Storage::disk('local')->get($this->signature_requesting_party);
     }
 
+    protected $rules = [
+        'requests' => 'required|array|min:1',
+        'requests.*' => 'in:Certificate of Employment,Certificate of Employment with Compensation,Service Record,Part time Teaching Services,MILC Certification,Certificate of No Pending Administrative Case,Others',
+        'purpose' => 'required|min:2|max:1000', 
+        // 'signature_requesting_party' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120 '
+    ];
+
     public function submit(){
-        // $this->validate();
+
+        $properties = [
+            'milc_description' => 'MILC Certification',
+            'other_request' => 'Others',
+        ];
+
+        foreach($properties as $property => $value){
+            if(in_array($value, $this->requests ?? [])){
+                $this->validate([$property => 'required']);
+            }
+        }
+
+        $this->validate();
 
         $loggedInUser = auth()->user();
 
@@ -83,7 +102,13 @@ class RequestDocumentUpdate extends Component
         $employee_record = Employee::select('employee_type', )
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
-      
+
+        if(is_string($this->signature_requesting_party)){
+            $documentrequestdata->signature_requesting_party = $this->signature_requesting_party;
+        } else{
+            $documentrequestdata->signature_requesting_party =  $this->signature_requesting_party->store('photos/documentrequest/applicant_signature', 'local');
+            $this->validate(['signature_requesting_party' => 'mimes:jpg,png|extensions:jpg,png']);
+        }
 
         $documentrequestdata->employee_id = $loggedInUser->employee_id;
         $documentrequestdata->date_of_filling = $this->date_of_filling;
@@ -95,12 +120,7 @@ class RequestDocumentUpdate extends Component
         $documentrequestdata->other_request = $this->other_request;
         $documentrequestdata->purpose = $this->purpose;
 
-        if(is_string($this->signature_requesting_party)){
-            $documentrequestdata->signature_requesting_party = $this->signature_requesting_party;
-        } else{
-            $documentrequestdata->signature_requesting_party =  $this->signature_requesting_party->store('photos/documentrequest/applicant_signature', 'local');
-            $this->validate(['signature_requesting_party' => 'mimes:jpg,png|extensions:jpg,png']);
-        }
+       
 
        
 

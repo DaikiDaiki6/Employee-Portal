@@ -438,7 +438,7 @@
                                                             <span class="font-semibold">Click to upload</span></p>
                                                         <p
                                                             class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                            PNG, JPG (MAX. 800x400px)</p>
+                                                            PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                     </div>
                                                     <input id="dropzone-file2" type="file" class="hidden"
                                                         wire:model.blur="applicant_signature" />
@@ -581,7 +581,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="cover_memo_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -603,7 +603,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="cover_memo" type="file" class="hidden"
                                                             wire:model.blur="cover_memo.0" multiple>
@@ -735,7 +735,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="request_letter_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -757,7 +757,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="request_letter" type="file" class="hidden"
                                                             wire:model.blur="request_letter.0" multiple>
@@ -892,7 +892,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="rated_ipcr_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -914,7 +914,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="rated_ipcr" type="file" class="hidden"
                                                             wire:model.blur="rated_ipcr.0" multiple>
@@ -1046,7 +1046,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="summary_of_schedule_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -1068,7 +1068,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="summary_of_schedule" type="file" class="hidden"
                                                             wire:model.blur="summary_of_schedule.0" multiple>
@@ -1203,7 +1203,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="certif_of_grades_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -1225,7 +1225,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="certif_of_grades" type="file" class="hidden"
                                                             wire:model.blur="certif_of_grades.0" multiple>
@@ -1357,7 +1357,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="study_plan_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -1379,7 +1379,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="study_plan" type="file" class="hidden"
                                                             wire:model.blur="study_plan.0" multiple>
@@ -1514,7 +1514,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="student_faculty_eval_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -1536,7 +1536,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="student_faculty_eval" type="file" class="hidden"
                                                             wire:model.blur="student_faculty_eval.0" multiple>
@@ -1668,7 +1668,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                     </label>
                                                     <input id="teaching_assignment_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
@@ -1690,7 +1690,7 @@
                                                                     <span class="font-semibold">Click to upload</span></p>
                                                                 <p
                                                                     class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                                    PNG, JPG (MAX. 800x400px)</p>
+                                                                    PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                             </div>
                                                             <input id="teaching_assignment" type="file" class="hidden"
                                                             wire:model.blur="teaching_assignment.0" multiple>
@@ -1766,7 +1766,7 @@
                                                             <span class="font-semibold">Click to upload</span></p>
                                                         <p
                                                             class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                            PNG, JPG (MAX. 800x400px)</p>
+                                                            PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                     </div>
                                                     <input id="signature_recommended_by" type="file"
                                                         class="hidden" wire:model.blur="signature_recommended_by">
@@ -1838,7 +1838,7 @@
                                                             <span class="font-semibold">Click to upload</span></p>
                                                         <p
                                                             class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                            PNG, JPG (MAX. 800x400px)</p>
+                                                            PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                     </div>
                                                     <input id="signature_endorsed_by" type="file" class="hidden"
                                                         wire:model.blur="signature_endorsed_by">

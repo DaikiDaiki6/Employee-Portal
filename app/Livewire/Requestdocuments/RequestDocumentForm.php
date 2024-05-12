@@ -83,8 +83,27 @@ class RequestDocumentForm extends Component
         return $result;
     }
 
+    protected $rules = [
+        'requests' => 'required|array|min:1',
+        'requests.*' => 'in:Certificate of Employment,Certificate of Employment with Compensation,Service Record,Part time Teaching Services,MILC Certification,Certificate of No Pending Administrative Case,Others',
+        'purpose' => 'required|min:2|max:1000', 
+        'signature_requesting_party' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120 '
+    ];
+
     public function submit(){
-        // $this->validate();
+        
+        $properties = [
+            'milc_description' => 'MILC Certification',
+            'other_request' => 'Others',
+        ];
+
+        foreach($properties as $property => $value){
+            if(in_array($value, $this->requests ?? [])){
+                $this->validate([$property => 'required']);
+            }
+        }
+
+        $this->validate();
 
         $loggedInUser = auth()->user();
 
@@ -95,7 +114,7 @@ class RequestDocumentForm extends Component
                                     ->get();   
       
 
-        $documentrequestdata->employee_id = $loggedInUser->employeeId;
+        $documentrequestdata->employee_id = $loggedInUser->employee_id;
         $documentrequestdata->department_name = $employee_record[0]->department_name;
         $documentrequestdata->date_of_filling = $this->date_of_filling;
         $documentrequestdata->ref_number = $this->ref_number;

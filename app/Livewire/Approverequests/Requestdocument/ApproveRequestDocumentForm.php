@@ -120,55 +120,50 @@ class ApproveRequestDocumentForm extends Component
 
         $documentrequestdata = Documentrequest::findOrFail($this->index);
 
-        $employee_record = Employee::select('employee_type', )
-                                    ->where('employee_id', $loggedInUser->employee_id)
-                                    ->get();   
+        // $employee_record = Employee::select('employee_type', )
+        //                             ->where('employee_id', $loggedInUser->employee_id)
+        //                             ->get();   
       
 
-        $documentrequestdata->employee_id = $loggedInUser->employee_id;
-        $documentrequestdata->date_of_filling = $this->date_of_filling;
-        $documentrequestdata->ref_number = $this->ref_number;
-        $documentrequestdata->employment_status = $employee_record[0]->employee_type;
-        $documentrequestdata->status = 'Pending';
-        $documentrequestdata->requests = $this->requests;
-        $documentrequestdata->milc_description = $this->milc_description;
-        $documentrequestdata->other_request = $this->other_request;
-        $documentrequestdata->purpose = $this->purpose;
+        // $documentrequestdata->employee_id = $loggedInUser->employee_id;
+        // $documentrequestdata->date_of_filling = $this->date_of_filling;
+        // $documentrequestdata->ref_number = $this->ref_number;
+        // $documentrequestdata->employment_status = $employee_record[0]->employee_type;
+        // $documentrequestdata->status = 'Pending';
+        // $documentrequestdata->requests = $this->requests;
+        // $documentrequestdata->milc_description = $this->milc_description;
+        // $documentrequestdata->other_request = $this->other_request;
+        // $documentrequestdata->purpose = $this->purpose;
 
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
-        ->where('employee_id', $loggedInUser->employee_id)
-        ->first();
+            ->where('employee_id', $loggedInUser->employee_id)
+            ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
 
         $targetUser = User::where('employee_id', $documentrequestdata->employee_id)->first();
 
         $properties = [
-            'signature_requesting_party' => 'mimes:jpg,png|extensions:jpg,png',
-            'certificate_of_employment' => 'nullable|file',
-            'certificate_of_employment_with_compensation' => 'nullable|file',
-            'service_record' => 'nullable|file',
-            'part_time_teaching_services' => 'nullable|file',
-            'milc_certification' => 'nullable|file',
-            'certificate_of_no_pending_administrative_case' => 'nullable|file',
-            'others' => 'nullable|file',
+            'signature_requesting_party' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+            'certificate_of_employment' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+            'certificate_of_employment_with_compensation' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+            'service_record' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+            'part_time_teaching_services' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+            'milc_certification' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+            'certificate_of_no_pending_administrative_case' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+            'others' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
         ];
-        // Iterate over the properties
+        
         foreach ($properties as $propertyName => $validationRule) {
-            // Check if the current property value is a string or an uploaded file
             if (is_string($this->$propertyName)) {
-                // If it's a string, assign it directly
                 $documentrequestdata->$propertyName = $this->$propertyName;
             } else {
-                // If it's an uploaded file, store it and apply validation rules
+                $this->validate([$propertyName => $validationRule]);
                 if($this->$propertyName){
                 $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Request Document', 'Signed', $documentrequestdata->id, $signedIn));
                 }
                 $documentrequestdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/documentrequest/' . $propertyName, 'local') : '';
-                $this->validate([$propertyName => $validationRule]);
             }
         }
-
-       
 
         $this->js("alert('Document Request has been submitted!')"); 
  

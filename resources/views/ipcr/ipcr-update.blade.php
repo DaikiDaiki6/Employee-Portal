@@ -106,7 +106,7 @@
                                         @error('start_period')
                                         <div class="transition transform alert alert-danger"
                                                 x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                            <span class="text-red-500 text-xs ">{{$message }}</span>
                                         </div> 
                                         @enderror   
                                     </div>
@@ -119,7 +119,7 @@
                                         @error('end_period')   
                                             <div class="transition transform alert alert-danger text-sm "
                                             x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
+                                            <span class="text-red-500 text-xs ">{{ $message }}</span>
                                             </div> 
                                          @enderror
                                     </div>

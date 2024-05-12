@@ -13,7 +13,7 @@ class PayrolPdfController extends Controller
     public function turnToPdf($id){
         $payrollData = Payroll::findOrFail($id); 
         $payrollData = json_decode($payrollData);
-        $loggedInuser = auth()->user()->employeeId;
+        $loggedInuser = auth()->user()->employee_id;
         $employee = Employee::query()->where('employee_id', $loggedInuser)->first(); 
         $logoUrl = Storage::disk('public')->get('plmlogo/plm-logo.png');
         $chiefSign = Storage::disk('local')->get('photos\payroll\R.jpg');

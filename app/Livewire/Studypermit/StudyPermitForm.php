@@ -240,7 +240,10 @@ class StudyPermitForm extends Component
                             ->get()->value('study_available_units');   
         $this->validate(['study_available_units' => 'lte:' . $real_available_units]);
 
-        $this->validate();
+        foreach($this->rules as $rule => $validationRule){
+            $this->validate([$rule => $validationRule]);
+            $this->resetValidation();
+        }   
 
         $days_and_time2 = array();
         $conflictFlag = False;
