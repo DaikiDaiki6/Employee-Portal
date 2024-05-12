@@ -14,12 +14,40 @@ class Employeeinformation extends Component
     public $employeeRecord;
     public $employeeHistory;
     public $employeeImage;
+
+    public $empDiploma;
+    public $empTOR;
+    public $empCertOfTrainingsSeminars;
+    public $empAuthCopyOfCscOrPrc;
+    public $empAuthCopyOfPrcBoardRating;
+    public $empMedCertif;
+    public $empNBIClearance;
+    public $empPSABirthCertif;
+    public $empPSAMarriageCertif;
+    public $empServiceRecordFromOtherGovtAgency;
+    public $empApprovedClearancePrevEmployer;
+    public $otherDocuments;
     
     public function mount(){
         $employee_id = auth()->user()->employee_id;
         $employee = Employee::where('employee_id', $employee_id)->first(); // Replace $employee_id with the actual employee ID
         $this->employeeImage = $employee->emp_image;
         $this->employeeRecord = Employee::where('employee_id', $employee_id)->first();
+        $this->empDiploma = json_decode($employee->emp_diploma, true) ?? [];
+        $this->empTOR = json_decode($employee->emp_TOR, true) ?? [];
+        $this->empCertOfTrainingsSeminars = json_decode($employee->emp_cert_of_trainings_seminars, true) ?? [];
+        $this->empAuthCopyOfCscOrPrc = json_decode($employee->emp_auth_copy_of_csc_or_prc, true) ?? [];
+        $this->empAuthCopyOfPrcBoardRating = json_decode($employee->emp_auth_copy_of_prc_board_rating, true) ?? [];
+        $this->empMedCertif = json_decode($employee->emp_med_certif, true) ?? [];
+        $this->empNBIClearance = json_decode($employee->emp_nbi_clearance, true) ?? [];
+        $this->empPSABirthCertif = json_decode($employee->emp_psa_birth_certif, true) ?? [];
+        $this->empPSAMarriageCertif = json_decode($employee->emp_psa_marriage_certif, true) ?? [];
+        $this->empServiceRecordFromOtherGovtAgency = json_decode($employee->emp_service_record_from_other_govt_agency, true) ?? [];
+        $this->empApprovedClearancePrevEmployer = json_decode($employee->emp_approved_clearance_prev_employer, true) ?? [];
+        $this->otherDocuments = json_decode($employee->other_documents, true) ?? [];
+        
+
+        // dd($this->employeeDiploma);
         if($this->employeeRecord->employee_history != null){
             $this->employeeHistory = json_decode($this->employeeRecord->employee_history);
         }
@@ -29,46 +57,62 @@ class Employeeinformation extends Component
         return $media;
     }
 
-    public function download($file){
+    public function download($file, $index = 0){
         $employee_id = auth()->user()->employee_id;
         $employee = Employee::where('employee_id', $employee_id)->first(); // Replace $employee_id with the actual employee ID
+        
         if($file == "photo"){
-            $mediaItems = $employee->getFirstMedia('avatar');
-            return $mediaItems;
+            return Storage::disk('public')->download($employee->emp_image);
         }
         else if ($file == "diploma"){
-            return Storage::disk('local')->download($employee->emp_diploma);
+            $files = json_decode( $employee->emp_diploma, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "tor"){
-            return Storage::disk('local')->download($employee->emp_TOR);
+            $files = json_decode( $employee->emp_TOR, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "certificate"){
-            return Storage::disk('local')->download($employee->emp_cert_of_trainings_seminars);
+            $files = json_decode( $employee->emp_cert_of_trainings_seminars, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "csc_eligibility"){
-            return Storage::disk('local')->download($employee->emp_auth_copy_of_csc_or_prc);
+            $files = json_decode( $employee->emp_auth_copy_of_csc_or_prc, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "prc_boardrating"){
-            return Storage::disk('local')->download($employee->emp_auth_copy_of_prc_board_rating);
+            $files = json_decode( $employee->emp_auth_copy_of_prc_board_rating, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "med_cert"){
-            return Storage::disk('local')->download($employee->emp_med_certif);
+            $files = json_decode( $employee->emp_med_certif, true);
+            return Storage::disk('local')->download($files[$index]);
         }
-        else if ($file == "nbi_clerance"){
-            return Storage::disk('local')->download($employee->emp_nbi_clearance);
+        else if ($file == "nbi_clearance"){
+            $files = json_decode( $employee->emp_med_certif, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "psa_birthcertificate"){
-            return Storage::disk('local')->download($employee->emp_psa_birth_certif);
+            $files = json_decode( $employee->emp_psa_birth_certif, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "psa_marriagecertificate"){
-            return Storage::disk('local')->download($employee->emp_psa_marriage_certif);
+            $files = json_decode( $employee->emp_psa_marriage_certif, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "service_record"){
-            return Storage::disk('local')->download($employee->emp_service_record_from_other_govt_agency);
+            $files = json_decode( $employee->emp_service_record_from_other_govt_agency, true);
+            return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "approved_clearance"){
-            return Storage::disk('local')->download($employee->emp_approved_clearance_prev_employer);
+            $files = json_decode( $employee->emp_approved_clearance_prev_employer, true);
+            return Storage::disk('local')->download($files[$index]);
         }
+        else if ($file == 'others'){
+            $files = json_decode( $employee->other_documents, true);
+            return Storage::disk('local')->download($files[$index]);
+        }
+
         else{
             abort(404);
         }

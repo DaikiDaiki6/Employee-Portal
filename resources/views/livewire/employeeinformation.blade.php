@@ -94,41 +94,71 @@
                        <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-900 dark:divide-gray-700">
                                 <li class="py-1 sm:py-2">
-                                    <div class="flex items-center">
-                                        <div class="flex-1 min-w-0 ms-4 truncate">
-                                            <a target="_blank" href="{{route('downloadFile', ['file' => 'photo'])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
+                                    <a target="_blank" href="{{route('downloadFile', ['file' => 'photo'])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
+                                        <div class="flex items-center ml-4">
+                                            <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-blue-600" >
+                                                    <path d="M12 9a3.75 3.75 0 1 0 0 7.5A3.75 3.75 0 0 0 12 9Z" />
+                                                    <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 0 1 5.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 0 0 1.11-.71l.822-1.315a2.942 2.942 0 0 1 2.332-1.39ZM6.75 12.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Zm12-1.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+                                                </svg>                                 
+                                            </div>
+                                            <div class="flex-1 min-w-0 truncate">
                                                 Photo
-                                            </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </li>
+                                @foreach ($empDiploma as $index => $item )
+                                    <li class="py-1 sm:py-2">
+                                        <a target="_blank" href="{{route('downloadFile', ['file' => 'diploma'])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
+                                            <div class="flex items-center ml-4">
+                                                <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-blue-600">
+                                                        <path d="M11.7 2.805a.75.75 0 0 1 .6 0A60.65 60.65 0 0 1 22.83 8.72a.75.75 0 0 1-.231 1.337 49.948 49.948 0 0 0-9.902 3.912l-.003.002c-.114.06-.227.119-.34.18a.75.75 0 0 1-.707 0A50.88 50.88 0 0 0 7.5 12.173v-.224c0-.131.067-.248.172-.311a54.615 54.615 0 0 1 4.653-2.52.75.75 0 0 0-.65-1.352 56.123 56.123 0 0 0-4.78 2.589 1.858 1.858 0 0 0-.859 1.228 49.803 49.803 0 0 0-4.634-1.527.75.75 0 0 1-.231-1.337A60.653 60.653 0 0 1 11.7 2.805Z" />
+                                                        <path d="M13.06 15.473a48.45 48.45 0 0 1 7.666-3.282c.134 1.414.22 2.843.255 4.284a.75.75 0 0 1-.46.711 47.87 47.87 0 0 0-8.105 4.342.75.75 0 0 1-.832 0 47.87 47.87 0 0 0-8.104-4.342.75.75 0 0 1-.461-.71c.035-1.442.121-2.87.255-4.286.921.304 1.83.634 2.726.99v1.27a1.5 1.5 0 0 0-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.66a6.727 6.727 0 0 0 .551-1.607 1.5 1.5 0 0 0 .14-2.67v-.645a48.549 48.549 0 0 1 3.44 1.667 2.25 2.25 0 0 0 2.12 0Z" />
+                                                        <path d="M4.462 19.462c.42-.419.753-.89 1-1.395.453.214.902.435 1.347.662a6.742 6.742 0 0 1-1.286 1.794.75.75 0 0 1-1.06-1.06Z" />
+                                                    </svg> 
+                                                </div>
+                                                <div class="flex-1 min-w-0 truncate">
+                                                    Diploma @if (count($empDiploma) > 1) {{$index + 1}} @endif
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                                @foreach ($empTOR as $index => $item )
                                 <li class="py-1 sm:py-2">
-                                    <div class="flex items-center">
-                                        <div class="flex-1 min-w-0 ms-4 truncate">
-                                            <a target="_blank" href="{{route('downloadFile', ['file' => 'diploma'])}}" class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                Diploma
-                                            </a>
+                                    <a target="_blank" href="{{route('downloadFile', ['file' => 'tor'])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
+                                        <div class="flex items-center ml-4">
+                                            <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
+                                                <svg class="w-6 h-6 text-blue-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm-1 9a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Zm2-5a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Zm4 4a1 1 0 1 0-2 0v3a1 1 0 1 0 2 0v-3Z" clip-rule="evenodd"/>
+                                                  </svg>                                                  
+                                            </div>
+                                            <div class="flex-1 min-w-0 truncate">
+                                                Transcript of Records @if (count($empTOR) > 1) {{$index + 1}} @endif
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </li>
+                                @endforeach
+                                @foreach ($empCertOfTrainingsSeminars as $index => $item )
                                 <li class="py-1 sm:py-2">
-                                    <div class="flex items-center">
-                                        <div class="flex-1 min-w-0 ms-4 truncate">
-                                            <a target="_blank" href="{{route('downloadFile', ['file' => 'tor'])}}" class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                Transcript of Records
-                                            </a>
+                                    <a target="_blank" href="{{route('downloadFile', ['file' => 'certificate'])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
+                                        <div class="flex items-center ml-4">
+                                            <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                                    <path fill-rule="evenodd" d="M4.5 3.75a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V6.75a3 3 0 0 0-3-3h-15Zm4.125 3a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Zm-3.873 8.703a4.126 4.126 0 0 1 7.746 0 .75.75 0 0 1-.351.92 7.47 7.47 0 0 1-3.522.877 7.47 7.47 0 0 1-3.522-.877.75.75 0 0 1-.351-.92ZM15 8.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15ZM14.25 12a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15Z" clip-rule="evenodd" />
+                                                  </svg>                                                                                            
+                                            </div>
+                                            <div class="flex-1 min-w-0 truncate">
+                                                Certificate of Trainings/Seminars @if (count($empCertOfTrainingsSeminars) > 1) {{$index + 1}} @endif
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </li>
-                                <li class="py-1 sm:py-2">
-                                    <div class="flex items-center">
-                                        <div class="flex-1 min-w-0 ms-4 truncate">
-                                            <a target="_blank" href="{{route('downloadFile', ['file' => 'certificate'])}}" class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                Certificate of Trainings/Seminars
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
+                                @endforeach
+                                @foreach ($empAuthCopyOfCscOrPrc as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
@@ -138,6 +168,8 @@
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach
+                                @foreach ($empAuthCopyOfPrcBoardRating as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
@@ -147,7 +179,8 @@
                                         </div>
                                     </div>
                                 </li>
-                              
+                                @endforeach
+                                @foreach ($empMedCertif as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
@@ -157,15 +190,19 @@
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach
+                                @foreach ($empNBIClearance as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
-                                            <a target="_blank" href="{{route('downloadFile', ['file' => 'nbi_clerance'])}}" class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                            <a target="_blank" href="{{route('downloadFile', ['file' => 'nbi_clearance'])}}" class="text-sm font-medium text-gray-900 truncate dark:text-white">
                                                 NBI Clearance
                                             </a>
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach
+                                @foreach ($empPSABirthCertif as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
@@ -175,6 +212,8 @@
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach
+                                @foreach ($empPSAMarriageCertif as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
@@ -184,6 +223,8 @@
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach
+                                @foreach ($empServiceRecordFromOtherGovtAgency as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
@@ -193,6 +234,8 @@
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach
+                                @foreach ($empApprovedClearancePrevEmployer as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <div class="flex items-center">
                                         <div class="flex-1 min-w-0 ms-4 truncate">
@@ -202,6 +245,18 @@
                                         </div>
                                     </div>
                                 </li>
+                                @endforeach
+                                @foreach ($otherDocuments as $index => $item )
+                                    <li class="py-1 sm:py-2">
+                                        <div class="flex items-center">
+                                            <div class="flex-1 min-w-0 ms-4 truncate">
+                                                    <a target="_blank" href="{{route('downloadFile', ['file' => 'others', 'index' => $index])}}" class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                        Other Document {{$index + 1}}
+                                                    </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
                                 {{-- <div class="row">
                                     @php
                                         $documents = $record->other_documents ?? []; // Set to empty array if null or not set

@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Changeinformation;
 
-use App\Models\ChangeInformation as ModelsChangeInformation;
 use Livewire\Component;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
+use App\Models\ChangeInformation as ModelsChangeInformation;
 
 class ChangeInformation extends Component
 {
@@ -25,17 +26,17 @@ class ChangeInformation extends Component
     public $employeeHistory;
     
     public $emp_photo;
-    public $emp_diploma ;
-    public $emp_TOR;
+    public $emp_diploma = [];
+    public $emp_TOR = [];
     public $emp_cert_of_trainings_seminars = [];
-    public $emp_auth_copy_of_csc_or_prc ;
-    public $emp_auth_copy_of_prc_board_rating ;
-    public $emp_med_certif;
-    public $emp_nbi_clearance ;
-    public $emp_psa_birth_certif;
-    public $emp_psa_marriage_certif;
+    public $emp_auth_copy_of_csc_or_prc = [];
+    public $emp_auth_copy_of_prc_board_rating  = [];
+    public $emp_med_certif = [];
+    public $emp_nbi_clearance = [];
+    public $emp_psa_birth_certif = [];
+    public $emp_psa_marriage_certif = [];
     public $emp_service_record_from_other_govt_agency = [];
-    public $emp_approved_clearance_prev_employer;
+    public $emp_approved_clearance_prev_employer = [];
     public $other_documents = [];
 
     public function mount(){
@@ -54,32 +55,50 @@ class ChangeInformation extends Component
         $this->address = $employee->address;
 
 
-        $this->emp_photo = $employee->getFirstMedia('avatar') ? 1 : null;
-        $this->emp_diploma = $employee->getFirstMedia('diploma') ? 1 : null;
-        $this->emp_TOR = $employee->getFirstMedia('tor') ? 1 : null;
-        $this->emp_cert_of_trainings_seminars = $employee->getFirstMedia('certificate/seminar') ? 1 : null;
-        $this->emp_auth_copy_of_csc_or_prc = $employee->getFirstMedia('csc_eligibility') ? 1 : null;
-        $this->emp_auth_copy_of_prc_board_rating = $employee->getFirstMedia('prc_boardrating') ? 1 : null;
-        $this->emp_med_certif = $employee->getFirstMedia('medical_certificate') ? 1 : null;
-        $this->emp_nbi_clearance = $employee->getFirstMedia('nbi_clearance') ? 1 : null;
-        $this->emp_psa_birth_certif = $employee->getFirstMedia('psa_birthcertificate') ? 1 : null;
-        $this->emp_psa_marriage_certif = $employee->getFirstMedia('psa_marriagecertificate') ? 1 : null;
-        $this->emp_service_record_from_other_govt_agency = $employee->getFirstMedia('service_record') ? 1 : null;
-        $this->emp_approved_clearance_prev_employer = $employee->getFirstMedia('approved_clearance') ? 1 : null;
+        // $this->emp_photo = $employee->getFirstMedia('avatar') ? 1 : null;
+        // $this->emp_diploma = $employee->getFirstMedia('diploma') ? 1 : null;
+        // $this->emp_TOR = $employee->getFirstMedia('tor') ? 1 : null;
+        // $this->emp_cert_of_trainings_seminars = $employee->getFirstMedia('certificate/seminar') ? 1 : null;
+        // $this->emp_auth_copy_of_csc_or_prc = $employee->getFirstMedia('csc_eligibility') ? 1 : null;
+        // $this->emp_auth_copy_of_prc_board_rating = $employee->getFirstMedia('prc_boardrating') ? 1 : null;
+        // $this->emp_med_certif = $employee->getFirstMedia('medical_certificate') ? 1 : null;
+        // $this->emp_nbi_clearance = $employee->getFirstMedia('nbi_clearance') ? 1 : null;
+        // $this->emp_psa_birth_certif = $employee->getFirstMedia('psa_birthcertificate') ? 1 : null;
+        // $this->emp_psa_marriage_certif = $employee->getFirstMedia('psa_marriagecertificate') ? 1 : null;
+        // $this->emp_service_record_from_other_govt_agency = $employee->getFirstMedia('service_record') ? 1 : null;
+        // $this->emp_approved_clearance_prev_employer = $employee->getFirstMedia('approved_clearance') ? 1 : null;
         if($employee->employee_history != null){
             $this->employeeHistory = json_decode($employee->employee_history);
         }
     }
 
+    public function removeArrayImage($index, $request, $insideIndex = null){
+        // dump($this->cover_memo);
+            // dump($this->$requestName, $index, $insideIndex);
+
+        $requestName = str_replace(' ', '_', $request);
+        $requestName = strtolower($requestName);
+        if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
+            unset($this->$requestName[$index][$insideIndex]);
+            // dump($this->$requestName);
+            $this->$requestName[$index] = array_values($this->$requestName[$index]);
+            // dd($this->$requestName, $index, $insideIndex);
+        }
+        else{
+            unset($this->$requestName[$index]);
+            $this->$requestName =  array_values($this->$requestName);
+        }
+        // dump($this->cover_memo);
+    }
+
+    protected $rules = [
+
+    ];
+
     public function submit(){
 
-        // $this->validate()
-        // dump($this->emp_diploma);
-        // foreach($this->emp_diploma as $diploma){
-        //     dump($diploma);
-        // }
-
-
+        // $this->validate();
+     
         $employee = new ModelsChangeInformation();
         $employee->employee_id = auth()->user()->employee_id;
         $employee->first_name = $this->first_name;
@@ -92,94 +111,47 @@ class ChangeInformation extends Component
         $employee->birth_date = $this->birth_date;
         $employee->address = $this->address;
         
-        if ($this->emp_photo !== 1) {
-            $employee->addMedia($this->emp_photo)
-                ->preservingOriginal()
-                ->toMediaCollection('avatar');
-        }
+        $fileFields = [
+            'emp_diploma',
+            'emp_TOR',
+            'emp_cert_of_trainings_seminars',
+            'emp_auth_copy_of_csc_or_prc',
+            'emp_auth_copy_of_prc_board_rating',
+            'emp_med_certif',
+            'emp_nbi_clearance',
+            'emp_psa_birth_certif',
+            'emp_psa_marriage_certif',
+            'emp_service_record_from_other_govt_agency',
+            'emp_approved_clearance_prev_employer',
+            'other_documents',
+        ];
         
-        if ($this->emp_diploma !== 1) {
-            $employee->addFromMediaLibraryRequest($this->emp_diploma)
-                ->preservingOriginal()
-                ->toMediaCollection('diploma');
-        }
-        
-        if ($this->emp_TOR !== 1) {
-            $employee->addMedia($this->emp_TOR)
-                ->preservingOriginal()
-                ->toMediaCollection('tor');
-        }
-        
-        if (is_array($this->emp_cert_of_trainings_seminars)) {
-            foreach ($this->emp_cert_of_trainings_seminars as $certif) {
-                if ($certif !== 1) {
-                    $employee->addMedia($certif)
-                        ->preservingOriginal()
-                        ->toMediaCollection('certificate/seminar');
+        foreach ($fileFields as $field) {
+            $fileNames = [];            
+            $ctrField = count($this->$field) - 1 ;
+            $ctr = 0;
+            foreach($this->$field as $index => $item){
+                $ctr += 1;
+                if(is_string($item)){
+                    $fileNames[] = $item;  
+                }
+                else if(is_array($item)){
+                   
+                    foreach($item as $file){
+                        if(is_string($item)){
+                            $fileNames[] = $file;
+                        }
+                        else{ 
+                            $itemName = $file->store("photos/studypermit/$field", 'local');
+                            $fileNames[] = $itemName;
+                            if($employee->$field != null && $ctr <= $ctrField){
+                                Storage::delete($employee->$field[$index]);
+                            }
+                        }
+                    }
                 }
             }
-        }
-        
-        if ($this->emp_auth_copy_of_csc_or_prc !== 1) {
-            $employee->addMedia($this->emp_auth_copy_of_csc_or_prc)
-                ->preservingOriginal()
-                ->toMediaCollection('csc_eligibility');
-        }
-        
-        if ($this->emp_auth_copy_of_prc_board_rating !== 1) {
-            $employee->addMedia($this->emp_auth_copy_of_prc_board_rating)
-                ->preservingOriginal()
-                ->toMediaCollection('prc_boardrating');
-        }
-        
-        if ($this->emp_med_certif !== 1) {
-            $employee->addMedia($this->emp_med_certif)
-                ->preservingOriginal()
-                ->toMediaCollection('medical_certificate');
-        }
-        
-        if ($this->emp_nbi_clearance !== 1) {
-            $employee->addMedia($this->emp_nbi_clearance)
-                ->preservingOriginal()
-                ->toMediaCollection('nbi_clearance');
-        }
-        
-        if ($this->emp_psa_birth_certif !== 1) {
-            $employee->addMedia($this->emp_psa_birth_certif)
-                ->preservingOriginal()
-                ->toMediaCollection('psa_birthcertificate');
-        }
-        
-        if ($this->emp_psa_marriage_certif !== 1) {
-            $employee->addMedia($this->emp_psa_marriage_certif)
-                ->preservingOriginal()
-                ->toMediaCollection('psa_marriagecertificate');
-        }
-        
-        if (is_array($this->emp_service_record_from_other_govt_agency)) {
-            foreach ($this->emp_service_record_from_other_govt_agency as $value) {
-                if ($value !== 1) {
-                    $employee->addMedia($value)
-                        ->preservingOriginal()
-                        ->toMediaCollection('service_record');
-                }
-            }
-        }
-        
-        if ($this->emp_approved_clearance_prev_employer !== 1) {
-            $employee->addMedia($this->emp_approved_clearance_prev_employer)
-                ->preservingOriginal()
-                ->toMediaCollection('approved_clearance');
-        }
-        
-        if (is_array($this->other_documents)) {
-            foreach ($this->other_documents as $value) {
-                if ($value !== 1) {
-                    $employee->addMedia($value)
-                        ->preservingOriginal()
-                        ->toMediaCollection('other_documents');
-                }
-            }
+            $employee->$field = $fileNames;
         }
         
 

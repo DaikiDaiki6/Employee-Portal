@@ -39,18 +39,18 @@ return new class extends Migration
             $table->integer('teach_available_units')->nullable();
             
             //Documents
-            $table->string('emp_diploma')->nullable();
-            $table->string('emp_TOR')->nullable();
-            $table->string('emp_cert_of_trainings_seminars')->nullable();
-            $table->string('emp_auth_copy_of_csc_or_prc')->nullable();
-            $table->string('emp_auth_copy_of_prc_board_rating')->nullable();
-            $table->string('emp_med_certif')->nullable();
-            $table->string('emp_nbi_clearance')->nullable();
-            $table->string('emp_psa_birth_certif')->nullable();
-            $table->string('emp_psa_marriage_certif')->nullable();
-            $table->string('emp_service_record_from_other_govt_agency')->nullable();
-            $table->string('emp_approved_clearance_prev_employer')->nullable();
-            $table->string('other_documents')->nullable();
+            $table->json('emp_diploma')->nullable();
+            $table->json('emp_TOR')->nullable();
+            $table->json('emp_cert_of_trainings_seminars')->nullable();
+            $table->json('emp_auth_copy_of_csc_or_prc')->nullable();
+            $table->json('emp_auth_copy_of_prc_board_rating')->nullable();
+            $table->json('emp_med_certif')->nullable();
+            $table->json('emp_nbi_clearance')->nullable();
+            $table->json('emp_psa_birth_certif')->nullable();
+            $table->json('emp_psa_marriage_certif')->nullable();
+            $table->json('emp_service_record_from_other_govt_agency')->nullable();
+            $table->json('emp_approved_clearance_prev_employer')->nullable();
+            $table->json('other_documents')->nullable();
             
             // Account Creation
             $table->string('emp_image')->nullable();

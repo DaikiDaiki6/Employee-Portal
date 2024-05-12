@@ -731,7 +731,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>
+                                        </div>
 
 
                                         {{-- 4 --}}
@@ -1352,8 +1352,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                    </div>
-
+                                        </div>
                                     </div>
                             </div>
                         </div>
