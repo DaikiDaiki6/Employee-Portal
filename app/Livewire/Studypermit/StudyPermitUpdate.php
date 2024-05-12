@@ -37,6 +37,9 @@ class StudyPermitUpdate extends Component
     public $status;
     public $total_units_enrolled;
     public $available_units;
+    public $study_available_units;
+
+    public $units_enrolled; 
     public $cover_memo = [];
     public $request_letter = [];
     public $teaching_assignment = [];
@@ -61,7 +64,7 @@ class StudyPermitUpdate extends Component
     public function mount($index){
         $this->index = $index;
         $loggedInUser = auth()->user();
-        $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
+        $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type', 'study_available_units' )
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
@@ -70,8 +73,10 @@ class StudyPermitUpdate extends Component
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->current_position = $this->employeeRecord[0]->current_position;
         $this->employee_type = $this->employeeRecord[0]->employee_type;
-
+        $this->study_available_units = $this->employeeRecord[0]->study_available_units ?? 0;
+        
         $studypermitdata = Studypermit::findOrFail($index);
+        
         $this->employee_id = $studypermitdata->employee_id;
         $this->application_date = $studypermitdata->application_date;
         $this->start_period_cover = $studypermitdata->start_period_cover;
@@ -82,7 +87,7 @@ class StudyPermitUpdate extends Component
         $this->applicant_signature = $studypermitdata->applicant_signature;
         $this->status = $studypermitdata->status;
         $this->total_units_enrolled = $studypermitdata->total_units_enrolled;
-        $this->available_units = $studypermitdata->available_units;
+        // $this->available_units = $studypermitdata->available_units;
         $this->cover_memo = $studypermitdata->cover_memo;
         $this->request_letter = $studypermitdata->request_letter;
         $this->summary_of_schedule = $studypermitdata->summary_of_schedule;
@@ -91,22 +96,58 @@ class StudyPermitUpdate extends Component
         $this->certif_of_grades = $studypermitdata->certif_of_grades;
         $this->study_plan = $studypermitdata->study_plan;
         $this->student_faculty_eval = $studypermitdata->student_faculty_eval;
-        $this->subjectLoad = json_decode($studypermitdata->load, true);
+        
         $this->date_recommended_by = $studypermitdata->date_recommended_by;
         $this->signature_recommended_by = $studypermitdata->signature_recommended_by;
         $this->date_endorsed_by = $studypermitdata->date_endorsed_by;
         $this->signature_endorsed_by = $studypermitdata->signature_endorsed_by;
+        if(isset($studypermitdata->load)){
+            $this->subjectLoad = json_decode($studypermitdata->load, true);
+            foreach($this->subjectLoad as $load){
+                $this->units_enrolled += $load['number_of_units'];
+            }
+        }
     }
 
-    public function updated($keys){
-        if($keys == "auth_off_sig_b"){
-            $this->flag = "New";
+    public function updated($key){
+       
+        $parts = explode('.', $key);
+
+        if ($parts[0] === 'subjectLoad' && count($parts) >= 3) {
+            $lastPart = end($parts);
+            if ($lastPart == 'number_of_units') {
+                if($this->subjectLoad != null){
+                    $sum = 0;
+                    $index = 0;
+                    foreach ($this->subjectLoad ?? [] as $load){
+                        $sum += (int) $load['number_of_units'] ?? 1;
+                        $index += 1;
+                    }
+                    $this->units_enrolled = $sum ;
+                    // if($this->ipcr_type == 'rated'){
+                    //     $weight =  $core_function['weight'] ?? 100;
+                    //     $this->core_rating = ($sum / ($index * 4)) / $weight;
+                    // }
+                    // else{
+                    //     $this->core_rating = $sum / ($index * 4);
+                    // }
+                    // $this->reset('core_rating');
+                    // dd($this->core_rating);
+                }
+            }
         }
+
     }
 
     public function addSubjectLoad(){
         $this->subjectLoad[] = ['subject' => '', 'days' => '', 'start_time' => '', 'end_time' => '', 'number_of_units' => ''];
     }
+
+    public function removeSubjectLoad($index){
+        unset($this->subjectLoad[$index]);
+        // $this->subjectLoad = array_values($this->subjectLoad);
+    }
+
 
     public function getRecommendedSignature(){
         return Storage::disk('local')->get($this->signature_recommended_by);
@@ -150,15 +191,30 @@ class StudyPermitUpdate extends Component
         'units_enrolled' => 'required|lte:study_available_units',
         'total_teaching_load' => 'required|numeric',
         'total_aggregate_load' => 'required|numeric',
-        'applicant_signature' => 'required|mimes:jpg,bmp,png,pdf',
-        // 'cover_memo.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
-        // 'request_letter.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
-        // 'summary_of_schedule.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
-        // 'rated_ipcr.*' => 'required|mimes:jpg,bmp,png,pdf|max:3',
-        // 'teaching_assignment.*' => 'mimes:jpg,bmp,png,pdf|max:3',
-        // 'certif_of_grades.*' => 'mimes:jpg,bmp,png,pdf|max:3',
-        // 'study_plan.*' => 'mimes:jpg,bmp,png,pdf|max:3',
-        // 'student_faculty_eval.*' => 'mimes:jpg,bmp,png,pdf|max:3',        
+        'cover_memo' => 'required|array|min:1|max:3',
+        'cover_memo.*' => 'required',
+        'cover_memo.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'request_letter' => 'required|array|min:1|max:3',
+        'request_letter.*' => 'required',
+        'request_letter.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'teaching_assignment' => 'nullable|array|max:3',
+        'teaching_assignment.*' => '',
+        'teaching_assignment.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'summary_of_schedule' => 'required|array|min:1|max:3',
+        'summary_of_schedule.*' => '',
+        'summary_of_schedule.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
+        'certif_of_grades' => 'nullable|array|max:3',
+        'certif_of_grades.*' => '',
+        'certif_of_grades.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'study_plan' => 'nullable|array|max:3',
+        'study_plan.*' => '',
+        'study_plan.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'student_faculty_eval' => 'nullable|array|max:3',
+        'student_faculty_eval.*' => '',
+        'student_faculty_eval.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
+        'rated_ipcr' => 'required|array|min:1|max:3',
+        'rated_ipcr.*' => '',
+        'rated_ipcr.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
     ];
 
     protected $validationAttributes = [
@@ -171,9 +227,39 @@ class StudyPermitUpdate extends Component
         'subjectLoad.*.end_time' => 'End Time',
         'subjectLoad.*.number_of_units' => 'Number of Units',
         'units_enrolled' => 'Units Enrolled',
+        // 'cover_memo' => 'Cover Memo',
+        // 'cover_memo.*' => 'Cover Memo',
+        // 'cover_memo.*.*' => 'Cover Memo',
+        'request_letter' => 'Request Letter',
+        'request_letter.*' => 'Request Letter',
+        'request_letter.*.*' => 'Request Letter',
+        'teaching_assignment' => 'Teaching Assignment',
+        'teaching_assignment.*' => 'Teaching Assignment',
+        'teaching_assignment.*.*' => 'Teaching Assignment',
+        'summary_of_schedule' => 'Summary of Schedule',
+        'summary_of_schedule.*' => 'Summary of Schedule',
+        'summary_of_schedule.*.*' => 'Summary of Schedule',
+        'rated_ipcr' => 'Rated IPCR',
+        'rated_ipcr.*' => 'Rated IPCR',
+        'rated_ipcr.*.*' => 'Rated IPCR',
+        'certif_of_grades' => 'Certificate of Grades',
+        'certif_of_grades.*' => 'Certificate of Grades',
+        'certif_of_grades.*.*' => 'Certificate of Grades',
+        'study_plan' => 'Study Plan',
+        'study_plan.*' => 'Study Plan',
+        'study_plan.*.*' => 'Study Plan',
+        'student_faculty_eval' => 'Student Faculty Evaluation',
+        'student_faculty_eval.*' => 'Student Faculty Evaluation',
+        'student_faculty_eval.*.*' => 'Student Faculty Evaluation',
     ];
 
     public function submit(){
+        // dd($this->cover_memo);
+        $loggedInUser = auth()->user();
+        $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
+                            ->get()->value('study_available_units');   
+        $this->validate(['study_available_units' => 'lte:' . $real_available_units]);
+
         $this->validate();
 
         $days_and_time2 = array();
@@ -265,8 +351,16 @@ class StudyPermitUpdate extends Component
         // $studypermitdata->applicant_signature = $this->applicant_signature->store('photos/studypermit/applicant_signature', 'local');
         $studypermitdata->status = 'Pending';
         $studypermitdata->total_units_enrolled = $this->total_units_enrolled;
-        $studypermitdata->available_units = $this->available_units;
+        $studypermitdata->available_units = $this->study_available_units;
 
+        if(is_string($this->applicant_signature) == True){
+            // 'applicant_signature' => 'required|mimes:jpg,png,pdf',
+            $this->validate(['applicant_signature' => 'required|string']);
+            $studypermitdata->applicant_signature = $this->applicant_signature;
+        }else{
+            $this->validate(['applicant_signature' => 'required|mimes:jpg,png,pdf']);
+            $studypermitdata->applicant_signature = $this->applicant_signature->store('photos/studypermit/applicant_signature', 'local');
+        }
         // $properties = [
         //     'applicant_signature' => 'mimes:jpg,png|extensions:jpg,png',
         //     'cover_memo' => 'file|mimes:jpg,png|extensions:jpg,png',

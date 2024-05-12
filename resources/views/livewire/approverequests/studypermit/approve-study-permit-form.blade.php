@@ -31,12 +31,12 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="m1 9 4-4-4-4" />
                     </svg>
-                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Create</span>
+                    <span class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">Approve</span>
                 </div>
             </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Update Study Permit</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Approve Study Permit</h2>
     <section class="bg-white dark:bg-gray-900 pb-24 px-8  rounded-lg">
         <div class=" px-1 mx-auto pt-8">
             <form wire:submit.prevent="submit" method="POST">
@@ -227,6 +227,7 @@
                                                         id="subjectLoad_{{ $index }}_subject"
                                                         name="subjectLoad[{{ $index }}][subject]"
                                                         wire:model.blur="subjectLoad.{{ $index }}.subject"
+                                                        disabled
                                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                                                     @error('subjectLoad.' . $index . '.subject')
                                                         <div class="transition transform alert alert-danger text-sm" x-data
@@ -246,6 +247,7 @@
                                                         id="subjectLoad_{{ $index }}_days"
                                                         name="subjectLoad[{{ $index }}][days]"
                                                         wire:model.blur="subjectLoad.{{ $index }}.days"
+                                                        disabled
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                         <option value="Sunday">Sunday</option>
                                                         <option value="Monday">Monday</option>
@@ -268,42 +270,29 @@
                                             <div
                                                 class="grid grid-cols-1 min-[1404px]:grid-cols-3 p-6 gap-4  bg-white border border-gray-200  shadow  dark:bg-gray-800 dark:border-gray-700">
                                                 <div class="mt-5">
-                                                    <label for="subjectLoad_{{ $index }}_start_time"
-                                                        class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Start
-                                                        Period <span class="text-red-600">*</span></label>
-                                                    <input type="date"
-                                                        name="subjectLoad_{{ $index }}_start_time"
-                                                        id="subjectLoad[{{ $index }}][start_time]"
-                                                        wire:model.live="subjectLoad.{{ $index }}.start_time"
+                                                    <label for="subjectLoad_{{$index}}_start_time"
+                                                        class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Start Period <span class="text-red-600">*</span></label>
+                                                    <input type="time" name="subjectLoad_{{$index}}_start_time" id="subjectLoad_{{$index}}_start_time" wire:model.live="subjectLoad.{{$index}}.start_time" 
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="">
-                                                    {{-- @error('start_period') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror  --}}
+                                                        disabled>
                                                     @error('subjectLoad.' . $index . '.start_time')
-                                                        <div class="transition transform alert alert-danger text-sm" x-data
-                                                            x-init="document.getElementById('subjectLoad_{{ $index }}_start_time').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                            document.getElementById('subjectLoad_{{ $index }}_start_time').focus();">
-                                                            <span class="text-red-500 text-xs"> {{ $message }}</span>
-                                                        </div>
-                                                    @enderror
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('subjectLoad_{{$index}}_start_time').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subjectLoad_{{$index}}_start_time').focus();" >
+                                                            <span class=    "text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                    @enderror       
                                                 </div>
                                                 <div class="mt-5">
-                                                    <label for="subjectLoad_{{ $index }}_end_time"
-                                                        class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">End
-                                                        Period <span class="text-red-600">*</span></label>
-                                                    <input type="date"
-                                                        name="subjectLoad_{{ $index }}_end_time"
-                                                        id="subjectLoad[{{ $index }}][end_time]"
-                                                        wire:model.live="subjectLoad.{{ $index }}.end_time"
-                                                        value="{{ $date }}"
-                                                        min="{{ \Carbon\Carbon::now()->addDays()->format('Y-m-d\TH:i') }}"
+                                                    <label for="subjectLoad_{{$index}}_end_time"
+                                                        class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">End Period <span class="text-red-600">*</span></label>
+                                                    <input type="time" name="subjectLoad_{{$index}}_end_time" id="subjectLoad_{{$index}}_end_time" wire:model.live="subjectLoad.{{$index}}.end_time" value="{{$date}}" min="{{ \Carbon\Carbon::now()->addDays()->format('Y-m-d\TH:i') }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="">
-                                                    @error('subjectLoad.' . $index . '.end_time')
-                                                        <div class="transition transform alert alert-danger text-sm" x-data
-                                                            x-init="document.getElementById('subjectLoad_{{ $index }}_end_time').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                            document.getElementById('subjectLoad_{{ $index }}_end_time').focus();">
-                                                            <span class="text-red-500 text-xs"> {{ $message }}</span>
-                                                        </div>
+                                                    required=" " disabled>
+                                                    @error('subjectLoad.' . $index . '.end_time')   
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('subjectLoad_{{$index}}_end_time').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subjectLoad_{{$index}}_end_time').focus();" >
+                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
                                                     @enderror
                                                 </div>
                                                 <div class="mt-5">
@@ -1591,145 +1580,181 @@
 
                             <div class="grid grid-cols-1 col-span-3 p-6 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <h2><b>Signed By:</b></h2>
-                                <div class="grid grid-cols-1 min-[800px]:grid-cols-3 gap-4 p-4  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <div class="w-full">
-                                        <label for="recommended_date"
-                                            class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Recommended Date<span class="text-red-600">*</span></label>
-                                        <input type="date" name="recommended_date" id="recommended_date"
-                                            wire:model="date_recommended_by"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            required="">
-                                        @error('date_recommended_by')
-                                            <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
-                                                <span
-                                                    class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
-                                            </div>
-                                        @enderror
+                                <div class="grid grid-cols-1 col-span-3  p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                    <div class="flex-none pb-4">
+                                        <h2><b>Recommended By:</b></h2>
                                     </div>
-                                    <div class="grid grid-cols-1 col-span-2  gap-4 ">
-                                        <label for="signature_recommended_by"
-                                            class="block text-sm font-medium text-gray-900 dark:text-white">Recommended
-                                            By<span class="text-red-600">*</span></label>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
-                                            @if ($signature_recommended_by)
-                                                <label for="signature_recommended_by"
-                                                    class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                    @if (is_string($signature_recommended_by) == true)
+                                    <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                        <div class="grid grid-cols-2">
+                                            <div class="w-full grid grid-cols-1">
+                                                <label for="verdict_recommended_by"
+                                                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
+                                                    <div class="w-full pl-4 items-start">
+                                                    <input type="radio" name="verdict_recommended_by" id="verdict_recommended_by" wire:model.live="verdict_recommended_by" value="1">
+                                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                                    <br>
+                                                    <input type="radio" id="verdict_recommended_by" name="verdict_recommended_by" wire:model.live="verdict_recommended_by" value="0">
+                                                    <label for="html" class="text-sm font-semibold">Declined</label><br>
+                                                    @error('verdict_recommended_by')
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                            x-data x-init="document.getElementById('verdict_recommended_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_recommended_by').focus();" >
+                                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                    @enderror   
+                                                    </div>
+                                            </div>
+
+                                            <div class="w-full pr-4">
+                                                <label for="date_recommended_by"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recommended Date<span class="text-red-600">*</span></label>
+                                                <input type="date" name="date_recommended_by" id="date_recommended_by" wire:model="date_recommended_by"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                @error('date_recommended_by')
+                                                    <div class="transition transform alert alert-danger"
+                                                            x-init="$el.closest('label').scrollIntoView()">
+                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    </div> 
+                                                @enderror
+                                            </div>
+                                        </div>
+    
+                                         <div>
+                                             <label for="signature_recommended_by"
+                                             class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Recommended By Signature<span class="text-red-600">*</span></label>
+                                             <div class="grid grid-cols-1 items-center justify-center w-full">
+                                                 @if($signature_recommended_by)
+                                                 <label for="signature_recommended_by" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                     @if(is_string($signature_recommended_by) == True)
                                                         @php
                                                             $signature_recommended_by = $this->getRecommendedSignature();
                                                         @endphp
-                                                        <img src="data:image/gif;base64,{{ base64_encode($signature_recommended_by) }}"
-                                                            alt="Image Description"
-                                                            class="w-full h-full object-contain">
-                                                    @else
-                                                        <img src="{{ $signature_recommended_by->temporaryUrl() }}"
-                                                            class="w-full h-full object-contain" alt="Uploaded Image">
-                                                    @endif
-                                                    <input id="signature_recommended_by" type="file"
-                                                        class="hidden" wire:model.live="signature_recommended_by">
-                                                </label>
-                                            @else
-                                                <label for="signature_recommended_by"
-                                                    class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                        <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400"
-                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none" viewBox="0 0 20 16">
-                                                            <path stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"
-                                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                                        <img src="data:image/gif;base64,{{ base64_encode($signature_recommended_by) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                                        <button type="button"
+                                                        wire:click="removeImage('signature_recommended_by')"
+                                                        class="absolute right-0 top-0 z-30 m-2 text-red-600 py-1  rounded">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor"
+                                                            class="w-6 h-6">
+                                                            <path stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                         </svg>
-                                                        <p
-                                                            class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400">
-                                                            <span class="font-semibold">Click to upload</span></p>
-                                                        <p
-                                                            class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                            PNG, JPG (MAX. 800x400px)</p>
-                                                    </div>
-                                                    <input id="signature_recommended_by" type="file"
-                                                        class="hidden" wire:model.blur="signature_recommended_by">
-                                                </label>
-                                            @endif
-                                            @error('signature_recommended_by')
-                                                <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                    <span
-                                                        class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
-                                                </div>
-                                            @enderror
-                                        </div>
+                                                        </button>
+                                                     @else
+                                                        <img src="{{ $signature_recommended_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                                        <button type="button"
+                                                        wire:click="removeArrayImage('signature_recommended_by')"
+                                                        class=" top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none" viewBox="0 0 24 24"
+                                                            stroke-width="1.5" stroke="currentColor"
+                                                            class="w-6 h-6">
+                                                            <path stroke-linecap="round"
+                                                                stroke-linejoin="round"
+                                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                                                        </button>
+                                                    @endif
+                                                     <input id="signature_recommended_by" type="file" class="hidden" wire:model.live="signature_recommended_by">
+                                                 </label>
+                                                 @else
+                                                     <label for="signature_recommended_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                             <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                             </svg>
+                                                             <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                             <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                                         </div>
+                                                         <input id="signature_recommended_by" type="file" class="hidden" wire:model.blur="signature_recommended_by">
+                                                     </label>
+                                                 @endif
+                                                 @error('signature_recommended_by')
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_recommended_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_recommended_by').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                 @enderror
+                                             </div>
+                                         </div>
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-1 min-[800px]:grid-cols-3 gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                    <div class="w-full">
-                                        <label for="date_endorsed_by"
-                                            class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Endorsed Date<span class="text-red-600">*</span></label>
-                                        <input type="date" name="date_endorsed_by" id="date_endorsed_by"
-                                            wire:model="date_endorsed_by"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            required="">
-                                        @error('date_endorsed_by')
-                                            <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
-                                                <span
-                                                    class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
-                                            </div>
-                                        @enderror
+
+                                <div class="grid grid-cols-1 col-span-3  p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                    <div class="flex-none pb-4">
+                                        <h2><b>Endorsed By:</b></h2>
                                     </div>
-                                    <div
-                                        class="col-span-2 grid grid-cols-1  gap-4  ">
-                                        <label for="signature_recommended_by"
-                                            class="block text-sm font-medium text-gray-900 dark:text-white">Endorsed
-                                            By<span class="text-red-600">*</span></label>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
-                                            @if ($signature_endorsed_by)
-                                                <div>
-                                                    <label for="signature_endorsed_by"
-                                                    class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                    @if (is_string($signature_endorsed_by) == true)
-                                                        @php
-                                                            $signature_endorsed_by = $this->getEndorsedSignature();
-                                                        @endphp
-                                                        <img src="data:image/gif;base64,{{ base64_encode($signature_endorsed_by) }}"
-                                                            alt="Image Description"
-                                                            class="w-full h-full object-contain">
-                                                    @else
-                                                        <img src="{{ $signature_endorsed_by->temporaryUrl() }}"
-                                                            class="w-full h-full object-contain" alt="Uploaded Image">
-                                                    @endif
-                                                    <input id="signature_endorsed_by" type="file" class="hidden"
-                                                        wire:model.live="signature_endorsed_by">
-                                                    </label>
-                                                </div>
-                                            @else
-                                                <label for="signature_endorsed_by"
-                                                    class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                        <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400"
-                                                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none" viewBox="0 0 20 16">
-                                                            <path stroke="currentColor" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke-width="2"
-                                                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                                                        </svg>
-                                                        <p
-                                                            class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400">
-                                                            <span class="font-semibold">Click to upload</span></p>
-                                                        <p
-                                                            class="text-xs text-center text-gray-500 dark:text-gray-400">
-                                                            PNG, JPG (MAX. 800x400px)</p>
+                                    <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                        <div class="grid grid-cols-2">
+                                            <div class="w-full grid grid-cols-1">
+                                                <label for="verdict_endorsed_by"
+                                                    class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
+                                                    <div class="w-full pl-4 items-start">
+                                                    <input type="radio" name="verdict_endorsed_by" id="verdict_endorsed_by" wire:model.live="verdict_endorsed_by" value="1">
+                                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                                    <br>
+                                                    <input type="radio" id="verdict_endorsed_by" name="verdict_endorsed_by" wire:model.live="verdict_endorsed_by" value="0">
+                                                    <label for="html" class="text-sm font-semibold">Declined</label><br>
+                                                    @error('verdict_endorsed_by')
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                            x-data x-init="document.getElementById('verdict_endorsed_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_endorsed_by').focus();" >
+                                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                    @enderror   
                                                     </div>
-                                                    <input id="signature_endorsed_by" type="file" class="hidden"
-                                                        wire:model.blur="signature_endorsed_by">
-                                                </label>
-                                            @endif
-                                            @error('signature_recommended_by')
-                                                <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                    <span
-                                                        class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
-                                                </div>
-                                            @enderror
+                                            </div>
+
+                                            <div class="w-full pr-4">
+                                                <label for="date_endorsed_by"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Endorsed Date<span class="text-red-600">*</span></label>
+                                                <input type="date" name="date_endorsed_by" id="date_endorsed_by" wire:model="date_endorsed_by"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                @error('date_endorsed_by')
+                                                    <div class="transition transform alert alert-danger"
+                                                            x-init="$el.closest('label').scrollIntoView()">
+                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    </div> 
+                                                @enderror
+                                            </div>
                                         </div>
+    
+                                         <div>
+                                             <label for="signature_endorsed_by"
+                                             class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Endorsed By Signature <span class="text-red-600">*</span></label>
+                                             <div class="grid grid-cols-1 items-center justify-center w-full">
+                                                 @if($signature_endorsed_by)
+                                                 <label for="signature_endorsed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                     @if(is_string($signature_endorsed_by) == True)
+                                                         @php
+                                                             $signature_endorsed_by = $this->getEndorsedSignature();
+                                                         @endphp
+                                                         <img src="data:image/gif;base64,{{ base64_encode($signature_endorsed_by) }}" alt="Image Description" class="w-full h-full object-contain"> 
+                                                     @else
+                                                         <img src="{{ $signature_endorsed_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                                     @endif
+                                                     <input id="signature_endorsed_by" type="file" class="hidden" wire:model.live="signature_endorsed_by">
+                                                 </label>
+                                                 @else
+                                                     <label for="signature_endorsed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                             <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                             </svg>
+                                                             <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                             <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
+                                                         </div>
+                                                         <input id="signature_endorsed_by" type="file" class="hidden" wire:model.blur="signature_endorsed_by">
+                                                     </label>
+                                                 @endif
+                                                 @error('signature_endorsed_by')
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_endorsed_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_endorsed_by').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                 @enderror
+                                             </div>
+                                         </div>
                                     </div>
                                 </div>
                             </div>

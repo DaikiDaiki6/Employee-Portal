@@ -50,10 +50,11 @@ class ApproveIpcrForm extends Component
     public $ipcrData;
     public $ipcrIndex;
 
+    public $dateToday;
+
     public function mount($index){
         $this->ipcrIndex = $index;
         $ipcrData = $this->editIpcr($index);
-        
         $this->ipcr_type = $ipcrData->ipcr_type;
         $this->date_of_filling = $ipcrData->date_of_filling;
         $this->ratee = $ipcrData->ratee;
@@ -69,13 +70,17 @@ class ApproveIpcrForm extends Component
         $this->comments_and_reco = $ipcrData->comments_and_reco;
         $this->discussed_with = $ipcrData->discussed_with;
         $this->disscused_with_date = $ipcrData->disscused_with_date;
+
+        $dateToday = Carbon::now()->toDateString();
+
         $this->assessed_by = $ipcrData->assessed_by;
-        $this->assessed_by_date =  $ipcrData->assessed_by_date;
+        $this->assessed_by_date =  $ipcrData->assessed_by_date ?? $dateToday;
         $this->assessed_by_verdict = $ipcrData->assessed_by_verdict;
         $this->final_rating = $ipcrData->final_rating;
         $this->final_rating_by = $ipcrData->final_rating_by;
         $this->final_rating_by_verdict = $ipcrData->final_rating_by_verdict;
-        $this->final_rating_by_date = $ipcrData->final_rating_by_date;
+        $this->final_rating_by_date = $ipcrData->final_rating_by_date ?? $dateToday;
+
     
         
         // $this->coreFunctions = [

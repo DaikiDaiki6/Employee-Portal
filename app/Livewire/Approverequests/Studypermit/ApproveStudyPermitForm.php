@@ -38,7 +38,10 @@ class ApproveStudyPermitForm extends Component
     public $applicant_signature;
     public $status;
     public $total_units_enrolled;
-    public $available_units;
+    public $study_available_units;
+
+    public $units_enrolled; 
+
     public $cover_memo = [];
     public $request_letter = [];
     public $teaching_assignment = [];
@@ -53,17 +56,20 @@ class ApproveStudyPermitForm extends Component
     public $date_head_office_unit;
     public $signature_endorsed_by;
     public $date_endorsed_by;
+
+    public $verdict_endorsed_by;
     public $signature_recommended_by;
     public $date_recommended_by;
+
+    public $verdict_recommended_by;
     public $signature_univ_pres;
     public $date_univ_pres;
-
     public $flag;
 
     public function mount($index){
         $this->index = $index;
         $loggedInUser = auth()->user();
-        $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
+        $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type', 'study_available_units' )
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
@@ -72,8 +78,10 @@ class ApproveStudyPermitForm extends Component
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->current_position = $this->employeeRecord[0]->current_position;
         $this->employee_type = $this->employeeRecord[0]->employee_type;
-
+        $this->study_available_units = $this->employeeRecord[0]->study_available_units ?? 0;
+        
         $studypermitdata = Studypermit::findOrFail($index);
+        
         $this->employee_id = $studypermitdata->employee_id;
         $this->application_date = $studypermitdata->application_date;
         $this->start_period_cover = $studypermitdata->start_period_cover;
@@ -84,7 +92,7 @@ class ApproveStudyPermitForm extends Component
         $this->applicant_signature = $studypermitdata->applicant_signature;
         $this->status = $studypermitdata->status;
         $this->total_units_enrolled = $studypermitdata->total_units_enrolled;
-        $this->available_units = $studypermitdata->available_units;
+        // $this->available_units = $studypermitdata->available_units;
         $this->cover_memo = $studypermitdata->cover_memo;
         $this->request_letter = $studypermitdata->request_letter;
         $this->summary_of_schedule = $studypermitdata->summary_of_schedule;
@@ -93,11 +101,19 @@ class ApproveStudyPermitForm extends Component
         $this->certif_of_grades = $studypermitdata->certif_of_grades;
         $this->study_plan = $studypermitdata->study_plan;
         $this->student_faculty_eval = $studypermitdata->student_faculty_eval;
-        $this->subjectLoad = json_decode($studypermitdata->load, true);
-        $this->date_recommended_by = $studypermitdata->date_recommended_by;
+        
+        $dateToday = Carbon::now()->toDateString();
+
+        $this->date_recommended_by = $studypermitdata->date_recommended_by ?? $dateToday;
         $this->signature_recommended_by = $studypermitdata->signature_recommended_by;
-        $this->date_endorsed_by = $studypermitdata->date_endorsed_by;
+        $this->date_endorsed_by = $studypermitdata->date_endorsed_by ?? $dateToday;
         $this->signature_endorsed_by = $studypermitdata->signature_endorsed_by;
+        if(isset($studypermitdata->load)){
+            $this->subjectLoad = json_decode($studypermitdata->load, true);
+            foreach($this->subjectLoad as $load){
+                $this->units_enrolled += $load['number_of_units'];
+            }
+        }
     }
 
     public function updated($keys){
@@ -140,10 +156,12 @@ class ApproveStudyPermitForm extends Component
         // dump($this->cover_memo);
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function submit(){
         // $this->validate();
-
-        // dd($this->days);
 
         $loggedInUser = auth()->user();
         $studypermitdata = Studypermit::findOrFail($this->index);
@@ -153,16 +171,17 @@ class ApproveStudyPermitForm extends Component
                 ->get();   
 
         $studypermitdata->employee_id = $loggedInUser->employee_id;
-        $studypermitdata->application_date = $this->application_date;
-        $studypermitdata->start_period_cover = $this->start_period_cover;
-        $studypermitdata->end_period_cover = $this->end_period_cover;
-        $studypermitdata->degree_prog_and_school = $this->degree_prog_and_school;
-        $studypermitdata->total_teaching_load = $this->total_teaching_load;
-        $studypermitdata->total_aggregate_load = $this->total_aggregate_load;
-        // $studypermitdata->applicant_signature = $this->applicant_signature->store('photos/studypermit/applicant_signature', 'local');
-        $studypermitdata->status = 'Pending';
-        $studypermitdata->total_units_enrolled = $this->total_units_enrolled;
-        $studypermitdata->available_units = $this->available_units;
+
+        // $studypermitdata->application_date = $this->application_date;
+        // $studypermitdata->start_period_cover = $this->start_period_cover;
+        // $studypermitdata->end_period_cover = $this->end_period_cover;
+        // $studypermitdata->degree_prog_and_school = $this->degree_prog_and_school;
+        // $studypermitdata->total_teaching_load = $this->total_teaching_load;
+        // $studypermitdata->total_aggregate_load = $this->total_aggregate_load;
+        // // $studypermitdata->applicant_signature = $this->applicant_signature->store('photos/studypermit/applicant_signature', 'local');
+        // $studypermitdata->status = 'Pending';
+        // $studypermitdata->total_units_enrolled = $this->total_units_enrolled;
+        // $studypermitdata->available_units = $this->available_units;
 
         // $properties = [
         //     'applicant_signature' => 'mimes:jpg,png|extensions:jpg,png',
@@ -197,54 +216,97 @@ class ApproveStudyPermitForm extends Component
 
         $targetUser = User::where('employee_id', $studypermitdata->employee_id)->first();
 
-        $fileFields = [
-            'cover_memo',
-            'request_letter',
-            'summary_of_schedule',
-            'rated_ipcr',
-            'teaching_assignment',
-            'certif_of_grades',
-            'study_plan',
-            'student_faculty_eval',
-        ];
+        // $fileFields = [
+        //     'cover_memo',
+        //     'request_letter',
+        //     'summary_of_schedule',
+        //     'rated_ipcr',
+        //     'teaching_assignment',
+        //     'certif_of_grades',
+        //     'study_plan',
+        //     'student_faculty_eval',
+        // ];
 
-        foreach ($fileFields as $field) {
-            $fileNames = [];            
-            $ctrField = count($this->$field) - 1 ;
-            $ctr = 0;
-            foreach($this->$field as $index => $item){
-                $ctr += 1;
-                if(is_string($item)){
-                    $fileNames[] = $item;  
-                }
-                else if(is_array($item)){
-                    foreach($item as $file){
-                        if(is_string($item)){
-                            $fileNames[] = $file;
-                        }
-                        else{ 
-                            if($this->$field){
-                                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Study Permit', 'Signed', $studypermitdata->id, $signedIn));
-                            }
-                            $itemName = $file->store("photos/studypermit/$field", 'local');
-                            $fileNames[] = $itemName;
-                            if($studypermitdata->$field != null && $ctr <= $ctrField){
-                                Storage::delete($studypermitdata->$field[$index]);
-                            }
-                        }
-                    }
-                }
-                // else{
-                //     $itemName = $item->store("photos/studypermit/$field", 'local');
-                //     $fileNames[] = $itemName;
-                //     Storage::delete($studypermitdata->$field[$index]);
+        // foreach ($fileFields as $field) {
+        //     $fileNames = [];            
+        //     $ctrField = count($this->$field) - 1 ;
+        //     $ctr = 0;
+        //     foreach($this->$field as $index => $item){
+        //         $ctr += 1;
+        //         if(is_string($item)){
+        //             $fileNames[] = $item;  
+        //         }
+        //         else if(is_array($item)){
+        //             foreach($item as $file){
+        //                 if(is_string($item)){
+        //                     $fileNames[] = $file;
+        //                 }
+        //                 else{ 
+        //                     if($this->$field){
+        //                         $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Study Permit', 'Signed', $studypermitdata->id, $signedIn));
+        //                     }
+        //                     $itemName = $file->store("photos/studypermit/$field", 'local');
+        //                     $fileNames[] = $itemName;
+        //                     if($studypermitdata->$field != null && $ctr <= $ctrField){
+        //                         Storage::delete($studypermitdata->$field[$index]);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         // else{
+        //         //     $itemName = $item->store("photos/studypermit/$field", 'local');
+        //         //     $fileNames[] = $itemName;
+        //         //     Storage::delete($studypermitdata->$field[$index]);
 
-                // }
+        //         // }
 
                 
-            }
-            $studypermitdata->$field = $fileNames;
+        //     }
+        //     $studypermitdata->$field = $fileNames;
+        // }
+
+        $properties = [
+            'signature_recommended_by' => 'required_with:verdict_recommended_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'signature_endorsed_by' => 'required_with:verdict_endorsed_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+        ];
+
+        // Iterate over the properties
+        foreach ($properties as $propertyName => $validationRule) {
+        // Check if the current property value is a string or an uploaded file                
+                if (is_string($this->$propertyName)) {
+                    // If it's a string, assign it directly
+                    $studypermitdata->$propertyName = $this->$propertyName;
+                }
+                else if($this->$propertyName == null){
+                    if($propertyName == "signature_recommended_by")
+                        $this->validate([$propertyName => 'required_with:verdict_recommended_by']);
+                    else if ($propertyName == 'signature_endorsed_by')
+                        $this->validate([$propertyName => 'required_with:verdict_endorsed_by']);
+                }
+                else {
+                    // If it's an uploaded file, store it and apply validation rules
+                    if($this->$propertyName){
+                    $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Leave Request', 'Signed', $studypermitdata->id, $signedIn));
+                    }
+                    $studypermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/studypermit/' . $propertyName, 'local') : '';
+                    $this->validate([$propertyName => $validationRule]);
+                }
         }
+
+        $verdictProperties = [
+            'verdict_recommended_by' => 'required_with:signature_recommended_by',
+            'verdict_endorsed_by' => 'required_with:signature_endorsed_by',
+        ];
+
+        // Iterate over the properties
+        foreach ($verdictProperties as $propertyName => $validationRule) {
+                $this->validate([$propertyName => $validationRule]);
+        }
+
+        // $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
+        $studypermitdata->date_recommended_by = $this->date_recommended_by;
+        // $studypermitdata->signature_endorsed_by = $this->signature_endorsed_by->store('photos/studypermit/endorsed_by', 'local');
+        $studypermitdata->date_endorsed_by = $this->date_endorsed_by;
         
         foreach($this->subjectLoad as $load){
             $jsonSubjectLoad[] = [
@@ -268,7 +330,7 @@ class ApproveStudyPermitForm extends Component
  
         $studypermitdata->update();
 
-        return redirect()->to(route('approveStudyPermitTable'));
+        return redirect()->to(route('ApproveStudyPermitTable'));
 
     
 

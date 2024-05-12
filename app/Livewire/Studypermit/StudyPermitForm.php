@@ -60,7 +60,6 @@ class StudyPermitForm extends Component
 
     public $cover_memo_ctr;
 
-
     public function mount(){
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type', 'study_available_units' )
@@ -148,7 +147,6 @@ class StudyPermitForm extends Component
     }
 
     public function removeSubjectLoad($index){
-        // dd($index);
         unset($this->subjectLoad[$index]);
         // $this->subjectLoad = array_values($this->subjectLoad);
     }
@@ -236,9 +234,12 @@ class StudyPermitForm extends Component
 
 
     public function submit(){
-        // dd($this->cover_memo);
+        $loggedInUser = auth()->user();
+        $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
+                            ->get()->value('study_available_units');   
+        $this->validate(['study_available_units' => 'lte:' . $real_available_units]);
+
         $this->validate();
-        // dd($this->cover_memo);
 
         $days_and_time2 = array();
         $conflictFlag = False;
@@ -315,11 +316,12 @@ class StudyPermitForm extends Component
 
         $studypermitdata = new Studypermit();
 
-        $departmentName = Employee::where('employee_id', $loggedInUser->employee_id)->value('department_name');   
-
+        $employeeRecords = Employee::select('department_name', 'study_available_units' )
+                                            ->where('employee_id', $loggedInUser->employee_id)
+                                            ->get();   
         $studypermitdata->employee_id = $loggedInUser->employee_id;
         $studypermitdata->application_date = $this->application_date;
-        $studypermitdata->department_name = $departmentName;
+        $studypermitdata->department_name = $employeeRecords[0]->department_name;
         $studypermitdata->start_period_cover = $this->start_period_cover;
         $studypermitdata->end_period_cover = $this->end_period_cover;
         $studypermitdata->degree_prog_and_school = $this->degree_prog_and_school;
@@ -329,6 +331,7 @@ class StudyPermitForm extends Component
         $studypermitdata->status = 'Pending';
         $studypermitdata->total_units_enrolled = $this->total_units_enrolled;
         $studypermitdata->available_units = $this->study_available_units;
+
         // $studypermitdata->cover_memo = $this->cover_memo->store('photos/studypermit/cover_memo', 'local');
         // $studypermitdata->request_letter = $this->request_letter->store('photos/studypermit/request_letter', 'local');
         // $studypermitdata->summary_of_schedule = $this->summary_of_schedule->store('photos/studypermit/summary_schedule', 'local');
@@ -397,10 +400,10 @@ class StudyPermitForm extends Component
         //     $studypermitdata->$field = $fileNames;
         // }
         
-        // $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
-        // $studypermitdata->date_recommended_by = $this->date_recommended_by;
-        // $studypermitdata->signature_endorsed_by = $this->signature_endorsed_by->store('photos/studypermit/endorsed_by', 'local');
-        // $studypermitdata->date_endorsed_by = $this->date_endorsed_by;
+        $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
+        $studypermitdata->date_recommended_by = $this->date_recommended_by;
+        $studypermitdata->signature_endorsed_by = $this->signature_endorsed_by->store('photos/studypermit/endorsed_by', 'local');
+        $studypermitdata->date_endorsed_by = $this->date_endorsed_by;
 
         foreach($this->subjectLoad as $load){
             $jsonSubjectLoad[] = [
