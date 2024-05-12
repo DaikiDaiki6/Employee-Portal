@@ -132,33 +132,19 @@ class ApproveTeachPermitForm extends Component
                 ->where('employee_id', $loggedInUser->employee_id)
                 ->get();   
 
-        // $teachpermitdata->employee_id = $loggedInUser->employee_id;
-        // $teachpermitdata->application_date = $this->application_date;
-        // $teachpermitdata->start_period_cover = $this->start_period_cover;
-        // $teachpermitdata->end_period_cover = $this->end_period_cover;
-        // $teachpermitdata->designation_rank = $this->designation_rank;
-        // $teachpermitdata->name_of_school_description = $this->name_of_school_description;
-        // $teachpermitdata->inside_outside_university = $this->inside_outside_university;
-        // $teachpermitdata->total_aggregate_load = $this->total_aggregate_load ? $this->total_aggregate_load : NULL;
-        // $teachpermitdata->total_load_plm = $this->total_load_plm ? $this->total_load_plm : NULL ;
-        // $teachpermitdata->total_load_otherunivs = $this->total_load_otherunivs ? $this->total_load_otherunivs : NULL ;
-        // $teachpermitdata->status = 'Pending';
-        // $teachpermitdata->total_units_enrolled = $this->total_units_enrolled;
-        // $teachpermitdata->available_units = $this->available_units;
-
-      
-
         $dates = [
-            'date_of_signature_of_head_office',
-            'date_of_signature_of_human_resource',
-            'date_of_signature_of_vp_for_academic_affair',
-            'date_of_signature_of_university_president',
+            'date_of_signature_of_head_office' => 'required_with:signature_of_head_office|date|after_or_equal:application_date',
+            'date_of_signature_of_human_resource' => 'required_with:signature_of_human_resource|date|after_or_equal:application_date',
+            'date_of_signature_of_vp_for_academic_affair' => 'required_with:signature_of_vp_for_academic_affair|date|after_or_equal:application_date',
+            'date_of_signature_of_university_president' => 'required_with:signature_of_university_president|date|after_or_equal:application_date',
         ];
 
-        foreach ($dates as $date){
-            if($this->$date){
-                $teachpermitdata->date_of_signature_of_head_office = $this->$date;
-            }
+        foreach ($dates as $date => $validationRule){
+            // if($this->$date){
+            $this->validate([$date => $validationRule]);
+            // dd('test');
+            $teachpermitdata->$date = $this->$date;
+            // }
         }
 
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
@@ -166,29 +152,31 @@ class ApproveTeachPermitForm extends Component
         ->first();
         $signedIn = $Names->first_name. ' ' .  $Names->middle_name. ' '. $Names->last_name;
 
-        $targetUser = User::where('employee_id', $$teachpermitdata->employee_id)->first();
+        $targetUser = User::where('employee_id', $teachpermitdata->employee_id)->first();
 
         $properties = [
-            'applicant_signature' => 'mimes:jpg,png|extensions:jpg,png',
-            'signature_of_head_office' => 'nullable|file|mimes:jpg,png|extensions:jpg,png',
-            'signature_of_human_resource' => 'nullable|file|mimes:jpg,png|extensions:jpg,png',
-            'signature_of_vp_for_academic_affair' => 'nullable|file|mimes:jpg,png|extensions:jpg,png',
-            'signature_of_university_president' => 'nullable|file|mimes:jpg,png|extensions:jpg,png',
+            // 'applicant_signature' => 'mimes:jpg,png|extensions:jpg,png,pdf',
+            'signature_of_head_office' => 'required_with:date_of_signature_of_head_office|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'signature_of_human_resource' => 'required_with:date_of_signature_of_human_resource|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'signature_of_vp_for_academic_affair' => 'required_with:date_of_signature_of_vp_for_academic_affair|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'signature_of_university_president' => 'required_with:date_of_signature_of_university_president|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
         ];
         
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
             // Check if the current property value is a string or an uploaded file
+            $this->validate([$propertyName => $validationRule]);
+
             if (is_string($this->$propertyName)) {
                 // If it's a string, assign it directly
                 $teachpermitdata->$propertyName = $this->$propertyName;
             } else {
                 // If it's an uploaded file, store it and apply validation rules
+                // $this->validate([$propertyName => $validationRule]);
                 if($this->$propertyName){
                 $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Teach Permit', 'Signed', $teachpermitdata->id, $signedIn));
                 }
                 $teachpermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/teachpermit/' . $propertyName, 'local') : '';
-                $this->validate([$propertyName => $validationRule]);
             }
         }
 

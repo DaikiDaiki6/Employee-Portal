@@ -74,6 +74,10 @@ class TeachPermitForm extends Component
         // $this->subjectLoad = array_values($this->subjectLoad);
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
 
     public function updated($key){
        
@@ -135,7 +139,6 @@ class TeachPermitForm extends Component
         'subjectLoad.*.end_time' => 'End Time',
         'subjectLoad.*.number_of_units' => 'Number of Units',
         'units_enrolled' => 'Units Enrolled',
-
     ];
 
     public function submit(){
@@ -144,7 +147,7 @@ class TeachPermitForm extends Component
             // $this->resetErrorBag();
             $this->resetValidation();
         }   
-
+    
         $loggedInUser = auth()->user();
         $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
                             ->get()->value('study_available_units');   
