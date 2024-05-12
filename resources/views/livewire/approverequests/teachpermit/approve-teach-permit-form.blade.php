@@ -376,7 +376,6 @@
 
                             <div class="grid grid-cols-1 col-span-3 p-6 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <h2><b>Signed By:</b></h2>
-
                                 <div class="grid grid-cols-3 gap-4">
                                     <div class="w-full mt-4">
                                         <label for="date_of_signature_of_head_office"
@@ -384,18 +383,21 @@
                                         <input type="date" name="date_of_signature_of_head_office" id="date_of_signature_of_head_office" wire:model="date_of_signature_of_head_office" 
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                         @error('date_of_signature_of_head_office')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs ">{{$message }}</span>
-                                        </div> 
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('date_of_signature_of_head_office').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_of_signature_of_head_office').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                            </div> 
                                         @enderror       
                                     </div>
-                                    <div class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+
+                                    {{-- Head Office --}}
+
+                                    <div id="signature_of_head_office_container" class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <label for="signature_recommended_by"
                                         class="block text-sm font-medium text-gray-900 dark:text-white">Department Head Signature<span class="text-red-600">*</span></label>
                                         <div class="grid grid-cols-1 items-center justify-center w-full">
                                             @if($signature_of_head_office)
-                                                <label for="signature_of_head_office" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                <label for="signature_of_head_office" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                     @if(is_string($signature_of_head_office) == True)
                                                         @php
                                                             $signature_of_head_office = $this->getHeadSignature();
@@ -404,6 +406,11 @@
                                                     @else
                                                         <img src="{{ $signature_of_head_office->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                                     @endif
+                                                    <button type="button" wire:click="removeImage('signature_of_head_office')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                                                    </button>
                                                     <input id="signature_of_head_office" type="file" class="hidden" wire:model.live="signature_of_head_office">
                                                 </label>
                                             @else
@@ -419,9 +426,9 @@
                                                 </label>
                                             @endif
                                             @error('signature_of_head_office')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap ">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_of_head_office_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_head_office_container').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
@@ -429,7 +436,7 @@
                                 </div>
 
                                 {{-- Human Resource  --}}
-                                <div class="grid grid-cols-3 gap-4">
+                                <div class="grid grid-cols-3 gap-4" id="signature_of_human_resource_container">
                                     <div class="w-full mt-4">
                                         <label for="date_of_signature_of_human_resource"
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Human Resource Signature Date<span class="text-red-600">*</span></label>
@@ -437,18 +444,18 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             >
                                         @error('date_of_signature_of_human_resource')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs ">{{$message }}</span>
-                                        </div> 
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_of_human_resource_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_human_resource_container').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                </div> 
                                         @enderror       
                                     </div>
-                                    <div class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                        <label for="signature_of_human_resource"
+                                    <div  class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                        <label for="signature_of_human_resource" 
                                         class="block text-sm font-medium text-gray-900 dark:text-white">Human Resource Signature <span class="text-red-600">*</span></label>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
+                                        <div  class="grid grid-cols-1 items-center justify-center w-full">
                                             @if($signature_of_human_resource)
-                                                <label for="signature_of_human_resource" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                <label for="signature_of_human_resource" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                     @if (is_string($signature_of_human_resource) == True)
                                                         @php
                                                             $signature_of_human_resource = $this->getHumanResourceSignature();
@@ -457,6 +464,11 @@
                                                     @else
                                                         <img src="{{ $signature_of_human_resource->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                                     @endif
+                                                    <button type="button" wire:click="removeImage('signature_of_human_resource')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                                                    </button>
                                                     <input id="signature_of_human_resource" type="file" class="hidden" wire:model.live="signature_of_human_resource">
                                                 </label>
                                             @else
@@ -472,9 +484,9 @@
                                                 </label>
                                             @endif
                                             @error('signature_of_human_resource')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap ">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('signature_of_human_resource_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_human_resource_container').focus();">
+                                                <span class="text-red-500 text-xs "> {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
@@ -482,7 +494,7 @@
                                 </div>
 
                                 {{-- Academic Affairs --}}
-                                <div class="grid grid-cols-3 gap-4">
+                                <div class="grid grid-cols-3 gap-4" id="signature_of_vp_for_academic_affair_container">
                                     <div class="w-full mt-4">
                                         <label for="date_of_signature_of_vp_for_academic_affair"
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">VP of Academic Affairs Signature Date<span class="text-red-600">*</span></label>
@@ -490,10 +502,10 @@
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             >
                                         @error('date_of_signature_of_vp_for_academic_affair')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs ">{{$message }}</span>
-                                        </div> 
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('signature_of_vp_for_academic_affair_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_vp_for_academic_affair_container').focus();">
+                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                            </div>  
                                         @enderror       
                                     </div>
                                     <div class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
@@ -501,7 +513,7 @@
                                         class="block text-sm font-medium text-gray-900 dark:text-white">VP of Academic Affairs Signature<span class="text-red-600">*</span></label>
                                         <div class="grid grid-cols-1 items-center justify-center w-full">
                                             @if($signature_of_vp_for_academic_affair)
-                                                <label for="signature_of_vp_for_academic_affair" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                <label for="signature_of_vp_for_academic_affair" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                     @if(is_string($signature_of_vp_for_academic_affair) == True)
                                                         @php
                                                             $signature_of_vp_for_academic_affair = $this->getVpAcademicAffairsSignature();
@@ -510,6 +522,11 @@
                                                     @else
                                                         <img src="{{ $signature_of_vp_for_academic_affair->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                                     @endif
+                                                    <button type="button" wire:click="removeImage('signature_of_vp_for_academic_affair')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                                                    </button>
                                                     <input id="signature_of_vp_for_academic_affair" type="file" class="hidden" wire:model.live="signature_of_vp_for_academic_affair">
                                                 </label>
                                             @else
@@ -525,9 +542,9 @@
                                                 </label>
                                             @endif
                                             @error('signature_of_vp_for_academic_affair')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_of_vp_for_academic_affair_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_vp_for_academic_affair_container').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
@@ -535,18 +552,17 @@
                                 </div>
 
                                 {{-- University President --}}
-                                <div class="grid grid-cols-3 gap-4">
+                                <div class="grid grid-cols-3 gap-4" id="signature_of_university_president_container">
                                     <div class="w-full mt-4">
                                         <label for="date_of_signature_of_university_president"
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">University President Signature Date<span class="text-red-600">*</span></label>
                                         <input type="date" name="date_of_signature_of_university_president" id="date_of_signature_of_university_president" wire:model="date_of_signature_of_university_president" 
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            >
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                         @error('date_of_signature_of_university_president')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs ">{{$message }}</span>
-                                        </div> 
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('signature_of_university_president_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_university_president_container').focus();">
+                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                            </div> 
                                         @enderror       
                                     </div>
                                     <div class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
@@ -554,7 +570,7 @@
                                         class="block text-sm font-medium text-gray-900 dark:text-white">University President Signature<span class="text-red-600">*</span></label>
                                         <div class="grid grid-cols-1 items-center justify-center w-full">
                                             @if($signature_of_university_president)
-                                                <label for="signature_of_university_president" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                <label for="signature_of_university_president" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                     @if(is_string($signature_of_university_president) == True)
                                                         @php
                                                             $signature_of_university_president = $this->getPresidentSignature();
@@ -563,6 +579,11 @@
                                                     @else
                                                         <img src="{{ $signature_of_university_president->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                                     @endif
+                                                    <button type="button" wire:click="removeImage('signature_of_university_president')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                                                    </button>
                                                     <input id="signature_of_university_president" type="file" class="hidden" wire:model.live="signature_of_university_president">
                                                 </label>
                                             @else
@@ -578,10 +599,10 @@
                                                 </label>
                                             @endif
                                             @error('signature_of_university_president')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_of_university_president_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_university_president_container').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                </div>  
                                             @enderror
                                         </div>
                                     </div>

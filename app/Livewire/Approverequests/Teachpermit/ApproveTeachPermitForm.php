@@ -117,8 +117,12 @@ class ApproveTeachPermitForm extends Component
     }
   
 
-    public function addSubjectLoad(){
-        $this->subjectLoad[] = ['subject' => '', 'days' => '', 'start_time' => '', 'end_time' => '', 'number_of_units' => ''];
+    // public function addSubjectLoad(){
+    //     $this->subjectLoad[] = ['subject' => '', 'days' => '', 'start_time' => '', 'end_time' => '', 'number_of_units' => ''];
+    // }
+
+    public function removeImage($item){
+        $this->$item = null;
     }
     
     public function submit(){
@@ -133,10 +137,10 @@ class ApproveTeachPermitForm extends Component
                 ->get();   
 
         $dates = [
-            'date_of_signature_of_head_office' => 'required_with:signature_of_head_office|date|after_or_equal:application_date',
-            'date_of_signature_of_human_resource' => 'required_with:signature_of_human_resource|date|after_or_equal:application_date',
-            'date_of_signature_of_vp_for_academic_affair' => 'required_with:signature_of_vp_for_academic_affair|date|after_or_equal:application_date',
-            'date_of_signature_of_university_president' => 'required_with:signature_of_university_president|date|after_or_equal:application_date',
+            'date_of_signature_of_head_office' => 'required_with:signature_of_head_office|nullable|date|after_or_equal:application_date',
+            'date_of_signature_of_human_resource' => 'required_with:signature_of_human_resource|nullable|date|after_or_equal:application_date',
+            'date_of_signature_of_vp_for_academic_affair' => 'required_with:signature_of_vp_for_academic_affair|nullable|date|after_or_equal:application_date',
+            'date_of_signature_of_university_president' => 'required_with:signature_of_university_president|nullable|date|after_or_equal:application_date',
         ];
 
         foreach ($dates as $date => $validationRule){
