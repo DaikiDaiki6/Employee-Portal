@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Teachpermit;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 
 class TeachPermitForm extends Component
 {
@@ -38,11 +39,13 @@ class TeachPermitForm extends Component
     public $applicant_signature;
     public $status;
     public $total_units_enrolled;
-    public $available_units;
+    public $study_available_units;
+
+    public $units_enrolled;
 
     public function mount(){
         $loggedInUser = auth()->user();
-        $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
+        $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type', 'study_available_units' )
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
         $this->first_name = $this->employeeRecord[0]->first_name;
@@ -51,7 +54,7 @@ class TeachPermitForm extends Component
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->current_position = $this->employeeRecord[0]->current_position;
         $this->employee_type = $this->employeeRecord[0]->employee_type;
-        
+        $this->study_available_units = $this->employeeRecord[0]->study_available_units ?? 0;
         $dateToday = Carbon::now()->toDateString();
         $this->date = $dateToday;
         $this->start_period_cover = $dateToday;
@@ -66,7 +69,155 @@ class TeachPermitForm extends Component
         $this->subjectLoad[] = ['subject' => '', 'days' => '', 'start_time' => '', 'end_time' => '', 'number_of_units' => ''];
     }
 
+    public function removeSubjectLoad($index){
+        unset($this->subjectLoad[$index]);
+        // $this->subjectLoad = array_values($this->subjectLoad);
+    }
+
+
+    public function updated($key){
+       
+        $parts = explode('.', $key);
+
+        if ($parts[0] === 'subjectLoad' && count($parts) >= 3) {
+            $lastPart = end($parts);
+            if ($lastPart == 'number_of_units') {
+                if($this->subjectLoad != null){
+                    $sum = 0;
+                    $index = 0;
+                    foreach ($this->subjectLoad ?? [] as $load){
+                        $sum += (int) $load['number_of_units'] ?? 1;
+                        $index += 1;
+                    }
+                    $this->units_enrolled = $sum ;
+                    // if($this->ipcr_type == 'rated'){
+                    //     $weight =  $core_function['weight'] ?? 100;
+                    //     $this->core_rating = ($sum / ($index * 4)) / $weight;
+                    // }
+                    // else{
+                    //     $this->core_rating = $sum / ($index * 4);
+                    // }
+                    // $this->reset('core_rating');
+                    // dd($this->core_rating);
+                }
+            }
+        }
+
+    }
+
+
+    protected $rules = [
+        'designation_rank' => 'required|min:2|max:150',
+        'inside_outside_university' => 'required|in:Inside the University,Outside the University',
+        'start_period_cover' => 'required|after_or_equal:application_date|date',
+        'end_period_cover' => 'required|after_or_equal:start_period_cover|date',
+        'name_of_school_description' => 'required|min:10|max:500',
+        'subjectLoad.*.subject' => 'required|min:2',
+        'subjectLoad.*.days' => 'required',
+        'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
+        'subjectLoad.*.end_time' => 'required|after_or_equal:subjectLoad.*.start_time',
+        'subjectLoad.*.number_of_units' => 'required|min:1',
+        'units_enrolled' => 'required|lte:study_available_units',
+        'total_load_plm' => 'required|numeric',
+        'total_load_otherunivs' => 'required|numeric',
+        'total_aggregate_load' => 'required|numeric',
+        'applicant_signature' => 'required|mimes:jpg,png,pdf',
+    ];
+
+    protected $validationAttributes = [
+        'inside_outside_university' => 'Inside or Outside the University',
+        'start_period_cover' => 'Start Period',
+        'end_period_cover' => 'End Period',
+        'name_of_school_description' => 'Teach Permit Description',
+        'subjectLoad.*.subject' => 'Subject',
+        'subjectLoad.*.days' => 'Days',
+        'subjectLoad.*.start_time' => 'Start Time',
+        'subjectLoad.*.end_time' => 'End Time',
+        'subjectLoad.*.number_of_units' => 'Number of Units',
+        'units_enrolled' => 'Units Enrolled',
+
+    ];
+
     public function submit(){
+
+        $loggedInUser = auth()->user();
+        $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
+                            ->get()->value('study_available_units');   
+        $this->validate(['study_available_units' => 'lte:' . $real_available_units]);
+
+        $this->validate();
+
+        $days_and_time2 = array();
+        $conflictFlag = False;
+        foreach($this->subjectLoad as $load){
+            $confirmedDate = array();
+            foreach ($load['days'] as $day){
+                $confirmedDate[] = $day.'["'.$load['start_time'].'"]'.' ["'.$load['end_time'].'"]'.'|'.$load['subject'];
+            }
+
+            $days_and_time2 = array_merge($days_and_time2, $confirmedDate);           
+        }
+        
+
+        foreach($this->subjectLoad as $index  => $load ){
+            $confirmedDate = array();
+            $subjectName = $load['subject'];
+
+
+            foreach($load['days'] as $day){
+                $confirmedDate[] = $day.'["'.$load['start_time'].'"]'. ' ["'.$load['end_time'].'"]'.'|'.$subjectName;
+            }
+            
+            foreach ($confirmedDate as $date){
+                $ctr = 0;
+                list($day, $timeString) = explode('["', $date, 2);
+                                                                               
+                // Add the missing '[' back to the time string
+                $timeString = '[' . $timeString;
+                // Remove the square brackets and quotes from the string
+                $timeString = str_replace(['[', ']', '"'], '', $timeString);
+                $timeString = explode("|", $timeString);
+                $dateName =  $timeString;
+                $timeString = trim($timeString[0]);
+
+                $times = explode(' ', $timeString);
+                                                                               
+                list($startTime, $endTime) = $times;
+                if ($days_and_time2){
+                    foreach ($days_and_time2 as $exist){
+                        list($day, $timeString) = explode('["', $exist, 2);
+                    
+                        // Add the missing '[' back to the time string
+                        $timeString = '[' . $timeString;
+                        
+                        // Remove the square brackets and quotes from the string
+                        $timeString = str_replace(['[', ']', '"'], '', $timeString);
+                        $timeString = explode("|", $timeString);
+                        $existsName = $timeString;
+                        $timeString = trim($timeString[0]);
+
+                        $times = explode(' ', $timeString);
+                        list($exitingTimeStart, $exitingTimeEnd) = $times;
+                        if ($exist === $date){
+                            $ctr = $ctr + 1;
+                        }
+                        else if ((($dateName === $existsName) === False) && (($startTime >= $exitingTimeStart && $startTime <= $exitingTimeEnd) || 
+                        ($endTime >= $exitingTimeStart && $endTime <= $exitingTimeEnd) ||
+                        ($startTime <= $exitingTimeStart && $endTime >= $exitingTimeEnd))) {
+                                $conflictFlag = True;
+                            }
+                        if ($ctr >= 2){ 
+                                $conflictFlag = True;
+                                // $this->addError('subjectLoad.*.start_time' , 'The selected time slot conflicts with an existing schedule. Please choose a different time.');
+                        }
+                    }
+                }                              
+                
+            }
+        }
+        
+        $this->validate(['subjectLoad.*.start_time' => Rule::prohibitedIf($conflictFlag)]);
+
 
         $loggedInUser = auth()->user();
 
@@ -89,7 +240,7 @@ class TeachPermitForm extends Component
         $teachpermitdata->applicant_signature = $this->applicant_signature->store('photos/studypermit/applicant_signature', 'local');
         $teachpermitdata->status = 'Pending';
         $teachpermitdata->total_units_enrolled = $this->total_units_enrolled;
-        $teachpermitdata->available_units = $this->available_units;
+        $teachpermitdata->available_units = $this->study_available_units;
 
         foreach($this->subjectLoad as $load){
             $jsonSubjectLoad[] = [
@@ -98,9 +249,6 @@ class TeachPermitForm extends Component
                 'start_time' => $load['start_time'],
                 'end_time' => $load['end_time'],
                 'number_of_units' => $load['number_of_units'],
-               
-            // ['subject' => '', 'days' => '', 'start_time' => '', 'end_time' => '', 'number_of_units' => '']
-
             ];
         }
 

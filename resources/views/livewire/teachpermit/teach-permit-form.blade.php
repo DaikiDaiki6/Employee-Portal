@@ -42,7 +42,7 @@
                                     <label for="application_date"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Filling<span class="text-red-600">*</span></label>
                                     <input type="date" wire:model="application_date" 
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        class="bg-gray-50 border min-[600px]:w-1/3 min-[900px]:w-1/3 min-[1150px]:w-1/4  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                          required disabled>
                                 </div>
                             </div>
@@ -77,21 +77,21 @@
                                                         class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Department Name <span class="text-red-600">*</span></label>
                                                     <input type="text" name="department_name" id="department_name"  value="{{$department_name}}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="Last name" required="" disabled>
+                                                        disabled>
                                                 </div>
                                                 <div class="w-full">
                                                     <label for="employee_type"
-                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee ID <span class="text-red-600">*</span></label>
+                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee Type <span class="text-red-600">*</span></label>
                                                     <input type="text" name="employee_type" id="employee_type"  value="{{$employee_type}}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="Last name" required="" disabled>
+                                                        disabled>
                                                 </div>
                                                 <div class="w-full">
                                                     <label for="current_position"
-                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee ID <span class="text-red-600">*</span></label>
+                                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Current Position <span class="text-red-600">*</span></label>
                                                     <input type="text" name="current_position" id="current_position"  value="{{$current_position}}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        placeholder="Last name" required="" disabled>
+                                                        disabled>
                                                 </div>
                                             </div>
                                             
@@ -105,7 +105,13 @@
                                                 class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Designation/Rank <span class="text-red-600">*</span></label>
                                             <input type="text" name="designation_rank" id="designation_rank"  wire:model="designation_rank"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                placeholder="Last name" required="" >
+                                                placeholder="Designation/Rank" required="" >
+                                            @error('designation_rank')
+                                                <div class="transition transform alert alert-danger"
+                                                        x-init="$el.closest('form').scrollIntoView()">
+                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                </div> 
+                                            @enderror  
                                         </div>
                                         <div class="w-full grid grid-cols-1 ">
                                             <label for="inside_outside_university"
@@ -119,13 +125,13 @@
                                                         <input type="radio" id="inside_outside_university" name="inside_outside_university" wire:model="inside_outside_university" value="Outside the University">
                                                         <label for="html" class="text-sm font-semibold">Not Requested</label><br>
                                                     </div>
+                                                </div>
                                                 @error('inside_outside_university')
-                                                <div class="transition transform alert alert-danger"
+                                                <div class="transition transform alert alert-danger ml-4"
                                                         x-init="$el.closest('form').scrollIntoView()">
                                                     <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
                                                 </div> 
                                                 @enderror   
-                                                </div>
                                         </div>
                                     </div>
                                 </div>
@@ -175,6 +181,12 @@
                                             placeholder="If chosen others, write the type of leave. Otherwise, Ignore"   
                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             </textarea>
+                                            @error('name_of_school_description')   
+                                                    <div class="transition transform alert alert-danger text-sm "
+                                                    x-init="$el.closest('form').scrollIntoView()">
+                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
+                                                    </div> 
+                                            @enderror
                                         </div>
                                     </div>
 
@@ -188,9 +200,12 @@
                                     <div class="grid grid-cols-5 col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <div class="col-span-5">
                                             <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                                <li class="float-left mt-4 ml-5 float-bold text-gray-900 font-bold">
+                                                    <span>No. {{$index + 1 }}</span>
+                                                </li>
                                                 <li class="">
                                                     <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                                    type="button" name="add" wire:click.prevent="removeCoreFunction({{$index}})" wire:confirm="Are you sure you want to delete this function?"
+                                                    type="button" name="add" wire:click.prevent="removeSubjectLoad({{$index}})" wire:confirm="Are you sure you want to delete this?"
                                                     class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-red-500">
                                                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                             <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -235,7 +250,7 @@
                                                 <div class="mt-5">
                                                     <label for="subjectLoad_{{$index}}_start_time"
                                                         class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Start Period <span class="text-red-600">*</span></label>
-                                                    <input type="date" name="subjectLoad_{{$index}}_start_time" id="subjectLoad[{{$index}}][start_time]" wire:model.live="subjectLoad.{{$index}}.start_time" 
+                                                    <input type="time" name="subjectLoad_{{$index}}_start_time" id="subjectLoad[{{$index}}][start_time]" wire:model.live="subjectLoad.{{$index}}.start_time" 
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                         required="">
                                                     {{-- @error('start_period') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror  --}}
@@ -249,7 +264,7 @@
                                                 <div class="mt-5">
                                                     <label for="subjectLoad_{{$index}}_end_time"
                                                         class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white">End Period <span class="text-red-600">*</span></label>
-                                                    <input type="date" name="subjectLoad_{{$index}}_end_time" id="subjectLoad[{{$index}}][end_time]" wire:model.live="subjectLoad.{{$index}}.end_time" value="{{$date}}" min="{{ \Carbon\Carbon::now()->addDays()->format('Y-m-d\TH:i') }}"
+                                                    <input type="time" name="subjectLoad_{{$index}}_end_time" id="subjectLoad[{{$index}}][end_time]" wire:model.live="subjectLoad.{{$index}}.end_time" value="{{$date}}" min="{{ \Carbon\Carbon::now()->addDays()->format('Y-m-d\TH:i') }}"
                                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="">
                                                     @error('subjectLoad.' . $index . '.end_time')   
@@ -261,7 +276,7 @@
                                                 </div>
                                                 <div class="mt-5">
                                                     <label for="subjectLoad_{{$index}}_number_of_units" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Subject <span class="text-red-600">*</span></label>
-                                                    <input type="text" rows="4" id="subjectLoad_{{$index}}_number_of_units" name="subjectLoad[{{$index}}][number_of_units]" wire:model.blur="subjectLoad.{{$index}}.number_of_units" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                                    <input type="text" rows="4" id="subjectLoad_{{$index}}_number_of_units" name="subjectLoad[{{$index}}][number_of_units]" wire:model.live="subjectLoad.{{$index}}.number_of_units" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                                                     @error('subjectLoad.' . $index . '.number_of_units')   
                                                         <div class="transition transform alert alert-danger text-sm"
                                                                 x-data x-init="document.getElementById('subjectLoad_{{$index}}_number_of_units').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subjectLoad_{{$index}}_number_of_units').focus();">
@@ -280,16 +295,28 @@
                                         <div class="w-full">
                                             <label for="available_units"
                                                 class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Available Units </label>
-                                            <input type="text" name="available_units" id="available_units"  value="20"
+                                            <input type="text" name="available_units" id="available_units" wire:model="study_available_units"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                placeholder="Last name" required="" disabled>
+                                                 required="" disabled>
+                                            @error('study_available_units')   
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                     x-data x-init="document.getElementById('study_available_units').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('study_available_units').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                </div> 
+                                            @enderror
                                         </div>
                                         <div class="w-full">
                                             <label for="units_enrolled"
                                                 class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Units Enrolled </label>
-                                            <input type="text" name="units_enrolled" id="units_enrolled"  value="20"
+                                            <input type="text" name="units_enrolled" id="units_enrolled"  value={{$units_enrolled ?? 0}}
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                placeholder="Last name" required="" disabled>
+                                                 required="" disabled>
+                                            @error('units_enrolled')   
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('units_enrolled').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('units_enrolled').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                </div> 
+                                            @enderror
                                         </div>
                                 </div>
                             </div>
@@ -306,24 +333,42 @@
                                                 <input type="text" name="total_load_plm" id="total_load_plm"  wire:model.blur="total_load_plm"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" >
+                                                @error('total_load_plm')   
+                                                    <div class="transition transform alert alert-danger"
+                                                        x-init="$el.closest('label').scrollIntoView()">
+                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    </div> 
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class=" ">
                                             <div class="w-full">
                                                 <label for="total_load_otherunivs"
                                                     class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Total Load in Other Universities <span class="text-red-600">*</span></label>
-                                                <input type="text" name="total_load_otherunivs" id="total_load_otherunivs"  wire:model.blur="total_load_otherunivs"
+                                                <input type="number" name="total_load_otherunivs" id="total_load_otherunivs"  wire:model.blur="total_load_otherunivs"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                      required="" >
+                                                @error('total_load_otherunivs')   
+                                                     <div class="transition transform alert alert-danger text-sm"
+                                                         x-data x-init="document.getElementById('total_load_otherunivs').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('total_load_otherunivs').focus();">
+                                                         <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                     </div> 
+                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="">
                                             <div class="w-full">
                                                 <label for="total_aggregate_load"
                                                     class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Total Aggregate Load (including ETUs) <span class="text-red-600">*</span></label>
-                                                <input type="text" name="total_aggregate_load" id="total_aggregate_load"  wire:model.blur="total_aggregate_load"
+                                                <input type="number" name="total_aggregate_load" id="total_aggregate_load"  wire:model.blur="total_aggregate_load"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" >
+                                                @error('total_aggregate_load')   
+                                                    <div class="transition transform alert alert-danger"
+                                                        x-init="$el.closest('label').scrollIntoView()">
+                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    </div> 
+                                                @enderror
                                             </div>
                                         </div>
                                        

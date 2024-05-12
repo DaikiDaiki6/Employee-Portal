@@ -158,7 +158,7 @@ class StudyPermitForm extends Component
     protected $rules = [
         'start_period_cover' => 'required|after_or_equal:application_date',
         'end_period_cover' => 'required|after_or_equal:start_period_cover',
-        'degree_prog_and_school' => 'required|min:20',
+        'degree_prog_and_school' => 'required|min:10|max:500',
         'subjectLoad.*.subject' => 'required|min:2',
         'subjectLoad.*.days' => 'required',
         'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
@@ -198,6 +198,7 @@ class StudyPermitForm extends Component
         'application_date' => 'Application Date',
         'start_period_cover' => 'Start Period Cover',
         'end_period_cover' => 'End Period Cover',
+        'degree_prog_and_school' => 'Degree Program and School',
         'subjectLoad.*.subject' => 'Subject',
         'subjectLoad.*.days' => 'Days',
         'subjectLoad.*.start_time' => 'Start Time',
