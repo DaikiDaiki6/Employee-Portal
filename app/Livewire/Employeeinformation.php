@@ -73,6 +73,7 @@ class Employeeinformation extends Component
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "certificate"){
+            dump($file, $index);
             $files = json_decode( $employee->emp_cert_of_trainings_seminars, true);
             return Storage::disk('local')->download($files[$index]);
         }

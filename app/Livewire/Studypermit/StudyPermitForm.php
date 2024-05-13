@@ -404,10 +404,10 @@ class StudyPermitForm extends Component
         //     $studypermitdata->$field = $fileNames;
         // }
         
-        $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
-        $studypermitdata->date_recommended_by = $this->date_recommended_by;
-        $studypermitdata->signature_endorsed_by = $this->signature_endorsed_by->store('photos/studypermit/endorsed_by', 'local');
-        $studypermitdata->date_endorsed_by = $this->date_endorsed_by;
+        // $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
+        // $studypermitdata->date_recommended_by = $this->date_recommended_by;
+        // $studypermitdata->signature_endorsed_by = $this->signature_endorsed_by->store('photos/studypermit/endorsed_by', 'local');
+        // $studypermitdata->date_endorsed_by = $this->date_endorsed_by;
 
         foreach($this->subjectLoad as $load){
             $jsonSubjectLoad[] = [

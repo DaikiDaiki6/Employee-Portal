@@ -88,6 +88,7 @@ class StudyPermitUpdate extends Component
         $this->status = $studypermitdata->status;
         $this->total_units_enrolled = $studypermitdata->total_units_enrolled;
         // $this->available_units = $studypermitdata->available_units;
+        dd($studypermitdata->cover_memo);
         $this->cover_memo = $studypermitdata->cover_memo;
         $this->request_letter = $studypermitdata->request_letter;
         $this->summary_of_schedule = $studypermitdata->summary_of_schedule;

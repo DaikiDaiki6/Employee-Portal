@@ -25,7 +25,7 @@ class ChangeInformation extends Component
     public $employee_history;
     public $employeeHistory;
     
-    public $emp_photo;
+    public $emp_image;
     public $emp_diploma = [];
     public $emp_TOR = [];
     public $emp_cert_of_trainings_seminars = [];
@@ -55,18 +55,19 @@ class ChangeInformation extends Component
         $this->address = $employee->address;
 
 
-        // $this->emp_photo = $employee->getFirstMedia('avatar') ? 1 : null;
-        // $this->emp_diploma = $employee->getFirstMedia('diploma') ? 1 : null;
-        // $this->emp_TOR = $employee->getFirstMedia('tor') ? 1 : null;
-        // $this->emp_cert_of_trainings_seminars = $employee->getFirstMedia('certificate/seminar') ? 1 : null;
-        // $this->emp_auth_copy_of_csc_or_prc = $employee->getFirstMedia('csc_eligibility') ? 1 : null;
-        // $this->emp_auth_copy_of_prc_board_rating = $employee->getFirstMedia('prc_boardrating') ? 1 : null;
-        // $this->emp_med_certif = $employee->getFirstMedia('medical_certificate') ? 1 : null;
-        // $this->emp_nbi_clearance = $employee->getFirstMedia('nbi_clearance') ? 1 : null;
-        // $this->emp_psa_birth_certif = $employee->getFirstMedia('psa_birthcertificate') ? 1 : null;
-        // $this->emp_psa_marriage_certif = $employee->getFirstMedia('psa_marriagecertificate') ? 1 : null;
-        // $this->emp_service_record_from_other_govt_agency = $employee->getFirstMedia('service_record') ? 1 : null;
-        // $this->emp_approved_clearance_prev_employer = $employee->getFirstMedia('approved_clearance') ? 1 : null;
+        $this->emp_image= $employee->emp_image ;
+        // dd($this->emp_photo
+        $this->emp_diploma = json_decode($employee->emp_diploma) ?? [];
+        $this->emp_TOR = json_decode($employee->emp_TOR) ?? [];
+        $this->emp_cert_of_trainings_seminars = json_decode($employee->emp_cert_of_trainings_seminars) ?? [];
+        $this->emp_auth_copy_of_csc_or_prc = json_decode($employee->emp_auth_copy_of_csc_or_prc) ?? [];
+        $this->emp_auth_copy_of_prc_board_rating = json_decode($employee->emp_auth_copy_of_prc_board_rating) ?? [];
+        $this->emp_med_certif = json_decode($employee->emp_med_certif) ?? [];
+        $this->emp_nbi_clearance = json_decode($employee->emp_nbi_clearance) ?? [];
+        $this->emp_psa_birth_certif = json_decode($employee->emp_psa_birth_certif) ?? [];
+        $this->emp_psa_marriage_certif = json_decode($employee->emp_psa_marriage_certif) ?? [];
+        $this->emp_service_record_from_other_govt_agency = json_decode($employee->emp_service_record_from_other_govt_agency) ?? [];
+        $this->emp_approved_clearance_prev_employer = json_decode($employee->emp_approved_clearance_prev_employer) ?? [];
         if($employee->employee_history != null){
             $this->employeeHistory = json_decode($employee->employee_history);
         }
@@ -91,6 +92,18 @@ class ChangeInformation extends Component
         // dump($this->cover_memo);
     }
 
+    public function getImage($item){
+        return Storage::disk('public')->get($this->$item);
+    }
+
+    public function removeImage($item){
+        $this->$item = null;
+    }
+    
+    public function getArrayImage($item, $index){
+        return Storage::disk('local')->get($this->$item[$index]);
+    }
+
     protected $rules = [
 
     ];
@@ -110,6 +123,8 @@ class ChangeInformation extends Component
         $employee->phone = $this->phone;
         $employee->birth_date = $this->birth_date;
         $employee->address = $this->address;
+
+        $employee->emp_photo = $this->emp_photo;
         
         $fileFields = [
             'emp_diploma',
@@ -136,7 +151,6 @@ class ChangeInformation extends Component
                     $fileNames[] = $item;  
                 }
                 else if(is_array($item)){
-                   
                     foreach($item as $file){
                         if(is_string($item)){
                             $fileNames[] = $file;
@@ -151,13 +165,11 @@ class ChangeInformation extends Component
                     }
                 }
             }
-            $employee->$field = $fileNames;
+            if(count($fileNames) > 0){
+                $employee->$field = $fileNames;            
+            }
         }
         
-
-        
-       
-
         foreach($this->employeeHistory as $history){
             $jsonEmployeeHistory[] = [
                 'name_of_company' => $history->name_of_company,
@@ -167,7 +179,7 @@ class ChangeInformation extends Component
             ];
         }
 
-        $jsonEmployeeHistory = json_encode( $jsonEmployeeHistory);
+        $jsonEmployeeHistory = json_encode($jsonEmployeeHistory);
 
         $employee->employee_history = $jsonEmployeeHistory;
 
@@ -177,9 +189,6 @@ class ChangeInformation extends Component
         $employee->save();
 
         return redirect()->to(route('profile'));
-
-
-        
     }
 
     public function render()
