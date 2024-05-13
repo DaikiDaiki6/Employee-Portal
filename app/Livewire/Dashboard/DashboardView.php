@@ -177,8 +177,7 @@ class DashboardView extends Component
     public function setFilter($filter){
         if($filter == "weekly"){
             $this->filter = "Weekly";
-            dd($this->weeklyCountsArray);
-            $this->dispatch('refresh-weekly-chart', data: array_values($this->weeklyCountsArray));
+                $this->dispatch('refresh-weekly-chart', data: array_values($this->weeklyCountsArray));
         }
         else{
             $this->filter = "Monthly";

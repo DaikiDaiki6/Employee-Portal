@@ -108,6 +108,22 @@ class ChangeInformation extends Component
 
     ];
 
+    protected $validationAttributes = [
+        'emp_image' => 'Employee Image',
+        'emp_diploma' => 'Employee Diploma',
+        'emp_TOR' => 'Employee TOR',
+        'emp_cert_of_trainings_seminars' => 'Employee Certificate of Trainings Seminars',
+        'emp_auth_copy_of_csc_or_prc' => 'Employee Auth Copy of CSC or PRC',
+        'emp_auth_copy_of_prc_board_rating' => 'Employee Auth Copy of PRC Board Rating',
+        'emp_med_certif' => 'Employee Medical Certificate',
+        'emp_nbi_clearance' => 'Employee NBI Clearance',
+        'emp_psa_birth_certif' => 'Employee PSA Birth Certificate',
+        'emp_psa_marriage_certif' => 'Employee PSA Marriage Certificate',
+        'emp_service_record_from_other_govt_agency' => 'Employee Service Record from Other Govt Agency',
+        'emp_approved_clearance_prev_employer' => 'Employee Approved Clearance from Previous Employer',
+        'other_documents' => 'Other Documents'
+    ];
+
     public function submit(){
 
         // $this->validate();
@@ -124,51 +140,59 @@ class ChangeInformation extends Component
         $employee->birth_date = $this->birth_date;
         $employee->address = $this->address;
 
-        $employee->emp_photo = $this->emp_photo;
+        if(is_string($this->emp_image) != True){
+            $this->validate(['emp_image' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120']);
+            $employee->emp_photo = $this->emp_image->store('photos/changeinformation/emp_image');
+        }else{
+            $employee->emp_photo = $this->emp_image;
+        }
         
+
         $fileFields = [
-            'emp_diploma',
-            'emp_TOR',
-            'emp_cert_of_trainings_seminars',
-            'emp_auth_copy_of_csc_or_prc',
-            'emp_auth_copy_of_prc_board_rating',
-            'emp_med_certif',
-            'emp_nbi_clearance',
-            'emp_psa_birth_certif',
-            'emp_psa_marriage_certif',
-            'emp_service_record_from_other_govt_agency',
-            'emp_approved_clearance_prev_employer',
-            'other_documents',
+            'emp_diploma' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_TOR' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_cert_of_trainings_seminars' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_auth_copy_of_csc_or_prc' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_auth_copy_of_prc_board_rating' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_med_certif' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_nbi_clearance' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_psa_birth_certif' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_psa_marriage_certif' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_service_record_from_other_govt_agency' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_approved_clearance_prev_employer' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'other_documents' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
         ];
         
-        foreach ($fileFields as $field) {
-            $fileNames = [];            
-            $ctrField = count($this->$field) - 1 ;
-            $ctr = 0;
-            foreach($this->$field as $index => $item){
-                $ctr += 1;
-                if(is_string($item)){
-                    $fileNames[] = $item;  
-                }
-                else if(is_array($item)){
-                    foreach($item as $file){
-                        if(is_string($item)){
-                            $fileNames[] = $file;
-                        }
-                        else{ 
-                            $itemName = $file->store("photos/studypermit/$field", 'local');
-                            $fileNames[] = $itemName;
-                            if($employee->$field != null && $ctr <= $ctrField){
-                                Storage::delete($employee->$field[$index]);
-                            }
-                        }
-                    }
-                }
-            }
-            if(count($fileNames) > 0){
-                $employee->$field = $fileNames;            
-            }
-        }
+        // foreach ($fileFields as $field => $validationRule) {
+        //     $fileNames = [];            
+        //     $ctrField = count($this->$field) - 1 ;
+        //     $ctr = 0;
+        //     foreach($this->$field as $index => $item){
+        //         $ctr += 1;
+        //         if(is_string($item)){
+        //             $fileNames[] = $item;  
+        //         }
+        //         else if(is_array($item)){
+        //             foreach($item as $file){
+        //                 if(is_string($item)){
+        //                     $fileNames[] = $file;
+        //                 }
+        //                 else{ 
+        //                     $this->validate([$field => $validationRule]);
+        //                     $itemName = $file->store("photos/changeinformation/$field", 'local');
+        //                     $fileNames[] = $itemName;
+        //                     if($employee->$field != null && $ctr <= $ctrField){
+        //                         Storage::delete($employee->$field[$index]);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     if(count($fileNames) > 0){
+        //         $employee->$field = $fileNames;        
+        //         dd($employee->$field, $fileNames);
+        //     }
+        // }
         
         foreach($this->employeeHistory as $history){
             $jsonEmployeeHistory[] = [

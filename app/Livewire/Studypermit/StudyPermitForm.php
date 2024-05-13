@@ -390,7 +390,7 @@ class StudyPermitForm extends Component
 
                 // }
 
-                
+            dump($fileNames);
             }
             $studypermitdata->$field = $fileNames;
         }

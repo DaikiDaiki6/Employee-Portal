@@ -7,52 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ChangeInformation extends Model implements HasMedia
+class ChangeInformation extends Model 
 {
     use HasFactory;
-    use InteractsWithMedia;
 
-    public function registerMediaCollections(): void
-    {
-        $this
-            ->addMediaCollection('avatar')
-            ->singleFile();
-        $this
-            ->addMediaCollection('diploma')
-            ->singleFile();
-        $this
-            ->addMediaCollection('tor')
-            ->singleFile();
-        $this
-            ->addMediaCollection('certificate/seminar')
-            ->onlyKeepLatest(10);
-        $this
-            ->addMediaCollection('csc_eligibility')
-            ->singleFile();
-        $this
-            ->addMediaCollection('prc_boardrating')
-            ->singleFile();
-        $this
-            ->addMediaCollection('medical_certificate')
-            ->singleFile();
-        $this
-            ->addMediaCollection('nbi_clearance')
-            ->singleFile();
-        $this
-            ->addMediaCollection('psa_birthcertificate')
-            ->singleFile();
-        $this
-            ->addMediaCollection('psa_marriagecertificate')
-            ->singleFile();
-        $this
-            ->addMediaCollection('service_record')
-            ->onlyKeepLatest(3);
-        $this
-            ->addMediaCollection('approved_clearance')
-            ->singleFile();
-        $this
-            ->addMediaCollection('other_documents')
-            ->onlyKeepLatest(10);
-
-    }
+    protected $casts = [
+        'emp_image' => 'array',
+        'emp_diploma' => 'array',
+        'emp_TOR' => 'array',
+        'emp_cert_of_trainings_seminars' => 'array',
+        'emp_auth_copy_of_csc_or_prc' => 'array',
+        'emp_auth_copy_of_prc_board_rating' => 'array',
+        'emp_med_certif' => 'array',
+        'emp_nbi_clearance' => 'array',
+        'emp_psa_birth_certif' => 'array',
+        'emp_psa_marriage_certif' => 'array',
+        'emp_service_record_from_other_govt_agency' => 'array',
+        'emp_approved_clearance_prev_employer' => 'array',
+        'other_documents' => 'array'
+    ];
 }
