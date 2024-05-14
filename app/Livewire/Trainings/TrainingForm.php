@@ -49,12 +49,10 @@ class TrainingForm extends Component
 
     public function removePreTestQuestion($index){
         unset($this->preTest[$index]);
-        $this->preTest = array_values($this->preTest);
     }
 
     public function removePostTestQuestion($index){
         unset($this->postTest[$index]);
-        $this->postTest = array_values($this->postTest);
     }
 
     protected $rules = [
