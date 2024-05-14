@@ -20,9 +20,9 @@ return new class extends Migration
 
             // Details of application
             $table->string('type_of_leave');
-            $table->string('type_of_leave_others')->default('Not Applicable');
+            $table->string('type_of_leave_others')->default('Not Applicable')->nullable();
             $table->string('type_of_leave_sub_category');
-            $table->string('type_of_leave_description')->default('Not Applicable');
+            $table->string('type_of_leave_description')->default('Not Applicable')->nullable();
             $table->decimal('num_of_days_work_days_applied');
             $table->dateTime('inclusive_start_date')->default(now()->timezone('Asia/Manila'));
             $table->dateTime('inclusive_end_date')->default(now()->timezone('Asia/Manila'));

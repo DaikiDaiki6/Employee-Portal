@@ -110,7 +110,7 @@
                             {{-- Leave Information --}}
                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <h2><b>Leave Information</b></h2>
-                                <div class="grid grid-cols-1 gap-4 min-[902px]:grid-cols-2">
+                                <div class="grid grid-cols-1 gap-4 min-[902px]:grid-cols-2" id="type_of_leave_container">
                                     <div class="grid grid-cols-1 w-full gap-4 min-[902px]:grid-cols-2 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <div class="w-full col-span-2">
                                             <label
@@ -134,10 +134,10 @@
                                                 <option value="Adoption Leave">Adoption Leave</option>
                                             </select>
                                             @error('type_of_leave')   
-                                            <div class="transition transform alert alert-danger text-sm"
-                                                 x-init="$el.closest('form').scrollIntoView()">
-                                                 <span class="text-red-500 text-xs "> {{$message}}</span>
-                                            </div> 
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('type_of_leave_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_leave_container').focus();" >
+                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                </div> 
                                             @enderror
                                             <label for="type_of_leave_others"
                                             class="block mb-2 pt-4 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Others (Put N\A if not applicable) </label>
@@ -146,10 +146,10 @@
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             </textarea>
                                             @error('type_of_leave_others')   
-                                            <div class="transition transform alert alert-danger text-sm"
-                                                 x-init="$el.closest('form').scrollIntoView()">
-                                                 <span class="text-red-500 text-xs "> {{$message}}</span>
-                                            </div> 
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('type_of_leave_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_leave_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                </div> 
                                             @enderror
                                         </div>
                                     </div>
@@ -177,10 +177,10 @@
                                                 @endif
                                             </select>
                                             @error('type_of_leave_sub_category')   
-                                            <div class="transition transform alert alert-danger text-sm"
-                                                 x-init="$el.closest('form').scrollIntoView()">
-                                                 <span class="text-red-500 text-xs "> {{$message}}</span>
-                                            </div> 
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('type_of_leave_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_leave_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                </div> 
                                             @enderror
                                             <label for="type_of_leave_description"
                                             class="block mb-2  pt-4  text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Additional Details (Put N\A if not applicable) </label>
@@ -190,8 +190,8 @@
                                                 </textarea>
                                             @error('type_of_leave_description')   
                                                 <div class="transition transform alert alert-danger text-sm"
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                x-data x-init="document.getElementById('type_of_leave_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_leave_container').focus();" >
+                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
@@ -204,7 +204,7 @@
                                 
                                 {{-- Time Frame --}}
                                 <div class="grid grid-cols-1 gap-4 min-[902px]:grid-cols-2">
-                                    <div class="grid grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                    <div id="time_period_container" class="grid grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                         <h2><b>Time Frame</b></h2>
                                         <div class="grid grid-cols-1 min-[1052px]:grid-cols-2 gap-4 pt-5">
                                             <div class="w-full">
@@ -214,10 +214,10 @@
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="">
                                                 @error('inclusive_start_date')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs ">{{$message }}</span>
-                                                </div> 
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
                                                 @enderror       
                                             </div>
                                             <div class="w-full">
@@ -227,9 +227,9 @@
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="">
                                                 @error('inclusive_end_date')   
-                                                    <div class="transition transform alert alert-danger text-sm "
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs">{{ $message }}</span>
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
                                                     </div> 
                                                 @enderror
                                             </div>
@@ -237,7 +237,7 @@
                                     </div>
 
                                     {{-- Available Credits --}}
-                                    <div class="grid grid-cols-1  gap-5 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                    <div id="leavecredits_container" class="grid grid-cols-1  gap-5 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                         <h2><b>Leave Credits</b></h2>
                                         <div class="grid grid-cols-1 gap-4 min-[1052px]:grid-cols-2">
                                             <div class="w-full">
@@ -248,10 +248,10 @@
                                                      disabled>
                                                 {{-- @error('start_period') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror  --}}
                                                 @error('num_of_days_work_days_applied')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs ">{{$message }}</span>
-                                                </div> 
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
                                                 @enderror   
                                             </div>
                                             <div class="w-full">
@@ -261,9 +261,9 @@
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                    disabled>
                                                 @error('available_credits')   
-                                                    <div class="transition transform alert alert-danger text-sm "
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs ">{{ $message }}</span>
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
                                                     </div> 
                                                  @enderror
                                             </div>
@@ -279,7 +279,7 @@
                                 <div class="grid grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                     
                                     <div class="grid grid-cols-1 gap-4 min-[1052px]:grid-cols-2">
-                                        <div class="w-full grid grid-cols-1 ">
+                                        <div class="w-full grid grid-cols-1" id="commutation_container">
                                             <label for="commutation"
                                                 class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Commutation <span class="text-red-600">*</span></label>
                                                 <div class="w-full pl-4 items-start">
@@ -288,16 +288,16 @@
                                                 <br>
                                                 <input type="radio" id="html" name="commutation" wire:model="commutation" value="not requested">
                                                 <label for="html" class="text-sm font-semibold">Not Requested</label><br>
-                                                @error('start_period')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
+                                                @error('commutation')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('commutation_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('commutation_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
                                                 @enderror   
                                                 </div>
                                         </div>
                                         <div>
-                                            <div class="justify-left">
+                                            <div class="justify-left" id="signature_container">
                                                 <label for="commutation_signature_of_appli" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Commutation Signature Of Application<span class="text-red-600">*</span></label> 
                                             </div>
                                             <div class="grid grid-cols-1 items-center justify-center w-full">
@@ -321,11 +321,11 @@
                                                 </label>
                                             @endif
                                             @error('commutation_signature_of_appli')
-                                            <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('label').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                            </div> 
-                                        @enderror
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('signature_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_container').focus();" >
+                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                </div> 
+                                            @enderror
                                             </div> 
 
                                         </div>

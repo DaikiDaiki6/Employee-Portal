@@ -75,13 +75,12 @@ class RequestDocumentUpdate extends Component
 
     protected $rules = [
         'requests' => 'required|array|min:1',
-        'requests.*' => 'in:Certificate of Employment,Certificate of Employment with Compensation,Service Record,Part time Teaching Services,MILC Certification,Certificate of No Pending Administrative Case,Others',
+        'requests.*' => 'in:Certificate of Employment,Certificate of Employment with Compensation,Service Record,Part-time Teaching Services,MILC Certification,Certificate of No Pending Administrative Case,Others',
         'purpose' => 'required|min:2|max:1000', 
         // 'signature_requesting_party' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120 '
     ];
 
     public function submit(){
-
         $properties = [
             'milc_description' => 'MILC Certification',
             'other_request' => 'Others',

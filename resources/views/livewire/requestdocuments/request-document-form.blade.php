@@ -143,6 +143,12 @@
                                     </div>  
                                 </div>
                             </div>
+                            @error('requests')   
+                                <div class="transition transform alert alert-danger text-sm mt-2"
+                                    x-data x-init="document.getElementById('requests_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('requests_container').focus();">
+                                    <span class="text-red-500 text-xs"> {{$message}}</span>
+                                </div> 
+                            @enderror
                             @error('requests.*')   
                                 <div class="transition transform alert alert-danger text-sm"
                                     x-data x-init="document.getElementById('requests_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('requests_container').focus();">

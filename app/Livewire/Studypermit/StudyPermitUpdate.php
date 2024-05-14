@@ -109,7 +109,6 @@ class StudyPermitUpdate extends Component
                 $this->units_enrolled += $load['number_of_units'];
             }
         }
-        dd($this->subjectLoad);
     }
 
     public function updated($key){

@@ -199,13 +199,16 @@
                             <div
                                 class="grid grid-cols-1 col-span-3 p-6 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <h2><b>Subject Load</b></h2>
+                                @php
+                                    $ctr = 0;
+                                @endphp
                                 @foreach ($subjectLoad as $index => $load)
                                     <div
                                         class="grid grid-cols-5 col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <div class="col-span-5">
                                             <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
                                                 <li class="float-left mt-4 ml-5 float-bold text-gray-900 font-bold">
-                                                    <span>No. {{$index + 1 }}</span>
+                                                    <span>No. {{$ctr+ 1 }}</span>
                                                 </li>
                                                 <li class="">
                                                     <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
@@ -323,6 +326,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @php
+                                        $ctr += 1;
+                                    @endphp
                                 @endforeach
                                 <div class="flex justify-center">
                                     <button type="button" name="add" wire:click.prevent="addSubjectLoad"

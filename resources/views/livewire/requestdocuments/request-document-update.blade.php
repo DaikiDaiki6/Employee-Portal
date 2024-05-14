@@ -142,9 +142,20 @@
                                     <div class="flex items-center">
                                         &nbsp;
                                     </div>  
-                                   
                                 </div>
                             </div>
+                            @error('requests')   
+                            <div class="transition transform alert alert-danger text-sm mt-2"
+                                x-data x-init="document.getElementById('requests_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('requests_container').focus();">
+                                <span class="text-red-500 text-xs"> {{$message}}</span>
+                            </div> r
+                            @enderror
+                            @error('requests.*')   
+                                <div class="transition transform alert alert-danger text-sm"
+                                    x-data x-init="document.getElementById('requests_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('requests_container').focus();">
+                                    <span class="text-red-500 text-xs"> {{$message}}</span>
+                                </div> 
+                            @enderror
                            
                             @if(in_array('Others', $requests) || in_array('MILC Certification', $requests))
                             <div class="grid grid-cols-2 gap-4 mt-5 ">
@@ -256,7 +267,7 @@
                    
                 </div>
                 <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                    Request Document
+                    Update Document
             </button>
             </form>
             {{-- <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
