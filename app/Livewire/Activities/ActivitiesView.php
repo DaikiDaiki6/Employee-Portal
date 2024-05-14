@@ -10,6 +10,7 @@ class ActivitiesView extends Component
     public $activityData;
     public $index;
     public function mount($index){
+        $this->index = $index;
 
         $this->activityData = Activities::findOrFail($index);
         // dd($this->activityData->poster);

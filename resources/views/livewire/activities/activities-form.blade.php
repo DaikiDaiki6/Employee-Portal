@@ -80,12 +80,6 @@
                             <img src="{{ $poster->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                             <input id="poster" type="file" class="hidden" wire:model.blur="poster">
                         </label>
-                        @error('poster')
-                            <div class="transition transform alert alert-danger"
-                                    x-init="$el.closest('form').scrollIntoView()">
-                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                            </div> 
-                        @enderror
                     </div>
                     @else
                     <div class="grid grid-cols-1 items-center justify-center w-full ">
@@ -99,14 +93,14 @@
                             </div>
                             <input id="poster" type="file" class="hidden" wire:model.blur="poster" />
                         </label>
-                        @error('applicant_signature')
-                            <div class="transition transform alert alert-danger"
-                                    x-init="$el.closest('label').scrollIntoView()">
-                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                            </div> 
-                        @enderror
                     </div> 
                     @endif
+                    @error('poster')
+                            <div class="transition transform alert alert-danger"
+                                    x-init="$el.closest('form').scrollIntoView()">
+                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                            </div> 
+                    @enderror
                 </div>
                 <div>
                     <label for="degree_prog_and_school"
@@ -127,6 +121,12 @@
                         <input type="date" wire:model="date" 
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                              required >
+                        @error('date')
+                             <div class="transition transform alert alert-danger"
+                                     x-init="$el.closest('label').scrollIntoView()">
+                                 <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                             </div> 
+                         @enderror
                     </div>
                     <div class="w-full">
                         <label for="start"
@@ -134,12 +134,11 @@
                         <input type="time" name="start" id="start" wire:model.blur="start" 
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                              required="" >
-                        {{-- @error('start_period') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror  --}}
                         @error('start')
-                        <div class="transition transform alert alert-danger"
-                                x-init="$el.closest('form').scrollIntoView()">
-                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                        </div> 
+                            <div class="transition transform alert alert-danger"
+                                    x-init="$el.closest('form').scrollIntoView()">
+                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                            </div> 
                         @enderror   
                     </div>
                     <div class="w-full">
@@ -150,7 +149,7 @@
                            required="">
                         @error('end')   
                             <div class="transition transform alert alert-danger text-sm "
-                            x-init="$el.closest('form').scrollIntoView()">
+                            x-init="$el.closest('label').scrollIntoView()">
                             <span class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
                             </div> 
                          @enderror
@@ -189,6 +188,12 @@
                             <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Featured?</span>
                         </label>
+                        @error('is_featured')
+                            <div class="transition transform alert alert-danger"
+                                    x-init="$el.closest('form').scrollIntoView()">
+                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                            </div> 
+                        @enderror
                     </div>
                 </div>
                 <div >
