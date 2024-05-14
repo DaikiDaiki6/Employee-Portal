@@ -162,16 +162,19 @@
                 <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                     <h2><b>Employee History</b></h2>
                     <div class="grid grid-cols-1  gap-4 col-span-3 pb-4" id="employeehistory_container">
+                        @php
+                            $ctr = 0
+                        @endphp
                         @foreach ($employeeHistory as $index => $history)
                             <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="col-span-5">
-                                    <ul class="text-sm font-medium text-right text-gray-800 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                        <li class="float-left mt-4 ml-5 font-bold">
-                                            <span>No. {{$index + 1 }}</span>
+                                    <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                        <li class="float-left mt-4 ml-5 float-bold text-gray-900 font-bold">
+                                            <span>No. {{$ctr + 1 }}</span>
                                         </li>
                                         <li class="">
                                             <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                            {{-- type="button" name="add" wire:click.prevent="removePreTestQuestion({{$index}})" wire:confirm="Are you sure you want to delete this function?" --}}
+                                            type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
                                             class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-red-500">
                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                     <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -181,17 +184,6 @@
                                     </ul>
                                 </div>
                                 <div class="border border-gray=200 border-solid p-6 ">
-                                        {{-- <div class="mt-5 ">
-                                            <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                Company Name <span class="text-red-600">*</span></label>
-                                            <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                                            @error('employeeHistory.' . $index . '.name_of_company')   
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
-                                                </div> 
-                                            @enderror
-                                        </div> --}}
                                         <div class="mt-5" id="employeeHistory_{{$index}}_name_of_company_container">
                                             <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Company Name <span class="text-red-600">*</span></label>
                                             <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
@@ -240,7 +232,13 @@
                                     </div>
                                 </div>
                             </div>
+                        @php
+                            $ctr += 1;
+                        @endphp
                         @endforeach
+                        <div class="flex justify-center">
+                            <button type="button" name="add" wire:click.prevent="addEmployeeHistory" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add a History</button>
+                        </div>
                         @error('employeeHistory')   
                             <div class="transition transform alert alert-danger text-sm"
                                     x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date_container').focus();">

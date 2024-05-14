@@ -181,17 +181,6 @@
                                     </ul>
                                 </div>
                                 <div class="border border-gray=200 border-solid p-6 ">
-                                        {{-- <div class="mt-5 ">
-                                            <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                Company Name <span class="text-red-600">*</span></label>
-                                            <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                                            @error('employeeHistory.' . $index . '.name_of_company')   
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
-                                                </div> 
-                                            @enderror
-                                        </div> --}}
                                         <div class="mt-5" id="employeeHistory_{{$index}}_name_of_company_container">
                                             <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Company Name <span class="text-red-600">*</span></label>
                                             <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>

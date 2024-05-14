@@ -62,9 +62,7 @@ class ActivitiesUpdate extends Component
         foreach($this->rules as $rule => $validationRule){
             $this->validate([$rule => $validationRule]);
             $this->resetValidation();
-        }   
-
-        
+        }  
 
         $activitydata = Activities::findOrFail($this->index);
         $this->validate(['date' => 'required|after_or_equal:'.$activitydata->date]);

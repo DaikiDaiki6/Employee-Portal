@@ -30,7 +30,7 @@ class TrainingGallery extends Component
 
     public function filterListener(){
         $loggedInUser = auth()->user();
-        $departmentName = Employee::where('employee_id', $loggedInUser->employeeId)
+        $departmentName = Employee::where('employee_id', $loggedInUser->employee_id)
                                 ->value('department_name');
         $this->department_name = $departmentName;
         if($this->filter != "All" && $this->filter != null){

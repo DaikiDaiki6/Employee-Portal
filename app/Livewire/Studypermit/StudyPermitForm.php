@@ -83,19 +83,19 @@ class StudyPermitForm extends Component
     }
 
 
-    public function removeImage($index, $request){
-        // dump($this->cover_memo);
-        $requestName = str_replace(' ', '_', $request);
-        $requestName = strtolower($requestName);
-        if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
-            unset($this->$requestName[$index]);
-            $this->$requestName =  array_values($this->$requestName);
-        }
-        // unset($this->$requestName[$index]);
-        // $this->$requestName =  array_values($this->$requestName);
-        // dump($this->cover_memo);
+    // public function removeImage($index, $request){
+    //     // dump($this->cover_memo);
+    //     $requestName = str_replace(' ', '_', $request);
+    //     $requestName = strtolower($requestName);
+    //     if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
+    //         unset($this->$requestName[$index]);
+    //         $this->$requestName =  array_values($this->$requestName);
+    //     }
+    //     // unset($this->$requestName[$index]);
+    //     // $this->$requestName =  array_values($this->$requestName);
+    //     // dump($this->cover_memo);
         
-    }
+    // }
 
     public function removeArrayImage($index, $request, $insideIndex = null){
         // dump($this->cover_memo);

@@ -14,7 +14,7 @@ class TrainingView extends Component
     public $postTestAnswerExists;
 
     public function mount($index){
-
+        $this->index = $index;
         $this->trainingData = Training::findOrFail($index);
         $loggedInUser = auth()->user();
         $this->preTestAnswerExists = Traininganswer::where('employee_id', $loggedInUser->employeeId)

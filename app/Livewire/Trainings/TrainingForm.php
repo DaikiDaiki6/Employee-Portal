@@ -58,21 +58,33 @@ class TrainingForm extends Component
     }
 
     protected $rules = [
-        'training_title' => 'required',
-        'training_information' => 'required',
-        'training_photo' => 'required',
-        'pre_test_title' => 'required',
-        'post_test_title' => 'required',
-        'preTest.*.question'  => 'required',
-        'preTest.*.answer'  => 'required',
-        'pre_test_description' => 'required',
-        'post_test_description' => 'required',
-        // 'host' => 'required',
-        'is_featured' => 'required',
-        'visible_to_list' => 'required',
+        'training_title' => 'required|max:150',
+        'training_information' => 'required|max:1024',
+        'training_photo' => 'required|mimes:jpg,png|extensions:jpg,png',
+        'pre_test_title' => 'required|max:150',
+        'post_test_title' => 'required|max:150',
+        'preTest' => 'required|array|min:1|max:100',
+        'preTest.*.question'  => 'required|required_with:preTest.*.answer|min:5|max:1024',
+        'preTest.*.answer'  => 'required|required_with:preTest.*.question|min:5|max:1024',
+        'postTest' => 'required|array|min:1|max:100',
+        'postTest.*.question'  => 'required|required_with:postTest.*.answer|min:5|max:1024',
+        'postTest.*.answer'  => 'required|required_with:postTest.*.question|min:5|max:1024',
+        'pre_test_description' => 'required|max:1024',
+        'post_test_description' => 'required|max:1024',
+        'is_featured' => 'required|in:1,0',
+        'visible_to_list' => 'required|array',
+        'visible_to_list.*' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
+    ];
+
+    protected $validationAttributes = [
+        'preTest.*.question' => 'Pre-Test Question',
+        'preTest.*.answer' => 'Pre-Test Answer',
+        'postTest.*.question' => 'Post-Test Question',
+        'postest.*.answer' => 'Post-Test Answer',
     ];
 
     public function submit(){
+        // dd($this->preTest);
         if($this->host){
             $this->host = "College of Information System and Technology Management";
         }

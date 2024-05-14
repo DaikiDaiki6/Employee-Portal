@@ -105,6 +105,16 @@ class ChangeInformation extends Component
         return Storage::disk('local')->get($this->$item[$index]);
     }
 
+    public function addEmployeeHistory(){
+        $this->employeeHistory[] = ['name_of_company' => '', 'prev_position' => '', 'start_date' => '', 'end_date' => ''];
+    }
+
+    public function removeHistory($index){
+        unset($this->employeeHistory[$index]);
+        // $this->subjectLoad = array_values($this->subjectLoad);
+    }
+
+
     protected $rules = [
         'phone' => 'required|numeric',
         'age' => 'required|numeric|min:1|max:120',

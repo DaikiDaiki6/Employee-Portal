@@ -133,6 +133,9 @@
             {{-- Pre-Test Question --}}
             <div class="grid grid-cols-1 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                 <h2><b>Pre Test Question</b></h2>
+                @php
+                    $index = 0;
+                @endphp
                 @foreach ($preTest as $index => $preQuestion)   
                     <div class="w-full col-span-3">
                         <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
@@ -155,7 +158,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question <span class="text-red-600">*</span></label>
                                 <textarea type="text" id="preTest_{{$index}}_question" wire:model.blur="preTest.{{$index}}.question"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </textarea>
-                                @error('preTest.{{$index}}.question')   
+                                @error('preTest.'. $index . '.question')   
                                 <div class="transition transform alert alert-danger text-sm"
                                         x-data x-init="document.getElementById('preTest_{{$index}}_question').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('preTest_{{$index}}_question').focus();" >
                                             <span class="text-red-500 text-xs" > {{$message}}</span>
@@ -166,8 +169,8 @@
                                 <label for="preTest_{{$index}}_answer"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Answer<span class="text-red-600">*</span></label>
                                 <textarea type="text" id="preTest_{{$index}}_answer" wire:model.blur="preTest.{{$index}}.answer"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                </textarea>
-                                @error('preTest.{{$index}}.answer')   
+                                </textarea> 
+                                @error('preTest.' . $index  .  '.answer')   
                                     <div class="transition transform alert alert-danger text-sm"
                                         x-data x-init="document.getElementById('preTest_{{$index}}_answer').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('preTest_{{$index}}_answer').focus();" >
                                             <span class="text-red-500 text-xs" > {{$message}}</span>
@@ -177,6 +180,12 @@
                         </div>
                     </div>
                     @endforeach
+                    @error('preTest')   
+                        <div class="transition transform alert alert-danger text-sm"
+                            x-data x-init="document.getElementById('preTest_{{$index}}_answer').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('preTest_{{$index}}_answer').focus();" >
+                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                        </div> 
+                    @enderror
                     <div class="flex justify-center">
                         <button type="button" name="add" wire:click.prevent="addPreTestQuestion" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             Add Pre Test Question</button>
@@ -214,6 +223,9 @@
              {{-- Post-Test Question --}}
              <div class="grid grid-cols-1 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                 <h2><b>Post Test Question</b></h2>
+                @php
+                    $index = 0;
+                @endphp
                 @foreach ($postTest as $index => $postQuestion)   
                     <div class="w-full col-span-3">
                         <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
@@ -236,7 +248,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question <span class="text-red-600">*</span></label>
                                 <textarea type="text" id="postTest_{{$index}}_question" wire:model.blur="postTest.{{$index}}.question"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </textarea>
-                                @error('postTest.{{$index}}.question')   
+                                @error('postTest.' . $index . '.question')   
                                 <div class="transition transform alert alert-danger text-sm"
                                         x-data x-init="document.getElementById('postTest_{{$index}}_question').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('postTest_{{$index}}_question').focus();" >
                                             <span class="text-red-500 text-xs" > {{$message}}</span>
@@ -248,7 +260,7 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Answer<span class="text-red-600">*</span></label>
                                 <textarea type="text" id="postTest_{{$index}}_answer" wire:model.blur="postTest.{{$index}}.answer"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </textarea>
-                                @error('postTest.{{$index}}.answer')   
+                                @error('postTest.' . $index . '.answer')   
                                     <div class="transition transform alert alert-danger text-sm"
                                         x-data x-init="document.getElementById('postTest_{{$index}}_answer').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('postTest_{{$index}}_answer').focus();" >
                                             <span class="text-red-500 text-xs" > {{$message}}</span>
@@ -258,6 +270,12 @@
                         </div>
                     </div>
                     @endforeach
+                    @error('postTest')   
+                        <div class="transition transform alert alert-danger text-sm"
+                            x-data x-init="document.getElementById('postTest_{{$index}}_answer').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('postTest_{{$index}}_answer').focus();" >
+                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                        </div> 
+                    @enderror
                     <div class="flex justify-center">
                         <button type="button" name="add" wire:click.prevent="addPostTestQuestion" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                             Add Post Test Question</button>
