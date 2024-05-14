@@ -33,18 +33,18 @@ class Employeeinformation extends Component
         $employee = Employee::where('employee_id', $employee_id)->first(); // Replace $employee_id with the actual employee ID
         $this->employeeImage = $employee->emp_image;
         $this->employeeRecord = Employee::where('employee_id', $employee_id)->first();
-        $this->empDiploma = json_decode($employee->emp_diploma, true) ?? [];
-        $this->empTOR = json_decode($employee->emp_TOR, true) ?? [];
-        $this->empCertOfTrainingsSeminars = json_decode($employee->emp_cert_of_trainings_seminars, true) ?? [];
-        $this->empAuthCopyOfCscOrPrc = json_decode($employee->emp_auth_copy_of_csc_or_prc, true) ?? [];
-        $this->empAuthCopyOfPrcBoardRating = json_decode($employee->emp_auth_copy_of_prc_board_rating, true) ?? [];
-        $this->empMedCertif = json_decode($employee->emp_med_certif, true) ?? [];
-        $this->empNBIClearance = json_decode($employee->emp_nbi_clearance, true) ?? [];
-        $this->empPSABirthCertif = json_decode($employee->emp_psa_birth_certif, true) ?? [];
-        $this->empPSAMarriageCertif = json_decode($employee->emp_psa_marriage_certif, true) ?? [];
-        $this->empServiceRecordFromOtherGovtAgency = json_decode($employee->emp_service_record_from_other_govt_agency, true) ?? [];
-        $this->empApprovedClearancePrevEmployer = json_decode($employee->emp_approved_clearance_prev_employer, true) ?? [];
-        $this->otherDocuments = json_decode($employee->other_documents, true) ?? [];
+        $this->empDiploma = $employee->emp_diploma ?? [];
+        $this->empTOR = $employee->emp_TOR ?? [];
+        $this->empCertOfTrainingsSeminars = $employee->emp_cert_of_trainings_seminars ?? [];
+        $this->empAuthCopyOfCscOrPrc = $employee->emp_auth_copy_of_csc_or_prc ?? [];
+        $this->empAuthCopyOfPrcBoardRating = $employee->emp_auth_copy_of_prc_board_rating ?? [];
+        $this->empMedCertif = $employee->emp_med_certif ?? [];
+        $this->empNBIClearance = $employee->emp_nbi_clearance ?? [];
+        $this->empPSABirthCertif = $employee->emp_psa_birth_certif ?? [];
+        $this->empPSAMarriageCertif = $employee->emp_psa_marriage_certif ?? [];
+        $this->empServiceRecordFromOtherGovtAgency = $employee->emp_service_record_from_other_govt_agency ?? [];
+        $this->empApprovedClearancePrevEmployer = $employee->emp_approved_clearance_prev_employer ?? [];
+        $this->otherDocuments = $employee->other_documents ?? [];
         
 
         // dd($this->employeeDiploma);

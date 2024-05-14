@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignId('employee_id');
+            $table->string('status');
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');

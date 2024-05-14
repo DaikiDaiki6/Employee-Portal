@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ChangeInformation extends Model 
 {
     use HasFactory;
-
     protected $casts = [
+        'employee_history' => 'array',
         'emp_image' => 'array',
         'emp_diploma' => 'array',
         'emp_TOR' => 'array',

@@ -58,7 +58,27 @@ class UserSeeder extends Seeder
         $employee->vacation_credits = 20;
         $employee->sick_credits = 20;
         $employee->school_email = 'comsci@plm.edu.ph'; 
-        $employee->employee_history = '[{"end_date": "2024-03-02", "start_date": "2024-03-02", "prev_position": "Software Engineer", "name_of_company": "Accenture"}, {"end_date": "2023-03-02", "start_date": "2022-03-02", "prev_position": "Junior Developer", "name_of_company": "IBM"}, {"end_date": "2022-03-02", "start_date": "2021-02-07", "prev_position": "Intern Developer", "name_of_company": "EasyPC"}]';
+
+        $employeeHistory = [
+            [
+            'name_of_company' => 'Accenture',
+            'prev_position' => 'Software Engineer',
+            'start_date' =>  "2024-03-02",
+            'end_date' =>  "2024-03-02",
+            ],
+            ];
+        foreach($employeeHistory as $load){
+            $jsonEmployeeHistory[] = [
+                'name_of_company' => $load['name_of_company'],
+                'prev_position' => $load['prev_position'],
+                'start_date' => $load['start_date'],
+                'end_date' => $load['end_date'],
+            ];
+        }
+
+        $employee->employee_history = json_encode($jsonEmployeeHistory);
+
+        // $employee->employee_history = "[{\"end_date\": \"2024-03-02\", \"start_date\": \"2024-03-02\", \"prev_position\": \"Software Engineer\", \"name_of_company\": "Accenture"}, {"end_date": "2023-03-02", "start_date": "2022-03-02", "prev_position": "Junior Developer", "name_of_company": "IBM"}, {"end_date": "2022-03-02", "start_date": "2021-02-07", "prev_position": "Intern Developer", "name_of_company": "EasyPC"}]';
         
         // Emp Image
         $imageContent = file_get_contents(public_path('storage/photos/demofiles/Picture.webp'));
@@ -66,7 +86,7 @@ class UserSeeder extends Seeder
         Storage::disk('public')->put($destinationPath, $imageContent);
         $employee->emp_image = $destinationPath;
 
-    //    // Emp Image
+    //    // Emp Image 
     //    $path = Storage::putFile('photos/avatar', new File('public\storage\photos\demofiles\Picture.webp'), 'public');
     //    $employee->emp_image = $path;
 
@@ -75,58 +95,58 @@ class UserSeeder extends Seeder
        $employee_diploma[] = $path;   
        $path = Storage::putFile('photos/diploma', new File('public\storage\photos\demofiles\Training picture\coding.webp'), 'private');
        $employee_diploma[] = $path;   
-       $employee->emp_diploma = json_encode($employee_diploma);
+       $employee->emp_diploma = $employee_diploma;
 
        // Tor
        $path = Storage::putFile('photos/tor', new File('public\storage\photos\demofiles\tor.jfif'), 'private');
        $emp_TOR[] = $path;   
-       $employee->emp_TOR = json_encode($emp_TOR);
+       $employee->emp_TOR = $emp_TOR;
 
 
        // Certificate
        $path = Storage::putFile('photos/cert_of_trainings_seminars', new File('public\storage\photos\demofiles\certif.jpg'), 'private');
        $emp_cert_of_trainings_seminars[] = $path;   
-       $employee->emp_TOR = json_encode($emp_cert_of_trainings_seminars);
+       $employee->emp_TOR = $emp_cert_of_trainings_seminars;
 
        // PRC License
        $path = Storage::putFile('photos/auth_copy_of_csc_or_prc', new File('public\storage\photos\demofiles\prc license.jfif'), 'private');
        $emp_auth_copy_of_csc_or_prc[] = $path;   
-       $employee->emp_auth_copy_of_csc_or_prc = json_encode($emp_auth_copy_of_csc_or_prc);
+       $employee->emp_auth_copy_of_csc_or_prc = $emp_auth_copy_of_csc_or_prc;
        
        // PRC Board Rating
        $path = Storage::putFile('photos/auth_copy_of_prc_board_rating', new File('public\storage\photos\demofiles\prc board rating.JPG'), 'private');
        $emp_auth_copy_of_prc_board_rating[] = $path;   
-       $employee->emp_auth_copy_of_prc_board_rating = json_encode($emp_auth_copy_of_prc_board_rating);
+       $employee->emp_auth_copy_of_prc_board_rating = $emp_auth_copy_of_prc_board_rating;
 
        // Medical Certificate
        $path = Storage::putFile('photos/med_certif', new File('public\storage\photos\demofiles\Medical Certificate.jpg'), 'private');
        $emp_med_certif[] = $path;   
-       $employee->emp_med_certif = json_encode($emp_med_certif);
+       $employee->emp_med_certif = $emp_med_certif;
 
        // NBI Clearance
        $path = Storage::putFile('photos/nbi_clearance', new File('public\storage\photos\demofiles\NBI Clearance.png'), 'private');
        $emp_nbi_clearance[] = $path;   
-       $employee->emp_nbi_clearance = json_encode($emp_nbi_clearance);
+       $employee->emp_nbi_clearance = $emp_nbi_clearance;
 
        // PSA
        $path = Storage::putFile('photos/psa', new File('public\storage\photos\demofiles\psa.png'), 'private');
        $emp_psa_birth_certif[] = $path;   
-       $employee->emp_psa_birth_certif = json_encode($emp_psa_birth_certif);
+       $employee->emp_psa_birth_certif = $emp_psa_birth_certif;
 
        // PSA Marriage
        $path = Storage::putFile('photos/psa_marriage', new File('public\storage\photos\demofiles\psa marriage.jpg'), 'private');
        $emp_psa_marriage_certif[] = $path;   
-       $employee->emp_psa_marriage_certif = json_encode($emp_psa_marriage_certif);
+       $employee->emp_psa_marriage_certif = $emp_psa_marriage_certif;
 
        // Service Record
        $path = Storage::putFile('photos/service_record', new File('public\storage\photos\demofiles\service record.png'), 'private');
        $emp_service_record_from_other_govt_agency[] = $path;   
-       $employee->emp_service_record_from_other_govt_agency = json_encode($emp_service_record_from_other_govt_agency);
+       $employee->emp_service_record_from_other_govt_agency = $emp_service_record_from_other_govt_agency;
 
        // Approved Clearance
        $path = Storage::putFile('photos/approved_clearance', new File('public\storage\photos\demofiles\Approved Clearance.jpg'), 'private');
        $emp_approved_clearance_prev_employer[] = $path;   
-       $employee->emp_approved_clearance_prev_employer = json_encode($emp_approved_clearance_prev_employer);
+       $employee->emp_approved_clearance_prev_employer = $emp_approved_clearance_prev_employer;
 
 
         // $employee->addMedia('public\storage\photos\demofiles\diploma.png')
@@ -167,14 +187,14 @@ class UserSeeder extends Seeder
         $employee->employee_type = 'Casual';
         $employee->department_name = 'College of Engineering';
         $employee->employee_role = 2;
-            $employee->department_id = 1;
-            $employee->dean_id = 1;
+        $employee->department_id = 1;
+        $employee->dean_id = 1;
         $employee->first_name = 'Juan';
         $employee->middle_name = 'Dela';
         $employee->last_name = 'Cruz';
         $employee->age = 25;
         $employee->gender = 'Male';
-        $employee->personal_email = 'juandelacruz@gmail.com';
+        $employee->personal_email = 'juandelacruz@gmail\.com';
         $employee->phone = '09323123232';
         $employee->birth_date = '2023-12-06';
         $employee->address = 'Sampaloc, Manila';
@@ -186,13 +206,13 @@ class UserSeeder extends Seeder
         $employee->department_head = 'Raymund Dioses';
         $employee->faculty_or_not = true;
         $employee->school_email = 'comsci@plm.edu.ph';
-        $employee->addMedia('public\storage\photos\demofiles\med-cert.jpg')
-            ->preservingOriginal()
-            ->toMediaCollection('avatar');
-        $employee->addMedia('public\storage\photos\demofiles\diploma.png')
-            ->preservingOriginal()
-            ->toMediaCollection('diploma');
-        $employee->save();
+        // $employee->addMedia('public\storage\photos\demofiles\med-cert.jpg')
+        //     ->preservingOriginal()
+        //     ->toMediaCollection('avatar');
+        // $employee->addMedia('public\storage\photos\demofiles\diploma.png')
+        //     ->preservingOriginal()
+        //     ->toMediaCollection('diploma');
+        // $employee->save();
 
 
         // $employee = Employee::create([

@@ -55,6 +55,9 @@ use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
+use App\Livewire\Approverequests\ChangeInformation\ApproveChangeInformationRequest;
+use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Approverequests\Studypermit\ApproveStudyPermitForm;
 use App\Livewire\Approverequests\Teachpermit\ApproveTeachPermitForm;
 use App\Livewire\Approverequests\Studypermit\ApproveStudyPermitTable;
@@ -130,6 +133,11 @@ Route::middleware('auth')->group(function (){
     Route::get('/profile/{media}/{filename}', [Employeeinformation::class, 'privateStorage'])->name('privateStorage');
 
     Route::get('/changeinformation', ChangeInformation::class)->name('changeInformation');
+
+    Route::get('/changeinformationrequests', ApproveChangeInformationTable::class)->name('ApproveChangeInformationTable');
+    
+    Route::get('/changeinformationrequests/approve/{index}', ApproveChangeInformationForm::class)->name('ApproveChangeInformationForm');
+
 
 });
 

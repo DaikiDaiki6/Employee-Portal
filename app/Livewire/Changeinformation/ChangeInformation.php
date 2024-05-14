@@ -56,21 +56,22 @@ class ChangeInformation extends Component
 
 
         $this->emp_image= $employee->emp_image ;
-        // dd($this->emp_photo
-        $this->emp_diploma = json_decode($employee->emp_diploma) ?? [];
-        $this->emp_TOR = json_decode($employee->emp_TOR) ?? [];
-        $this->emp_cert_of_trainings_seminars = json_decode($employee->emp_cert_of_trainings_seminars) ?? [];
-        $this->emp_auth_copy_of_csc_or_prc = json_decode($employee->emp_auth_copy_of_csc_or_prc) ?? [];
-        $this->emp_auth_copy_of_prc_board_rating = json_decode($employee->emp_auth_copy_of_prc_board_rating) ?? [];
-        $this->emp_med_certif = json_decode($employee->emp_med_certif) ?? [];
-        $this->emp_nbi_clearance = json_decode($employee->emp_nbi_clearance) ?? [];
-        $this->emp_psa_birth_certif = json_decode($employee->emp_psa_birth_certif) ?? [];
-        $this->emp_psa_marriage_certif = json_decode($employee->emp_psa_marriage_certif) ?? [];
-        $this->emp_service_record_from_other_govt_agency = json_decode($employee->emp_service_record_from_other_govt_agency) ?? [];
-        $this->emp_approved_clearance_prev_employer = json_decode($employee->emp_approved_clearance_prev_employer) ?? [];
+
+        $this->emp_diploma = $employee->emp_diploma ?? [];
+        $this->emp_TOR = $employee->emp_TOR ?? [];
+        $this->emp_cert_of_trainings_seminars = $employee->emp_cert_of_trainings_seminars ?? [];
+        $this->emp_auth_copy_of_csc_or_prc = $employee->emp_auth_copy_of_csc_or_prc ?? [];
+        $this->emp_auth_copy_of_prc_board_rating = $employee->emp_auth_copy_of_prc_board_rating ?? [];
+        $this->emp_med_certif = $employee->emp_med_certif ?? [];
+        $this->emp_nbi_clearance = $employee->emp_nbi_clearance ?? [];
+        $this->emp_psa_birth_certif = $employee->emp_psa_birth_certif ?? [];
+        $this->emp_psa_marriage_certif = $employee->emp_psa_marriage_certif ?? [];
+        $this->emp_service_record_from_other_govt_agency = $employee->emp_service_record_from_other_govt_agency ?? [];
+        $this->emp_approved_clearance_prev_employer = $employee->emp_approved_clearance_prev_employer ?? [];
         if($employee->employee_history != null){
-            $this->employeeHistory = json_decode($employee->employee_history);
+            $this->employeeHistory = json_decode($employee->employee_history, true);
         }
+        // dd($this->employeeHistory);
     }
 
     public function removeArrayImage($index, $request, $insideIndex = null){
@@ -105,10 +106,63 @@ class ChangeInformation extends Component
     }
 
     protected $rules = [
+        'phone' => 'required|numeric',
+        'age' => 'required|numeric|min:1|max:120',
+        'gender' => 'required|in:Male,Female,M,F',
+        'birth_date' => 'required|date',
+        'personal_email' => 'required|email:rfc,dns',
+        'address' => 'required|min:10|max:500',
+        'employeeHistory' => 'required|array|min:1|max:5',
+        'employeeHistory.*.name_of_company' => 'required|string|min:2|max:75',
+        'employeeHistory.*.prev_position' => 'required|string|min:2|max:75',
+        'employeeHistory.*.start_date' => 'required|date|before_or_equal:employeeHistory.*.end_date',
+        'employeeHistory.*.end_date' => 'required|date|after_or_equal:employeeHistory.*.start_date',
 
+        'emp_diploma' => 'nullable|array|min:1|max:3',
+        'emp_diploma.*' => 'required',
+        'emp_diploma.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_TOR' => 'nullable|array|min:1|max:3',
+        'emp_TOR.*' => 'required',
+        'emp_TOR.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_cert_of_trainings_seminars' => 'nullable|array|max:3',
+        'emp_cert_of_trainings_seminars.*' => 'required',
+        'emp_cert_of_trainings_seminars.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_auth_copy_of_csc_or_prc' => 'nullable|array|min:1|max:3',
+        'emp_auth_copy_of_csc_or_prc.*' => 'required',
+        'emp_auth_copy_of_csc_or_prc.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_auth_copy_of_prc_board_rating' => 'nullable|array|min:1|max:3',
+        'emp_auth_copy_of_prc_board_rating.*' => 'required',
+        'emp_auth_copy_of_prc_board_rating.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_med_certif' => 'nullable|array|min:1|max:3',
+        'emp_med_certif.*' => 'required',
+        'emp_med_certif.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_nbi_clearance' => 'nullable|array|min:1|max:3',
+        'emp_nbi_clearance.*' => 'required',
+        'emp_nbi_clearance.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_psa_birth_certif' => 'nullable|array|min:1|max:3',
+        'emp_psa_birth_certif.*' => 'required',
+        'emp_psa_birth_certif.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_psa_marriage_certif' => 'nullable|array|min:1|max:3',
+        'emp_psa_marriage_certif.*' => 'required',
+        'emp_psa_marriage_certif.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_service_record_from_other_govt_agency' => 'nullable|array|min:1|max:3',
+        'emp_service_record_from_other_govt_agency.*' => 'required',
+        'emp_service_record_from_other_govt_agency.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_approved_clearance_prev_employer' => 'nullable|array|min:1|max:3',
+        'emp_approved_clearance_prev_employer.*' => 'required',
+        'emp_approved_clearance_prev_employer.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'other_documents' => 'nullable|array|max:3',
+        'other_documents.*' => 'required',
+        'other_documents.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        
     ];
 
     protected $validationAttributes = [
+        'employeeHistory' => 'Employee History',
+        'employeeHistory.*.name_of_company' => 'Name of Company/Organization',
+        'employeeHistory.*.prev_position' => 'Position',
+        'employeeHistory.*.end_date' => 'Finished Date',
+        'employeeHistory.*.start_date' => 'Start Date',
         'emp_image' => 'Employee Image',
         'emp_diploma' => 'Employee Diploma',
         'emp_TOR' => 'Employee TOR',
@@ -125,14 +179,19 @@ class ChangeInformation extends Component
     ];
 
     public function submit(){
+        // dd($this->employeeHistory);
 
-        // $this->validate();
+        foreach($this->rules as $rule => $validationRule){
+            $this->validate([$rule => $validationRule]);
+            $this->resetValidation();
+        }   
      
         $employee = new ModelsChangeInformation();
         $employee->employee_id = auth()->user()->employee_id;
         $employee->first_name = $this->first_name;
         $employee->middle_name = $this->middle_name;
         $employee->last_name = $this->last_name;
+        $employee->status = 'Pending';
         $employee->age = $this->age;
         $employee->gender = $this->gender;
         $employee->personal_email = $this->personal_email;
@@ -149,57 +208,65 @@ class ChangeInformation extends Component
         
 
         $fileFields = [
-            'emp_diploma' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_TOR' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_cert_of_trainings_seminars' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_auth_copy_of_csc_or_prc' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_auth_copy_of_prc_board_rating' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_med_certif' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_nbi_clearance' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_psa_birth_certif' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_psa_marriage_certif' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_service_record_from_other_govt_agency' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'emp_approved_clearance_prev_employer' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'other_documents' => 'nullable|array|min:1|max:3|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'emp_diploma',
+            'emp_TOR',
+            'emp_cert_of_trainings_seminars',
+            'emp_auth_copy_of_csc_or_prc',
+            'emp_auth_copy_of_prc_board_rating',
+            'emp_med_certif',
+            'emp_nbi_clearance',
+            'emp_psa_birth_certif',
+            'emp_psa_marriage_certif',
+            'emp_service_record_from_other_govt_agency',
+            'emp_approved_clearance_prev_employer',
+            'other_documents'
         ];
         
-        // foreach ($fileFields as $field => $validationRule) {
-        //     $fileNames = [];            
-        //     $ctrField = count($this->$field) - 1 ;
-        //     $ctr = 0;
-        //     foreach($this->$field as $index => $item){
-        //         $ctr += 1;
-        //         if(is_string($item)){
-        //             $fileNames[] = $item;  
-        //         }
-        //         else if(is_array($item)){
-        //             foreach($item as $file){
-        //                 if(is_string($item)){
-        //                     $fileNames[] = $file;
-        //                 }
-        //                 else{ 
-        //                     $this->validate([$field => $validationRule]);
-        //                     $itemName = $file->store("photos/changeinformation/$field", 'local');
-        //                     $fileNames[] = $itemName;
-        //                     if($employee->$field != null && $ctr <= $ctrField){
-        //                         Storage::delete($employee->$field[$index]);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     if(count($fileNames) > 0){
-        //         $employee->$field = $fileNames;        
-        //         dd($employee->$field, $fileNames);
-        //     }
-        // }
+        
+        foreach ($fileFields as $field) {
+            $fileNames = [];            
+            $ctrField = count($this->$field) - 1 ;
+            $ctr = 0;
+            foreach($this->$field as $index => $item){
+                $ctr += 1;
+                if(is_string($item)){
+                    // dump($field, $item);
+                    // $fileNames[] = $item;  
+                }
+                else if(is_array($item)){
+                    foreach($item as $file){
+                        if(is_string($item)){
+                            // $fileNames[] = $file;
+                        }
+                        else{ 
+                            // $this->validate([$field => $validationRule]);
+                            $itemName = $file->store("photos/changeinformation/$field", 'local');
+                            $fileNames[] = $itemName;
+                            if($employee->$field != null && $ctr <= $ctrField){
+                                Storage::delete($employee->$field[$index]);
+                            }
+                        }
+                    }
+                }
+                else{
+                    $this->resetValidation();
+                    if (!is_array($item) && !is_string($item)) {
+                        $this->addError($field . '.' . $index, 'The' . $field . 'must be a string or an array.');
+                    }
+                }
+            }
+            if(count($fileNames) > 0){
+                $employee->$field = $fileNames;        
+                // dd($employee->$field, $fileNames);
+            }
+        }
         
         foreach($this->employeeHistory as $history){
             $jsonEmployeeHistory[] = [
-                'name_of_company' => $history->name_of_company,
-                'prev_position' => $history->prev_position,
-                'start_date' => $history->start_date,
-                'end_date' => $history->end_date,
+                'name_of_company' => $history['name_of_company'],
+                'prev_position' => $history['prev_position'],
+                'start_date' => $history['start_date'],
+                'end_date' => $history['end_date'],
             ];
         }
 

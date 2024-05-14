@@ -5,6 +5,7 @@ namespace App\Livewire\Studypermit;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Studypermit;
+use App\Rules\StringOrArray;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
@@ -88,7 +89,7 @@ class StudyPermitUpdate extends Component
         $this->status = $studypermitdata->status;
         $this->total_units_enrolled = $studypermitdata->total_units_enrolled;
         // $this->available_units = $studypermitdata->available_units;
-        dd($studypermitdata->cover_memo);
+        // dd($studypermitdata->cover_memo);
         $this->cover_memo = $studypermitdata->cover_memo;
         $this->request_letter = $studypermitdata->request_letter;
         $this->summary_of_schedule = $studypermitdata->summary_of_schedule;
@@ -108,6 +109,7 @@ class StudyPermitUpdate extends Component
                 $this->units_enrolled += $load['number_of_units'];
             }
         }
+        dd($this->subjectLoad);
     }
 
     public function updated($key){
@@ -199,22 +201,22 @@ class StudyPermitUpdate extends Component
         'request_letter.*' => 'required',
         'request_letter.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
         'teaching_assignment' => 'nullable|array|max:3',
-        'teaching_assignment.*' => '',
+        'teaching_assignment.*' => 'nullable',
         'teaching_assignment.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
         'summary_of_schedule' => 'required|array|min:1|max:3',
-        'summary_of_schedule.*' => '',
+        'summary_of_schedule.*' => 'nullable',
         'summary_of_schedule.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
         'certif_of_grades' => 'nullable|array|max:3',
-        'certif_of_grades.*' => '',
+        'certif_of_grades.*' => 'nullable',
         'certif_of_grades.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
         'study_plan' => 'nullable|array|max:3',
-        'study_plan.*' => '',
+        'study_plan.*' => 'nullable',
         'study_plan.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
         'student_faculty_eval' => 'nullable|array|max:3',
-        'student_faculty_eval.*' => '',
+        'student_faculty_eval.*' => 'nullable',
         'student_faculty_eval.*.*' => 'nullable|mimes:jpg,png,pdf|max:5120',
         'rated_ipcr' => 'required|array|min:1|max:3',
-        'rated_ipcr.*' => '',
+        'rated_ipcr.*' => 'nullable',
         'rated_ipcr.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
     ];
 
@@ -255,7 +257,7 @@ class StudyPermitUpdate extends Component
     ];
 
     public function submit(){
-        // dd($this->cover_memo);
+        // dd($this->request_letter);
         $loggedInUser = auth()->user();
         $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
                             ->get()->value('study_available_units');   
@@ -334,9 +336,53 @@ class StudyPermitUpdate extends Component
         }
         $this->validate(['subjectLoad.*.start_time' => Rule::prohibitedIf($conflictFlag)]);
 
-
         $loggedInUser = auth()->user();
         $studypermitdata = Studypermit::findOrFail($this->index);
+
+        $fileFields = [
+            'cover_memo',
+            'request_letter',
+            'summary_of_schedule',
+            'rated_ipcr',
+            'teaching_assignment',
+            'certif_of_grades',
+            'study_plan',
+            'student_faculty_eval',
+        ];
+
+        foreach ($fileFields as $field) {
+            $fileNames = [];            
+            $ctrField = count($this->$field) - 1 ;
+            $ctr = 0;
+            foreach($this->$field as $index => $item){
+                $ctr += 1;
+                if(is_string($item)){
+                    $fileNames[] = $item;  
+                }
+                else if(is_array($item)){
+                    foreach($item as $file){
+                        if(is_string($item)){
+                            $fileNames[] = $file;
+                        }
+                        else{ 
+
+                            $itemName = $file->store("photos/studypermit/$field", 'local');
+                            $fileNames[] = $itemName;
+                            if($studypermitdata->$field != null && $ctr <= $ctrField){
+                                Storage::delete($studypermitdata->$field[$index]);
+                            }
+                        }
+                    }
+                }
+                else{
+                    if (!is_array($item) && !is_string($item)) {
+                        $this->addError('cover_memo.' . $index, 'The cover memo must be a string or an array.');
+                    }
+                }
+            }
+            $studypermitdata->$field = $fileNames;
+        }
+        
 
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
                 ->where('employee_id', $loggedInUser->employee_id)
@@ -388,53 +434,7 @@ class StudyPermitUpdate extends Component
         // }
         // dd($this->cover_memo);
 
-        $fileFields = [
-            'cover_memo',
-            'request_letter',
-            'summary_of_schedule',
-            'rated_ipcr',
-            'teaching_assignment',
-            'certif_of_grades',
-            'study_plan',
-            'student_faculty_eval',
-        ];
-
-        foreach ($fileFields as $field) {
-            $fileNames = [];            
-            $ctrField = count($this->$field) - 1 ;
-            $ctr = 0;
-            foreach($this->$field as $index => $item){
-                $ctr += 1;
-                if(is_string($item)){
-                    $fileNames[] = $item;  
-                }
-                else if(is_array($item)){
-                   
-                    foreach($item as $file){
-                        if(is_string($item)){
-                            $fileNames[] = $file;
-                        }
-                        else{ 
-                            $itemName = $file->store("photos/studypermit/$field", 'local');
-                            $fileNames[] = $itemName;
-                            if($studypermitdata->$field != null && $ctr <= $ctrField){
-                                Storage::delete($studypermitdata->$field[$index]);
-                            }
-                        }
-                    }
-                }
-                // else{
-                //     $itemName = $item->store("photos/studypermit/$field", 'local');
-                //     $fileNames[] = $itemName;
-                //     Storage::delete($studypermitdata->$field[$index]);
-
-                // }
-
-                
-            }
-            $studypermitdata->$field = $fileNames;
-        }
-        
+       
         foreach($this->subjectLoad as $load){
             $jsonSubjectLoad[] = [
                 'subject' => $load['subject'],

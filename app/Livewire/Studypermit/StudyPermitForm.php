@@ -159,6 +159,7 @@ class StudyPermitForm extends Component
         'start_period_cover' => 'required|after_or_equal:application_date',
         'end_period_cover' => 'required|after_or_equal:start_period_cover',
         'degree_prog_and_school' => 'required|min:10|max:500',
+        'subjectLoad' => 'required|min:1',
         'subjectLoad.*.subject' => 'required|min:2',
         'subjectLoad.*.days' => 'required',
         'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
@@ -314,6 +315,7 @@ class StudyPermitForm extends Component
                 
             }
         }
+        $this->resetValidation();
         $this->validate(['subjectLoad.*.start_time' => Rule::prohibitedIf($conflictFlag)]);
 
         $loggedInUser = auth()->user();
