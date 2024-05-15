@@ -38,6 +38,7 @@ class UserSeeder extends Seeder
         $employee->employee_role = 2;
         $employee->department_id = 1;
         $employee->dean_id = 1;
+        $employee->is_department_head_or_dean = ['0,0'];
         $employee->first_name = 'Juan';
         $employee->middle_name = 'Dela';
         $employee->last_name = 'Cruz';
@@ -49,7 +50,7 @@ class UserSeeder extends Seeder
         $employee->address = 'Sampaloc, Manila';
         $employee->current_position = 'Part-time';
         $employee->salary = 510;
-        $employee->department_head = 'Raymund Dioses';
+        // $employee->department_head = 'Raymund Dioses';
         $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
         $employee->end_of_employment = Carbon::createFromDate(2024, 4, 9);
         $employee->faculty_or_not = true;
@@ -148,50 +149,71 @@ class UserSeeder extends Seeder
        $emp_approved_clearance_prev_employer[] = $path;   
        $employee->emp_approved_clearance_prev_employer = $emp_approved_clearance_prev_employer;
 
-
-        // $employee->addMedia('public\storage\photos\demofiles\diploma.png')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('diploma');
-        // $employee->addMedia('public\storage\photos\demofiles\tor.jfif')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('tor');
-        // $employee->addMedia('public\storage\photos\demofiles\certif.jpg')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('certificate/seminar');
-        // $employee->addMedia('public\storage\photos\demofiles\prc license.jfif')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('csc_eligibility');
-        // $employee->addMedia('public\storage\photos\demofiles\prc board rating.JPG')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('prc_boardrating');
-        // $employee->addMedia('public\storage\photos\demofiles\med-cert.jpg')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('medical_certificate');
-        // $employee->addMedia('public\storage\photos\demofiles\psa.png')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('psa_birthcertificate');
-        // $employee->addMedia('public\storage\photos\demofiles\psa marriage.jpg')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('psa_marriagecertificate');
-        // $employee->addMedia('public\storage\photos\demofiles\service record.png')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('service_record');
-        // $employee->addMedia('public\storage\photos\demofiles\Approved Clearance.jpg')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('approved_clearance');
         $employee->save();
 
 
+        // $employee = new Employee();
+        // $employee->employee_id = '202151232';
+        // $employee->employee_type = 'Casual';
+        // $employee->department_name = 'College of Engineering';
+        // $employee->employee_role = 2;
+        // $employee->department_id = ['1,3'];
+        // $employee->dean_id = ['0,1'];
+        // $employee->first_name = 'Juan';
+        // $employee->middle_name = 'Dela';
+        // $employee->last_name = 'Cruz';
+        // $employee->age = 25;
+        // $employee->gender = 'Male';
+        // $employee->personal_email = 'juandelacruz@gmail\.com';
+        // $employee->phone = '09323123232';
+        // $employee->birth_date = '2023-12-06';
+        // $employee->address = 'Sampaloc, Manila';
+        // $employee->current_position = 'Part-time';
+        // $employee->salary = 510;
+        // $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
+        // $employee->end_of_employment = Carbon::createFromDate(2024, 4, 9);
+        // $employee->faculty_or_not = true;
+        // $employee->faculty_or_not = true;
+        // $employee->school_email = 'comsci@plm.edu.ph';
+        // $employee->save();
+
+        // $employee = new Employee();
+        // $employee->employee_id = '202189212';
+        // $employee->employee_type = 'Permanent';
+        // $employee->department_name = 'College of Information System and Technology Management';
+        // $employee->employee_role = 2;
+        // $employee->department_id = ['0,1'];
+        // $employee->dean_id = ['1,3'];
+        // $employee->first_name = 'Department';
+        // $employee->middle_name = 'Head';
+        // $employee->last_name = '3';
+        // $employee->age = 25;
+        // $employee->gender = 'Male';
+        // $employee->personal_email = 'juandelacruz@gmail\.com';
+        // $employee->phone = '09323123232';
+        // $employee->birth_date = '2023-12-06';
+        // $employee->address = 'Sampaloc, Manila';
+        // $employee->current_position = 'Part-time';
+        // $employee->salary = 510;
+        // $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
+        // $employee->end_of_employment = Carbon::createFromDate(2024, 4, 9);
+        // $employee->faculty_or_not = true;
+        // $employee->faculty_or_not = true;
+        // $employee->school_email = 'comsci@plm.edu.ph';
+        // $employee->save();
+
+        
         $employee = new Employee();
-        $employee->employee_id = '202151232';
-        $employee->employee_type = 'Casual';
-        $employee->department_name = 'College of Engineering';
+        $employee->employee_id = '202121054';
+        $employee->employee_type = 'Permanent';
+        $employee->department_name = 'College of Information System and Technology Management';
         $employee->employee_role = 2;
-        $employee->department_id = 1;
+        $employee->department_id = 3;
         $employee->dean_id = 1;
-        $employee->first_name = 'Juan';
-        $employee->middle_name = 'Dela';
-        $employee->last_name = 'Cruz';
+        $employee->is_department_head_or_dean = ['0,1'];
+        $employee->first_name = 'College';
+        $employee->middle_name = 'Dean';
+        $employee->last_name = '3';
         $employee->age = 25;
         $employee->gender = 'Male';
         $employee->personal_email = 'juandelacruz@gmail\.com';
@@ -203,52 +225,73 @@ class UserSeeder extends Seeder
         $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
         $employee->end_of_employment = Carbon::createFromDate(2024, 4, 9);
         $employee->faculty_or_not = true;
-        $employee->department_head = 'Raymund Dioses';
         $employee->faculty_or_not = true;
         $employee->school_email = 'comsci@plm.edu.ph';
-        // $employee->addMedia('public\storage\photos\demofiles\med-cert.jpg')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('avatar');
-        // $employee->addMedia('public\storage\photos\demofiles\diploma.png')
-        //     ->preservingOriginal()
-        //     ->toMediaCollection('diploma');
-        // $employee->save();
+        $employee->save();
 
 
-        // $employee = Employee::create([
-        //     'employee_id' => '202132321',
-        //     'employee_type' => 'Casual',
-        //     'department_name' => 'computer science',
-        //     'first_name' => 'Juan',
-        //     'middle_name' => 'Dela',
-        //     'last_name' => 'Cruz',
-        //     'age' => 25,
-        //     'gender' => 'Male',
-        //     'personal_email' => 'juandelacruz@gmail',
-        //     'phone' => '09323123232',
-        //     'birth_date' => '2023-12-06',
-        //     'address' => 'Sampaloc, Manila',
-        //     'current_position' => 'Part-time',
-        //     'salary' => 510,
-        //     'department_head' => 'Raymund Dioses',
-        //     'faculty_or_not' => True,
-        // ]);
+        $employee = new Employee();
+        $employee->employee_id = '200000001';
+        $employee->employee_type = 'Casual';
+        $employee->department_name = 'College of Information System and Technology Management';
+        $employee->employee_role = 2;
+        $employee->department_id = 1;
+        $employee->is_department_head_or_dean = ['1,0'];
+        $employee->first_name = 'Admin';
+        $employee->middle_name = 'Admin';
+        $employee->last_name = 'Admin';
+        $employee->age = 1;
+        $employee->gender = 'Male';
+        $employee->personal_email = 'admin@gmail.com';
+        $employee->phone = '00000000000';
+        $employee->birth_date = '2000-01-01';
+        $employee->address = 'PLM';
+        $employee->current_position = 'Permanent';
+        $employee->salary = 0;
+        $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
+        $employee->faculty_or_not = false;
+        $employee->school_email = 'admin@plm.edu.ph';
+
+        $employee->save();
 
        
+        // User::create([
+        //     'name'     => 'Don',
+        //     'email'    => 'donfelipe@plm.edu.ph',
+        //     'password' => bcrypt('donfelipe'),
+        //     'employee_id' => '202151232',
+        // ]);
 
-        $user = User::create([
-            'name'     => 'Admin',
+        User::create([
+            'name'     => 'Department Head 3',
+            'email'    => 'departmentHead@plm.edu.ph',
+            'password' => bcrypt('depthead'),
+            'employee_id' => '202189212',
+        ]);
+
+        User::create([
+            'name'     => 'College Dean 3',
+            'email'    => 'collgeDean@plm.edu.ph',
+            'password' => bcrypt('collegedean'),
+            'employee_id' => '202121054',
+        ]);
+
+        User::create([
+            'name'     => 'Employee',
             'email'    => 'employee@plm.edu.ph',
             'password' => bcrypt('secret'),
             'employee_id' => '202132321',
         ]);
 
-        // $user = User::create([
-        //     'name'     => 'Don',
-        //     'email'    => 'donfelipe@gmail.com',
-        //     'password' => bcrypt('donfelipe'),
-        //     'employee_id' => '202151232',
-        // ]);
+        User::create([
+            'name'     => 'Admin',
+            'email'    => 'admin@plm.edu.ph',
+            'password' => bcrypt('admin'),
+            'employee_id' => '200000001',
+            'is_admin' => 1,
+        ]);
+
+       
 
        
 

@@ -10,6 +10,7 @@ use Livewire\WithFileUploads;
 use App\Models\Documentrequest;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\SignedNotifcation;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveRequestDocumentForm extends Component
 {
@@ -48,6 +49,15 @@ class ApproveRequestDocumentForm extends Component
 
     public function mount($index){
         $this->index = $index;
+        $documentrequestdata = Documentrequest::findOrFail($index);
+        
+        $type = 'Approve';
+        try {
+            $this->authorize('update', [$documentrequestdata,  $type]);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
                                     ->where('employee_id', $loggedInUser->employee_id)
@@ -58,8 +68,6 @@ class ApproveRequestDocumentForm extends Component
         $this->department_name = $this->employeeRecord[0]->department_name;
         $this->current_position = $this->employeeRecord[0]->current_position;
         $this->employee_type = $this->employeeRecord[0]->employee_type;
-
-        $documentrequestdata = Documentrequest::findOrFail($index);
 
         $this->date_of_filling = $documentrequestdata->date_of_filling;
         $this->ref_number = $documentrequestdata->ref_number;

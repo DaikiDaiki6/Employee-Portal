@@ -98,22 +98,16 @@ class StudyPermitForm extends Component
     // }
 
     public function removeArrayImage($index, $request, $insideIndex = null){
-        // dump($this->cover_memo);
-            // dump($this->$requestName, $index, $insideIndex);
-
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
         if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
             unset($this->$requestName[$index][$insideIndex]);
-            // dump($this->$requestName);
             $this->$requestName[$index] = array_values($this->$requestName[$index]);
-            // dd($this->$requestName, $index, $insideIndex);
         }
         else{
             unset($this->$requestName[$index]);
             $this->$requestName =  array_values($this->$requestName);
         }
-        // dump($this->cover_memo);
     }
 
     public function updated($key){
@@ -392,7 +386,6 @@ class StudyPermitForm extends Component
 
                 // }
 
-            dump($fileNames);
             }
             $studypermitdata->$field = $fileNames;
         }

@@ -12,11 +12,18 @@ class SidebarView extends Component
     public $role;
 
     public $employeeImage;
+
+    public $employeeName;
+
+    public $employeeEmail;
     public function mount(){
-        $loggedInUser = auth()->user()->employee_id;
-        $this->role = (int) Employee::where('employee_id', $loggedInUser)->value('employee_role');
-        $employee = Employee::where('employee_id', $loggedInUser)->first(); 
+        $loggedInUser = auth()->user();
+        $this->role = (int) Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_role');
+        $employee = Employee::where('employee_id', $loggedInUser->employee_id)->first(); 
+        // dd($this->role);
         $this->employeeImage = $employee->emp_image;
+        $this->employeeName = $employee->first_name. ' ' . $employee->middle_name . ' ' . $employee->last_name;
+        $this->employeeEmail = $loggedInUser->email;
     }
 
     public function render()

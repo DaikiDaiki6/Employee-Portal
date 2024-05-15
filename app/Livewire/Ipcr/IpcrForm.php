@@ -271,9 +271,9 @@ class IpcrForm extends Component
         $this->validate();
 
         $loggedInUser = auth()->user();
-        $this->employeeRecord = Employee::select('department_head', 'department_name')
+        $this->employeeRecord = Employee::select('current_position')
             ->where('employee_id', $loggedInUser->employee_id)
-            ->get();
+            ->first();
 
 
         $loggedInUser = auth()->user();
@@ -281,7 +281,7 @@ class IpcrForm extends Component
         $ipcr->employee_id = $loggedInUser->employee_id;
         $ipcr->ipcr_type = $this->ipcr_type;
         $ipcr->date_of_filling = $this->date_of_filling;
-        $ipcr->position = $this->employeeRecord[0]->department_name;
+        $ipcr->position = $this->employeeRecord->department_name ?? ' ';
         $ipcr->start_period = $this->start_period;
         $ipcr->end_period = $this->end_period;
         $ipcr->ratee = $this->ratee;

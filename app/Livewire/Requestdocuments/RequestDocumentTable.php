@@ -26,10 +26,15 @@ class RequestDocumentTable extends Component
     public function render()
     {
         $loggedInUser = auth()->user();
-        return view('livewire.requestdocuments.request-document-table', [
-            // 'DocumentRequestData' => Documentrequest::where('employee_id', $loggedInUser->employee_id)->paginate(1),
-            'DocumentRequestData' => Documentrequest::paginate(10),
 
+        if ($loggedInUser->is_admin) {
+            $documentRequestData = Documentrequest::paginate(10);
+        } else {
+            $documentRequestData = Documentrequest::where('employee_id', $loggedInUser->employee_id)->paginate(10);
+        }
+        
+        return view('livewire.requestdocuments.request-document-table', [
+            'DocumentRequestData' => $documentRequestData,
         ]);
         
     } 

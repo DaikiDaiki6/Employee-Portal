@@ -18,7 +18,7 @@ class ApproveOpcrTable extends Component
     //     $employee_id = Opcr::query()->where('id', $index)->value('employee_id'); // Get Employee ID
     //     $employee = Employee::query()->where('employee_id', $employee_id)->first(); // Get Employee Records
     //     Pdf::setOption(['dpi' => 150, 'defaultFont' => 'arial']); // Set PDF settings
-    //     $pdf = PDF::loadView('ipcr.Ipcrpdf', ['ipcrs' => $ipcr, 'employees' => $employee]); // Pass data to the blade file
+    //     $pdf = PDF::loadView('ipcr.Ipcrpdf', ['opcrs' => $ipcr, 'employees' => $employee]); // Pass data to the blade file
     //     $pdf->setPaper('A4', 'landscape'); // Set paper type and orientation
     //     return response()->stream(function() use($pdf){
     //         echo $pdf->stream();
@@ -38,10 +38,51 @@ class ApproveOpcrTable extends Component
     public function render()
     {   
         $loggedInUser = auth()->user();
-        // $ipcrs = Opcr::paginate(5)
-        // return view('livewire.ipcrtable');
+        
+        $loggedInEmployeeData = Employee::where('employee_id', $loggedInUser->employee_id)->first();
+        $head = explode(',', $loggedInEmployeeData->is_department_head_or_dean[0] ?? ' ');
+        $departmentHeadId = $loggedInEmployeeData->department_id;
+        $collgeDeanId = $loggedInEmployeeData->dean_id;
+
+        // Check if condition for department head is true
+        if ($head[0] == 1 && $head[1] == 1){
+            $opcrData = Opcr::join('employees', 'employees.employee_id', 'opcrs.employee_id')
+                ->where(function ($query) use ($collgeDeanId, $departmentHeadId) {
+                    $query->orWhere('employees.department_id', $departmentHeadId)
+                        ->orWhere('employees.dean_id',  $collgeDeanId);
+                })
+                ->select('opcrs.*') // Select only documentrequest columns
+                ->distinct() // Ensure unique records
+                ->paginate(10);
+        }
+        else if ($head[0] == 1) {
+            $opcrData= Opcr::join('employees', 'employees.employee_id', 'opcrs.employee_id')
+                ->where(function ($query) use ($departmentHeadId) {
+                    $query->orWhere('employees.department_id', $departmentHeadId);
+                })
+                ->select('opcrs.*') // Select only Opcr columns
+                ->distinct() // Ensure unique records
+                ->paginate(10);
+        }
+
+        // Check if condition for college dean is true
+        else if ($head[1] == 1) {
+            $opcrData = Opcr::join('employees', 'employees.employee_id', 'opcrs.employee_id')
+                ->where(function ($query) use ($collgeDeanId) {
+                    $query->orWhere('employees.dean_id',  $collgeDeanId);
+                })
+                ->select('opcrs.*') // Select only Opcr columns
+                ->distinct() // Ensure unique records
+                ->paginate(10);
+        }
+        else if ($loggedInUser->is_admin == 1) {
+            $opcrData = Opcr::paginate(10);
+        } 
+        else{
+            abort(404);
+        }
         return view('livewire.approverequests.opcr.approve-opcr-table', [
-            'opcrs' => Opcr::where('employee_id', $loggedInUser->employee_id)->paginate(5),
+            'opcrs' => $opcrData,
         ]);
     }
 

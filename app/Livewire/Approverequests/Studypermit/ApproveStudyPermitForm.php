@@ -10,6 +10,7 @@ use App\Models\Studypermit;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\SignedNotifcation;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveStudyPermitForm extends Component
 {
@@ -67,8 +68,16 @@ class ApproveStudyPermitForm extends Component
     public $flag;
 
     public function mount($index){
-        $this->index = $index;
         $loggedInUser = auth()->user();
+
+        try {
+            $this->index = $index;
+            $studypermitdata = Studypermit::findOrFail($index);
+            $this->authorize('update', [$studypermitdata, 'Approve']);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type', 'study_available_units' )
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
@@ -80,7 +89,6 @@ class ApproveStudyPermitForm extends Component
         $this->employee_type = $this->employeeRecord[0]->employee_type;
         $this->study_available_units = $this->employeeRecord[0]->study_available_units ?? 0;
         
-        $studypermitdata = Studypermit::findOrFail($index);
         
         $this->employee_id = $studypermitdata->employee_id;
         $this->application_date = $studypermitdata->application_date;
@@ -143,7 +151,6 @@ class ApproveStudyPermitForm extends Component
     }
 
     public function removeArrayImage($index, $request, $insideIndex = null){
-        // dump($this->cover_memo);
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
         if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
@@ -153,7 +160,6 @@ class ApproveStudyPermitForm extends Component
             unset($this->$requestName[$index]);
             $this->$requestName =  array_values($this->$requestName);
         }
-        // dump($this->cover_memo);
     }
 
     public function removeImage($item){

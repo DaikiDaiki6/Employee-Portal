@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\SignedNotifcation;
+use Illuminate\Auth\Access\AuthorizationException;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class ApproveLeaveRequestForm extends Component
@@ -67,7 +68,14 @@ class ApproveLeaveRequestForm extends Component
     public function mount($index){
         $this->index = $index;
         $loggedInUser = auth()->user();
-        $leaverequest = $this->editLeaveRequest($index);
+        try {
+            $leaverequest = $this->editLeaveRequest($index);
+            $this->authorize('update', [$leaverequest, 'Approve']);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+
+        // $leaverequest = $this->editLeaveRequest($index);
         $this->date_of_filling = $leaverequest->date_of_filling;
         $this->type_of_leave = $leaverequest->type_of_leave;
         $this->type_of_leave_others = $leaverequest->type_of_leave_others;

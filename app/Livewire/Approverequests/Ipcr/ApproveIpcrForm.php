@@ -11,6 +11,7 @@ use Livewire\WithFileUploads;
 use App\Notifications\IpcrNotification;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\SignedNotifcation;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveIpcrForm extends Component
 {
@@ -53,8 +54,16 @@ class ApproveIpcrForm extends Component
     public $dateToday;
 
     public function mount($index){
-        $this->ipcrIndex = $index;
-        $ipcrData = $this->editIpcr($index);
+
+        $type = 'Approve';
+        try {
+            $this->ipcrIndex = $index;
+            $ipcrData = $this->editIpcr($index);
+            $this->authorize('update', [$ipcrData ,  $type]);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+        
         $this->ipcr_type = $ipcrData->ipcr_type;
         $this->date_of_filling = $ipcrData->date_of_filling;
         $this->ratee = $ipcrData->ratee;

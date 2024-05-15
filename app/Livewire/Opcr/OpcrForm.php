@@ -60,10 +60,8 @@ class OpcrForm extends Component
     }
 
 
-    public function updated($key, $value)
-    {
+    public function updated($key, $value) {
         $parts = explode('.', $key);
-
         if ($parts[0] === 'coreFunctions' && count($parts) >= 3) {
             $lastPart = end($parts);
             if (in_array($lastPart, ['Q', 'E', 'T', 'A'])) {
@@ -105,11 +103,11 @@ class OpcrForm extends Component
     public function mount($type){
         $dateToday = Carbon::now()->toDateString();
         $loggedInUser = auth()->user();
-        $this->employeeRecord = Employee::select('department_head', 'department_name')
+        $this->employeeRecord = Employee::select('department_id')
                     ->where('employee_id', $loggedInUser->employee_id)
                     ->get();
-        $this->department_name = $this->employeeRecord[0]->department_name;
-        $this->department_head = $this->employeeRecord[0]->department_head;
+        $this->department_name = $this->employeeRecord[0]->department_id;
+        $this->department_head = $this->employeeRecord[0]   ->department_id; // Needs to be changed as soon as i get the list of dept names.
         $this->date_of_filling = $dateToday;
         $this->opcr_type = $type;
         $this->start_period = $dateToday;
@@ -201,7 +199,7 @@ class OpcrForm extends Component
         $opcr->employee_id = $loggedInUser->employee_id;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
-        $opcr->department_name = $this->department_name;
+        // $opcr->department_id = $this->department_id;
         $opcr->department_head = $this->department_head;
         $opcr->start_period = $this->start_period;
         $opcr->end_period = $this->end_period;

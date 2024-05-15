@@ -9,6 +9,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class OpcrUpdate extends Component
 {
@@ -106,17 +107,22 @@ class OpcrUpdate extends Component
     }
 
     public function mount($index){
+
+        try {
+            $this->opcrIndex = $index;
+            $opcrData = $this->editOpcr($index);
+            $this->authorize('update', [$opcrData]);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+
         $loggedInUser = auth()->user();
-        $this->employeeRecord = Employee::select('department_head', 'department_name')
+        $this->employeeRecord = Employee::select('department_id')
                     ->where('employee_id', $loggedInUser->employee_id)
                     ->get();
-        $this->department_name = $this->employeeRecord[0]->department_name;
-        $this->department_head = $this->employeeRecord[0]->department_head;
-
-        $this->opcrIndex = $index;
-        $opcrData = $this->editOpcr($index);
+        $this->department_name = $this->employeeRecord[0]->department_id;
+        $this->department_head = $this->employeeRecord[0]->department_id;
         $dateToday = Carbon::now()->toDateString();
-       
         $this->opcr_type = $opcrData->opcr_type;
         $this->date_of_filling = $opcrData->date_of_filling;
         $this->ratee = $opcrData->ratee;

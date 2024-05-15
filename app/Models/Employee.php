@@ -12,6 +12,7 @@ class Employee extends Model
     use HasFactory;
 
     protected $casts = [
+        'is_department_head_or_dean' => 'array',
         'emp_image' => 'array',
         'emp_diploma' => 'array',
         'emp_TOR' => 'array',

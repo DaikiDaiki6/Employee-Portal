@@ -10,6 +10,7 @@ use App\Models\Teachpermit;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\SignedNotifcation;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveTeachPermitForm extends Component
 {
@@ -56,8 +57,16 @@ class ApproveTeachPermitForm extends Component
 
 
     public function mount($index){
-        $this->index = $index;
         $loggedInUser = auth()->user();
+
+        try {
+            $this->index = $index;
+            $teachpermitdata = Teachpermit::findOrFail($index);
+            $this->authorize('update', [$teachpermitdata, 'Approve']);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
@@ -68,7 +77,6 @@ class ApproveTeachPermitForm extends Component
         $this->current_position = $this->employeeRecord[0]->current_position;
         $this->employee_type = $this->employeeRecord[0]->employee_type;
 
-        $teachpermitdata = Teachpermit::findOrFail($index);
         $this->employee_id = $teachpermitdata->employee_id;
         $this->application_date = $teachpermitdata->application_date;
         $this->start_period_cover = $teachpermitdata->start_period_cover;

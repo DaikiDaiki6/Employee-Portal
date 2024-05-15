@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class LeaveRequestUpdate extends Component
 {
@@ -56,6 +57,14 @@ class LeaveRequestUpdate extends Component
 
     public function mount($index){
         $loggedInUser = auth()->user();
+
+        try {
+            $leaverequest = $this->editLeaveRequest($index);
+            $this->authorize('update', [$leaverequest]);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+        
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'employee_id', 'current_position', 'salary', 'vacation_credits', 'sick_credits')
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
@@ -68,7 +77,7 @@ class LeaveRequestUpdate extends Component
         $this->current_position = $this->employeeRecord[0]->current_position;
         $this->salary = $this->employeeRecord[0]->salary;
 
-        $leaverequest = $this->editLeaveRequest($index);
+        
         $this->date_of_filling = $leaverequest->date_of_filling;
         $this->type_of_leave = $leaverequest->type_of_leave;
         $this->type_of_leave_others = $leaverequest->type_of_leave_others;

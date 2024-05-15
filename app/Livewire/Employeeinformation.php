@@ -65,52 +65,53 @@ class Employeeinformation extends Component
             return Storage::disk('public')->download($employee->emp_image);
         }
         else if ($file == "diploma"){
-            $files = json_decode( $employee->emp_diploma, true);
+            $files = $employee->emp_diploma;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "tor"){
-            $files = json_decode( $employee->emp_TOR, true);
+            $files = $employee->emp_TOR;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "certificate"){
             dump($file, $index);
-            $files = json_decode( $employee->emp_cert_of_trainings_seminars, true);
+            $files = $employee->emp_cert_of_trainings_seminars;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "csc_eligibility"){
-            $files = json_decode( $employee->emp_auth_copy_of_csc_or_prc, true);
+            $files = $employee->emp_auth_copy_of_csc_or_prc;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "prc_boardrating"){
-            $files = json_decode( $employee->emp_auth_copy_of_prc_board_rating, true);
+            $files = $employee->emp_auth_copy_of_prc_board_rating;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "med_cert"){
-            $files = json_decode( $employee->emp_med_certif, true);
+            $files = $employee->emp_med_certif;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "nbi_clearance"){
-            $files = json_decode( $employee->emp_med_certif, true);
+            $files = $employee->emp_med_certif;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "psa_birthcertificate"){
-            $files = json_decode( $employee->emp_psa_birth_certif, true);
+            $files = $employee->emp_psa_birth_certif;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "psa_marriagecertificate"){
-            $files = json_decode( $employee->emp_psa_marriage_certif, true);
+            $files = $employee->emp_psa_marriage_certif;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "service_record"){
-            $files = json_decode( $employee->emp_service_record_from_other_govt_agency, true);
+            $files = $employee->emp_service_record_from_other_govt_agency;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == "approved_clearance"){
-            $files = json_decode( $employee->emp_approved_clearance_prev_employer, true);
+            $files = $employee->emp_approved_clearance_prev_employer;
             return Storage::disk('local')->download($files[$index]);
         }
         else if ($file == 'others'){
-            $files = json_decode( $employee->other_documents, true);
+            $files = 
+$employee->other_documents;
             return Storage::disk('local')->download($files[$index]);
         }
 

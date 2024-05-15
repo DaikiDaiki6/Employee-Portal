@@ -12,6 +12,7 @@ use Livewire\WithFileUploads;
 use Livewire\Attributes\Locked;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\SignedNotifcation;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveOpcrForm extends Component
 {
@@ -124,15 +125,25 @@ class ApproveOpcrForm extends Component
     }
 
     public function mount($index){
+        
         $loggedInUser = auth()->user();
-        $this->employeeRecord = Employee::select('department_head', 'department_name')
-                    ->where('employee_id', $loggedInUser->employee_id)
+
+        $type = 'Approve';
+        try {
+            $opcrData = $this->editOpcr($index);
+            $this->authorize('update', [$opcrData ,  $type]);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+        
+        $this->employeeRecord = Employee::select('department_id')
+                    ->where('employee_id', $opcrData->employee_id)
                     ->get();
-        $this->department_name = $this->employeeRecord[0]->department_name;
-        $this->department_head = $this->employeeRecord[0]->department_head;
+        $this->department_name = $this->employeeRecord[0]->department_id;
+        $this->department_head = $this->employeeRecord[0]->department_id;
         $this->index = $index;
         $this->opcrIndex = $index;
-        $opcrData = $this->editOpcr($index);
+       
         $dateToday = Carbon::now()->toDateString();
        
         $this->opcr_type = $opcrData->opcr_type;
@@ -361,7 +372,6 @@ class ApproveOpcrForm extends Component
     public function render()
     {   
        
-        
         return view('livewire.approverequests.opcr.approve-opcr-form')->extends('layouts.app');
     }
 

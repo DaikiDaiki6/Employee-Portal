@@ -46,6 +46,7 @@ class RequestDocumentUpdate extends Component
         } catch (AuthorizationException $e) {
             abort(404);
         }
+        
         $this->index = $index;
         $loggedInUser = auth()->user();
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type' )
@@ -75,7 +76,7 @@ class RequestDocumentUpdate extends Component
 
     protected $rules = [
         'requests' => 'required|array|min:1',
-        'requests.*' => 'in:Certificate of Employment,Certificate of Employment with Compensation,Service Record,Part-time Teaching Services,MILC Certification,Certificate of No Pending Administrative Case,Others',
+        'requests.*' => 'in:Certificate of Employment,Certificate of Employment with Compensation,Service Record,Part time Teaching Services,MILC Certification,Certificate of No Pending Administrative Case,Others',
         'purpose' => 'required|min:2|max:1000', 
         // 'signature_requesting_party' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120 '
     ];

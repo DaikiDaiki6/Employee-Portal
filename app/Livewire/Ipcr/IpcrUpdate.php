@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class IpcrUpdate extends Component
 {
@@ -45,6 +46,11 @@ class IpcrUpdate extends Component
     public function mount($index){
         $this->ipcrIndex = $index;
         $ipcrData = $this->editIpcr($index);
+        try {
+            $this->authorize('update', [$ipcrData]);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
         
         $this->ipcr_type = $ipcrData->ipcr_type;
         $this->date_of_filling = $ipcrData->date_of_filling;

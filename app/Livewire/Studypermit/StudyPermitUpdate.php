@@ -9,6 +9,7 @@ use App\Rules\StringOrArray;
 use Livewire\WithFileUploads;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class StudyPermitUpdate extends Component
 {
@@ -63,8 +64,17 @@ class StudyPermitUpdate extends Component
     public $flag;
 
     public function mount($index){
-        $this->index = $index;
+   
         $loggedInUser = auth()->user();
+        
+        try {
+            $this->index = $index;
+            $studypermitdata = Studypermit::findOrFail($index);
+            $this->authorize('update', [$studypermitdata]);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
+
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'current_position', 'employee_type', 'study_available_units' )
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->get();   
@@ -75,8 +85,6 @@ class StudyPermitUpdate extends Component
         $this->current_position = $this->employeeRecord[0]->current_position;
         $this->employee_type = $this->employeeRecord[0]->employee_type;
         $this->study_available_units = $this->employeeRecord[0]->study_available_units ?? 0;
-        
-        $studypermitdata = Studypermit::findOrFail($index);
         
         $this->employee_id = $studypermitdata->employee_id;
         $this->application_date = $studypermitdata->application_date;

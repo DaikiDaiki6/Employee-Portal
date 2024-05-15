@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id');
             $table->string('status')->default('Pending');
-            $table->string('department_name');
+            $table->string('department_id');
             $table->string('opcr_type');
             $table->date( 'date_of_filling');
             $table->date('start_period');

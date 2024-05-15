@@ -17,8 +17,9 @@ return new class extends Migration
             $table->longText('employee_type');
             $table->longText('department_name');
             $table->integer('department_id');
-            $table->integer('dean_id');
-            $table->decimal('employee_role');
+            $table->integer('dean_id')->nullable()->default(0);
+            $table->json('is_department_head_or_dean')->nullable();
+            $table->integer('employee_role');
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
@@ -57,7 +58,7 @@ return new class extends Migration
             $table->string('school_email')->nullable();
             $table->string('current_position');
             $table->decimal('salary', 10, 2);
-            $table->string('department_head');
+            // $table->string('department_head');
             $table->timestamps();
         });
     }
