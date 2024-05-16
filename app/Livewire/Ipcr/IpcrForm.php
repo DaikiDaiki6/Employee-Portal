@@ -73,6 +73,8 @@ class IpcrForm extends Component
     //     }
     // }
 
+    protected $listeners = ['refreshComponent' => '$refresh'];
+
     public function addCoreFunction(){
         $this->coreFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
@@ -83,12 +85,17 @@ class IpcrForm extends Component
 
     public function removeCoreFunction($index){
         unset($this->coreFunctions[$index]);
-        // $this->coreFunctions = array_values($this->coreFunctions);
+        $this->coreFunctions = array_values($this->coreFunctions);
+        $this->dispatch('update-core-functions', [json_encode($this->coreFunctions, true)]);
+
     }
 
     public function removeSupportiveFunction($index){
         unset($this->supportiveFunctions[$index]);
-        // $this->supportiveFunctions = array_values($this->supportiveFunctions);
+        $this->supportiveFunctions = array_values($this->supportiveFunctions);
+        $this->dispatch('update-supportive-functions', [json_encode($this->supportiveFunctions, true)]);
+
+
     }
 
     
@@ -261,7 +268,7 @@ class IpcrForm extends Component
 
     public function submit(){
 
-        // dd($this->rules);
+        // dd($this->coreFunctions);
 
         // foreach($this->rules as $field => $validationRules){
         //     // dd($field, $validationRules);

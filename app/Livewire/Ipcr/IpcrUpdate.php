@@ -94,12 +94,17 @@ class IpcrUpdate extends Component
 
     public function removeCoreFunction($index){
         unset($this->coreFunctions[$index]);
-        // $this->coreFunctions = array_values($this->coreFunctions);
+        $this->coreFunctions = array_values($this->coreFunctions);
+        
+        $this->dispatch('update-core-functions', [json_encode($this->coreFunctions, true)]);
+
     }
 
     public function removeSupportiveFunction($index){
         unset($this->supportiveFunctions[$index]);
-        // $this->supportiveFunctions = array_values($this->supportiveFunctions);
+        $this->supportiveFunctions = array_values($this->supportiveFunctions);
+        $this->dispatch('update-supportive-functions', [json_encode($this->supportiveFunctions, true)]);
+
     }
 
     public function getDiscussedWith(){

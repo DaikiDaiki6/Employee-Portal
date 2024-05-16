@@ -270,6 +270,7 @@ const options = {
   })
   document.addEventListener('livewire:init', () => {
       Livewire.on('refresh-weekly-chart', (chartData) => {
+        alert(chartData);
         chart.updateSeries([{
           name: "Weekly Count",
           data: chartData.data,

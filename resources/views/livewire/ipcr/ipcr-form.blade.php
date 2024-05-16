@@ -138,14 +138,14 @@
                     
                 <div class="grid grid-cols-1 gap-4 w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                     {{-- Core Functions --}}
-                    <div class="block flex-wrap w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                    <div wire:poll.1s class="block flex-wrap w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="flex-none pb-4">
                             <h2><b>Core Functions-80%</b></h2>
                         </div>
                         @php
                             $coreCtr = 0;
                         @endphp
-                            @foreach ($coreFunctions as $index => $coreFunction)   
+                        @foreach ($coreFunctions as $index => $coreFunction)   
                             <div class="block w-full col-span-3 p-6 pb-8 mb-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="col-span-5">
                                     <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
@@ -153,8 +153,8 @@
                                             <span>No. {{$coreCtr + 1 }}</span>
                                         </li>
                                         <li class="">
-                                            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                            type="button" name="add" wire:click.prevent="removeCoreFunction({{$index}})" wire:confirm="Are you sure you want to delete this?"
+                                            <button id="about-tab" 
+                                            type="button" name="add" wire:click="removeCoreFunction({{$index}})" wire:confirm="Are you sure you want to delete this?"
                                             class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-red-500">
                                                 <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                     <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
@@ -167,7 +167,7 @@
                                     <div class="grid col-span-3 gap-4 sm:grid-cols-1 min-[900px]:grid-cols-3">
                                         <div>
                                             <label for="coreFunctions_{{$index}}_output" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Output <span class="text-red-600">*</span></label>
-                                            <textarea type="text" rows="10" id="coreFunctions_{{$index}}_output" name="coreFunctions[{{$index}}][output]" wire:model.blur="coreFunctions.{{$index}}.output" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                            <textarea type="text" rows="10" id="coreFunctions_{{$index}}_output" name="coreFunctions[{{$index}}][output]" wire:model.change="coreFunctions.{{$index}}.output" value="coreFunctions.{{$index}}.output" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                             @error('coreFunctions.' . $index . '.output')   
                                                 <div class="transition transform alert alert-danger text-sm"
                                                         x-data x-init="document.getElementById('coreFunctions_{{$index}}_output').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_output').focus();">
@@ -178,7 +178,7 @@
                                         <div>
                                             <label for="coreFunctions_{{$index}}_indicator"
                                                 class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Success Indicators <span class="text-red-600">*</span></label>
-                                            <textarea type="text" rows="10" id="coreFunctions_{{$index}}_indicator" name="coreFunctions[{{$index}}][indicator]" wire:model.blur="coreFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <textarea type="text" rows="10" id="coreFunctions_{{$index}}_indicator" name="coreFunctions[{{$index}}][indicator]" wire:model.change="coreFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             </textarea>
                                             @error('coreFunctions.' . $index . '.indicator')   
                                                 <div class="transition transform alert alert-danger text-sm"
@@ -321,7 +321,30 @@
                         @php
                             $coreCtr += 1;
                         @endphp
-                    @endforeach
+                        @endforeach
+
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-core-functions', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+                        
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('coreFunctions_' + index + '_output').value = element.output;
+                                        document.getElementById('coreFunctions_' + index + '_indicator').value = element.indicator;
+                                        document.getElementById('coreFunctions_' + index + '_accomp').value = element.accomp;
+                                        document.getElementById('coreFunctions_' + index + '_Q').value = element.Q;
+                                        document.getElementById('coreFunctions_' + index + '_E').value = element.E;
+                                        document.getElementById('coreFunctions_' + index + '_T').value = element.T;
+                                        document.getElementById('coreFunctions_' + index + '_A').value = element.A;
+                                        document.getElementById('coreFunctions_' + index + '_weight').value = element.weight;
+                                        document.getElementById('coreFunctions_' + index + '_remarks').value = element.remarks;
+                                    });
+                                });
+                            });
+                        </script>
                           
                   
                         <div class="flex justify-center">
@@ -350,7 +373,7 @@
                         @php
                             $supportCtr = 0;
                         @endphp
-                            @foreach ($supportiveFunctions as $index => $suuportiveFunction)   
+                        @foreach ($supportiveFunctions as $index => $suuportiveFunction)   
                             <div class="block w-full col-span-3 p-6 pb-8 mb-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="col-span-5">
                                     <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
@@ -529,10 +552,33 @@
                                 @endif
                                 </div>
                             </div>
-                        @php
-                            $supportCtr += 1;
-                        @endphp
+                            @php
+                                $supportCtr += 1;
+                            @endphp
                         @endforeach
+
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-supportive-functions', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+                        
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('supportiveFunctions_' + index + '_output').value = element.output;
+                                        document.getElementById('supportiveFunctions_' + index + '_indicator').value = element.indicator;
+                                        document.getElementById('supportiveFunctions_' + index + '_accomp').value = element.accomp;
+                                        document.getElementById('supportiveFunctions_' + index + '_Q').value = element.Q;
+                                        document.getElementById('supportiveFunctions_' + index + '_E').value = element.E;
+                                        document.getElementById('supportiveFunctions_' + index + '_T').value = element.T;
+                                        document.getElementById('supportiveFunctions_' + index + '_A').value = element.A;
+                                        document.getElementById('supportiveFunctions_' + index + '_weight').value = element.weight;
+                                        document.getElementById('supportiveFunctions_' + index + '_remarks').value = element.remarks;
+                                    });
+                                });
+                            });
+                        </script>
                         
                         <div class="flex justify-center">
                             <button type="button" name="add" wire:click.prevent="addSupportiveFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Support / Administrative Function</button>
