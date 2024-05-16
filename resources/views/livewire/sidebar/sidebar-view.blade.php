@@ -200,9 +200,9 @@
 
  
  <br><br>
- {{-- <aside id="logo-sidebar" class="fixed top-0 pt-5 h-full left-0 z-40 w-64 sm:w-72 lg:w-80 h-auto sm:h-screen transition-transform -translate-x-full bg-blue-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar"> --}}
+    {{-- <aside id="logo-sidebar" class="fixed top-0 pt-5 h-full left-0 z-40 w-64 transition-transform -translate-x-full bg-blue-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar"> --}}
+    <aside id="logo-sidebar" class="fixed top-0 pt-5 h-full left-0 z-40 w-64 bg-blue-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
 
-  <aside id="logo-sidebar" class="fixed top-0 pt-5 h-full left-0 z-40 w-64 sm:h-screen   transition-transform -translate-x-full bg-blue-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
   
    <div class="h-full px-3 pb-4 pt-5 overflow-y-auto bg-blue-600 dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
