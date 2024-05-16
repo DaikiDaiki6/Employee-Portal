@@ -1,7 +1,5 @@
-<div class="main-content ">
-    <br>
-    <div class="p-4 sm:ml-64">
-        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+<div class="main-content">
+        <div class="border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
         <div class="grid grid-cols-5 gap-4">
             <div class="col-span-3 grid grid-cols-1 gap-4">
                 <div class="w-full bg-white border-10 border-gray-800 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
@@ -332,10 +330,6 @@
                        </div>
                     </div>
             </div>
-            
-
         </div>
-   
-    </div>
     </div>
 </div>

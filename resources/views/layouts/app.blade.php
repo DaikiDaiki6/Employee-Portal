@@ -20,13 +20,18 @@
     @livewire('sidebar.sidebar-view')
 
     <div class="main-content">
-        <div id="padding-content" class="p-4 sm:ml-64">
+        <div id="padding-content" class=" sm:ml-64">
             <div class="p-4 rounded-lg dark:border-gray-700 mt-14">
                 @isset($slot)
                     {{ $slot }}
                 @endisset
-                @yield('content')
+                <div class="p-4">
+                    @yield('content')
+                </div>
+                
             </div>
+            
+                
         </div>
     </div>
     <script>
@@ -55,7 +60,7 @@
             }
             // Toggle content padding
             const mainContent = document.getElementById('padding-content');
-            mainContent.classList.toggle('p-4');
+            // mainContent.classList.toggle('p-2');
             mainContent.classList.toggle('sm:ml-64');
         });
 

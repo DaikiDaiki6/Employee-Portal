@@ -40,15 +40,17 @@ const swiper = new Swiper('.swiper', {
   spaceBetween: 10,
   loop: true,
   modules: [Navigation, Pagination],
-
+  height: 100,
   pagination: {
     el: '.swiper-pagination',
   },
-  height: 100,
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
   },
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  }
 
 
 });

@@ -66,6 +66,7 @@ use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentForm;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
+use App\Livewire\Leaverequest\LeaveRequestTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +125,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function (){
     Route::get("/dashboard", DashboardView::class)->name('dashboard');
 
-    Route::get("/profile", [ProfileController::class, 'view'])->name('profile');
+    Route::get("/profile", Employeeinformation::class)->name('profile');
 
     // Route::view('/', 'dashboardview')->name('home');
 
@@ -187,7 +188,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get("/leaverequest", [LeaveRequestController::class, 'view'])->name('LeaveRequestTable');
+    Route::get("/leaverequest", LeaveRequestTable::class)->name('LeaveRequestTable');
 
     Route::get("/leaverequest/form", LeaveRequestForm::class)->name('LeaveRequestForm');
 

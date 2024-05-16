@@ -6,7 +6,20 @@ export default {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        '1/3': '33%',
+        '1/2': '50%',
+        sm: '480px',
+        md: '768px',
+        lg: '976px',
+        xl: '1440px',
+      },
+      screens: {
+        '450px': '450px',
+        '902px': '902px',
+      },
+    },
   },
   plugins: [],
 }
