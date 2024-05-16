@@ -22,9 +22,12 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
             <div class="sm:mx-auto sm:w-full sm:max-w-md text-center flex flex-col items-center mb-10">
-                <a href="{{ route('dashboard') }}" class="inline-block">
-                    <img src="{{ asset('storage/plmlogo/plm.png') }}" style="height: auto; max-height: 75px;" alt="PLM Logo">
-                </a>
+                {{-- <a href="{{ route('dashboard') }}" class="inline-block"> --}}
+                   <div class="flex ">
+                    <img src="{{ asset('storage/plmlogo/plm-logo.png') }}" style="height: auto; max-height: 75px;" class="mr-2" alt="PLM Logo">
+                    <img src="{{ asset('storage/plmlogo/plm.png') }}" style="height: auto; max-height: 75px;" alt="PLM Text">
+                   </div>
+                {{-- </a> --}}
             </div>
             <form wire:submit.prevent="authenticate">
                 <div>

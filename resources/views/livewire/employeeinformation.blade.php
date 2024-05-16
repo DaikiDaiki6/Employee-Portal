@@ -69,9 +69,11 @@
                                             <p class="my-4"><b>{{$index + 1}}. <span class="text-gray-900">{{$record->prev_position}}</span> - <span class="text-gray-700">{{$record->name_of_company}}</span> <br> | {{$record->start_date}} to {{$record->end_date}} </b> </p>
                                         @endforeach
                                     @else
-                                        <p class="my-4"><b>1. </b> </p>
-                                        <p class="my-4"><b>2. </b> </p>
-                                        <p class="my-4"><b>3. </b> </p>
+                                        <div class="text-gray-800">
+                                            <p class="my-4"><b>1. Don't Worry </b> </p>
+                                            <p class="my-4"><b>2. Plenty of Opportunities</b> </p>
+                                            <p class="my-4"><b>3. Awaits!!!!!!!! </b> </p>
+                                        </div>
                                     @endif
                                 </blockquote>
                             </figure>

@@ -100,14 +100,14 @@ class UserSeeder extends Seeder
 
        // Tor
        $path = Storage::putFile('photos/tor', new File('public\storage\photos\demofiles\tor.jfif'), 'private');
-       $emp_TOR[] = $path;   
-       $employee->emp_TOR = $emp_TOR;
+       $emp_tor[] = $path;   
+       $employee->emp_tor = $emp_tor;
 
 
        // Certificate
        $path = Storage::putFile('photos/cert_of_trainings_seminars', new File('public\storage\photos\demofiles\certif.jpg'), 'private');
        $emp_cert_of_trainings_seminars[] = $path;   
-       $employee->emp_TOR = $emp_cert_of_trainings_seminars;
+       $employee->emp_cert_of_trainings_seminars = $emp_cert_of_trainings_seminars;
 
        // PRC License
        $path = Storage::putFile('photos/auth_copy_of_csc_or_prc', new File('public\storage\photos\demofiles\prc license.jfif'), 'private');

@@ -32,7 +32,7 @@ return new class extends Migration
              //Documents
             $table->string('emp_photo')->nullable();
             $table->json('emp_diploma')->nullable();
-            $table->json('emp_TOR')->nullable();
+            $table->json('emp_tor')->nullable();
             $table->json('emp_cert_of_trainings_seminars')->nullable();
             $table->json('emp_auth_copy_of_csc_or_prc')->nullable();
             $table->json('emp_auth_copy_of_prc_board_rating')->nullable();

@@ -14,7 +14,7 @@ class ChangeInformation extends Model
         'employee_history' => 'array',
         'emp_image' => 'array',
         'emp_diploma' => 'array',
-        'emp_TOR' => 'array',
+        'emp_tor' => 'array',
         'emp_cert_of_trainings_seminars' => 'array',
         'emp_auth_copy_of_csc_or_prc' => 'array',
         'emp_auth_copy_of_prc_board_rating' => 'array',

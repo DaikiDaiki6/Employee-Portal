@@ -25,11 +25,11 @@
             <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 w-full min-[450px]:w-1/3  lg:w-1/3">
                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                     <h4 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white whitespace-normal xl:whitespace-nowrap">Vacation Credits</h4>
-                    <p class="font-semibold text-3xl text-blue-600 dark:text-gray-400">{{$vacationCredits}}</p>
+                    <p class="font-semibold text-3xl text-blue-600 dark:text-gray-400">{{$vacationCredits ?? 0.00}}</p>
                 </div>
                 <div class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                     <h4 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white whitespace-normal xl:whitespace-nowrap">Sick Credits</h4>
-                    <p class="font-semibold text-3xl text-blue-600 dark:text-gray-400">{{$sickCredits}}</p>
+                    <p class="font-semibold text-3xl text-blue-600 dark:text-gray-400">{{$sickCredits ?? 0.00}}</p>
                 </div>
             </div>
 

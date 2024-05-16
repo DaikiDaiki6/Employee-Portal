@@ -165,77 +165,79 @@
                         @php
                             $ctr = 0
                         @endphp
+                        @if ($employeeHistory)
                         @foreach ($employeeHistory as $index => $history)
-                            <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                <div class="col-span-5">
-                                    <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                        <li class="float-left mt-4 ml-5 float-bold text-gray-900 font-bold">
-                                            <span>No. {{$ctr + 1 }}</span>
-                                        </li>
-                                        <li class="">
-                                            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                            type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
-                                            class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-red-500">
-                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                </svg>
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="border border-gray=200 border-solid p-6 ">
-                                        <div class="mt-5" id="employeeHistory_{{$index}}_name_of_company_container">
-                                            <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Company Name <span class="text-red-600">*</span></label>
-                                            <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                                            @error('employeeHistory.' . $index . '.name_of_company')   
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
-                                        <div class="mt-5 ">
-                                            <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                Position <span class="text-red-600">*</span></label>
-                                            <input type="text" rows="4" id="employeeHistory_{{$index}}_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                                            @error('employeeHistory.' . $index . '.prev_position')   
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_position').focus();">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
+                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                            <div class="col-span-5">
+                                <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                    <li class="float-left mt-4 ml-5 float-bold text-gray-900 font-bold">
+                                        <span>No. {{$ctr + 1 }}</span>
+                                    </li>
+                                    <li class="">
+                                        <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
+                                        type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
+                                        class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-red-500">
+                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="border border-gray=200 border-solid p-6 ">
+                                    <div class="mt-5" id="employeeHistory_{{$index}}_name_of_company_container">
+                                        <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Company Name <span class="text-red-600">*</span></label>
+                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                        @error('employeeHistory.' . $index . '.name_of_company')   
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
+                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                            </div> 
+                                        @enderror
+                                    </div>
+                                    <div class="mt-5 ">
+                                        <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                            Position <span class="text-red-600">*</span></label>
+                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                        @error('employeeHistory.' . $index . '.prev_position')   
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_position').focus();">
+                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                            </div> 
+                                        @enderror
+                                    </div>
 
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div class="mt-5">
-                                            <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                Start Date <span class="text-red-600">*</span></label>
-                                            <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                                            @error('employeeHistory.' . $index . '.start_date')   
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
-                                        <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
-                                            <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                End Date <span class="text-red-600">*</span></label>
-                                            <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                                            @error('employeeHistory.' . $index . '.end_date')   
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="mt-5">
+                                        <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                            Start Date <span class="text-red-600">*</span></label>
+                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                        @error('employeeHistory.' . $index . '.start_date')   
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
+                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                            </div> 
+                                        @enderror
+                                    </div>
+                                    <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
+                                        <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                            End Date <span class="text-red-600">*</span></label>
+                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                        @error('employeeHistory.' . $index . '.end_date')   
+                                            <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
+                                                <span class="text-red-500 text-xs "> {{$message}}</span>
+                                            </div> 
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                        @php
-                            $ctr += 1;
-                        @endphp
-                        @endforeach
+                        </div>
+                    @php
+                        $ctr += 1;
+                    @endphp
+                    @endforeach
+                        @endif
                         <div class="flex justify-center">
                             <button type="button" name="add" wire:click.prevent="addEmployeeHistory" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add a History</button>
                         </div>
@@ -452,25 +454,25 @@
                             </div>
 
                             {{-- 2 --}}
-                            <div id="emp_TOR_container"
+                            <div id="emp_tor_container"
                                 class="grid grid-cols-1  p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                <label for="emp_TOR"
+                                <label for="emp_tor"
                                     class="block text-sm font-medium text-gray-900 dark:text-white">2. Transcript of Records<span class="text-red-600">*</span></label>
                                 <div class="grid grid-cols-1   w-full">
-                                    @if ($emp_TOR)
-                                        @foreach ($emp_TOR as $index => $item)
+                                    @if ($emp_tor)
+                                        @foreach ($emp_tor as $index => $item)
                                         @php
                                             $insideIndex = 0;
                                         @endphp
                                         @if(is_string($item) == true)
                                             <div>
-                                                <label for="emp_TOR_{{ $index }}"
+                                                <label for="emp_tor_{{ $index }}"
                                                     class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                     @php
-                                                        $image = $this->getArrayImage('emp_TOR', $index);
+                                                        $image = $this->getArrayImage('emp_tor', $index);
                                                     @endphp
                                                     <button type="button"
-                                                        wire:click="removeArrayImage({{ $index }}, 'emp_TOR')"
+                                                        wire:click="removeArrayImage({{ $index }}, 'emp_tor')"
                                                         class="absolute top-0 right-0 m-2 text-red-600 py-1 rounded">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             fill="none" viewBox="0 0 24 24"
@@ -484,20 +486,20 @@
                                                     <img src="data:image/gif;base64,{{ base64_encode($image) }}"
                                                         alt="Image Description"
                                                         class="w-full h-full object-contain p-1">
-                                                    <input id="emp_TOR_{{ $index }}" type="file" class="hidden"
-                                                        wire:model="emp_TOR.{{ $index }}" multiple>
+                                                    <input id="emp_tor_{{ $index }}" type="file" class="hidden"
+                                                        wire:model="emp_tor.{{ $index }}" multiple>
                                                 </label>
                                             </div>
                                         @else
                                             @foreach ($item as $insideIndex => $file)
                                                 @if (is_array($file))
-                                                    <label for="emp_TOR_{{ $index }}.{{$insideIndex}}"
+                                                    <label for="emp_tor_{{ $index }}.{{$insideIndex}}"
                                                     class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                             <img src="{{ $file[$insideIndex]->temporaryUrl() }}"
                                                                 class="w-full h-full object-contain p-1 "
                                                                 alt="Uploaded Image">
                                                             <button type="button"
-                                                                wire:click="removeArrayImage({{ $index }}, 'emp_TOR', {{$insideIndex}})"
+                                                                wire:click="removeArrayImage({{ $index }}, 'emp_tor', {{$insideIndex}})"
                                                                 class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none" viewBox="0 0 24 24"
@@ -508,17 +510,17 @@
                                                                         d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                                 </svg>
                                                             </button>
-                                                            <input id="emp_TOR_{{ $index }}.{{$insideIndex}}" type="file" class="hidden"
-                                                                wire:model="emp_TOR.{{ $index }}.{{$insideIndex}}" multiple>
+                                                            <input id="emp_tor_{{ $index }}.{{$insideIndex}}" type="file" class="hidden"
+                                                                wire:model="emp_tor.{{ $index }}.{{$insideIndex}}" multiple>
                                                     </label>
                                                 @else
-                                                    <label for="emp_TOR_{{ $index }}.{{$insideIndex}}"
+                                                    <label for="emp_tor_{{ $index }}.{{$insideIndex}}"
                                                     class="relative flex flex-col mb-2 items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                             <img src="{{ $file->temporaryUrl() }}"
                                                                 class="w-full h-full object-contain p-1"
                                                                 alt="Uploaded Image">
                                                             <button type="button"
-                                                                wire:click="removeArrayImage({{ $index }}, 'emp_TOR', {{$insideIndex}})"
+                                                                wire:click="removeArrayImage({{ $index }}, 'emp_tor', {{$insideIndex}})"
                                                                 class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
                                                                 <svg xmlns="http://www.w3.org/2000/svg"
                                                                     fill="none" viewBox="0 0 24 24"
@@ -529,13 +531,13 @@
                                                                         d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                                 </svg>
                                                             </button>
-                                                            <input id="emp_TOR_{{ $index }}.{{$insideIndex}}" type="file" class="hidden"
-                                                                wire:model="emp_TOR.{{ $index }}.{{$insideIndex}}">
+                                                            <input id="emp_tor_{{ $index }}.{{$insideIndex}}" type="file" class="hidden"
+                                                                wire:model="emp_tor.{{ $index }}.{{$insideIndex}}">
                                                     </label>
                                                 @endif
-                                                @error('emp_TOR.' . $index .  '.' .  $insideIndex)
+                                                @error('emp_tor.' . $index .  '.' .  $insideIndex)
                                                 <div class="transition transform alert alert-danger text-sm mb-1"
-                                                        x-data x-init="document.getElementById('emp_TOR_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('emp_TOR_container').focus();">
+                                                        x-data x-init="document.getElementById('emp_tor_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('emp_tor_container').focus();">
                                                     <span class="text-red-500 text-xs "> {{$message}}</span>
                                                 </div> 
                                             @enderror
@@ -544,14 +546,14 @@
                                             @php
                                                 $indexRequestLetter = $index;
                                             @endphp
-                                        @error('emp_TOR.' . $index - $insideIndex)
+                                        @error('emp_tor.' . $index - $insideIndex)
                                             <div class="transition transform alert alert-danger text-sm mb-1"
-                                                    x-data x-init="document.getElementById('emp_TOR_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('emp_TOR_container').focus();">
+                                                    x-data x-init="document.getElementById('emp_tor_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('emp_tor_container').focus();">
                                                 <span class="text-red-500 text-xs "> {{$message}}</span>
                                             </div> 
                                         @enderror
                                         @endforeach
-                                        <label for="emp_TOR_{{ $indexRequestLetter + 1 }}"
+                                        <label for="emp_tor_{{ $indexRequestLetter + 1 }}"
                                             class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 <div
                                                     class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -570,10 +572,10 @@
                                                         PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                 </div>
                                         </label>
-                                        <input id="emp_TOR_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
-                                                        wire:model="emp_TOR.{{ $indexRequestLetter + 1 }}" multiple>
+                                        <input id="emp_tor_{{ $indexRequestLetter + 1 }}" type="file" class="hidden"
+                                                        wire:model="emp_tor.{{ $indexRequestLetter + 1 }}" multiple>
                                     @else
-                                        <label for="emp_TOR"
+                                        <label for="emp_tor"
                                         class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 <div
                                                     class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -591,14 +593,14 @@
                                                         class="text-xs text-center text-gray-500 dark:text-gray-400">
                                                         PNG, JPG, or PDF files (Max: 3 files | 5MB each)</p>
                                                 </div>
-                                                <input id="emp_TOR" type="file" class="hidden"
-                                                wire:model.blur="emp_TOR.0" multiple>
+                                                <input id="emp_tor" type="file" class="hidden"
+                                                wire:model.blur="emp_tor.0" multiple>
                                         </label>
                                     @endif
-                                    @error('emp_TOR')
+                                    @error('emp_tor')
                                     <div class="transition transform alert alert-danger text-sm mb-1 mt-2" x-data
-                                        x-init="document.getElementById('emp_TOR_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                        document.getElementById('emp_TOR_container').focus();">
+                                        x-init="document.getElementById('emp_tor_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                        document.getElementById('emp_tor_container').focus();">
                                         <span class="text-red-500 text-xs "> {{ $message }}</span>
                                     </div>
                                     @enderror

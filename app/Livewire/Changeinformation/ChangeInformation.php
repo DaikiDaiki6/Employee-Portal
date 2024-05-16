@@ -4,6 +4,7 @@ namespace App\Livewire\Changeinformation;
 
 use Livewire\Component;
 use App\Models\Employee;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use App\Models\ChangeInformation as ModelsChangeInformation;
@@ -27,7 +28,7 @@ class ChangeInformation extends Component
     
     public $emp_image;
     public $emp_diploma = [];
-    public $emp_TOR = [];
+    public $emp_tor = [];
     public $emp_cert_of_trainings_seminars = [];
     public $emp_auth_copy_of_csc_or_prc = [];
     public $emp_auth_copy_of_prc_board_rating  = [];
@@ -58,7 +59,7 @@ class ChangeInformation extends Component
         $this->emp_image= $employee->emp_image ;
 
         $this->emp_diploma = $employee->emp_diploma ?? [];
-        $this->emp_TOR = $employee->emp_TOR ?? [];
+        $this->emp_tor = $employee->emp_tor ?? [];
         $this->emp_cert_of_trainings_seminars = $employee->emp_cert_of_trainings_seminars ?? [];
         $this->emp_auth_copy_of_csc_or_prc = $employee->emp_auth_copy_of_csc_or_prc ?? [];
         $this->emp_auth_copy_of_prc_board_rating = $employee->emp_auth_copy_of_prc_board_rating ?? [];
@@ -77,18 +78,28 @@ class ChangeInformation extends Component
     public function removeArrayImage($index, $request, $insideIndex = null){
         // dump($this->cover_memo);
             // dump($this->$requestName, $index, $insideIndex);
+        // dd($index, $request, $insideIndex);
 
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
+
         if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
             unset($this->$requestName[$index][$insideIndex]);
-            // dump($this->$requestName);
             $this->$requestName[$index] = array_values($this->$requestName[$index]);
-            // dd($this->$requestName, $index, $insideIndex);
+            // $this->$requestName[$index] = array_filter($this->$requestName[$index], function($value) {
+            //     return $value !== null;
+            // });
+            if(empty($this->$requestName[$index])){
+                unset($this->$requestName[$index]);
+            }
         }
         else{
             unset($this->$requestName[$index]);
             $this->$requestName =  array_values($this->$requestName);
+            $this->$requestName = array_filter($this->$requestName, function($value) {
+                return $value !== null;
+            });
+            
         }
         // dump($this->cover_memo);
     }
@@ -99,6 +110,7 @@ class ChangeInformation extends Component
 
     public function removeImage($item){
         $this->$item = null;
+        $this->$item = array_filter($this->$item);
     }
     
     public function getArrayImage($item, $index){
@@ -131,9 +143,9 @@ class ChangeInformation extends Component
         'emp_diploma' => 'nullable|array|min:1|max:3',
         'emp_diploma.*' => 'required',
         'emp_diploma.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
-        'emp_TOR' => 'nullable|array|min:1|max:3',
-        'emp_TOR.*' => 'required',
-        'emp_TOR.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+        'emp_tor' => 'nullable|array|min:1|max:3',
+        'emp_tor.*' => 'required',
+        'emp_tor.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
         'emp_cert_of_trainings_seminars' => 'nullable|array|max:3',
         'emp_cert_of_trainings_seminars.*' => 'required',
         'emp_cert_of_trainings_seminars.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
@@ -161,7 +173,7 @@ class ChangeInformation extends Component
         'emp_approved_clearance_prev_employer' => 'nullable|array|min:1|max:3',
         'emp_approved_clearance_prev_employer.*' => 'required',
         'emp_approved_clearance_prev_employer.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
-        'other_documents' => 'nullable|array|max:3',
+        'other_documents' => 'nullable|array|max:5',
         'other_documents.*' => 'required',
         'other_documents.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
         
@@ -175,7 +187,7 @@ class ChangeInformation extends Component
         'employeeHistory.*.start_date' => 'Start Date',
         'emp_image' => 'Employee Image',
         'emp_diploma' => 'Employee Diploma',
-        'emp_TOR' => 'Employee TOR',
+        'emp_tor' => 'Employee TOR',
         'emp_cert_of_trainings_seminars' => 'Employee Certificate of Trainings Seminars',
         'emp_auth_copy_of_csc_or_prc' => 'Employee Auth Copy of CSC or PRC',
         'emp_auth_copy_of_prc_board_rating' => 'Employee Auth Copy of PRC Board Rating',
@@ -188,9 +200,23 @@ class ChangeInformation extends Component
         'other_documents' => 'Other Documents'
     ];
 
-    public function submit(){
-        // dd($this->employeeHistory);
+    protected $messages = [
+        'emp_diploma.*' => 'The Employee Diploma must be less than 3',
+        'emp_tor.*' => 'The Employee TOR must be less than 3',
+        'emp_cert_of_trainings_seminars.*' => 'The Employee Certificate of Trainings/Seminars must be less than 3',
+        'emp_auth_copy_of_csc_or_prc.*' => 'The Employee Authorization Copy of CSC or PRC must be less than 3',
+        'emp_auth_copy_of_prc_board_rating.*' => 'The Employee Authorization Copy of PRC Board Rating must be less than 3',
+        'emp_med_certif.*' => 'The Employee Medical Certificate must be less than 3',
+        'emp_nbi_clearance.*' => 'The Employee NBI Clearance must be less than 3',
+        'emp_psa_birth_certif.*' => 'The Employee PSA Birth Certificate must be less than 3',
+        'emp_psa_marriage_certif.*' => 'The Employee PSA Marriage Certificate must be less than 3',
+        'emp_service_record_from_other_govt_agency.*' => 'The Employee Service Record from Other Government Agency must be less than 3',
+        'emp_approved_clearance_prev_employer.*' => 'The Employee Approved Clearance from Previous Employer must be less than 3',
+        'other_documents.*' => 'Other documents must be less than 5'
+    ];
 
+    public function submit(){
+        // dd($this->emp_diploma);
         foreach($this->rules as $rule => $validationRule){
             $this->validate([$rule => $validationRule]);
             $this->resetValidation();
@@ -219,7 +245,7 @@ class ChangeInformation extends Component
 
         $fileFields = [
             'emp_diploma',
-            'emp_TOR',
+            'emp_tor',
             'emp_cert_of_trainings_seminars',
             'emp_auth_copy_of_csc_or_prc',
             'emp_auth_copy_of_prc_board_rating',
@@ -231,6 +257,8 @@ class ChangeInformation extends Component
             'emp_approved_clearance_prev_employer',
             'other_documents'
         ];
+
+
         
         
         foreach ($fileFields as $field) {
@@ -238,18 +266,26 @@ class ChangeInformation extends Component
             $ctrField = count($this->$field) - 1 ;
             $ctr = 0;
             foreach($this->$field as $index => $item){
-                $ctr += 1;
                 if(is_string($item)){
+                    $ctr += 1;
                     // dump($field, $item);
                     // $fileNames[] = $item;  
                 }
                 else if(is_array($item)){
+                    if (is_null($item)){
+                        dd('test');
+                    }
+                    else{
                     foreach($item as $file){
-                        if(is_string($item)){
+                        if (is_null($file)){
+                            dd('test');
+                        }
+                        else if(is_string($item)){
                             // $fileNames[] = $file;
+                            $ctr += 1;
                         }
                         else{ 
-                            // $this->validate([$field => $validationRule]);
+                            $ctr += 1;
                             $itemName = $file->store("photos/changeinformation/$field", 'local');
                             $fileNames[] = $itemName;
                             if($employee->$field != null && $ctr <= $ctrField){
@@ -258,13 +294,26 @@ class ChangeInformation extends Component
                         }
                     }
                 }
+                }
                 else{
                     $this->resetValidation();
                     if (!is_array($item) && !is_string($item)) {
                         $this->addError($field . '.' . $index, 'The' . $field . 'must be a string or an array.');
                     }
                 }
+                if($field == "other_documents"){
+                    if($ctr > 5){
+                        $this->validate([$field => [Rule::prohibitedIf(true)]]);
+                    }
+                }
+                if($ctr > 3){
+                    dump($ctr);
+                    // $this->addError("{$field}", "{$field} must be less than or equal to 3.");   
+                    $this->validate([$field => [Rule::prohibitedIf(true)]]);
+                }
+
             }
+
             if(count($fileNames) > 0){
                 $employee->$field = $fileNames;        
                 // dd($employee->$field, $fileNames);
