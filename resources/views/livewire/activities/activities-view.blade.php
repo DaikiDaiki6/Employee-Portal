@@ -37,7 +37,7 @@
         <div class=" px-1 mx-auto pt-8">
             <div class="grid grid-cols-2 ">
                 <div class="col-span-2 flex justify-center">
-                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('storage/' . $activityData->poster) }}" alt="">
+                    <img class="w-full rounded-lg" src="{{ asset('storage/' . $activityData->poster) }}" style="width: 500px;" alt="">
                 </div>
                 <div class="col-span-2 text-center">
                     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{$activityData->title}}</h1>

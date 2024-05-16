@@ -28,8 +28,8 @@ class TrainingPostTestForm extends Component
 
     public function submit(){
         $loggedInUser = auth()->user();
-        $trainingData = Traininganswer::where('employee_id', $loggedInUser->employeeId)->where('training_id', $this->index)->first();
-        $trainingData->employee_id = Employee::where('employee_id', $loggedInUser->employeeId)->value('employee_id');
+        $trainingData = Traininganswer::where('employee_id', $loggedInUser->employee_id)->where('training_id', $this->index)->first();
+        $trainingData->employee_id = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_id');
         $trainingData->training_id = $this->index;
         $postTestData = $this->postTest;
         foreach($postTestData as $data){

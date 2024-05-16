@@ -69,7 +69,8 @@ class TrainingForm extends Component
         'postTest.*.answer'  => 'required|required_with:postTest.*.question|min:5|max:1024',
         'pre_test_description' => 'required|max:1024',
         'post_test_description' => 'required|max:1024',
-        'is_featured' => 'required|in:1,0',
+        'is_featured' => 'required|boolean',
+        'host' => 'required|in:in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
         'visible_to_list' => 'required|array',
         'visible_to_list.*' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
     ];
@@ -82,10 +83,11 @@ class TrainingForm extends Component
     ];
 
     public function submit(){
+        // dd($this->is_featured);
         // dd($this->preTest);
-        if($this->host){
-            $this->host = "College of Information System and Technology Management";
-        }
+        // if($this->host){
+        //     $this->host = "College of Information System and Technology Management";
+        // }
         $this->validate();
         $trainingdata = new Training();
         $trainingdata->training_title = $this->training_title;

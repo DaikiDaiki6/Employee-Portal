@@ -37,7 +37,7 @@
         <div class=" px-1 mx-auto pt-8">
             <div class="grid grid-cols-2 ">
                 <div class="col-span-2 flex justify-center">
-                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('storage/' . $trainingData->training_photo) }}" alt="">
+                    <img class="w-full rounded-lg" src="{{ asset('storage/' . $trainingData->training_photo) }}" style="width: 500px;" alt="">
                 </div>
                 <div class="col-span-2 text-center">
                     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{{$trainingData->training_title}}</h1>
@@ -86,11 +86,11 @@
                                
                             @endphp
                             <div class="pt-4">
-                                <button type="button" 
+                                {{-- <button type="button" 
                                 onclick="location.href='{{ route('TrainingPreTestForm', ['index' => $index ]) }}'"
                                    @disabled($preTestAnswerExists)
                                 class="text-white mb-8 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                Take Pre-Test
+                                Take Pre-Test --}}
                             </button>
 
                             </div>
@@ -117,9 +117,9 @@
                             </div>
                                 
                                 <div class="pt-4">
-                                <button type="button" @disabled($postTestAnswerExists) 
+                                {{-- <button type="button" @disabled($postTestAnswerExists) 
                                     onclick="location.href='{{ route('TrainingPostTestForm', ['index' => $index]) }}'" class="text-blue-700 border h-10 border-blue-400 hover:text-white hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 me-2 mb-2 dark:text-blue-300 dark:border-blue-300 dark:hover:text-white dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Take Post-Test
-                                </button>
+                                </button> --}}
                             </div>
                         </dl>
                     </div>

@@ -30,7 +30,7 @@ class TrainingPreTestForm extends Component
         $trainingData = new Traininganswer;
         $loggedInUser = auth()->user();
 
-        $trainingData->employee_id = Employee::where('employee_id', $loggedInUser->employeeId)->value('employee_id');
+        $trainingData->employee_id = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_id');
         $trainingData->training_id = $this->index;
         $preTestData = $this->preTest;
         foreach($preTestData as $data){

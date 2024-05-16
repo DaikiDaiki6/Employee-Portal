@@ -29,6 +29,7 @@ class ActivitiesForm extends Component
         'description' => 'required|min:2|max:1024',
         'start' => 'required|before_or_equal:end',
         'end' => 'required|after_or_equal:start',
+        'is_featured' => 'required|boolean',
         'host' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
         'visible_to_list' => 'required|array|min:1',
         'visible_to_list.*' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department'

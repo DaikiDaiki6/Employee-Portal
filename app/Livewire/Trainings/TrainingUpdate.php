@@ -42,7 +42,7 @@ class TrainingUpdate extends Component
         $this->pre_test_description = $trainingdata->pre_test_description;
         $this->post_test_description = $trainingdata->post_test_description;
         $this->host = $trainingdata->host;
-        $this->is_featured = $trainingdata->is_featured;
+        $this->is_featured = ( $trainingdata->is_featured == 1) ? true : false;
         $this->visible_to_list = $trainingdata->visible_to_list;
         $this->preTest = json_decode($trainingdata->pre_test_questions, true);
         $this->postTest = json_decode($trainingdata->post_test_questions, true);
@@ -92,7 +92,7 @@ class TrainingUpdate extends Component
         'postTest.*.answer'  => 'required|required_with:postTest.*.question|min:5|max:1024',
         'pre_test_description' => 'required|max:1024',
         'post_test_description' => 'required|max:1024',
-        'is_featured' => 'required|in:1,0',
+        'is_featured' => 'required|boolean',
         'visible_to_list' => 'required|array',
         'visible_to_list.*' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
     ];
@@ -109,7 +109,6 @@ class TrainingUpdate extends Component
     }
 
     public function submit(){
-        // dd($this->preTest);
         if($this->host){
             $this->host = "College of Information System and Technology Management";
         }
