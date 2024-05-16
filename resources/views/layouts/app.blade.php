@@ -18,20 +18,56 @@
 @section('body')
     {{-- @include('livewire.sidebar.sidebar-view') --}}
     @livewire('sidebar.sidebar-view')
-    @isset($slot)
-    {{ $slot }}
-    @endisset
+
     <div class="main-content">
-        
-        <div class="p-4 sm:ml-64">
+        <div id="padding-content" class="p-4 sm:ml-64">
             <div class="p-4 rounded-lg dark:border-gray-700 mt-14">
-        @yield('content')
-       
+                @isset($slot)
+                    {{ $slot }}
+                @endisset
+                @yield('content')
             </div>
         </div>
     </div>
-    
+    <script>
+        // Get the toggle button
+        const toggleButton = document.getElementById('toggleSidebar');
+        // Get the dropdown element
+        const logoSidebar = document.getElementById('logo-sidebar');
+        // Initialize a flag to track the first click
+        let firstClick = true;
+
+        // Toggle dropdown visibility and content padding when the button is clicked
+        toggleButton.addEventListener('click', function() {
+            // If it's the first click, do nothing
+            if (firstClick) {
+                firstClick = false;
+                return;
+            }
+            // Toggle dropdown visibility
+            const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
+            toggleButton.setAttribute('aria-expanded', String(!isExpanded));
+            logoSidebar.classList.toggle('hidden');
+            if (!isExpanded && window.innerWidth <= 640) {
+                logoSidebar.style.display = 'block';
+            } else {
+                logoSidebar.style.display = '';
+            }
+            // Toggle content padding
+            const mainContent = document.getElementById('padding-content');
+            mainContent.classList.toggle('p-4');
+            mainContent.classList.toggle('sm:ml-64');
+        });
+
+        // Hide the dropdown by default on screens narrower than 640 pixels
+        if (window.innerWidth <= 640) {
+            logoSidebar.classList.add('hidden');
+        }
+    </script>
 @endsection
+
+
+
 
     
 </body>

@@ -1,18 +1,29 @@
 <div>
+    <style>
+        @media (max-width: 640px) {
+            #logo-sidebar {
+                display: none;
+            }
+            #plm-text {
+                display: none;
+            }
+        }
+    </style>
     @vite(['resources/css/app.css','resources/js/app.js'])
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" /> --}}
 <header class="antialiased">
    <nav class="fixed top-0 z-50 w-full pb-4 bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
        <div class="flex flex-wrap justify-between items-center">
            <div class="flex justify-start items-center">
-               <button id="toggleSidebar" aria-expanded="true" aria-controls="sidebar" class=" p-2 mr-3 text-gray-600 rounded cursor-pointer lg:inline hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
-                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h14M1 6h14M1 11h7"/> </svg>
-               </button>
-               <a href="{{route('dashboard')}}"><img src="{{ asset('storage/plmlogo/plm.png') }}" style="height:100% height: auto; min-height: 30px; max-height: 75px;"  alt="PLM Logo">
+                <button id="toggleSidebar" aria-expanded="true" aria-controls="logo-sidebar" data-dropdown-toggle="logo-sidebar" class=" p-2 mr-3 text-gray-600 rounded cursor-pointer lg:inline hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12"> <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h14M1 6h14M1 11h7"/> </svg>
+                </button>
+               <a href="{{route('dashboard')}}"><img src="{{ asset('storage/plmlogo/plm-logo.png') }}" id="plm-logo" style="height:100% height: auto; min-height: 30px; max-height: 75px;"  alt="PLM Logo">
+               </a>
+               <a href="{{route('dashboard')}}"><img src="{{ asset('storage/plmlogo/plm.png') }}" id="plm-text" style="height:100% height: auto; min-height: 30px; max-height: 75px;"  alt="PLM Logo">
                </a>
             </div>
            <div class="flex items-center lg:order-2">
-              
                <!-- Notifications -->
                <button type="button" data-dropdown-toggle="notification-dropdown" class="p-2 mr-1 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
                    <span class="sr-only">View notifications</span>
@@ -184,14 +195,16 @@
            </div>
        </div>
    </nav>
- </header>
+</header>
 
 
  
  <br><br>
-  <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-blue-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+ {{-- <aside id="logo-sidebar" class="fixed top-0 pt-5 h-full left-0 z-40 w-64 sm:w-72 lg:w-80 h-auto sm:h-screen transition-transform -translate-x-full bg-blue-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar"> --}}
+
+  <aside id="logo-sidebar" class="fixed top-0 pt-5 h-full left-0 z-40 w-64 sm:h-screen   transition-transform -translate-x-full bg-blue-600 border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
   
-   <div class="h-full px-3 pb-4 pt-10 overflow-y-auto bg-blue-600 dark:bg-gray-800">
+   <div class="h-full px-3 pb-4 pt-5 overflow-y-auto bg-blue-600 dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
            <li class="bg-white rounded">
               <a href="{{route('dashboard')}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -416,6 +429,8 @@
         </ul>
      </div>
   </aside>
+
+
 
 {{-- <div class="main-content">
     <div class="p-4 sm:ml-64">

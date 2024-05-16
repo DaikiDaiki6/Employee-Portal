@@ -1,8 +1,8 @@
-<div class="grid grid-cols-3 gap-4 p-4 sm:ml-64" style="margin-top: 55px">
+{{-- <div class=" p-4 sm:ml-64" style="margin-top: 55px"> --}}
+  <div class="grid grid-cols-3 gap-4"> 
     <style>
         .swiper {
-        max-width: 1200px; */
-        /* Optionally, set a minimum height */
+        max-width: 1600px;*/
         max-width: 100px;
         width: 100%;
         height: 100%; 
@@ -35,16 +35,16 @@
  
 <div wire:ignore class="bg-white border col-span-3  border-gray-200 rounded-lg shadow sm:p-4 dark:bg-gray-800 dark:border-gray-700  ">
   @if ($activities->isEmpty())
-  <div class="flex items-center justify-center text-center h-full">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
-    </svg>
-     <span class="text-blue-500 font-semibold items-center ml-3"> No Events Available. Stay tuned for Future Events</span>
-  </div>
-@else
-    <div class="swiper w-full object-contain">
+    <div class="flex items-center justify-center text-center h-full">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
+      </svg>
+      <span class="text-blue-500 font-semibold items-center ml-3"> No Events Available. Stay tuned for Future Events</span>
+    </div>
+  @else
+    <div class="swiper w-full h-full object-contain">
         <!-- Additional required wrapper -->
-        <div class="swiper-wrapper p-1 ">
+        <div class="swiper-wrapper p-2">
             @foreach ($activities as $activity)
                 <div class="swiper-slide">
                     <a href="{{route('ActivitiesView', ['index' => $activity->id])}}"><img src="{{ asset('storage/' . $activity->poster) }}" class="h-full w-full object-cover" alt="..."></a>
@@ -55,8 +55,8 @@
         <div class="swiper-pagination text-bold"></div>
       
         <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev absolute top-0 start-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
-        <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
+        <div class="swiper-button-prev !relative top-0 start-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
+        <div class="swiper-button-next !relative top-0 end-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
         
         {{-- <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div> --}}
       
