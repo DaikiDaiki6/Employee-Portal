@@ -54,6 +54,8 @@ class LeaveRequestUpdate extends Component
     public $disapprove_reason;
     public $auth_off_sig_c_and_d;
 
+    public $index;
+
 
     public function mount($index){
         $loggedInUser = auth()->user();
@@ -64,6 +66,9 @@ class LeaveRequestUpdate extends Component
         } catch (AuthorizationException $e) {
             abort(404);
         }
+
+
+        $this->index = $index;
         
         $this->employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department_name', 'employee_id', 'current_position', 'salary', 'vacation_credits', 'sick_credits')
                                     ->where('employee_id', $loggedInUser->employee_id)
@@ -140,17 +145,25 @@ class LeaveRequestUpdate extends Component
     
     protected $rules = [
         'type_of_leave' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
-        'type_of_leave_others' => 'required_if:type_of_leave,Others',
+        'type_of_leave_others' => 'required_if:type_of_leave,Others|max:100',
         'type_of_leave_sub_category' => 'required|in:Within the Philippines,Abroad,In Hospital,Out Patient,Special Leave Benefits for Women,Completion of Master\'s degree,BAR/Board Examination Review,Monetization of leave credits,Terminal Leave',
-        // 'type_of_leave_description' => '',
+        'type_of_leave_description' => 'max:500',
         'inclusive_start_date' => 'required|after_or_equal:date_of_filling|before_or_equal:inclusive_end_date',
         'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
         'num_of_days_work_days_applied' => 'required|lte:available_credits',
-        'commutation' => 'required|in:not requested, requested',
+        'commutation' => 'required|in:not requested,requested',
         
     ];
 
+    protected $validationAttributes = [
+        'type_of_leave' => 'Type of Leave',
+        'type_of_leave_others' => 'Others',
+        'type_of_leave_sub_category' => 'Sub Category',
+        'type_of_leave_description' => 'Leave Description',
+    ];
+
     public function submit(){
+        // dd($this->type_of_leave);
         foreach($this->rules as $rule => $validationRule){
             $this->validate([$rule => $validationRule]);
             $this->resetValidation();
@@ -158,7 +171,7 @@ class LeaveRequestUpdate extends Component
 
         $loggedInUser = auth()->user();
 
-        $leaverequestdata = new Leaverequest();
+        $leaverequestdata = Leaverequest::findOrFail($this->index);
 
         $leaverequestdata->employee_id = $loggedInUser->employee_id;
         $leaverequestdata->status = "Pending";

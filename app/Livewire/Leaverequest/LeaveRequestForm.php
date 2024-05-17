@@ -107,15 +107,23 @@ class LeaveRequestForm extends Component
 
     protected $rules = [
         'type_of_leave' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
-        'type_of_leave_others' => 'required_if:type_of_leave,Others',
+        'type_of_leave_others' => 'required_if:type_of_leave,Others|max:100',
         'type_of_leave_sub_category' => 'required|in:Within the Philippines,Abroad,In Hospital,Out Patient,Special Leave Benefits for Women,Completion of Master\'s degree,BAR/Board Examination Review,Monetization of leave credits,Terminal Leave',
-        // 'type_of_leave_description' => '',
+        'type_of_leave_description' => 'max:500',
         'inclusive_start_date' => 'required|after_or_equal:date_of_filling|before_or_equal:inclusive_end_date',
         'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
         'num_of_days_work_days_applied' => 'required|lte:available_credits',
         'commutation' => 'required|in:not requested,requested',
         'commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf'
     ];
+
+    protected $validationAttributes = [
+        'type_of_leave' => 'Type of Leave',
+        'type_of_leave_others' => 'Others',
+        'type_of_leave_sub_category' => 'Sub Category',
+        'type_of_leave_description' => 'Leave Description',
+    ];
+
 
     public function submit(){
         foreach($this->rules as $rule => $validationRule){
