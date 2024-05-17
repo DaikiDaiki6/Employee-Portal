@@ -67,6 +67,8 @@ class OpcrForm extends Component
         } else {
             $this->core_rating = 0; // Set to zero if $indexCount is zero to avoid division by zero
         }
+        $this->final_rating = ( $this->core_rating * 0.70 + $this->supp_admin_rating * 0.20); 
+        $this->final_average_rating = $this->final_rating;
 
     }
 
@@ -88,6 +90,8 @@ class OpcrForm extends Component
         } else {
             $this->supp_admin_rating = 0; // Set to zero if $indexCount is zero to avoid division by zero
         }
+        $this->final_rating = ( $this->core_rating * 0.70 + $this->supp_admin_rating * 0.20); 
+        $this->final_average_rating = $this->final_rating;
 
     }
 
@@ -128,7 +132,7 @@ class OpcrForm extends Component
                 }
             }
         }
-        $this->final_rating = ( $this->core_rating + $this->supp_admin_rating) / 2; 
+        $this->final_rating = ( $this->core_rating * 0.80 + $this->supp_admin_rating * 0.20); 
         $this->final_average_rating = $this->final_rating;
     }
 

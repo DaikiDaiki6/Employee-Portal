@@ -133,7 +133,6 @@
                 <div style="display: inline-block; width: 48%; vertical-align: top; text-align: center;">
                     <div style="position: relative; display: inline-block;">
                         <img src="data:image/gif;base64,{{ base64_encode($signature) }}" alt="Image Description" width="200" height="50"> 
-
                     </div>
                     <div style="position: relative; margin-top: 50px;">
                         <hr style="border: none; border-bottom: 1px solid black; width: 200px;">

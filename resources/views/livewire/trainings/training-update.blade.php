@@ -105,7 +105,7 @@
                
             </div>
             
-            {{-- Pre Test Title and Description --}}
+            {{-- <!-- Pre Test Title and Description -->
             <div class="grid grid-cols-1 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                 <h2><b>Pre Test Title and Description</b></h2>
                 <div class="grid grid-cols-2 gap-4">
@@ -132,7 +132,7 @@
                 </div>
             </div>
 
-            {{-- Pre-Test Question --}}
+            <!-- Pre-Test Question -->
             <div class="grid grid-cols-1 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                 <h2><b>Pre Test Question</b></h2>
                 @foreach ($preTest as $index => $preQuestion)   
@@ -192,7 +192,7 @@
                     
             </div>
 
-            {{-- Post Test Title and Description --}}
+            <!-- Post Test Title and Description -->
             <div class="grid grid-cols-1 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                 <h2><b>Post Test Title and Description</b></h2>
                 <div class="grid grid-cols-2 gap-4">
@@ -219,8 +219,8 @@
                 </div>
             </div>
 
-             {{-- Post-Test Question --}}
-             <div class="grid grid-cols-1 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+            <!-- Post-Test Question -->
+            <div class="grid grid-cols-1 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                 <h2><b>Post Test Question</b></h2>
                 @foreach ($postTest as $index => $postQuestion)   
                     <div class="w-full col-span-3">
@@ -277,7 +277,7 @@
                             Add Post Test Question</button>
                     </div>
                     
-            </div>
+            </div> --}}
 
             {{-- Host and visible to list --}}
             <div class="grid grid-cols-2 gap-4  p-6 mt-5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">

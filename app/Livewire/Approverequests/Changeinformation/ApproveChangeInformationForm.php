@@ -7,6 +7,7 @@ use App\Models\Employee;
 use Livewire\WithFileUploads;
 use App\Models\ChangeInformation;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveChangeInformationForm extends Component
 {
@@ -43,8 +44,14 @@ class ApproveChangeInformationForm extends Component
 
     public function mount($index){
         // $employee_id = auth()->user()->employee_id;
-        $employee = ChangeInformation::findOrFail($index);
-        $this->index = $index;
+        // $this->index = $index;
+        try {
+            $this->index = $index;
+            $employee = ChangeInformation::findOrFail($index);
+            $this->authorize('update', [$employee, 'Approve']);
+        } catch (AuthorizationException $e) {
+            abort(404);
+        }
 
         // Employee Information
         $this->first_name = $employee->first_name;
