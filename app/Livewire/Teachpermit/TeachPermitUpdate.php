@@ -139,7 +139,16 @@ class TeachPermitUpdate extends Component
 
     public function removeSubjectLoad($index){
         unset($this->subjectLoad[$index]);
-        // $this->subjectLoad = array_values($this->subjectLoad);
+        $this->subjectLoad = array_values($this->subjectLoad);
+        $this->dispatch('update-subject-load', [json_encode($this->subjectLoad, true)]);
+        $sum = 0;
+        $index = 0;
+        foreach ($this->subjectLoad ?? [] as $load){
+            $sum += (int) $load['number_of_units'] ?? 1;
+            $index += 1;
+        }
+        $this->units_enrolled = $sum ;
+
     }
 
     public function removeImage($item){
@@ -183,7 +192,6 @@ class TeachPermitUpdate extends Component
         'total_load_plm' => 'required|numeric',
         'total_load_otherunivs' => 'required|numeric',
         'total_aggregate_load' => 'required|numeric',
-        'applicant_signature' => 'required|mimes:jpg,png,pdf',
     ];
 
     protected $validationAttributes = [
@@ -200,6 +208,8 @@ class TeachPermitUpdate extends Component
     ];
     
     public function submit(){
+
+        // dd($this->getErrorBag());
 
         $loggedInUser = auth()->user();
         $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
@@ -318,10 +328,6 @@ class TeachPermitUpdate extends Component
 
         $properties = [
             'applicant_signature' => 'required|mimes:jpg,png|extensions:jpg,png',
-            // 'signature_of_head_office' => 'file|mimes:jpg,png|extensions:jpg,png',
-            // 'signature_of_human_resource' => 'file|mimes:jpg,png|extensions:jpg,png',
-            // 'signature_of_vp_for_academic_affair' => 'file|mimes:jpg,png|extensions:jpg,png',
-            // 'signature_of_university_president' => 'file|mimes:jpg,png|extensions:jpg,png',
         ];
         
         // Iterate over the properties

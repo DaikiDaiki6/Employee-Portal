@@ -36,13 +36,12 @@
                     <div class="block w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                             {{-- Application Date --}}
-
                             <div class="grid min-[1000px]:grid-cols-2  col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                 <div class="">
                                     <label for="application_date"
                                         class="block mb-2 text-sm  font-medium text-gray-900 dark:text-white">Date of Filling<span class="text-red-600">*</span></label>
                                     <input type="date" wire:model="application_date" 
-                                        class="bg-gray-50 border min-[600px]:w-1/3 min-[900px]:w-1/3 min-[1150px]:w-1/4 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        class="bg-gray-50 border w-auto border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                          required disabled>
                                 </div>
                             </div>
@@ -254,6 +253,24 @@
                                         $ctr += 1;
                                     @endphp
                                 @endforeach
+
+                                <script>
+                                    document.addEventListener('livewire:init', () => {
+                                        Livewire.on('update-subject-load', (data) => {
+                                            // Parse the JSON data into a JavaScript array
+                                            const dataArray = JSON.parse(data);
+                                
+                                            // Iterate over the array elements
+                                            dataArray.forEach((element, index) => {
+                                                document.getElementById('subjectLoad_' + index + '_subject').value = element.subject;
+                                                document.getElementById('subjectLoad_' + index + '_days').value = element.days;
+                                                document.getElementById('subjectLoad_' + index + '_start_time').value = element.start_time;
+                                                document.getElementById('subjectLoad_' + index + '_end_time').value = element.end_time;
+                                                document.getElementById('subjectLoad_' + index + '_number_of_units').value = element.number_of_units;
+                                            });
+                                        });
+                                    });
+                                </script>
                                 <div class="flex justify-center">
                                     <button type="button" name="add" wire:click.prevent="addSubjectLoad" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Subject Load</button>
                                 </div>

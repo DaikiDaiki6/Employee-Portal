@@ -42,7 +42,7 @@
                                     <label for="application_date"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Filling<span class="text-red-600">*</span></label>
                                     <input type="date" wire:model="application_date" 
-                                        class="bg-gray-50 border min-[600px]:w-1/3 min-[900px]:w-1/3 min-[1150px]:w-1/4  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        class="bg-gray-50 border w-auto  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                          required disabled>
                                 </div>
                             </div>
@@ -277,12 +277,12 @@
                                                         </div> 
                                                     @enderror
                                                 </div>
-                                                <div class="mt-5" id="subjectLoad_{{$index}}_number_of_units">
-                                                    <label for="subjectLoad_{{$index}}_number_of_units" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Subject <span class="text-red-600">*</span></label>
+                                                <div class="mt-5" id="subjectLoad_{{$index}}_number_of_units_container">
+                                                    <label for="subjectLoad_{{$index}}_number_of_units" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Number of units <span class="text-red-600">*</span></label>
                                                     <input type="text" rows="4" id="subjectLoad_{{$index}}_number_of_units" name="subjectLoad[{{$index}}][number_of_units]" wire:model.live="subjectLoad.{{$index}}.number_of_units" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                                                     @error('subjectLoad.' . $index . '.number_of_units')   
                                                         <div class="transition transform alert alert-danger text-sm"
-                                                                x-data x-init="document.getElementById('subjectLoad_{{$index}}_number_of_units').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subjectLoad_{{$index}}_number_of_units').focus();">
+                                                                x-data x-init="document.getElementById('subjectLoad_{{$index}}_number_of_units_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subjectLoad_{{$index}}_number_of_units_container').focus();">
                                                             <span class="text-red-500 text-xs "> {{$message}}</span>
                                                         </div> 
                                                     @enderror
@@ -294,6 +294,25 @@
                                         $ctr += 1;
                                     @endphp
                                     @endforeach
+
+                                    <script>
+                                        document.addEventListener('livewire:init', () => {
+                                            Livewire.on('update-subject-load', (data) => {
+                                                // Parse the JSON data into a JavaScript array
+                                                const dataArray = JSON.parse(data);
+                                    
+                                                // Iterate over the array elements
+                                                dataArray.forEach((element, index) => {
+                                                    document.getElementById('subjectLoad_' + index + '_subject').value = element.subject;
+                                                    document.getElementById('subjectLoad_' + index + '_days').value = element.days;
+                                                    document.getElementById('subjectLoad_' + index + '_start_time').value = element.start_time;
+                                                    document.getElementById('subjectLoad_' + index + '_end_time').value = element.end_time;
+                                                    document.getElementById('subjectLoad_' + index + '_number_of_units').value = element.number_of_units;
+                                                });
+                                            });
+                                        });
+                                    </script>
+
                                 <div class="flex justify-center">
                                     <button type="button" name="add" wire:click.prevent="addSubjectLoad" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Subject Load</button>
                                 </div>

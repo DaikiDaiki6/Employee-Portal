@@ -42,7 +42,7 @@
                                     <label for="application_date"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date of Filling<span class="text-red-600">*</span></label>
                                     <input type="date" wire:model="application_date" 
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        class="bg-gray-50 border w-auto border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                          required disabled>
                                 </div>
                             </div>
@@ -196,12 +196,15 @@
                             {{-- Subject Load --}}
                             <div class="grid grid-cols-1 col-span-3 p-6 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <h2><b>Subject Load</b></h2>
+                                @php
+                                    $ctr = 0;
+                                @endphp
                                 @foreach ($subjectLoad as $index => $load)
                                     <div class="grid grid-cols-5 col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <div class="col-span-5">
                                             <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
                                                 <li class="float-left mt-4 ml-5 float-bold text-gray-900 font-bold">
-                                                    <span>No. {{$index + 1 }}</span>
+                                                    <span>No. {{$ctr + 1 }}</span>
                                                 </li>
                                                 <li class="">
                                                     <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
@@ -287,7 +290,29 @@
                                             </div>
                                             </div>
                                         </div>
-                                    @endforeach
+                                        @php
+                                            $ctr += 1;
+                                        @endphp
+                                @endforeach
+
+                                <script>
+                                    document.addEventListener('livewire:init', () => {
+                                        Livewire.on('update-subject-load', (data) => {
+                                            // Parse the JSON data into a JavaScript array
+                                            const dataArray = JSON.parse(data);
+                                
+                                            // Iterate over the array elements
+                                            dataArray.forEach((element, index) => {
+                                                document.getElementById('subjectLoad_' + index + '_subject').value = element.subject;
+                                                document.getElementById('subjectLoad_' + index + '_days').value = element.days;
+                                                document.getElementById('subjectLoad_' + index + '_start_time').value = element.start_time;
+                                                document.getElementById('subjectLoad_' + index + '_end_time').value = element.end_time;
+                                                document.getElementById('subjectLoad_' + index + '_number_of_units').value = element.number_of_units;
+                                            });
+                                        });
+                                    });
+                                </script>
+                                
                                 <div class="flex justify-center">
                                     <button type="button" name="add" wire:click.prevent="addSubjectLoad" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Subject Load</button>
                                 </div>
@@ -330,27 +355,45 @@
                                             <div class="w-full">
                                                 <label for="total_load_plm"
                                                     class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Total Load At PLM <span class="text-red-600">*</span></label>
-                                                <input type="text" name="total_load_plm" id="total_load_plm"  wire:model.blur="total_load_plm"
+                                                <input type="number" name="total_load_plm" id="total_load_plm"  wire:model.blur="total_load_plm"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" >
+                                                @error('total_load_plm')   
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('total_load_plm').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('total_load_plm').focus();">
+                                                        <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                    </div> 
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class=" ">
                                             <div class="w-full">
                                                 <label for="total_load_otherunivs"
                                                     class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Total Load in Other Universities <span class="text-red-600">*</span></label>
-                                                <input type="text" name="total_load_otherunivs" id="total_load_otherunivs"  wire:model.blur="total_load_otherunivs"
+                                                <input type="number" name="total_load_otherunivs" id="total_load_otherunivs"  wire:model.blur="total_load_otherunivs"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                      required="" >
+                                                @error('total_load_otherunivs')   
+                                                     <div class="transition transform alert alert-danger text-sm"
+                                                         x-data x-init="document.getElementById('total_load_otherunivs').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('total_load_otherunivs').focus();">
+                                                         <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                     </div> 
+                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="">
                                             <div class="w-full">
                                                 <label for="total_aggregate_load"
                                                     class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Total Aggregate Load (including ETUs) <span class="text-red-600">*</span></label>
-                                                <input type="text" name="total_aggregate_load" id="total_aggregate_load"  wire:model.blur="total_aggregate_load"
+                                                <input type="number" name="total_aggregate_load" id="total_aggregate_load"  wire:model.blur="total_aggregate_load"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" >
+                                                @error('total_aggregate_load')   
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('total_aggregate_load').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('total_aggregate_load').focus();">
+                                                        <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                    </div> 
+                                                @enderror
                                             </div>
                                         </div>
                                        

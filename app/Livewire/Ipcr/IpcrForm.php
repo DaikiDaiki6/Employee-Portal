@@ -88,14 +88,40 @@ class IpcrForm extends Component
         $this->coreFunctions = array_values($this->coreFunctions);
         $this->dispatch('update-core-functions', [json_encode($this->coreFunctions, true)]);
 
+        $sum = 0;
+        $indexCount = count($this->coreFunctions); // Count the number of items in the array
+        if ($indexCount > 0) { // Check if there are items in the array
+            foreach ($this->coreFunctions ?? [] as $core_function){
+                $sum += (int) $core_function['Q'] ?? 1;
+                $sum += (int) $core_function['E'] ?? 1;
+                $sum += (int) $core_function['T'] ?? 1;
+                $sum += (int) $core_function['A'] ?? 1;
+            }
+            $this->core_rating = $sum / ($indexCount * 4); // Perform division if $indexCount is not zero
+        } else {
+            $this->core_rating = 0; // Set to zero if $indexCount is zero to avoid division by zero
+        }
+
     }
 
     public function removeSupportiveFunction($index){
         unset($this->supportiveFunctions[$index]);
         $this->supportiveFunctions = array_values($this->supportiveFunctions);
         $this->dispatch('update-supportive-functions', [json_encode($this->supportiveFunctions, true)]);
-
-
+        
+        $sum = 0;
+        $indexCount = count($this->supportiveFunctions); // Count the number of items in the array
+        if ($indexCount > 0) { // Check if there are items in the array
+            foreach ($this->supportiveFunctions ?? [] as $supp_function){
+                $sum += (int) $supp_function['Q'] ?? 1;
+                $sum += (int) $supp_function['E'] ?? 1;
+                $sum += (int) $supp_function['T'] ?? 1;
+                $sum += (int) $supp_function['A'] ?? 1;
+            }
+            $this->supp_admin_rating = $sum / ($indexCount * 4); // Perform division if $indexCount is not zero
+        } else {
+            $this->supp_admin_rating = 0; // Set to zero if $indexCount is zero to avoid division by zero
+        }
     }
 
     

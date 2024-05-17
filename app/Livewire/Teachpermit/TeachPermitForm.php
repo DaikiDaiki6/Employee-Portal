@@ -71,7 +71,16 @@ class TeachPermitForm extends Component
 
     public function removeSubjectLoad($index){
         unset($this->subjectLoad[$index]);
-        // $this->subjectLoad = array_values($this->subjectLoad);
+        $this->subjectLoad = array_values($this->subjectLoad);
+        $this->dispatch('update-subject-load', [json_encode($this->subjectLoad, true)]);
+        
+        $sum = 0;
+        $index = 0;
+        foreach ($this->subjectLoad ?? [] as $load){
+            $sum += (int) $load['number_of_units'] ?? 1;
+            $index += 1;
+        }
+        $this->units_enrolled = $sum ;
     }
 
     public function removeImage($item){

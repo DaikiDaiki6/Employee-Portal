@@ -10,6 +10,7 @@ export default {
       width: {
         '1/3': '33%',
         '1/2': '50%',
+        '1/4' : '25%',
         sm: '480px',
         md: '768px',
         lg: '976px',
@@ -17,7 +18,9 @@ export default {
       },
       screens: {
         '450px': '450px',
+        '600px' : '600px',
         '902px': '902px',
+        '1150px' : '1150px',
       },
     },
   },
