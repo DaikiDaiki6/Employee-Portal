@@ -76,9 +76,6 @@ class ChangeInformation extends Component
     }
 
     public function removeArrayImage($index, $request, $insideIndex = null){
-        // dump($this->cover_memo);
-            // dump($this->$requestName, $index, $insideIndex);
-        // dd($index, $request, $insideIndex);
 
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
@@ -86,9 +83,6 @@ class ChangeInformation extends Component
         if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
             unset($this->$requestName[$index][$insideIndex]);
             $this->$requestName[$index] = array_values($this->$requestName[$index]);
-            // $this->$requestName[$index] = array_filter($this->$requestName[$index], function($value) {
-            //     return $value !== null;
-            // });
             if(empty($this->$requestName[$index])){
                 unset($this->$requestName[$index]);
             }
@@ -101,7 +95,7 @@ class ChangeInformation extends Component
             });
             
         }
-        // dump($this->cover_memo);
+
     }
 
     public function getImage($item){
@@ -123,7 +117,8 @@ class ChangeInformation extends Component
 
     public function removeHistory($index){
         unset($this->employeeHistory[$index]);
-        // $this->subjectLoad = array_values($this->subjectLoad);
+        $this->employeeHistory = array_values($this->employeeHistory);
+        $this->dispatch('update-employee-history', [json_encode($this->employeeHistory, true)]);
     }
 
 

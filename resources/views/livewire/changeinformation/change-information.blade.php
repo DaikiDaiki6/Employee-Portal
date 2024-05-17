@@ -198,10 +198,10 @@
                                     <div class="mt-5 ">
                                         <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                             Position <span class="text-red-600">*</span></label>
-                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
                                         @error('employeeHistory.' . $index . '.prev_position')   
                                             <div class="transition transform alert alert-danger text-sm"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_position').focus();">
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
                                                 <span class="text-red-500 text-xs "> {{$message}}</span>
                                             </div> 
                                         @enderror
@@ -238,6 +238,23 @@
                     @endphp
                     @endforeach
                         @endif
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-employee-history', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+                        
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('employeeHistory_' + index + '_name_of_company').value = element.name_of_company;
+                                        document.getElementById('employeeHistory_' + index + '_prev_position').value = element.prev_position;
+                                        document.getElementById('employeeHistory_' + index + '_start_date').value = element.start_date;
+                                        document.getElementById('employeeHistory_' + index + '_end_date').value = element.end_date;
+                                    });
+                                });
+                            });
+                        </script>
                         <div class="flex justify-center">
                             <button type="button" name="add" wire:click.prevent="addEmployeeHistory" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add a History</button>
                         </div>
