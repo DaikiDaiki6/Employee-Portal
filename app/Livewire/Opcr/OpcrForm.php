@@ -51,12 +51,16 @@ class OpcrForm extends Component
 
     public function removeCoreFunction($index){
         unset($this->coreFunctions[$index]);
-        // $this->coreFunctions = array_values($this->coreFunctions);
+        $this->coreFunctions = array_values($this->coreFunctions);
+        $this->dispatch('update-core-functions', [json_encode($this->coreFunctions, true)]);
+
     }
 
     public function removeSupportiveFunction($index){
         unset($this->supportiveFunctions[$index]);
-        // $this->supportiveFunctions = array_values($this->supportiveFunctions);
+        $this->supportiveFunctions = array_values($this->supportiveFunctions);
+        $this->dispatch('update-supportive-functions', [json_encode($this->supportiveFunctions, true)]);
+
     }
 
 
@@ -194,13 +198,17 @@ class OpcrForm extends Component
     public function submit(){
 
         $this->validate();
+
         $loggedInUser = auth()->user();
+        $department_id = Employee::select('department_id')
+                ->where('employee_id', $loggedInUser->employee_id)
+                ->first();
         $opcr = new Opcr();
         $opcr->employee_id = $loggedInUser->employee_id;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
-        // $opcr->department_id = $this->department_id;
-        $opcr->department_head = $this->department_head;
+        $opcr->department_id = $department_id;
+        // $opcr->department_head = $this->department_head;
         $opcr->start_period = $this->start_period;
         $opcr->end_period = $this->end_period;
         $opcr->ratee = $this->ratee;

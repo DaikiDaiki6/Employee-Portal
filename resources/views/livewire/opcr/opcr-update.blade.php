@@ -34,16 +34,7 @@
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
-                    @if (session()->has('message'))
-                    <div class="alert alert-success">
-                        {{ session('message') }}
-                    </div>
-                    @endif
-                    <div x-data="{ errors: {{ json_encode(array_keys($errors->getMessages())) }} }">
-                        <template x-for="field in errors">
-                            <div x-ref="field" x-show="field === Object.keys(errors)[0]"></div>
-                        </template>
-                    </div>
+                    
                     <div
                         class="block w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
@@ -390,6 +381,32 @@
                                 $coreCtr += 1;
                             @endphp
                         @endforeach
+
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-core-functions', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+                        
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('coreFunctions_' + index + '_output').value = element.output;
+                                        document.getElementById('coreFunctions_' + index + '_indicator').value = element.indicator;
+                                        document.getElementById('coreFunctions_' + index + '_accomp').value = element.accomp;
+                                        document.getElementById('coreFunctions_' + index + '_Q').value = element.Q;
+                                        document.getElementById('coreFunctions_' + index + '_E').value = element.E;
+                                        document.getElementById('coreFunctions_' + index + '_T').value = element.T;
+                                        document.getElementById('coreFunctions_' + index + '_A').value = element.A;
+                                        document.getElementById('coreFunctions_' + index + '_budget').value = element.budget;
+                                        document.getElementById('coreFunctions_' + index + '_weight').value = element.weight;
+                                        document.getElementById('coreFunctions_' + index + '_personsConcerned').value = element.personsConcerned;
+                                        document.getElementById('coreFunctions_' + index + '_remark').value = element.remark;
+                                    });
+                                });
+                            });
+                        </script>
+
                             <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addCoreFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Core Function</button>
                             </div>
@@ -525,7 +542,7 @@
                                                         <div class="w-full ">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                            <select  id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
+                                                            <select  id="supportiveFunctions_{{$index}}_T" wire:model.change="supportiveFunctions.{{$index}}.T"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -571,7 +588,7 @@
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-3 min-[1150px]:col-span-5">
                                             @if($opcr_type == "rated")
                                                 <div>
-                                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget <span class="text-red-600">*</span></label>
+                                                    <label for="supportiveFunctions_{{$index}}_budget" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget <span class="text-red-600">*</span></label>
                                                     <input type="number" id="supportiveFunctions_{{$index}}_budget" wire:model.blur="supportiveFunctions.{{$index}}.budget" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                     @error('supportiveFunctions.' . $index. '.budget')   
                                                         <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_budget').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_budget').focus();">
@@ -627,6 +644,32 @@
                             $supportCtr += 1;
                         @endphp
                         @endforeach
+
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-supportive-functions', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+                        
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('supportiveFunctions_' + index + '_output').value = element.output;
+                                        document.getElementById('supportiveFunctions_' + index + '_indicator').value = element.indicator;
+                                        document.getElementById('supportiveFunctions_' + index + '_accomp').value = element.accomp;
+                                        document.getElementById('supportiveFunctions_' + index + '_Q').value = element.Q;
+                                        document.getElementById('supportiveFunctions_' + index + '_E').value = element.E;
+                                        document.getElementById('supportiveFunctions_' + index + '_T').value = element.T;
+                                        document.getElementById('supportiveFunctions_' + index + '_A').value = element.A;
+                                        document.getElementById('supportiveFunctions_' + index + '_budget').value = element.budget;
+                                        document.getElementById('supportiveFunctions_' + index + '_weight').value = element.weight;
+                                        document.getElementById('supportiveFunctions_' + index + '_personsConcerned').value = element.personsConcerned;
+                                        document.getElementById('supportiveFunctions_' + index + '_remark').value = element.remark;
+                                    });
+                                });
+                            });
+                        </script>
+
                             <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addSupportiveFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Support / Administrative Function</button>
                             

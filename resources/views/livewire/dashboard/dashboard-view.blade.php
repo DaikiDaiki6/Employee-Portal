@@ -1,10 +1,10 @@
 {{-- <div class=" p-4 sm:ml-64" style="margin-top: 55px"> --}}
 <div class="grid grid-cols-3 gap-4"> 
     <style>
-        .swiper {
-        max-width: 1600px;*/
-        max-width: 100px;
-        width: 100%;
+    .swiper {
+        /* max-width: 1600px;*/ */
+        /* max-width: 100px; */
+        width: 1700px;
         height: 100%; 
     }
     .swiper-wrapper{
@@ -42,27 +42,28 @@
      <span class="text-blue-500 font-semibold items-center ml-3"> No Events Available. Stay tuned for Future Events</span>
   </div>
   @else
-    <div class="swiper w-full h-full object-contain">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper p-2" >
-            @foreach ($activities as $activity)
-                <div class="swiper-slide" data-swiper-autoplay="2000">
-                    <a href="{{route('ActivitiesView', ['index' => $activity->id])}}"><img src="{{ asset('storage/' . $activity->poster) }}" class="h-full w-full object-cover" alt="..."></a>
-                </div>
-            @endforeach
-        </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination text-bold"></div>
-      
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev absolute top-0 start-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
-        <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center  h-full px-4 cursor-pointer group focus:outline-none"></div> 
-        
-        {{-- <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div> --}}
-      
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
+  <div class="swiper w-full h-full">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper p-2">
+        @foreach ($activities as $activity)
+            <div class="swiper-slide w-full" data-swiper-autoplay="2000">
+                <a href="{{route('ActivitiesView', ['index' => $activity->id])}}">
+                    <img src="{{ asset('storage/' . $activity->poster) }}" class="h-full w-full object-cover" alt="...">
+                </a>
+            </div>
+        @endforeach
     </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination text-bold"></div>
+  
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div> 
+    <div class="swiper-button-next absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"></div> 
+  
+    <!-- If we need scrollbar -->
+    <div class="swiper-scrollbar"></div>
+</div>
+
   @endif
 </div>
 

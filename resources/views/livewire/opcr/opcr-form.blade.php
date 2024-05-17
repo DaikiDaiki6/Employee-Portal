@@ -29,7 +29,7 @@
     </nav> 
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Add a new OPCR</h2>
     <br>
-    <section class="bg-white dark:bg-gray-900 pb-24 px-8 rounded-lg">
+    <section class="bg-white dark:bg-gray-900 px-8 rounded-lg">
         <div class=" px-1 mx-auto  py-8">
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
@@ -283,7 +283,7 @@
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-3 min-[1150px]:col-span-5 ">
                                             @if($opcr_type == "rated")
                                                 <div>
-                                                    <label for="message"
+                                                    <label for="coreFunctions_{{$index}}_budget"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget <span class="text-red-600">*</span></label>
                                                     <input type="number" id="coreFunctions_{{$index}}_budget" wire:model.blur="coreFunctions.{{$index}}.budget"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                     @error('coreFunctions.' . $index. '.budget')   
@@ -295,7 +295,7 @@
                                                 </div>
                                             @endif
                                             <div>
-                                                <label for="message"
+                                                <label for="coreFunctions_{{$index}}_weight"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight (%) <span class="text-red-600">*</span></label>
                                                 <input type="number" id="coreFunctions_{{$index}}_weight" wire:model.blur="coreFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('coreFunctions.' . $index. '.weight')   
@@ -307,7 +307,7 @@
                                             </div>
                                             @if($opcr_type == "rated")
                                             <div>
-                                                <label for="message"
+                                                <label for="coreFunctions_{{$index}}_personsConcerned"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
                                                 <textarea type="text" id="coreFunctions_{{$index}}_personsConcerned" wire:model.blur="coreFunctions.{{$index}}.personsConcerned"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                                 @error('coreFunctions.' . $index . '.personsConcerned')   
@@ -318,7 +318,7 @@
                                                 @enderror
                                             </div>
                                             <div>
-                                                <label for="message"
+                                                <label for="coreFunctions_{{$index}}_remark"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
                                                 <textarea type="text" id="coreFunctions_{{$index}}_remark" wire:model.blur="coreFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                                 @error('coreFunctions.' . $index . '.remark')   
@@ -348,6 +348,32 @@
                             $coreCtr += 1;
                         @endphp
                         @endforeach
+
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-core-functions', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+                        
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('coreFunctions_' + index + '_output').value = element.output;
+                                        document.getElementById('coreFunctions_' + index + '_indicator').value = element.indicator;
+                                        document.getElementById('coreFunctions_' + index + '_accomp').value = element.accomp;
+                                        document.getElementById('coreFunctions_' + index + '_Q').value = element.Q;
+                                        document.getElementById('coreFunctions_' + index + '_E').value = element.E;
+                                        document.getElementById('coreFunctions_' + index + '_T').value = element.T;
+                                        document.getElementById('coreFunctions_' + index + '_A').value = element.A;
+                                        document.getElementById('coreFunctions_' + index + '_budget').value = element.budget;
+                                        document.getElementById('coreFunctions_' + index + '_weight').value = element.weight;
+                                        document.getElementById('coreFunctions_' + index + '_personsConcerned').value = element.personsConcerned;
+                                        document.getElementById('coreFunctions_' + index + '_remark').value = element.remark;
+
+                                    });
+                                });
+                            });
+                        </script>
                               
                       
                             <div class="flex justify-center">
@@ -444,7 +470,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Q<span class="text-red-600">*</span></label>
-                                                            <select id="smtpQ" id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
+                                                            <select id="supportiveFunctions_{{$index}}_Q" wire:model.change="supportiveFunctions.{{$index}}.Q"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected >Pick</option>
                                                                 <option value="5">5</option>
@@ -465,7 +491,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E<span class="text-red-600">*</span></label>
-                                                            <select id="smtpE" id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
+                                                            <select id="supportiveFunctions_{{$index}}_E" wire:model.change="supportiveFunctions.{{$index}}.E"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -485,7 +511,7 @@
                                                         <div class="w-full ">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">T<span class="text-red-600">*</span></label>
-                                                            <select id="smtpT" id="supportiveFunctions[{{$index}}][T]" wire:model.change="supportiveFunctions.{{$index}}.T"
+                                                            <select id="supportiveFunctions_{{$index}}_T" wire:model.change="supportiveFunctions.{{$index}}.T"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -505,7 +531,7 @@
                                                         <div class="w-full">
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">A<span class="text-red-600">*</span></label>
-                                                            <select id="smtpA" id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
+                                                            <select id="supportiveFunctions_{{$index}}_A" wire:model.change="supportiveFunctions.{{$index}}.A"
                                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option selected>Pick</option>
                                                                 <option value="5">5</option>
@@ -531,7 +557,7 @@
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-3 min-[1150px]:col-span-5">
                                             @if($opcr_type == "rated")
                                                 <div>
-                                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget <span class="text-red-600">*</span></label>
+                                                    <label for="supportiveFunctions_{{$index}}_budget" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget <span class="text-red-600">*</span></label>
                                                     <input type="number" id="supportiveFunctions_{{$index}}_budget" wire:model.blur="supportiveFunctions.{{$index}}.budget" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                     @error('supportiveFunctions.' . $index. '.budget')   
                                                         <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_budget').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_budget').focus();">
@@ -541,7 +567,7 @@
                                                 </div>
                                             @endif
                                             <div>
-                                                <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight (%) <span class="text-red-600">*</span></label>
+                                                <label for="supportiveFunctions_{{$index}}_weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight (%) <span class="text-red-600">*</span></label>
                                                 <input type="number" id="supportiveFunctions_{{$index}}_weight" wire:model.blur="supportiveFunctions.{{$index}}.weight" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('supportiveFunctions.' . $index. '.weight')   
                                                     <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_weight').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_weight').focus();">
@@ -551,7 +577,7 @@
                                             </div>
                                             @if($opcr_type == "rated")
                                                 <div>
-                                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
+                                                    <label for="supportiveFunctions_{{$index}}_personsConcerned" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
                                                     <textarea type="text" id="supportiveFunctions_{{$index}}_personsConcerned" wire:model.blur="supportiveFunctions.{{$index}}.personsConcerned" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                                     @error('supportiveFunctions.' . $index . '.personsConcerned')   
                                                         <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_personsConcerned').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_personsConcerned').focus();">
@@ -560,7 +586,7 @@
                                                     @enderror
                                                 </div>
                                                 <div>
-                                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
+                                                    <label for="supportiveFunctions_{{$index}}_remark" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
                                                     <textarea type="text" id="supportiveFunctions_{{$index}}_remark" wire:model.blur="supportiveFunctions.{{$index}}.remark" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                                     @error('supportiveFunctions.' . $index . '.remark')   
                                                         <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_remark').focus();">
@@ -570,7 +596,7 @@
                                                 </div>
                                             @else
                                                 <div>
-                                                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
+                                                    <label for="supportiveFunctions_{{$index}}_remark" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
                                                     <input type="text" id="supportiveFunctions_{{$index}}_remark" wire:model.blur="supportiveFunctions.{{$index}}.remark" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                     @error('supportiveFunctions.' . $index . '.remark')   
                                                         <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_remark').focus();">
@@ -587,6 +613,33 @@
                             $supportCtr += 1;
                         @endphp
                         @endforeach
+
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-supportive-functions', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+                        
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('supportiveFunctions_' + index + '_output').value = element.output;
+                                        document.getElementById('supportiveFunctions_' + index + '_indicator').value = element.indicator;
+                                        document.getElementById('supportiveFunctions_' + index + '_accomp').value = element.accomp;
+                                        document.getElementById('supportiveFunctions_' + index + '_Q').value = element.Q;
+                                        document.getElementById('supportiveFunctions_' + index + '_E').value = element.E;
+                                        document.getElementById('supportiveFunctions_' + index + '_T').value = element.T;
+                                        document.getElementById('supportiveFunctions_' + index + '_A').value = element.A;
+                                        document.getElementById('supportiveFunctions_' + index + '_budget').value = element.budget;
+                                        document.getElementById('supportiveFunctions_' + index + '_weight').value = element.weight;
+                                        document.getElementById('supportiveFunctions_' + index + '_personsConcerned').value = element.personsConcerned;
+                                        document.getElementById('supportiveFunctions_' + index + '_remark').value = element.remark;
+                                    
+                                    });
+                                });
+                            });
+                        </script>
+
                             <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addSupportiveFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Support / Administrative Function</button>
                             

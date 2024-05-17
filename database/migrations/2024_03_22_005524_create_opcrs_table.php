@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('start_period');
             $table->date('end_period');
             $table->string('ratee');
-            $table->string('department_head');
+            // $table->string('department_head');
             $table->json('core_functions');
             $table->float('core_rating');
             $table->json('supp_admin_functions');
