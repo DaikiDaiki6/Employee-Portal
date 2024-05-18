@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('part_time_teaching_services')->nullable();
             $table->string('milc_certification')->nullable();
             $table->string('certificate_of_no_pending_administrative_case')->nullable();
-            $table->string('others')->nullable();
+            $table->longText('other_documents')->nullable();
             
             $table->timestamps();
         });

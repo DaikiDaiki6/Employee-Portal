@@ -327,7 +327,7 @@ class TeachPermitUpdate extends Component
 
 
         $properties = [
-            'applicant_signature' => 'required|mimes:jpg,png|extensions:jpg,png',
+            'applicant_signature' => 'required|mimes:jpg,png|extensions:jpg,png|max:5120',
         ];
         
         // Iterate over the properties

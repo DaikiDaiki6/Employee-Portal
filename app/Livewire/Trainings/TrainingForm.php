@@ -59,18 +59,18 @@ class TrainingForm extends Component
         'training_title' => 'required|max:150',
         'training_information' => 'required|max:1024',
         'training_photo' => 'required|mimes:jpg,png|extensions:jpg,png',
-        'pre_test_title' => 'required|max:150',
-        'post_test_title' => 'required|max:150',
-        'preTest' => 'required|array|min:1|max:100',
-        'preTest.*.question'  => 'required|required_with:preTest.*.answer|min:5|max:1024',
-        'preTest.*.answer'  => 'required|required_with:preTest.*.question|min:5|max:1024',
-        'postTest' => 'required|array|min:1|max:100',
-        'postTest.*.question'  => 'required|required_with:postTest.*.answer|min:5|max:1024',
-        'postTest.*.answer'  => 'required|required_with:postTest.*.question|min:5|max:1024',
-        'pre_test_description' => 'required|max:1024',
-        'post_test_description' => 'required|max:1024',
+        // 'pre_test_title' => 'required|max:150',
+        // 'post_test_title' => 'required|max:150',
+        // 'preTest' => 'required|array|min:1|max:100',
+        // 'preTest.*.question'  => 'required|required_with:preTest.*.answer|min:5|max:1024',
+        // 'preTest.*.answer'  => 'required|required_with:preTest.*.question|min:5|max:1024',
+        // 'postTest' => 'required|array|min:1|max:100',
+        // 'postTest.*.question'  => 'required|required_with:postTest.*.answer|min:5|max:1024',
+        // 'postTest.*.answer'  => 'required|required_with:postTest.*.question|min:5|max:1024',
+        // 'pre_test_description' => 'required|max:1024',
+        // 'post_test_description' => 'required|max:1024',
         'is_featured' => 'required|boolean',
-        'host' => 'required|in:in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
+        'host' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
         'visible_to_list' => 'required|array',
         'visible_to_list.*' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
     ];
@@ -83,43 +83,38 @@ class TrainingForm extends Component
     ];
 
     public function submit(){
-        // dd($this->is_featured);
-        // dd($this->preTest);
-        // if($this->host){
-        //     $this->host = "College of Information System and Technology Management";
-        // }
         $this->validate();
         $trainingdata = new Training();
         $trainingdata->training_title = $this->training_title;
         $trainingdata->training_information = $this->training_information;
-        $trainingdata->pre_test_title = $this->pre_test_title;
-        $trainingdata->post_test_title = $this->post_test_title;
-        $trainingdata->pre_test_description = $this->pre_test_description;
-        $trainingdata->post_test_description = $this->post_test_description;
+        // $trainingdata->pre_test_title = $this->pre_test_title;
+        // $trainingdata->post_test_title = $this->post_test_title;
+        // $trainingdata->pre_test_description = $this->pre_test_description;
+        // $trainingdata->post_test_description = $this->post_test_description;
         $trainingdata->host = $this->host;
         $trainingdata->is_featured = $this->is_featured;
         $trainingdata->visible_to_list = $this->visible_to_list;
 
-        foreach($this->preTest as $data){
-            $jsonPreTestData[] = [
-                'question' => $data['question'],
-                'answer' => $data['answer'],
-            ];
-        }
+        // foreach($this->preTest as $data){
+        //     $jsonPreTestData[] = [
+        //         'question' => $data['question'],
+        //         'answer' => $data['answer'],
+        //     ];
+        // }
 
-        foreach($this->postTest as $data){
-            $jsonPostTestData[] = [
-                'question' => $data['question'],
-                'answer' => $data['answer'],
-            ];
-        }
+        // foreach($this->postTest as $data){
+        //     $jsonPostTestData[] = [
+        //         'question' => $data['question'],
+        //         'answer' => $data['answer'],
+        //     ];
+        // }
 
-        $jsonPreTestData = json_encode($jsonPreTestData);
-        $jsonPostTestData = json_encode($jsonPostTestData);
+        // $jsonPreTestData = json_encode($jsonPreTestData);
+        // $jsonPostTestData = json_encode($jsonPostTestData);
 
 
-        $trainingdata->pre_test_questions = $jsonPreTestData;
-        $trainingdata->post_test_questions = $jsonPostTestData;
+        // $trainingdata->pre_test_questions = $jsonPreTestData;
+        // $trainingdata->post_test_questions = $jsonPostTestData;
 
         $trainingdata->training_photo = $this->training_photo->store('photos/trainings/training_photos', 'public');
 

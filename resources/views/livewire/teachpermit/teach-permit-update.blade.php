@@ -399,7 +399,7 @@
                                        
                                         
                                     </div>
-                                    <div class="grid grid-cols-1  p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                    <div id="applicant_signature_container" class="grid grid-cols-1  p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <label for="total_aggregate_load"
                                         class="block text-base font-medium text-gray-900 dark:text-white">I hereby abide by the applicable rules and regulations on study/educational priviliges. 
                                         I also certify in my honor to the correctness and completeness of the information provided herein.* <span class="text-red-600">*</span></label>
@@ -433,9 +433,9 @@
                                             @endif
                                             </label>
                                             @error('applicant_signature')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm mb-1"
+                                                    x-data x-init="document.getElementById('applicant_signature_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('applicant_signature_container').focus();">
+                                                    <span   span class="text-red-500 text-xs "> {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>

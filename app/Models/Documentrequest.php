@@ -27,6 +27,7 @@ class Documentrequest extends Model
     ];
 
     protected $casts = [
-        'requests' => 'json'
+        'requests' => 'json',
+        'other_documents' => 'json'
     ];
 }

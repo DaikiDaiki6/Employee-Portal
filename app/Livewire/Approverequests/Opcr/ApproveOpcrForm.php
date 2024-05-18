@@ -71,6 +71,10 @@ class ApproveOpcrForm extends Component
         $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function removeCoreFunction($index){
         // unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
@@ -262,8 +266,8 @@ class ApproveOpcrForm extends Component
 
 
         $properties = [
-            'assessed_by' => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png',
-            'final_rating_by' => 'required_with:final_rating_by_verdict|mimes:jpg,png|extensions:jpg,png',
+            'assessed_by' => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png|max:5120',
+            'final_rating_by' => 'required_with:final_rating_by_verdict|mimes:jpg,png|extensions:jpg,png|max:5120',
             // 'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
         ];
 

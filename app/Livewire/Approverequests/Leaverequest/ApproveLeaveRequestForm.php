@@ -157,6 +157,10 @@ class ApproveLeaveRequestForm extends Component
         return Storage::disk('local')->get($this->commutation_signature_of_appli);
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function updated($keys){
         // if(in_array($keys, ['inclusive_start_date', 'inclusive_end_date'])){
         //     $startDate = Carbon::parse($this->inclusive_start_date);
@@ -224,9 +228,9 @@ class ApproveLeaveRequestForm extends Component
         $targetUser = User::where('employee_id', $leaveRequest->employee_id)->first();
 
         $properties = [
-            'auth_off_sig_a' => 'required_with:human_resource_verdict_a||mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'auth_off_sig_b' => 'required_with:department_head_verdict|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'auth_off_sig_c_and_d' => 'required_with:human_resource_verdict_cd|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'auth_off_sig_a' => 'required_with:human_resource_verdict_a||mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+            'auth_off_sig_b' => 'required_with:department_head_verdict|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+            'auth_off_sig_c_and_d' => 'required_with:human_resource_verdict_cd|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
         ];
 
         // Iterate over the properties

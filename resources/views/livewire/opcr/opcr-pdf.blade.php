@@ -37,7 +37,7 @@
     @endphp
     @endforeach
     <p style="text-align: center;"><b> Office Performance Commitment and Review (OPCR)</b></p>    
-    <p> The <b><u>{{$opcrData['department_name']}}</u></b> commits to deliver and agree to be rated on the attainment of the following targets in accordance with the indicated measures for the period of <b><u>{{$opcrData['start_period']}}</u></b> to <b><u>{{$opcrData['end_period']}}  </u></b></p>
+    <p> The <b><u>{{$employees->department_name}}</u></b> commits to deliver and agree to be rated on the attainment of the following targets in accordance with the indicated measures for the period of <b><u>{{$opcrData['start_period']}}</u></b> to <b><u>{{$opcrData['end_period']}}  </u></b></p>
     <div style="display: flex; align-items: flex-start;">
         <!-- Ratings -->
         <div style="display: inline-block; border: 1px solid #000; padding: 8px;">

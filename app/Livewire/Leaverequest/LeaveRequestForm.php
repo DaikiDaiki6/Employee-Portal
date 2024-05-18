@@ -114,7 +114,7 @@ class LeaveRequestForm extends Component
         'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
         'num_of_days_work_days_applied' => 'required|lte:available_credits',
         'commutation' => 'required|in:not requested,requested',
-        'commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf'
+        'commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120'
     ];
 
     protected $validationAttributes = [

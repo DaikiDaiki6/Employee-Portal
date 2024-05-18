@@ -44,7 +44,7 @@ class ApproveRequestDocumentForm extends Component
     public $part_time_teaching_services;
     public $milc_certification;
     public $certificate_of_no_pending_administrative_case;
-    public $others;
+    public $other_documents = [];
 
 
     public function mount($index){
@@ -85,7 +85,7 @@ class ApproveRequestDocumentForm extends Component
         $this->part_time_teaching_services = $documentrequestdata->part_time_teaching_services;
         $this->milc_certification = $documentrequestdata->milc_certification;
         $this->certificate_of_no_pending_administrative_case = $documentrequestdata->certificate_of_no_pending_administrative_case;
-        $this->others = $documentrequestdata->others;
+        $this->other_documents = $documentrequestdata->other_documents ?? [];
 
     }
 
@@ -117,8 +117,28 @@ class ApproveRequestDocumentForm extends Component
         return Storage::disk('local')->get($this->certificate_of_no_pending_administrative_case);
     }
 
-    public function getOtherDocuments(){
-        return Storage::disk('local')->get($this->others);
+    // public function getOtherDocuments(){
+    //     return Storage::disk('local')->get($this->other_documents);
+    // }
+
+    public function getArrayImage($item, $index){
+        return Storage::disk('local')->get($this->$item[$index]);
+    }
+
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
+    public function removeArrayImage($index, $request, $insideIndex = null){
+        $requestName = str_replace(' ', '_', $request);
+        $requestName = strtolower($requestName);
+        if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
+            unset($this->$requestName[$index][$insideIndex]);
+        }
+        else{
+            unset($this->$requestName[$index]);
+            $this->$requestName =  array_values($this->$requestName);
+        }
     }
 
     public function submit(){
@@ -158,7 +178,6 @@ class ApproveRequestDocumentForm extends Component
             'part_time_teaching_services' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
             'milc_certification' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
             'certificate_of_no_pending_administrative_case' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
-            'others' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
         ];
         
         foreach ($properties as $propertyName => $validationRule) {
@@ -171,6 +190,48 @@ class ApproveRequestDocumentForm extends Component
                 }
                 $documentrequestdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/documentrequest/' . $propertyName, 'local') : '';
             }
+        }
+
+
+        // $properties = [
+        // ];
+
+
+        $fileFields = [
+            'other_documents' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
+        ];
+
+        foreach ($fileFields as $field => $validationRule) {
+            $fileNames = [];            
+            $ctrField = count($this->$field) - 1 ;
+            $ctr = 0;
+            foreach($this->$field as $index => $item){
+                $ctr += 1;
+                if(is_string($item)){
+                    $fileNames[] = $item;  
+                }
+                else if(is_array($item)){
+                    foreach($item as $file){
+                        if(is_string($item)){
+                            $fileNames[] = $file;
+                        }
+                        else{ 
+                            $this->validate([$field. '.*.*' => $validationRule]);
+                            $itemName = $file->store("photos/studypermit/$field", 'local');
+                            $fileNames[] = $itemName;
+                            if($documentrequestdata->$field != null && $ctr <= $ctrField){
+                                Storage::delete($documentrequestdata->$field[$index]);
+                            }
+                        }
+                    }
+                }
+                else{
+                    if (!is_array($item) && !is_string($item)) {
+                        $this->addError('cover_memo.' . $index, 'The' . $field . 'must be a string or an array.');
+                    }
+                }
+            }
+            $documentrequestdata->$field = $fileNames;
         }
 
         $this->js("alert('Document Request has been submitted!')"); 

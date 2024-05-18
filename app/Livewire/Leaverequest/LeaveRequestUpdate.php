@@ -188,7 +188,7 @@ class LeaveRequestUpdate extends Component
             $leaverequestdata->commutation_signature_of_appli= $this->commutation_signature_of_appli;
         } else{
             $leaverequestdata->commutation_signature_of_appli =  $this->commutation_signature_of_appli->store('photos/leaveRequest/discussed_with', 'local');
-            $this->validate(['commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf']);
+            $this->validate(['commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120']);
         }
         
         $this->js("alert('Leave Request Updated!')"); 

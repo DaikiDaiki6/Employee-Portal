@@ -493,7 +493,7 @@
                                             <div>
                                                 <label for="message"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight <span class="text-red-600">*</span></label>
-                                                <input type="text" id="supportiveFunctions_{{$index}}_weight" wire:model.blur="supportiveFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <input disabled type="text" id="supportiveFunctions_{{$index}}_weight" wire:model.blur="supportiveFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('supportiveFunctions.' . $index . '.weight')   
                                                     <div class="transition transform alert alert-danger text-sm"
                                                         x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_weight').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_weight').focus();" >
@@ -504,7 +504,7 @@
                                             <div>
                                                 <label for="message"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
-                                                <input type="text" id="supportiveFunctions_{{$index}}_remark" wire:model.blur="supportiveFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                <input  disabled type="text" id="supportiveFunctions_{{$index}}_remark" wire:model.blur="supportiveFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @error('supportiveFunctions.' . $index . '.remark')   
                                                     <div class="transition transform alert alert-danger text-sm"
                                                     x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_remark').focus();" >
@@ -687,7 +687,7 @@
                                          class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Assessed By <span class="text-red-600">*</span></label>
                                          <div class="grid grid-cols-1 items-center justify-center w-full">
                                              @if($assessed_by)
-                                             <label for="assessed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                             <label for="assessed_by" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                  @if(is_string($assessed_by) == True)
                                                      @php
                                                          $assessed_by = $this->getAssessedBy();
@@ -697,7 +697,12 @@
                                                      <img src="{{ $assessed_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                                  @endif
                                                  <input id="assessed_by" type="file" class="hidden" wire:model.live="assessed_by">
-                                             </label>
+                                                 <button type="button" wire:click="removeImage('assessed_by')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    </svg>
+                                                </button>
+                                            </label>
                                              @else
                                                  <label for="assessed_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                      <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -726,7 +731,7 @@
                                 </div>
                                 <div class="grid gap-4 sm:grid-cols-1 min-[738px]:grid-cols-2 sm:gap-6  p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                     <div class="grid grid-cols-2">
-                                        <div class="w-full grid grid-cols-1">
+                                        <div class="w-full grid grid-cols-1" id="final_rating_by_verdict_container">
                                             <label for="final_rating_by_verdict"
                                                 class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
                                                 <div class="w-full pl-4 items-start">
@@ -737,34 +742,34 @@
                                                 <label for="html" class="text-sm font-semibold">Declined</label><br>
                                                 @error('final_rating_by_verdict')
                                                     <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('final_rating_by_verdict').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_verdict').focus();" >
+                                                        x-data x-init="document.getElementById('final_rating_by_verdict_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_verdict_container').focus();" >
                                                             <span class="text-red-500 text-xs" > {{$message}}</span>
                                                     </div> 
                                                 @enderror   
                                                 </div>
                                         </div>
                                     <div class="grid grid-cols-1 w-full gap-4 pr-4">
-                                        <div>
+                                        <div id="final_rating_container">
                                             <label for="final_rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
                                             <input type="number" id="final_rating" name="final_rating" value={{$final_rating}}
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="{{$final_rating}}" disabled/>
                                             @error('final_rating')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('final_rating_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
-                                        <div class="w-full ">
+                                        <div class="w-full" id="final_rating_by_date_container">
                                             <label for="brand"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
                                             <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                             @error('final_rating_by_date')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('final_rating_by_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_date_container').focus();" >
+                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
@@ -772,10 +777,10 @@
                                     </div>
                                     <div>
                                         <label for="final_rating_by"
-                                                class="block text-sm font-medium text-gray-900 dark:text-white">Final Rating By<span class="text-red-600">*</span></label>
+                                                class="block text-sm mb-2 font-medium text-gray-900 dark:text-white">Final Rating By<span class="text-red-600">*</span></label>
                                         <div class="grid grid-cols-1 items-center justify-center w-full">
                                             @if($final_rating_by)
-                                            <label for="final_rating_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                            <label for="final_rating_by" class="relative flex flex-col  items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 @if(is_string($final_rating_by) == True)
                                                     @php
                                                         $final_rating_by = $this->getFinalRatingBy();
@@ -786,6 +791,11 @@
                                                     <img src="{{ $final_rating_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                                 @endif
                                                 <input id="final_rating_by" type="file" class="hidden" wire:model.live="final_rating_by">
+                                                <button type="button" wire:click="removeImage('final_rating_by')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    </svg>
+                                                </button>
                                             </label>
                                             @else
                                                 <label for="final_rating_by" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -812,9 +822,6 @@
                                 
                             </div>
                     </div>
-                    
-                   
-                  
                     <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
                             Submit IPCR
                     </button>

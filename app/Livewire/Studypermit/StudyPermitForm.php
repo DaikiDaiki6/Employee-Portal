@@ -97,6 +97,10 @@ class StudyPermitForm extends Component
         
     // }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function removeArrayImage($index, $request, $insideIndex = null){
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
@@ -163,11 +167,11 @@ class StudyPermitForm extends Component
         'end_period_cover' => 'required|after_or_equal:start_period_cover',
         'degree_prog_and_school' => 'required|min:10|max:500',
         'subjectLoad' => 'required|min:1',
-        'subjectLoad.*.subject' => 'required|min:2',
+        'subjectLoad.*.subject' => 'required|min:2|max:50',
         'subjectLoad.*.days' => 'required',
         'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
         'subjectLoad.*.end_time' => 'required|after_or_equal:subjectLoad.*.start_time',
-        'subjectLoad.*.number_of_units' => 'required|min:1',
+        'subjectLoad.*.number_of_units' => 'required|min:1|lte:12',
         'units_enrolled' => 'required|lte:study_available_units',
         'total_teaching_load' => 'required|numeric',
         'total_aggregate_load' => 'required|numeric',

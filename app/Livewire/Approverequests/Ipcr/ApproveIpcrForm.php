@@ -109,6 +109,10 @@ class ApproveIpcrForm extends Component
         $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function removeCoreFunction($index){
         // unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
@@ -235,8 +239,8 @@ class ApproveIpcrForm extends Component
         $targetUser = User::where('employee_id', $ipcr->employee_id)->first();
 
         $properties = [
-            'assessed_by'  => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png' ,
-            'final_rating_by'  => 'required_with:final_rating_by_verdict|mimes:jpg,png|extensions:jpg,png',
+            'assessed_by'  => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png|max:5120' ,
+            'final_rating_by'  => 'required_with:final_rating_by_verdict|mimes:jpg,png|extensions:jpg,png|max:5120',
             // 'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
         ];
         

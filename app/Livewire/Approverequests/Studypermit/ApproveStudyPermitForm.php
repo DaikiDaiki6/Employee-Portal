@@ -150,6 +150,7 @@ class ApproveStudyPermitForm extends Component
         return Storage::disk('local')->get($this->$item[$index]);
     }
 
+
     public function removeArrayImage($index, $request, $insideIndex = null){
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);

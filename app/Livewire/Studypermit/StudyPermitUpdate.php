@@ -175,37 +175,41 @@ class StudyPermitUpdate extends Component
         return Storage::disk('local')->get($this->$item[$index]);
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function removeArrayImage($index, $request, $insideIndex = null){
         // dump($this->cover_memo);
         $requestName = str_replace(' ', '_', $request);
         $requestName = strtolower($requestName);
         if(isset($this->$requestName[$index]) && is_array($this->$requestName[$index])){
             unset($this->$requestName[$index][$insideIndex]);
+            $this->$requestName =  array_values($this->$requestName);
         }
         else{
             unset($this->$requestName[$index]);
             $this->$requestName =  array_values($this->$requestName);
         }
-        // dump($this->cover_memo);
     }
 
     protected $rules = [
         'start_period_cover' => 'required|after_or_equal:application_date',
         'end_period_cover' => 'required|after_or_equal:start_period_cover',
-        'degree_prog_and_school' => 'required|min:20',
-        'subjectLoad.*.subject' => 'required|min:2',
+        'degree_prog_and_school' => 'required|min:10|max:500',
+        'subjectLoad.*.subject' => 'required|min:2|max:50',
         'subjectLoad.*.days' => 'required',
         'subjectLoad.*.start_time' => 'required|before_or_equal:subjectLoad.*.end_time',
         'subjectLoad.*.end_time' => 'required|after_or_equal:subjectLoad.*.start_time',
-        'subjectLoad.*.number_of_units' => 'required|min:1',
+        'subjectLoad.*.number_of_units' => 'required|min:1|lte:12',
         'units_enrolled' => 'required|lte:study_available_units',
         'total_teaching_load' => 'required|numeric',
         'total_aggregate_load' => 'required|numeric',
         'cover_memo' => 'required|array|min:1|max:3',
-        'cover_memo.*' => 'required',
+        // 'cover_memo.*' => 'required',
         'cover_memo.*.*' => 'mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
         'request_letter' => 'required|array|min:1|max:3',
-        'request_letter.*' => 'required',
+        // 'request_letter.*' => 'required',
         'request_letter.*.*' => 'required|mimes:jpg,png,pdf|max:5120',
         'teaching_assignment' => 'nullable|array|max:3',
         'teaching_assignment.*' => 'nullable',
@@ -264,7 +268,7 @@ class StudyPermitUpdate extends Component
     ];
 
     public function submit(){
-        // dd($this->request_letter);
+        // dd($this->request_letter, $this->cover_memo);
         $loggedInUser = auth()->user();
         $real_available_units = Employee::where('employee_id', $loggedInUser->employee_id)
                             ->get()->value('study_available_units');   
@@ -372,7 +376,6 @@ class StudyPermitUpdate extends Component
                             $fileNames[] = $file;
                         }
                         else{ 
-
                             $itemName = $file->store("photos/studypermit/$field", 'local');
                             $fileNames[] = $itemName;
                             if($studypermitdata->$field != null && $ctr <= $ctrField){
@@ -383,7 +386,7 @@ class StudyPermitUpdate extends Component
                 }
                 else{
                     if (!is_array($item) && !is_string($item)) {
-                        $this->addError('cover_memo.' . $index, 'The cover memo must be a string or an array.');
+                        $this->addError('cover_memo.' . $index, 'The' . $field . 'must be a string or an array.');
                     }
                 }
             }
@@ -408,11 +411,10 @@ class StudyPermitUpdate extends Component
         $studypermitdata->available_units = $this->study_available_units;
 
         if(is_string($this->applicant_signature) == True){
-            // 'applicant_signature' => 'required|mimes:jpg,png,pdf',
-            $this->validate(['applicant_signature' => 'required|string']);
+            $this->validate(['applicant_signature' => 'required|string|max:5120']);
             $studypermitdata->applicant_signature = $this->applicant_signature;
         }else{
-            $this->validate(['applicant_signature' => 'required|mimes:jpg,png,pdf']);
+            $this->validate(['applicant_signature' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120']);
             $studypermitdata->applicant_signature = $this->applicant_signature->store('photos/studypermit/applicant_signature', 'local');
         }
         // $properties = [

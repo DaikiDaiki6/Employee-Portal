@@ -83,6 +83,10 @@ class IpcrForm extends Component
         $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function removeCoreFunction($index){
         unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
@@ -252,8 +256,8 @@ class IpcrForm extends Component
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
         // 'comments_and_reco' => 'required|min:10|max:2048', 
-        'discussed_with' => 'required|mimes:jpg,png|extensions:jpg,png',
-        'disscused_with_date' => 'required|date|after_or_equal:start_period',
+        'discussed_with' => 'required|mimes:jpg,png|extensions:jpg,png|max:5120',
+        'disscused_with_date' => 'required|date|after_or_equal:start_period|max:5120',
         // 'assessed_by' => 'required|mimes:jpg,png|extensions:jpg,png',
         // 'assessed_by_date' => 'required|date',
         // 'final_rating' => 'required|numeric',

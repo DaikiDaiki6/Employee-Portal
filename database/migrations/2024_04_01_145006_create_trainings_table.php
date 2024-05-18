@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('training_title');
             $table->string('training_information');
             $table->string('training_photo')->nullable();
-            $table->string('pre_test_title');
-            $table->string('post_test_title');
-            $table->string('pre_test_description');
-            $table->string('post_test_description');
-            $table->json('pre_test_questions');
-            $table->json('post_test_questions');
+            // $table->string('pre_test_title');
+            // $table->string('post_test_title');
+            // $table->string('pre_test_description');
+            // $table->string('post_test_description');
+            // $table->json('pre_test_questions');
+            // $table->json('post_test_questions');
             $table->string('host');
             $table->boolean('is_featured');
             $table->json('visible_to_list');

@@ -63,9 +63,9 @@
             </div>
 
             {{-- Poster and Details --}}
-            <div class="grid grid-cols-1  p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+            <div class="grid grid-cols-1 mt-6  p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                 <label for="training_photo"
-                class="block text-base font-medium text-gray-900 dark:text-white">training_photo <span class="text-red-600">*</span></label>
+                class="block text-base font-medium text-gray-900 dark:text-white">Training Photo <span class="text-red-600">*</span></label>
                 <div class="grid grid-cols-1 items-center justify-center w-full">
                     <label for="training_photo" class="relative p-1 flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                     @if($training_photo)

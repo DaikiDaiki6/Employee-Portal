@@ -95,14 +95,14 @@
                                             class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee ID <span class="text-red-600">*</span></label>
                                         <input type="text" name="position" id="position" wire:model="current_position"  
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Last name" required="" disabled>
+                                            required="" disabled>
                                     </div>
                                     <div class="w-full">
                                         <label for=""
                                             class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Employee ID <span class="text-red-600">*</span></label>
                                         <input type="text" name="salary" id="salary" wire:model="salary"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Last name" required="" disabled>
+                                            required="" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -179,7 +179,6 @@
                                             <textarea disabled type="text" rows="10" id="type_of_leave_description" name="type_of_leave_description" wire:model="type_of_leave_description" 
                                                 placeholder="Write Additional Details here."
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            
                                             </textarea>
                                         </div>
                                     </div>
@@ -351,7 +350,7 @@
                                 </div>
                                 <div class="grid grid-cols-1 items-center justify-center w-full">
                                     @if($auth_off_sig_b)
-                                    <label for="auth_off_sig_b" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <label for="auth_off_sig_b" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                         @if (is_string($auth_off_sig_b))
                                             @php
                                                 $auth_off_sig_b = $this->getHeadSignature();
@@ -361,6 +360,11 @@
                                             <img src="{{ $auth_off_sig_b->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                         @endif
                                         <input id="auth_off_sig_b" type="file" class="hidden" wire:model.live="auth_off_sig_b">
+                                        <button type="button" wire:click="removeImage('auth_off_sig_b')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
                                     </label>
                                     @else
                                         <label for="auth_off_sig_b" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -431,7 +435,7 @@
                                 </div>
                                 <div class="grid grid-cols-1 items-center justify-center w-full">
                                     @if($auth_off_sig_a)
-                                    <label for="auth_off_sig_a" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <label for="auth_off_sig_a" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                         @if (is_string($auth_off_sig_a))
                                             @php
                                                 $auth_off_sig_a = $this->getHumanResourceA();
@@ -441,6 +445,11 @@
                                             <img src="{{ $auth_off_sig_a->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                         @endif
                                         <input id="auth_off_sig_a" type="file" class="hidden" wire:model.live="auth_off_sig_a">
+                                        <button type="button" wire:click="removeImage('auth_off_sig_a')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
                                     </label>
                                     @else
                                         <label for="auth_off_sig_a" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -478,10 +487,10 @@
                                     <input type="radio" id="human_resource_verdict_cd" name="human_resource_verdict_cd" wire:model.live="human_resource_verdict_cd" value="Declined">
                                     <label for="html" class="text-sm font-semibold">Declined</label><br>
                                     @error('human_resource_verdict_cd')
-                                    <div class="transition transform alert alert-danger"
-                                            x-init="$el.closest('form').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                    </div> 
+                                        <div class="transition transform alert alert-danger"
+                                                x-init="$el.closest('form').scrollIntoView()">
+                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                        </div> 
                                     @enderror   
                                     </div>
                             </div>
@@ -491,7 +500,7 @@
                                 </div>
                                 <div class="grid grid-cols-1 items-center justify-center w-full">
                                     @if($auth_off_sig_c_and_d)
-                                    <label for="auth_off_sig_c_and_d" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                    <label for="auth_off_sig_c_and_d" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                         @if (is_string($auth_off_sig_c_and_d))
                                             @php
                                                 $auth_off_sig_c_and_d = $this->getHumanResourceCD();
@@ -501,6 +510,11 @@
                                             <img src="{{ $auth_off_sig_c_and_d->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
                                         @endif
                                         <input id="auth_off_sig_c_and_d" type="file" class="hidden" wire:model.live="auth_off_sig_c_and_d">
+                                        <button type="button" wire:click="removeImage('auth_off_sig_c_and_d')" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
                                     </label>
                                     @else
                                         <label for="auth_off_sig_c_and_d" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -515,10 +529,10 @@
                                         </label>
                                     @endif
                                     @error('auth_off_sig_c_and_d')
-                                    <div class="transition transform alert alert-danger"
-                                            x-init="$el.closest('form').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                    </div> 
+                                        <div class="transition transform alert alert-danger"
+                                                x-init="$el.closest('form').scrollIntoView()">
+                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                        </div> 
                                     @enderror
                                 </div>  
                         </div>

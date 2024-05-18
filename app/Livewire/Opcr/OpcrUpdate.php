@@ -53,6 +53,10 @@ class OpcrUpdate extends Component
         $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'budget' => '', 'personsConcerned' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function removeCoreFunction($index){
         unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
@@ -292,7 +296,7 @@ class OpcrUpdate extends Component
         $properties = [
             // 'assessed_by' => 'mimes:jpg,png|extensions:jpg,png',
             // 'final_rating_by' => 'mimes:jpg,png|extensions:jpg,png',
-            'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
+            'discussed_with' => 'mimes:jpg,png|extensions:jpg,png|max:5120',
         ];
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {

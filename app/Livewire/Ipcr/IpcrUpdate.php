@@ -92,6 +92,10 @@ class IpcrUpdate extends Component
         $this->supportiveFunctions[] = ['output' => '', 'indicator' => '', 'accomp' => '', 'weight' => ' ', 'remark' => ' ', 'Q' => '', 'E' => '', 'T' => '', 'A' => ''];
     }
 
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
     public function removeCoreFunction($index){
         unset($this->coreFunctions[$index]);
         $this->coreFunctions = array_values($this->coreFunctions);
@@ -273,7 +277,7 @@ class IpcrUpdate extends Component
         $ipcr->comments_and_reco = $this->comments_and_reco;
         
         $properties = [
-            'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
+            'discussed_with' => 'mimes:jpg,png|extensions:jpg,png|max:5120',
         ];
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
