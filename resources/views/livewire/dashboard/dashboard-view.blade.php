@@ -29,6 +29,24 @@
         outline: 10px solid transparent;
         /* outline-offset: 2px; */
     }
+    @media (max-width: 1120px) {
+            #user_avatar {
+                display: none;
+            }
+        }
+    @media (min-width: 900px) {
+        #good_morning{
+            white-space: nowrap;
+
+        }
+    }
+     @media (min-width: 900px) {
+        #good_morning{
+            white-space: nowrap;
+            
+        }
+    }
+    
 
     </style>
 
@@ -112,10 +130,10 @@
 
   <div style="margin-bottom:150px; height:100%; max-height:230px" class="grid grid-cols-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
     <div class="grid grid-cols-5  mb-4  items-center">
-        <div class="h-full col-span-2">
-          <p class=" font-semibold text-blue-500 text-lg min-[1475px]:text-2xl whitespace-nowrap">Good {{$period}}, {{$firstName}}. </p>
-          <span class="text-base whitespace-nowrap  ">Ready to Start your Day?</span>
-          <p class="text-sm whitespace-nowrap mt-4">"<span class="text-blue-500">Tough times</span> never last,</p>
+        <div class="h-full col-span-2" id="good_morning">
+          <p class=" font-semibold text-blue-500 text-lg min-[1475px]:text-2xl" >Good {{$period}}, {{$firstName}}. </p>
+          <p class="text-base">Ready to Start your Day?</p>
+          <p class="text-sm  mt-4">"<span class="text-blue-500">Tough times</span> never last,</p>
           <span class="text-sm whitespace-nowrap">but <span class="text-blue-700">tough people</span> do"</span>
           <div wire:poll.1s class="text-xl p-0 font-semibold text-blue-700">
             <br> 
@@ -129,7 +147,7 @@
             </div>
         </div>
        
-        <div class="mb-4 ml-8 col-span-3"> 
+        <div class="mb-4 ml-8 col-span-3" id="user_avatar"> 
           @if ($gender == "Female")
             <img src="{{asset('storage\EmployeeImages\girl.png')}}"  style="width:500px ;height: 200px" alt="...">
           @else

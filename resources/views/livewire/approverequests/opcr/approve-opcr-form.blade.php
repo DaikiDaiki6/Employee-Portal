@@ -754,17 +754,17 @@
                     </div> --}}
                     <br>
 
-                    <div class="grid gap-4 grid-cols-1 sm:gap-6 w-full col-span-3 p-6 pt-8 bg-gray-100 border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <div class="grid grid-cols-1 col-span-3  p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                    <div class="grid gap-4 grid-cols-1 w-full col-span-3 p-6 pt-8 bg-gray-100 border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                        <div class="grid grid-cols-1 col-span-3  p-4  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                             <div class="flex-none pb-4">
                                 <h2><b>Assessed By:</b></h2>
                             </div>
-                            <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                <div class="grid grid-cols-2">
+                            <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 x w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                <div class="grid grid-cols-1 gap-2 lg:grid-cols-2">
                                  <div class="w-full grid grid-cols-1">
                                      <label for="assessed_by_verdict"
-                                         class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
-                                         <div class="w-full pl-4 items-start">
+                                         class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved / Declined <span class="text-red-600">*</span></label>
+                                         <div class="w-full pl-2 items-start">
                                          <input type="radio" name="status" id="assessed_by_verdict" wire:model.live="assessed_by_verdict" value="1">
                                          <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
                                          <br>
@@ -791,8 +791,7 @@
                                          </div> 
                                      @enderror
                                  </div>
-                                </div>
- 
+                                 </div>
                                  <div>
                                      <label for="assessed_by"
                                      class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Assessed By <span class="text-red-600">*</span></label>
@@ -840,12 +839,12 @@
                             <div class="flex-none pb-4">
                                 <h2><b>Final Rating By:</b></h2>
                             </div>
-                            <div class="grid gap-4 sm:grid-cols-1 min-[738px]:grid-cols-2 sm:gap-6  p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                <div class="grid grid-cols-2">
-                                    <div class="w-full grid grid-cols-1">
+                            <div class="grid gap-4 sm:grid-cols-1 min-[738px]:grid-cols-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                                    <div class="w-full grid grid-cols-1 ">
                                         <label for="final_rating_by_verdict"
-                                            class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
-                                            <div class="w-full pl-4 items-start">
+                                            class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved / Declined <span class="text-red-600">*</span></label>
+                                            <div class="w-full pl-2 items-start">
                                             <input type="radio" name="final_rating_by_verdict" id="final_rating_by_verdict" wire:model.live="final_rating_by_verdict" value="1">
                                             <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
                                             <br>
@@ -859,33 +858,33 @@
                                             @enderror   
                                             </div>
                                     </div>
-                                <div class="grid grid-cols-1 w-full gap-4 pr-4">
-                                    <div>
-                                        <label for="final_rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
-                                        <input type="number" id="final_rating" name="final_rating" value={{$final_rating}}
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                            placeholder="{{$final_rating}}" disabled/>
-                                        @error('final_rating')
-                                            <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                            </div> 
-                                        @enderror
+                                    <div class="grid grid-cols-1 w-full gap-4">
+                                        <div>
+                                            <label for="final_rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
+                                            <input type="number" id="final_rating" name="final_rating" value={{$final_rating}}
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                placeholder="{{$final_rating}}" disabled/>
+                                            @error('final_rating')
+                                                <div class="transition transform alert alert-danger"
+                                                        x-init="$el.closest('form').scrollIntoView()">
+                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                </div> 
+                                            @enderror
+                                        </div>
+                                        <div class="w-full ">
+                                            <label for="brand"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
+                                            <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                placeholder="Last name">
+                                            @error('final_rating_by_date')
+                                                <div class="transition transform alert alert-danger"
+                                                        x-init="$el.closest('form').scrollIntoView()">
+                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                </div> 
+                                            @enderror
+                                        </div>
                                     </div>
-                                    <div class="w-full ">
-                                        <label for="brand"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
-                                        <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Last name">
-                                        @error('final_rating_by_date')
-                                            <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('form').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                            </div> 
-                                        @enderror
-                                    </div>
-                                </div>
                                 </div>
                                 <div>
                                     <label for="final_rating_by"
@@ -896,7 +895,6 @@
                                             @if(is_string($final_rating_by) == True)
                                                 @php
                                                     $final_rating_by = $this->getFinalRatingBy();
-                                                    
                                                 @endphp
                                                 <img src="data:image/gif;base64,{{ base64_encode($final_rating_by) }}" alt="Image Description" class="w-full h-full object-contain"> 
                                             @else
@@ -929,9 +927,7 @@
                                         @enderror
                                     </div>
                                 </div>
-
                             </div>
-                            
                         </div>
                 </div>
                     

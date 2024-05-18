@@ -650,7 +650,7 @@
                                     <h2><b>Assessed By:</b></h2>
                                 </div>
                                 <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                    <div class="grid grid-cols-2">
+                                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                      <div class="w-full grid grid-cols-1">
                                          <label for="assessed_by_verdict"
                                              class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
@@ -730,7 +730,7 @@
                                     <h2><b>Final Rating By:</b></h2>
                                 </div>
                                 <div class="grid gap-4 sm:grid-cols-1 min-[738px]:grid-cols-2 sm:gap-6  p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                    <div class="grid grid-cols-2">
+                                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                         <div class="w-full grid grid-cols-1" id="final_rating_by_verdict_container">
                                             <label for="final_rating_by_verdict"
                                                 class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
@@ -748,32 +748,32 @@
                                                 @enderror   
                                                 </div>
                                         </div>
-                                    <div class="grid grid-cols-1 w-full gap-4 pr-4">
-                                        <div id="final_rating_container">
-                                            <label for="final_rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
-                                            <input type="number" id="final_rating" name="final_rating" value={{$final_rating}}
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="{{$final_rating}}" disabled/>
-                                            @error('final_rating')
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                    x-data x-init="document.getElementById('final_rating_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_container').focus();" >
+                                        <div class="grid grid-cols-1 w-full gap-4 pr-4">
+                                            <div id="final_rating_container">
+                                                <label for="final_rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
+                                                <input type="number" id="final_rating" name="final_rating" value={{$final_rating}}
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="{{$final_rating}}" disabled/>
+                                                @error('final_rating')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('final_rating_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_container').focus();" >
+                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
+                                                @enderror
+                                            </div>
+                                            <div class="w-full" id="final_rating_by_date_container">
+                                                <label for="brand"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
+                                                <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                @error('final_rating_by_date')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('final_rating_by_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_date_container').focus();" >
                                                         <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                </div> 
-                                            @enderror
+                                                    </div> 
+                                                @enderror
+                                            </div>
                                         </div>
-                                        <div class="w-full" id="final_rating_by_date_container">
-                                            <label for="brand"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
-                                            <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            @error('final_rating_by_date')
-                                                <div class="transition transform alert alert-danger text-sm"
-                                                x-data x-init="document.getElementById('final_rating_by_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_date_container').focus();" >
-                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
-                                    </div>
                                     </div>
                                     <div>
                                         <label for="final_rating_by"
@@ -823,7 +823,7 @@
                             </div>
                     </div>
                     <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                            Update IPCR
+                            Approve IPCR
                     </button>
                 </div>
              

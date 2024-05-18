@@ -29,13 +29,12 @@
     </nav> 
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Add a new OPCR</h2>
     <br>
-    <section class="bg-white dark:bg-gray-900 px-8 rounded-lg">
-        <div class=" px-1 mx-auto  py-8">
+    <section class="bg-white dark:bg-gray-900 px-4 rounded-lg">
+        <div class=" px-1 mx-auto pt-4 pb-8">
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
-                    <div
-                        class="block w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                    <div class="block w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                            <div  class="flex-wrap col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <h2><b>Department Information</b></h2>
@@ -58,7 +57,7 @@
                                 </div>
                            </div>
                           
-                    {{-- Date Of Filling --}}
+                        {{-- Date Of Filling --}}
                         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 col-span-3">
                             <div class="block grid-row-2 w-full min-[0px]:col-span-2  lg:col-span-1  p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <h2><b>Date of Filling</b></h2>
@@ -126,7 +125,6 @@
                     
                     {{-- Core Functions --}}
                     <div class="grid grid-cols-1 gap-4 w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        {{-- Core Functions --}}
                         <div class="block flex-wrap w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                             <div class="flex-none pb-4">
                                 <h2><b>Core Functions-70%</b></h2>
@@ -344,38 +342,37 @@
                                         </div>
                                     </div>
                                 </div>
-                        @php
-                            $coreCtr += 1;
-                        @endphp
-                        @endforeach
+                                @php
+                                    $coreCtr += 1;
+                                @endphp
+                                @endforeach
 
-                        <script>
-                            document.addEventListener('livewire:init', () => {
-                                Livewire.on('update-core-functions', (data) => {
-                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
-                                    // Parse the JSON data into a JavaScript array
-                                    const dataArray = JSON.parse(data);
-                        
-                                    // Iterate over the array elements
-                                    dataArray.forEach((element, index) => {
-                                        document.getElementById('coreFunctions_' + index + '_output').value = element.output;
-                                        document.getElementById('coreFunctions_' + index + '_indicator').value = element.indicator;
-                                        document.getElementById('coreFunctions_' + index + '_accomp').value = element.accomp;
-                                        document.getElementById('coreFunctions_' + index + '_Q').value = element.Q;
-                                        document.getElementById('coreFunctions_' + index + '_E').value = element.E;
-                                        document.getElementById('coreFunctions_' + index + '_T').value = element.T;
-                                        document.getElementById('coreFunctions_' + index + '_A').value = element.A;
-                                        document.getElementById('coreFunctions_' + index + '_budget').value = element.budget;
-                                        document.getElementById('coreFunctions_' + index + '_weight').value = element.weight;
-                                        document.getElementById('coreFunctions_' + index + '_personsConcerned').value = element.personsConcerned;
-                                        document.getElementById('coreFunctions_' + index + '_remark').value = element.remark;
+                                <script>
+                                document.addEventListener('livewire:init', () => {
+                                    Livewire.on('update-core-functions', (data) => {
+                                        // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                        // Parse the JSON data into a JavaScript array
+                                        const dataArray = JSON.parse(data);
+                            
+                                        // Iterate over the array elements
+                                        dataArray.forEach((element, index) => {
+                                            document.getElementById('coreFunctions_' + index + '_output').value = element.output;
+                                            document.getElementById('coreFunctions_' + index + '_indicator').value = element.indicator;
+                                            document.getElementById('coreFunctions_' + index + '_accomp').value = element.accomp;
+                                            document.getElementById('coreFunctions_' + index + '_Q').value = element.Q;
+                                            document.getElementById('coreFunctions_' + index + '_E').value = element.E;
+                                            document.getElementById('coreFunctions_' + index + '_T').value = element.T;
+                                            document.getElementById('coreFunctions_' + index + '_A').value = element.A;
+                                            document.getElementById('coreFunctions_' + index + '_budget').value = element.budget;
+                                            document.getElementById('coreFunctions_' + index + '_weight').value = element.weight;
+                                            document.getElementById('coreFunctions_' + index + '_personsConcerned').value = element.personsConcerned;
+                                            document.getElementById('coreFunctions_' + index + '_remark').value = element.remark;
 
+                                        });
                                     });
                                 });
-                            });
-                        </script>
+                            </script>
                               
-                      
                             <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addCoreFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Core Function</button>
                             </div>
@@ -609,12 +606,12 @@
                                         
                                     </div>
                                 </div>
-                        @php
-                            $supportCtr += 1;
-                        @endphp
-                        @endforeach
+                            @php
+                                $supportCtr += 1;
+                            @endphp
+                            @endforeach
 
-                        <script>
+                            <script>
                             document.addEventListener('livewire:init', () => {
                                 Livewire.on('update-supportive-functions', (data) => {
                                     // alert(JSON.stringify(data)); // Ensure the data received here is correct
@@ -638,7 +635,7 @@
                                     });
                                 });
                             });
-                        </script>
+                            </script>
 
                             <div class="flex justify-center">
                                 <button type="button" name="add" wire:click.prevent="addSupportiveFunction" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add Support / Administrative Function</button>
@@ -659,7 +656,6 @@
                             </div>
                         </div>
         
-                        <br>
                         <div class="block col-span-3 p-6 pt-8 sm:w-1/2 md:w-1/3 min-[900px]:w-1/4 min-[1150px]:w-1/5 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                             <div class="grid gap-4 sm:grid-cols-1 sm:gap-6   ">
                                 <div>
@@ -735,200 +731,17 @@
                                 </div>
                             </div>
                         </div>
+                      
                     </div>
-    
-                    <br>
-                    {{-- <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <div class="grid gap-4 sm:grid-cols-1 sm:gap-6 ">
-                            <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                <div >
-                                    <div class="justify-left">
-                                        <label for="discussed_with" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discussed with<span class="text-red-600">*</span></label> 
-                                    </div>
-                                    @if($discussed_with)
-                                    <div class="grid grid-cols-1 items-center justify-center w-full">
-                                        <label for="dropzone-file1" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                            <img src="{{ $discussed_with->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
-                                            <input id="dropzone-file1" type="file" class="hidden" wire:model="discussed_with">
-                                        </label>
-                                        @error('discussed_with')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                        </div> 
-                                        @enderror
-                                    </div>
-                                    @else
-                                    <div class="grid grid-cols-1 items-center justify-center w-full">
-                                        <label for="dropzone-file1" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                                </svg>
-                                                <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                                <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG, or PDF file (Max: 5 MB size)</p>
-                                            </div>
-                                            <input id="dropzone-file1" type="file" class="hidden" wire:model="discussed_with" />
-                                        </label>
-                                        @error('discussed_with')
-                                            <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('label').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                            </div> 
-                                        @enderror
-                                    </div> 
-                                    @endif
-                                </div>
-                                <div class="w-full pr-4">
-                                    <label for="brand"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discussed Date<span class="text-red-600">*</span></label>
-                                        <input type="date" name="disscused_with_date" id="disscused_with_date" value="{{$employeeRecordDate}}" wire:model="disscused_with_date"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            placeholder="Last name" required="">
-                                    @error('disscused_with_date')
-                                            <div class="transition transform alert alert-danger"
-                                                    x-init="$el.closest('label').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                            </div> 
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                <div >
-                                    <div>
-                                        <div class="justify-left">
-                                            <label for="assessed_by" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed by<span class="text-red-600">*</span></label> 
-                                        </div>
-                                        @if($assessed_by)
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
-                                            <label for="dropzone-file2" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                <img src="{{ $assessed_by->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
-                                                <input id="dropzone-file2" type="file" class="hidden" wire:model="assessed_by">
-                                            </label>
-                                            @error('assessed_by')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
-                                        @else
-                                        <div class="grid grid-cols-1 items-center justify-center w-full ">
-                                            <label for="dropzone-file2" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                    <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                                    </svg>
-                                                    <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                                    <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG, or PDF file (Max: 5 MB size)</p>
-                                                </div>
-                                                <input id="dropzone-file2" type="file" class="hidden" wire:model="assessed_by" />
-                                            </label>
-                                            @error('assessed_by')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('label').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
-                                            @enderror
-                                        </div> 
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="w-full pr-4">
-                                    <label for="assessed_date"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed Date<span class="text-red-600">*</span></label>
-                                    <input type="date" name="assessed_by_date" id="assessed_by_date" value="{{$employeeRecordDate}}" wire:model="assessed_by_date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        placeholder="Last name" required="">
-                                    @error('assessed_by_date')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('label').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                        </div> 
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                     
-                    {{-- <br>
-                    <div class="block w-full col-span-3 p-6 pt-8 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                        <div class="grid gap-4 sm:grid-cols-1 sm:gap-6 ">
-                            <div>
-                                <label for="corerating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
-                                <input type="number" id="final_rating" name="final_rating" wire:model="final_rating"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    placeholder="{{$final_rating}}" disabled/>
-                                @error('final_rating')
-                                    <div class="transition transform alert alert-danger"
-                                            x-init="$el.closest('label').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                    </div> 
-                                @enderror
-                            </div>
-                            <div>
-                                <div class="justify-left">
-                                    <label for="final_rating_by" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by<span class="text-red-600">*</span></label> 
-                                </div>
-                                @if($final_rating_by)
-                                <div class="grid grid-cols-1 items-center justify-center w-full">
-                                    <label for="dropzone-file3" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                        <img src="{{ $final_rating_by->temporaryUrl() }}" class="w-full h-full object-contain " alt="Uploaded Image">
-                                        <input id="dropzone-file3" type="file" class="hidden" wire:model="final_rating_by">
-                                    </label>
-                                    @error('final_rating_by')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('label').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                        </div> 
-                                     @enderror
-                                </div>
-                                @else
-                                <div class="grid grid-cols-1 items-center justify-center w-full ">
-                                    <label for="dropzone-file3" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                            <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                            </svg>
-                                            <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                            <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG, or PDF file (Max: 5 MB size)</p>
-                                        </div>
-                                        <input id="dropzone-file3" type="file" class="hidden" wire:model="final_rating_by"/>
-                                    </label>
-                                    @error('final_rating_by')
-                                        <div class="transition transform alert alert-danger"
-                                                x-init="$el.closest('label').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                        </div> 
-                                    @enderror
-                                </div> 
-                                @endif
-                            </div>
-                            <div class="w-full pr-4">
-                                <label for="brand"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
-                                <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Last name" required="">
-                                @error('final_rating_by_date')
-                                    <div class="transition transform alert alert-danger"
-                                            x-init="$el.closest('label').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                    </div> 
-                                 @enderror
-                            </div>
-                        </div>
-                        
-                    </div> --}}
-                  
-                    <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                            Submit OPCR
-                    </button>
-                </div>
-             
+                
+                <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                    Submit OPCR
+                </button>
+                <br><br>
             </form>
         </div>
+        
     </section>
-    
     </div>
 </div>
