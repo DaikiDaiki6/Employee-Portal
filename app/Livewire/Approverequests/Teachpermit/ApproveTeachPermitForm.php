@@ -46,12 +46,16 @@ class ApproveTeachPermitForm extends Component
     public $available_units;
 
     public $signature_of_head_office;
+    public $verdict_of_head_office;
     public $date_of_signature_of_head_office;
     public $signature_of_human_resource;
+    public $verdict_of_human_resource;
     public $date_of_signature_of_human_resource;
     public $signature_of_vp_for_academic_affair;
+    public $verdict_of_vp_for_academic_affair;
     public $date_of_signature_of_vp_for_academic_affair;
     public $signature_of_university_president;
+    public $verdict_of_university_president;
     public $date_of_signature_of_university_president;
 
 
@@ -91,6 +95,8 @@ class ApproveTeachPermitForm extends Component
         $this->status = $teachpermitdata->status;
         $this->total_units_enrolled = $teachpermitdata->total_units_enrolled;
         $this->available_units = $teachpermitdata->available_units;
+        $dateToday = Carbon::now()->toDateString();
+
         $this->date_of_signature_of_head_office = $teachpermitdata->date_of_signature_of_head_office;
         $this->date_of_signature_of_human_resource = $teachpermitdata->date_of_signature_of_human_resource;
         $this->date_of_signature_of_vp_for_academic_affair = $teachpermitdata->date_of_signature_of_vp_for_academic_affair;
@@ -99,6 +105,11 @@ class ApproveTeachPermitForm extends Component
         $this->signature_of_head_office = $teachpermitdata->signature_of_head_office;
         $this->signature_of_human_resource = $teachpermitdata->signature_of_human_resource;
         $this->signature_of_vp_for_academic_affair = $teachpermitdata->signature_of_vp_for_academic_affair;
+        $this->signature_of_university_president = $teachpermitdata->signature_of_university_president;
+
+        $this->verdict_of_head_office = $teachpermitdata->verdict_of_head_office;
+        $this->verdict_of_human_resource = $teachpermitdata->verdict_of_human_resource;
+        $this->verdict_of_vp_for_academic_affair = $teachpermitdata->verdict_of_vp_for_academic_affair;
         $this->signature_of_university_president = $teachpermitdata->signature_of_university_president;
 
         $this->subjectLoad = json_decode($teachpermitdata->load, true);
@@ -177,7 +188,6 @@ class ApproveTeachPermitForm extends Component
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
             // Check if the current property value is a string or an uploaded file
-            $this->validate([$propertyName => $validationRule]);
 
             if (is_string($this->$propertyName)) {
                 // If it's a string, assign it directly
@@ -185,12 +195,32 @@ class ApproveTeachPermitForm extends Component
             } else {
                 // If it's an uploaded file, store it and apply validation rules
                 // $this->validate([$propertyName => $validationRule]);
+                $this->validate([$propertyName => $validationRule]);
                 if($this->$propertyName){
                 $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Teach Permit', 'Signed', $teachpermitdata->id, $signedIn));
                 }
                 $teachpermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/teachpermit/' . $propertyName, 'local') : '';
             }
         }
+
+        $verdicts = [
+            'verdict_of_head_office',
+            'verdict_of_human_resource',
+            'verdict_of_vp_for_academic_affair',
+            'verdict_of_university_president',
+        ];
+
+        foreach($verdicts as $verdict) {
+            $this->validate([$verdict => 'nullable|in:1,0']);
+            $teachpermitdata->$verdict = $this->$verdict;
+        }
+        if($teachpermitdata->verdict_of_head_office == 1 && $teachpermitdata->verdict_of_human_resource == 1 
+            && $teachpermitdata->verdict_of_vp_for_academic_affair == 1 && $teachpermitdata->verdict_of_university_president == 1){
+                if($teachpermitdata->signature_of_head_office && $teachpermitdata->signature_of_human_resource 
+                && $teachpermitdata->signature_of_vp_for_academic_affair && $teachpermitdata->signature_of_university_president ){
+                    $teachpermitdata->status = "Approved";
+                }
+            }
 
        
 

@@ -376,23 +376,47 @@
 
                             <div class="grid grid-cols-1 col-span-3 p-6 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <h2><b>Signed By:</b></h2>
-                                <div class="grid grid-cols-3 gap-4">
-                                    <div class="w-full mt-4">
-                                        <label for="date_of_signature_of_head_office"
-                                            class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Department Head Signature Date<span class="text-red-600">*</span></label>
-                                        <input type="date" name="date_of_signature_of_head_office" id="date_of_signature_of_head_office" wire:model="date_of_signature_of_head_office" 
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                        @error('date_of_signature_of_head_office')
-                                            <div class="transition transform alert alert-danger text-sm"
-                                                    x-data x-init="document.getElementById('date_of_signature_of_head_office').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_of_signature_of_head_office').focus();">
-                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
-                                            </div> 
-                                        @enderror       
+                                <div class="grid grid-cols-5 gap-2">
+                                    <div class="grid grid-cols-1 gap-4 col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700" >
+                                        <div class="w-full grid grid-cols-1 mt-10" id="verdict_of_head_office_container">
+                                            <label for="verdict_of_head_office"
+                                                class="text-sm font-medium text-gray-900 dark:text-white">Approved/Declined <span class="text-red-600">*</span></label>
+                                                <div class="w-full pl-4 items-start">
+                                                <div class="grid grid-cols-1 lg:grid-cols-2 ">
+                                                   <div>
+                                                    <input type="radio" name="verdict_of_head_office" id="verdict_of_head_office" wire:model.live="verdict_of_head_office" value="1">
+                                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                                   </div>
+                                                   <div>
+                                                    <input type="radio" id="verdict_of_head_office" name="verdict_of_head_office" wire:model.live="verdict_of_head_office" value="0">
+                                                    <label for="html" class="text-sm font-semibold">Declined</label>
+                                                   </div>
+                                                </div>
+                                                @error('verdict_of_head_office')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('verdict_of_head_office_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_of_head_office_container').focus();" >
+                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
+                                                @enderror   
+                                                </div>
+                                        </div>
+                                        <div class="w-full ">
+                                            <label for="date_of_signature_of_head_office"
+                                                class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Department Head Signature Date<span class="text-red-600">*</span></label>
+                                            <input type="date" name="date_of_signature_of_head_office" id="date_of_signature_of_head_office" wire:model="date_of_signature_of_head_office" 
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            @error('date_of_signature_of_head_office')
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('date_of_signature_of_head_office').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_of_signature_of_head_office').focus();">
+                                                        <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                </div> 
+                                            @enderror       
+                                        </div>
                                     </div>
 
                                     {{-- Head Office --}}
 
-                                    <div id="signature_of_head_office_container" class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                    <div id="signature_of_head_office_container" class=" col-span-3 grid grid-cols-1 p-4 gap-2 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <label for="signature_recommended_by"
                                         class="block text-sm font-medium text-gray-900 dark:text-white">Department Head Signature<span class="text-red-600">*</span></label>
                                         <div class="grid grid-cols-1 items-center justify-center w-full">
@@ -436,9 +460,32 @@
                                 </div>
 
                                 {{-- Human Resource  --}}
-                                <div class="grid grid-cols-3 gap-4" id="signature_of_human_resource_container">
-                                    <div class="w-full mt-4">
-                                        <label for="date_of_signature_of_human_resource"
+                                <div class="grid grid-cols-5 gap-2" id="signature_of_human_resource_container">
+                                    <div class="grid grid-cols-1 gap-4 col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                        <div class="w-full grid grid-cols-1 mt-10" id="verdict_of_human_resource_container">
+                                            <label for="verdict_of_human_resource"
+                                                class="text-sm font-medium text-gray-900 dark:text-white">Approved/Declined <span class="text-red-600">*</span></label>
+                                                <div class="w-full pl-4 items-start">
+                                                <div class="grid grid-cols-1 lg:grid-cols-2 ">
+                                                   <div>
+                                                    <input type="radio" name="verdict_of_human_resource" id="verdict_of_human_resource" wire:model.live="verdict_of_human_resource" value="1">
+                                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                                   </div>
+                                                   <div>
+                                                    <input type="radio" id="verdict_of_human_resource" name="verdict_of_human_resource" wire:model.live="verdict_of_human_resource" value="0">
+                                                    <label for="html" class="text-sm font-semibold">Declined</label>
+                                                   </div>
+                                                </div>
+                                                @error('verdict_of_human_resource')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('verdict_of_human_resource_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_of_human_resource_container').focus();" >
+                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
+                                                @enderror   
+                                                </div>
+                                        </div>
+                                        <div>
+                                            <label for="date_of_signature_of_human_resource"
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">Human Resource Signature Date<span class="text-red-600">*</span></label>
                                         <input type="date" name="date_of_signature_of_human_resource" id="date_of_signature_of_human_resource" wire:model="date_of_signature_of_human_resource" 
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -449,8 +496,9 @@
                                                     <span class="text-red-500 text-xs "> {{$message}}</span>
                                                 </div> 
                                         @enderror       
+                                        </div>
                                     </div>
-                                    <div  class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                    <div  class="col-span-3 grid grid-cols-1 p-4 gap-2 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <label for="signature_of_human_resource" 
                                         class="block text-sm font-medium text-gray-900 dark:text-white">Human Resource Signature <span class="text-red-600">*</span></label>
                                         <div  class="grid grid-cols-1 items-center justify-center w-full">
@@ -494,24 +542,47 @@
                                 </div>
 
                                 {{-- Academic Affairs --}}
-                                <div class="grid grid-cols-3 gap-4" id="signature_of_vp_for_academic_affair_container">
-                                    <div class="w-full mt-4">
-                                        <label for="date_of_signature_of_vp_for_academic_affair"
+                                <div class="grid grid-cols-5 gap-2" id="signature_of_vp_for_academic_affair_container">
+                                    <div class="grid grid-cols-1  gap-4 col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                        <div class="w-full grid grid-cols-1 " id="verdict_of_vp_for_academic_affair_container">
+                                            <label for="verdict_of_vp_for_academic_affair"
+                                                class="text-sm font-medium text-gray-900 dark:text-white">Approved/Declined <span class="text-red-600">*</span></label>
+                                                <div class="w-full pl-4 items-start">
+                                                <div class="grid grid-cols-1 lg:grid-cols-2 ">
+                                                   <div>
+                                                    <input type="radio" name="verdict_of_vp_for_academic_affair" id="verdict_of_vp_for_academic_affair" wire:model.live="verdict_of_vp_for_academic_affair" value="1">
+                                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                                   </div>
+                                                   <div>
+                                                    <input type="radio" id="verdict_of_vp_for_academic_affair" name="verdict_of_vp_for_academic_affair" wire:model.live="verdict_of_vp_for_academic_affair" value="0">
+                                                    <label for="html" class="text-sm font-semibold">Declined</label>
+                                                   </div>
+                                                </div>
+                                                @error('verdict_of_vp_for_academic_affair')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('verdict_of_vp_for_academic_affair_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_of_vp_for_academic_affair_container').focus();" >
+                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
+                                                @enderror   
+                                                </div>
+                                        </div>
+                                        <div>
+                                            <label for="date_of_signature_of_vp_for_academic_affair"
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">VP of Academic Affairs Signature Date<span class="text-red-600">*</span></label>
-                                        <input type="date" name="date_of_signature_of_vp_for_academic_affair" id="date_of_signature_of_vp_for_academic_affair" wire:model="date_of_signature_of_vp_for_academic_affair" 
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                            >
-                                        @error('date_of_signature_of_vp_for_academic_affair')
-                                            <div class="transition transform alert alert-danger text-sm"
-                                                x-data x-init="document.getElementById('signature_of_vp_for_academic_affair_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_vp_for_academic_affair_container').focus();">
-                                                <span class="text-red-500 text-xs "> {{$message}}</span>
-                                            </div>  
-                                        @enderror       
+                                            <input type="date" name="date_of_signature_of_vp_for_academic_affair" id="date_of_signature_of_vp_for_academic_affair" wire:model="date_of_signature_of_vp_for_academic_affair" 
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            @error('date_of_signature_of_vp_for_academic_affair')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('signature_of_human_resource_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_human_resource_container').focus();">
+                                                        <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                    </div> 
+                                            @enderror       
+                                        </div>
                                     </div>
-                                    <div class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                    <div class="col-span-3 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <label for="signature_of_vp_for_academic_affair"
                                         class="block text-sm font-medium text-gray-900 dark:text-white">VP of Academic Affairs Signature<span class="text-red-600">*</span></label>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
+                                        <div class="grid grid-cols-1 items-center justify-center w-full ">
                                             @if($signature_of_vp_for_academic_affair)
                                                 <label for="signature_of_vp_for_academic_affair" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                     @if(is_string($signature_of_vp_for_academic_affair) == True)
@@ -552,20 +623,45 @@
                                 </div>
 
                                 {{-- University President --}}
-                                <div class="grid grid-cols-3 gap-4" id="signature_of_university_president_container">
-                                    <div class="w-full mt-4">
-                                        <label for="date_of_signature_of_university_president"
+                                <div class="grid grid-cols-5 gap-2" id="signature_of_university_president_container">
+                                    <div class="grid grid-cols-1  gap-4 col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
+                                        <div class="w-full grid grid-cols-1 mt-10" id="verdict_of_university_president_container">
+                                            <label for="verdict_of_university_president"
+                                                class="text-sm font-medium text-gray-900 dark:text-white">Approved/Declined <span class="text-red-600">*</span></label>
+                                                <div class="w-full pl-4 items-start">
+                                                <div class="grid grid-cols-1 lg:grid-cols-2 ">
+                                                   <div>
+                                                    <input type="radio" name="verdict_of_university_president" id="verdict_of_university_president" wire:model.live="verdict_of_university_president" value="1">
+                                                    <label for="numOfWorkDay" class="text-sm font-semibold">Approved</label>
+                                                   </div>
+                                                   <div>
+                                                    <input type="radio" id="verdict_of_university_president" name="verdict_of_university_president" wire:model.live="verdict_of_university_president" value="0">
+                                                    <label for="html" class="text-sm font-semibold">Declined</label>
+                                                   </div>
+                                                </div>
+                                                @error('verdict_of_university_president')
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                        x-data x-init="document.getElementById('verdict_of_university_president_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_of_university_president_container').focus();" >
+                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                    </div> 
+                                                @enderror   
+                                                </div>
+                                        </div>
+                                        <div>
+                                            <label for="date_of_signature_of_university_president"
                                             class="block  mb-2 text-sm font-medium text-gray-900 dark:text-white ">University President Signature Date<span class="text-red-600">*</span></label>
                                         <input type="date" name="date_of_signature_of_university_president" id="date_of_signature_of_university_president" wire:model="date_of_signature_of_university_president" 
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            >
                                         @error('date_of_signature_of_university_president')
-                                            <div class="transition transform alert alert-danger text-sm"
-                                                x-data x-init="document.getElementById('signature_of_university_president_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_university_president_container').focus();">
-                                                <span class="text-red-500 text-xs "> {{$message}}</span>
-                                            </div> 
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('signature_of_university_president_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_of_university_president_container').focus();">
+                                                    <span class="text-red-500 text-xs "> {{$message}}</span>
+                                                </div> 
                                         @enderror       
+                                        </div>
                                     </div>
-                                    <div class="col-span-2 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                    <div class="col-span-3 grid grid-cols-1 p-4 gap-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <label for="signature_of_university_president"
                                         class="block text-sm font-medium text-gray-900 dark:text-white">University President Signature<span class="text-red-600">*</span></label>
                                         <div class="grid grid-cols-1 items-center justify-center w-full">

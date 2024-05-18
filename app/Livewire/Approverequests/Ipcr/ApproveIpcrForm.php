@@ -83,12 +83,12 @@ class ApproveIpcrForm extends Component
         $dateToday = Carbon::now()->toDateString();
 
         $this->assessed_by = $ipcrData->assessed_by;
-        $this->assessed_by_date =  $ipcrData->assessed_by_date ?? $dateToday;
+        $this->assessed_by_date =  $ipcrData->assessed_by_date ;
         $this->assessed_by_verdict = $ipcrData->assessed_by_verdict;
         $this->final_rating = $ipcrData->final_rating;
         $this->final_rating_by = $ipcrData->final_rating_by;
         $this->final_rating_by_verdict = $ipcrData->final_rating_by_verdict;
-        $this->final_rating_by_date = $ipcrData->final_rating_by_date ?? $dateToday;
+        $this->final_rating_by_date = $ipcrData->final_rating_by_date ;
 
     
         

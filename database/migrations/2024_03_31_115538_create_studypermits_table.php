@@ -47,6 +47,8 @@ return new class extends Migration
             $table->date('date_head_office_unit')->nullable();
             $table->string('signature_endorsed_by')->nullable();
             $table->date('date_endorsed_by')->nullable();
+            $table->boolean('verdict_recommended_by')->nullable();
+            $table->boolean('verdict_endorsed_by')->nullable();
             $table->string('signature_recommended_by')->nullable();
             $table->date('date_recommended_by')->nullable();
             $table->string('signature_univ_pres')->nullable();

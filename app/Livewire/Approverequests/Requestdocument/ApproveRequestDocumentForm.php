@@ -148,21 +148,6 @@ class ApproveRequestDocumentForm extends Component
 
         $documentrequestdata = Documentrequest::findOrFail($this->index);
 
-        // $employee_record = Employee::select('employee_type', )
-        //                             ->where('employee_id', $loggedInUser->employee_id)
-        //                             ->get();   
-      
-
-        // $documentrequestdata->employee_id = $loggedInUser->employee_id;
-        // $documentrequestdata->date_of_filling = $this->date_of_filling;
-        // $documentrequestdata->ref_number = $this->ref_number;
-        // $documentrequestdata->employment_status = $employee_record[0]->employee_type;
-        // $documentrequestdata->status = 'Pending';
-        // $documentrequestdata->requests = $this->requests;
-        // $documentrequestdata->milc_description = $this->milc_description;
-        // $documentrequestdata->other_request = $this->other_request;
-        // $documentrequestdata->purpose = $this->purpose;
-
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
             ->where('employee_id', $loggedInUser->employee_id)
             ->first();
@@ -191,11 +176,6 @@ class ApproveRequestDocumentForm extends Component
                 $documentrequestdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/documentrequest/' . $propertyName, 'local') : '';
             }
         }
-
-
-        // $properties = [
-        // ];
-
 
         $fileFields = [
             'other_documents' => 'nullable|mimes:jpg,png,pdf|extensions:jpg,png',
@@ -232,6 +212,15 @@ class ApproveRequestDocumentForm extends Component
                 }
             }
             $documentrequestdata->$field = $fileNames;
+        }
+        $flag = False;
+        foreach($documentrequestdata->requests as $request){
+            if(is_null($documentrequestdata->$request)){
+                $flag = True;
+            }
+        }
+        if($flag == True){
+            $documentrequestdata->status = "Approved";
         }
 
         $this->js("alert('Document Request has been submitted!')"); 

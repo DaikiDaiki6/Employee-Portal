@@ -13,6 +13,8 @@ class LeaveRequestController extends Controller
     public function turnToPdf($id){
         // $pdf = PDF::loadView('workpdf', ['works' => $ipcr, 'employees' => $employee,]);
         $leaveRequestData = Leaverequest::query()->where('id', $id)->first();
+        // dd($leaveRequestData->human_resource_verdict_cd == 1 && $leaveRequestData->human_resource_verdict_a == 1 && $leaveRequestData->department_head_verdict == 1);
+        // dd($leaveRequestData->auth_off_sig_b && $leaveRequestData->auth_off_sig_a && $leaveRequestData->auth_off_sig_c_and_d);
         $employee_id = Leaverequest::query()->where('id', $id)->value('employee_id');
         $employee = Employee::query()->where('employee_id', $employee_id)->first(); 
         $image = Storage::disk('local')->get($leaveRequestData['commutation_signature_of_appli']);

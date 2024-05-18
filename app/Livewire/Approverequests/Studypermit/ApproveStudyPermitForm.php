@@ -112,10 +112,13 @@ class ApproveStudyPermitForm extends Component
         
         $dateToday = Carbon::now()->toDateString();
 
-        $this->date_recommended_by = $studypermitdata->date_recommended_by ?? $dateToday;
+        $this->date_recommended_by = $studypermitdata->date_recommended_by ;
         $this->signature_recommended_by = $studypermitdata->signature_recommended_by;
-        $this->date_endorsed_by = $studypermitdata->date_endorsed_by ?? $dateToday;
+        $this->date_endorsed_by = $studypermitdata->date_endorsed_by;
         $this->signature_endorsed_by = $studypermitdata->signature_endorsed_by;
+        $this->verdict_recommended_by = $studypermitdata->verdict_recommended_by;
+        $this->verdict_endorsed_by = $studypermitdata->verdict_endorsed_by;
+
         if(isset($studypermitdata->load)){
             $this->subjectLoad = json_decode($studypermitdata->load, true);
             foreach($this->subjectLoad as $load){
@@ -307,6 +310,7 @@ class ApproveStudyPermitForm extends Component
 
         // Iterate over the properties
         foreach ($verdictProperties as $propertyName => $validationRule) {
+                $studypermitdata->$propertyName = $this->$propertyName; 
                 $this->validate([$propertyName => $validationRule]);
         }
 
@@ -328,12 +332,18 @@ class ApproveStudyPermitForm extends Component
             ];
         }
 
+        if($studypermitdata->verdict_recommended_by &&  $studypermitdata->verdict_endorsed_by){
+            if( $studypermitdata->signature_recommended_by &&  $studypermitdata->signature_endorsed_by){
+                $studypermitdata->status = "Approved";
+            }
+        }
+
         $jsonSubjectLoad = json_encode($jsonSubjectLoad);
 
         $studypermitdata->load = $jsonSubjectLoad;
 
        
-        $this->js("alert('Study Permit submitted!')"); 
+        $this->js("alert('Study Permit updated!')"); 
  
         $studypermitdata->update();
 

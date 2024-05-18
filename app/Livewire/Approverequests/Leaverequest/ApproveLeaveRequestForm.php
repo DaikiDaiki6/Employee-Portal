@@ -284,15 +284,17 @@ class ApproveLeaveRequestForm extends Component
             } else{
                 $leaveRequest->human_resource_verdict_cd = 0;
                 $leaveRequest->hr_cd_disapprove_reason = $this->hr_cd_disapprove_reason;
-
             }
         }
-       
-       
 
-        if($leaveRequest->auth_off_sig_b && $leaveRequest->auth_off_sig_a && $leaveRequest->auth_off_sig_c_and_d){
-            $leaveRequest->status == "Approved";
+       
+       
+        if($leaveRequest->human_resource_verdict_cd == 1 && $leaveRequest->human_resource_verdict_a == 1 && $leaveRequest->department_head_verdict == 1 ){
+            if($leaveRequest->auth_off_sig_b && $leaveRequest->auth_off_sig_a && $leaveRequest->auth_off_sig_c_and_d){
+                $leaveRequest->status = "Approved";
+            }
         }
+
 
         $this->js("alert('Leave Request Status Updated!')"); 
 

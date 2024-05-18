@@ -99,8 +99,11 @@ class ApproveRequestDocumentTable extends Component
        $documentRequest = Documentrequest::findOrFail($index);
        $requestName = str_replace(' ', '_', $request);
        $requestName = strtolower($requestName);
+       $loggedInUser = auth()->user();
+       $loggedInEmployeeData = Employee::where('employee_id', $loggedInUser->employee_id)->first();
        $employee_id = auth()->user()->employee_id;
-       if($documentRequest->$requestName && $employee_id == $documentRequest->employee_id){
+       $head = explode(',', $loggedInEmployeeData->is_department_head_or_dean[0] ?? ' ');
+       if($documentRequest->$requestName && ($employee_id == $documentRequest->employee_id || $head[0] == 1 || $head[1] == 1 )){
            return "Approved";
        }
        return "Pending";

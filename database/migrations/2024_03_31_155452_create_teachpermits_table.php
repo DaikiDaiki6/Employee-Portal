@@ -32,12 +32,16 @@ return new class extends Migration
             $table->decimal('available_units', 10, 2)->nullable();
 
             $table->string('signature_of_head_office')->nullable();
+            $table->string('verdict_of_head_office')->nullable();
             $table->date('date_of_signature_of_head_office')->nullable();
             $table->string('signature_of_human_resource')->nullable();
+            $table->string('verdict_of_human_resource')->nullable();
             $table->date('date_of_signature_of_human_resource')->nullable();
             $table->string('signature_of_vp_for_academic_affair')->nullable();
+            $table->string('verdict_of_vp_for_academic_affair')->nullable();
             $table->date('date_of_signature_of_vp_for_academic_affair')->nullable();
             $table->string('signature_of_university_president')->nullable();
+            $table->string('verdict_of_university_president')->nullable();
             $table->date('date_of_signature_of_university_president')->nullable();
             
             $table->timestamps();

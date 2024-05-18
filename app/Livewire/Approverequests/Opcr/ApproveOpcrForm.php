@@ -167,11 +167,11 @@ class ApproveOpcrForm extends Component
         $this->disscused_with_date = $opcrData->disscused_with_date;
         $this->assessed_by = $opcrData->assessed_by;
         $this->assessed_by_verdict = $opcrData->assessed_by_verdict;
-        $this->assessed_by_date =  $opcrData->assessed_by_date ?? $dateToday;
+        $this->assessed_by_date =  $opcrData->assessed_by_date;
         $this->final_rating = $opcrData->final_rating;
         $this->final_rating_by = $opcrData->final_rating_by;
         $this->final_rating_by_verdict = $opcrData->final_rating_by_verdict;
-        $this->final_rating_by_date = $opcrData->final_rating_by_date ?? $dateToday;
+        $this->final_rating_by_date = $opcrData->final_rating_by_date;
     }
 
     public function getDiscussedWith(){
