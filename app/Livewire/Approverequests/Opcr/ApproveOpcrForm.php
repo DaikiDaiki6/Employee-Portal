@@ -167,11 +167,11 @@ class ApproveOpcrForm extends Component
         $this->disscused_with_date = $opcrData->disscused_with_date;
         $this->assessed_by = $opcrData->assessed_by;
         $this->assessed_by_verdict = $opcrData->assessed_by_verdict;
-        $this->assessed_by_date =  $opcrData->assessed_by_date;
+        $this->assessed_by_date =  $opcrData->assessed_by_date ?? $dateToday;
         $this->final_rating = $opcrData->final_rating;
         $this->final_rating_by = $opcrData->final_rating_by;
         $this->final_rating_by_verdict = $opcrData->final_rating_by_verdict;
-        $this->final_rating_by_date = $opcrData->final_rating_by_date;
+        $this->final_rating_by_date = $opcrData->final_rating_by_date ?? $dateToday;
     }
 
     public function getDiscussedWith(){
@@ -254,8 +254,8 @@ class ApproveOpcrForm extends Component
         $opcr->employee_id = $loggedInUser->employee_id;
         $opcr->opcr_type = $this->opcr_type;
         $opcr->date_of_filling = $this->date_of_filling;
-        $opcr->department_name = $this->department_name;
-        $opcr->department_head = $this->department_head;
+        // $opcr->department_name = $this->department_name;
+        // $opcr->department_head = $this->department_head;
         $opcr->start_period = $this->start_period;
         $opcr->end_period = $this->end_period;
         $opcr->ratee = $this->ratee;
@@ -295,6 +295,12 @@ class ApproveOpcrForm extends Component
             }
         }
 
+        if($opcr->assessed_by_verdict == 1 && $opcr->final_rating_by_verdict == 1){
+            if($opcr->final_rating_by &&  $opcr->assessed_by){
+                $opcr->status = "Approved";
+            }
+        }
+
         $opcr->disscused_with_date = $this->disscused_with_date;
         $opcr->assessed_by_date = $this->assessed_by_date;
         $opcr->final_rating = $this->final_rating;
@@ -309,6 +315,8 @@ class ApproveOpcrForm extends Component
                     'output' => $coreFunction['output'],
                     'indicator' => $coreFunction['indicator'],
                     'accomp' => $coreFunction['accomp'],
+                    'budget' => $coreFunction['budget'],
+                    'personsConcerned' => $coreFunction['personsConcerned'],
                     'Q' => $coreFunction['Q'],
                     'E' => $coreFunction['E'],
                     'T' => $coreFunction['T'],
@@ -318,13 +326,15 @@ class ApproveOpcrForm extends Component
     
             foreach($this->supportiveFunctions as $supportiveFunction){
                 $jsonSupportiveData[] = [
-                    'output' => $supportiveFunction['output'],
-                    'indicator' => $supportiveFunction['indicator'],
-                    'accomp' => $supportiveFunction['accomp'],
-                    'Q' => $supportiveFunction['Q'],
-                    'E' => $supportiveFunction['E'],
-                    'T' => $supportiveFunction['T'],
-                    'A' => $supportiveFunction['A'],
+                    'output' => $coreFunction['output'],
+                    'indicator' => $coreFunction['indicator'],
+                    'accomp' => $coreFunction['accomp'],
+                    'budget' => $coreFunction['budget'],
+                    'personsConcerned' => $coreFunction['personsConcerned'],
+                    'Q' => $coreFunction['Q'],
+                    'E' => $coreFunction['E'],
+                    'T' => $coreFunction['T'],
+                    'A' => $coreFunction['A'],
                 ];
             }
         } else{
@@ -333,8 +343,8 @@ class ApproveOpcrForm extends Component
                     'output' => $coreFunction['output'],
                     'indicator' => $coreFunction['indicator'],
                     'accomp' => $coreFunction['accomp'],
-                    'weight' => $coreFunction['weight'],
-                    'remark' => $coreFunction['remark'],
+                    'budget' => $coreFunction['budget'],
+                    'personsConcerned' => $coreFunction['personsConcerned'],
                     'Q' => $coreFunction['Q'],
                     'E' => $coreFunction['E'],
                     'T' => $coreFunction['T'],
@@ -347,8 +357,8 @@ class ApproveOpcrForm extends Component
                     'output' => $supportiveFunction['output'],
                     'indicator' => $supportiveFunction['indicator'],
                     'accomp' => $supportiveFunction['accomp'],
-                    'weight' => $supportiveFunction['weight'],
-                    'remark' => $supportiveFunction['remark'],
+                    'budget' => $supportiveFunction['budget'],
+                    'personsConcerned' => $supportiveFunction['personsConcerned'],
                     'Q' => $supportiveFunction['Q'],
                     'E' => $supportiveFunction['E'],
                     'T' => $supportiveFunction['T'],
@@ -364,10 +374,8 @@ class ApproveOpcrForm extends Component
         $opcr->core_functions = $jsonCoreData;
         $opcr->supp_admin_functions = $jsonSupportiveData;
 
-        $this->js("alert('Opcr submitted!')"); 
-        // session()->flash('status', 'Ipcr successfully submitted.');
-
-        // Ipcr::create($opcr);
+        $this->js("alert('Opcr Updated!')"); 
+        
         $opcr->update();
 
         return redirect()->to(route('ApproveOpcrTable'));

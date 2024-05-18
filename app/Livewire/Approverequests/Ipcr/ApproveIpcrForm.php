@@ -262,6 +262,13 @@ class ApproveIpcrForm extends Component
                 $this->validate([$propertyName => $validationRule]);
             }
         }
+        
+        if($ipcr->assessed_by_verdict == 1 && $ipcr->final_rating_by_verdict == 1){
+            if($ipcr->final_rating_by &&  $ipcr->assessed_by){
+                $ipcr->status = "Approved";
+            }
+        }
+        
 
         $ipcr->disscused_with_date = $this->disscused_with_date;       
         $ipcr->assessed_by_date = $this->assessed_by_date;

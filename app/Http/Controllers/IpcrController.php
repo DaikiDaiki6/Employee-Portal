@@ -46,13 +46,13 @@ class IpcrController extends Controller
         $employee_id = Ipcr::query()->where('id', $index)->value('employee_id'); // Get Employee ID
         $employee = Employee::query()->where('employee_id', $employee_id)->first(); // Get Employee Records
         $images['discussed_with'] = Storage::disk('local')->get($ipcr[0]['discussed_with']);
-        if(isset($images['assessed_by'])){
-            if($images['assessed_by'] != Null){
+        if(isset($ipcr[0]['assessed_by'])){
+            if($ipcr[0]['assessed_by_verdict'] == 1){
                 $images['assessed_by'] = Storage::disk('local')->get($ipcr[0]['assessed_by']);
             }
         }
-        if(isset($images['final_rating_by'])){
-            if($images['final_rating_by'] != Null){
+        if(isset($ipcr[0]['final_rating_by'])){
+            if($ipcr[0]['final_rating_by_verdict'] == 1){
                 $images['final_rating_by'] = Storage::disk('local')->get($ipcr[0]['final_rating_by']);
             }
         }

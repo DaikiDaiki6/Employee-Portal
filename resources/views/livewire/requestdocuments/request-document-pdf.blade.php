@@ -68,12 +68,12 @@
                 </div>
                 
                 <div style="margin-bottom: 10px; display: flex; align-items: center; margin-left: 3%">
-                    <input type="checkbox" name="requests[]" value="Service Record" style="margin-right: 5px; vertical-align: middle;" {{ in_array('Service Record', $requestDocument->requests) ? 'checked' : '' }}>
+                    <input type="checkbox" name="requests[]" value="Service Record" style="margin-right: 5px; vertical-align: middle;" {{ in_array('Certificate of Employment with Compensation', $requestDocument->requests) ? 'checked' : '' }}>
                     <label style="vertical-align: middle;">Certificate of Employment with Compensation</label>
                 </div>
                 
                 <div style="margin-bottom: 10px; display: flex; align-items: center; margin-left: 3%">
-                    <input type="checkbox" name="requests[]" value="Part-time Teaching Services" style="margin-right: 5px; vertical-align: middle;" {{ in_array('Part-time Teaching Services', $requestDocument->requests) ? 'checked' : '' }}>
+                    <input type="checkbox" name="requests[]" value="Part time Teaching Services" style="margin-right: 5px; vertical-align: middle;" {{ in_array('MILC Certification', $requestDocument->requests) ? 'checked' : '' }}>
                     @if ($requestDocument->milc_description)
                     <label style=“vertical-align: middle;”>MILC Certification:<span style="text-decoration: underline; text-underline-offset: 0px; text-decoration-thickness: auto">__{{$requestDocument->milc_description}}___</span></label>
 
@@ -110,7 +110,7 @@
                 </div>
                 
                 <div style="margin-bottom: 10px; margin-left: 3%">
-                    <input type="checkbox" name="requests[]" value="Part-time Teaching Servicesr" style="margin-right: 5px; vertical-align: middle;" {{ in_array('Part-time Teaching Services', $requestDocument->requests) ? 'checked' : '' }}>
+                    <input type="checkbox" name="requests[]" value="Part time Teaching Services" style="margin-right: 5px; vertical-align: middle;" {{ in_array('Part time Teaching Services', $requestDocument->requests) ? 'checked' : '' }}>
                     <label style="vertical-align: middle;">Part-time Teaching Services</label>
                 </div>
             </div>

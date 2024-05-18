@@ -35,7 +35,7 @@ return new class extends Migration
             $table->boolean('assessed_by_verdict')->nullable();
             $table->float('final_rating')->nullable();
             $table->string('final_rating_by')->nullable();
-            $table->boolean('final_rating_verdict')->nullable();
+            $table->boolean('final_rating_by_verdict')->nullable();
             $table->date('final_rating_by_date')->nullable();
             $table->timestamps();
         });
