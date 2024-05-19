@@ -17,8 +17,7 @@ class StudyPermitController extends Controller
         $employee_id = Studypermit::query()->where('id', $id)->value('employee_id'); 
         $employee = Employee::query()->where('employee_id', $employee_id)->first(); 
         $logoUrl = Storage::disk('public')->get('plmlogo/plm-logo.png');
-        // $image = Storage::disk('local')->get($studypermit['applicant_signature']);
-        $image = 5;
+        $image = Storage::disk('local')->get($studypermit['applicant_signature']);
         Pdf::setOption(['dpi' => 150, 'defaultFont' => 'arial']); 
         $pdf = PDF::loadView('livewire.studypermit.study-permit-pdf', ['studypermits' => $studypermit, 'employees' => $employee, 'stud' => $stud, 'signature' => $image, 'logo' => $logoUrl ]); // Pass data to the blade file
         $pdf->setPaper('A4', 'portrait'); 

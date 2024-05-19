@@ -5,6 +5,7 @@ namespace App\Livewire\Trainings;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Training;
+use Livewire\Attributes\Locked;
 
 class TrainingGallery extends Component
 {
@@ -28,20 +29,26 @@ class TrainingGallery extends Component
 
     public $filter;
 
+    #[Locked]
+    public $is_head;
+
     public function filterListener(){
         $loggedInUser = auth()->user();
-        $departmentName = Employee::where('employee_id', $loggedInUser->employee_id)
-                                ->value('department_name');
-        $this->department_name = $departmentName;
+        $employeeData = Employee::select('department_id', 'dean_id', 'is_department_head_or_dean')
+                    ->where('employee_id', $loggedInUser->employee_id)
+                    ->first();
+        $head = explode(',', $employeeData->is_department_head_or_dean[0] ?? ' ');
+        $this->is_head = $head[0] == 1 || $head[1] == 1 || $loggedInUser->is_admin ? true : false;
+        $this->department_name = $employeeData->department_name;
         if($this->filter != "All" && $this->filter != null){
-            return Training::whereJsonContains('visible_to_list', $departmentName)
+            return Training::whereJsonContains('visible_to_list', $employeeData->department_name)
                         ->whereJsonContains('visible_to_list', $this->filter)
                         ->paginate(10);
                         // dd($this->filter);
         }
         else {
             // dd('seal');
-            return Training::whereJsonContains('visible_to_list', $departmentName)->paginate(10);
+            return Training::whereJsonContains('visible_to_list', $employeeData->department_name)->paginate(10);
         }
 
     }

@@ -23,12 +23,13 @@ class StudyPermitPolicy
     public function view(User $user, Studypermit $studypermit, $type = Null): bool
     {
         if($type == "Approved"){
+            
             $loggedInUser = Employee::select('department_id', 'dean_id', 'is_department_head_or_dean')
                 ->where('employee_id', $user->employee_id)
                 ->first();
             $head = explode(',', $loggedInUser->is_department_head_or_dean[0] ?? ' ');
 
-            return $head[0] == 1 || $head[1] == 1; 
+            return $head[0] == 1 || $head[1] == 1 || $user->is_admin; 
        } else {
             return $user->employee_id == $studypermit->employee_id || $user->is_admin == True;
        }

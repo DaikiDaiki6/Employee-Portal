@@ -28,7 +28,7 @@ class TeachPermitPolicy
                 ->first();
             $head = explode(',', $loggedInUser->is_department_head_or_dean[0] ?? ' ');
 
-            return $head[0] == 1 || $head[1] == 1; 
+            return $head[0] == 1 || $head[1] == 1 || $user->is_admin; 
        } else {
             return $user->employee_id == $teachpermit->employee_id || $user->is_admin == True;
        }

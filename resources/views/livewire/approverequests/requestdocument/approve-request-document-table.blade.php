@@ -128,6 +128,7 @@
                                         @foreach ($documentrequest->requests as $request)
                                         @php
                                             $documentStatus = $this->getStatusOfDocument($documentrequest->id, $request);
+                                         
                                         @endphp
                                            <div class="mt-2">
                                             @if ($documentStatus == "Approved")

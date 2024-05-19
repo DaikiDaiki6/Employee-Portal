@@ -213,8 +213,8 @@ class OpcrUpdate extends Component
         'coreFunctions.*.accomp' => 'required|min:10|max:2048',
         'coreFunctions.*.weight' => 'required_if:opcr_type,rated|numeric|min:1|max:100',
         'coreFunctions.*.remark' => 'required_if:opcr_type,rated|min:10',
-        'coreFunctions.*.budget' => 'required_if:opcr_type,rated|numeric|min:1|max:9999999999',
-        'coreFunctions.*.personsConcerned' => 'required_if:opcr_type,rated|min:10',
+        'coreFunctions.*.budget' => 'required|numeric|min:1|max:9999999999',
+        'coreFunctions.*.personsConcerned' => 'required|min:10',
         'coreFunctions.*.Q' => 'required|numeric|min:1|max:5',
         'coreFunctions.*.E' => 'required|numeric|min:1|max:5',
         'coreFunctions.*.T' => 'required|numeric|min:1|max:5',
@@ -225,8 +225,8 @@ class OpcrUpdate extends Component
         'supportiveFunctions.*.accomp' => 'required|min:10|max:2048',
         'supportiveFunctions.*.weight' => 'required_if:opcr_type,rated|numeric|min:1|max:100',
         'supportiveFunctions.*.remark' => 'required_if:opcr_type,rated|required_if:opcr_type,ratedmin:10',
-        'supportiveFunctions.*.budget' => 'required_if:opcr_type,rated|numeric|min:1|max:9999999999',
-        'supportiveFunctions.*.personsConcerned' => 'required_if:opcr_type,rated|min:10',
+        'supportiveFunctions.*.budget' => 'required|numeric|min:1|max:9999999999',
+        'supportiveFunctions.*.personsConcerned' => 'required|min:10',
         'supportiveFunctions.*.Q' => 'required|numeric|min:1|max:5',
         'supportiveFunctions.*.E' => 'required|numeric|min:1|max:5',
         'supportiveFunctions.*.T' => 'required|numeric|min:1|max:5',
@@ -355,6 +355,8 @@ class OpcrUpdate extends Component
                     'accomp' => $coreFunction['accomp'],
                     'budget' => $coreFunction['budget'],
                     'personsConcerned' => $coreFunction['personsConcerned'],
+                    'weight' => $coreFunction['weight'],
+                    'remark' => $coreFunction['remark'],
                     'Q' => $coreFunction['Q'],
                     'E' => $coreFunction['E'],
                     'T' => $coreFunction['T'],
@@ -369,6 +371,8 @@ class OpcrUpdate extends Component
                     'accomp' => $supportiveFunction['accomp'],
                     'budget' => $supportiveFunction['budget'],
                     'personsConcerned' => $supportiveFunction['personsConcerned'],
+                    'weight' => $supportiveFunction['weight'],
+                    'remark' => $supportiveFunction['remark'],
                     'Q' => $supportiveFunction['Q'],
                     'E' => $supportiveFunction['E'],
                     'T' => $supportiveFunction['T'],
@@ -384,7 +388,7 @@ class OpcrUpdate extends Component
         $opcr->core_functions = $jsonCoreData;
         $opcr->supp_admin_functions = $jsonSupportiveData;
 
-        $this->js("alert('Opcr submitted!')"); 
+        $this->js("alert('Opcr Updated!')"); 
         // session()->flash('status', 'Ipcr successfully submitted.');
 
         // Ipcr::create($opcr);

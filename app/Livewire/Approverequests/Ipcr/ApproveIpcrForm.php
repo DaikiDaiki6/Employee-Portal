@@ -90,8 +90,6 @@ class ApproveIpcrForm extends Component
         $this->final_rating_by_verdict = $ipcrData->final_rating_by_verdict;
         $this->final_rating_by_date = $ipcrData->final_rating_by_date ;
 
-    
-        
         // $this->coreFunctions = [
         //     ['output' => '', 'indicator' => '', 'accomp' => '', 'Q' => '', 'E' => '', 'T' => '', 'A' => '']
         // ];

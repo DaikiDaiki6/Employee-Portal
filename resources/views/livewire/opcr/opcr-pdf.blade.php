@@ -104,7 +104,7 @@
                 @endforeach 
                 <tr><td colspan="9"><b>Core Function Rating: {{$opcrData['core_rating']}}</b></td></tr>
                 <tr>
-                    <td colspan="9"><b>B. Support / Administrative Functions - 20%</b></td>
+                    <td colspan="9"><b>B. Support / Administrative Functions - 30%</b></td>
                 </tr>   
                 @foreach ($suppFunctions as $suppAdminFunction)
                   <!-- SUpport/Administrative Functions -->

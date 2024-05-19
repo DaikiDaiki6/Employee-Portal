@@ -144,7 +144,9 @@
                 
                     <tr>
                         <td class="employee-info" colspan="5" ><b>Degree program and school where employee intends to enroll.</b><br> <br>
-                            <label style="word-wrap: break-word; "> <u>{{str_pad($studypermits['degree_prog_and_school'] ?? ' ', 428, '_', STR_PAD_RIGHT) }}</u></label>
+                            {{-- <label style="word-wrap: break-word; "> {{str_pad($studypermits['degree_prog_and_school'] ?? ' ', 428, '_', STR_PAD_RIGHT) }}</label> --}}
+                            <label style="word-wrap: break-word;  "> {{$studypermits['degree_prog_and_school']}}</label>
+                            
                         </td>
                     </tr>
     
@@ -199,7 +201,7 @@
                 <tr>
                     <td colspan="4" style="border: none"></td>
                     <td colspan="1" style="text-align: center; border:none">
-                        {{-- <img src="data:image/gif;base64,{{ base64_encode($signature) }}" alt="Image Description" width="200" height="50">  --}}
+                        <img src="data:image/gif;base64,{{ base64_encode($signature) }}" alt="Image Description" width="200" height="50"> 
                         <p style="vertical-align: bottom; margin-top:0px "> __________________ <br> Signature</p>
                     </td>
                 </tr>

@@ -40,7 +40,7 @@ class OpcrTable extends Component
     public function removeOpcr($id){
         $opcrToBeDeleted = Opcr::findOrFail($id);
         $opcrToBeDeleted->delete();
-        return redirect()->route('opcrtable');
+        return redirect()->route('OpcrTable');
     }
 
     

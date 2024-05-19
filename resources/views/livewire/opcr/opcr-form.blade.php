@@ -279,7 +279,6 @@
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-3 min-[1150px]:col-span-5 ">
-                                            @if($opcr_type == "rated")
                                                 <div>
                                                     <label for="coreFunctions_{{$index}}_budget"
                                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget <span class="text-red-600">*</span></label>
@@ -291,53 +290,54 @@
                                                         </div> 
                                                     @enderror
                                                 </div>
-                                            @endif
-                                            <div>
-                                                <label for="coreFunctions_{{$index}}_weight"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight (%) <span class="text-red-600">*</span></label>
-                                                <input type="number" id="coreFunctions_{{$index}}_weight" wire:model.blur="coreFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                @error('coreFunctions.' . $index. '.weight')   
-                                                    <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('coreFunctions_{{$index}}_weight').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_weight').focus();" >
-                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                    </div> 
-                                                @enderror
-                                            </div>
                                             @if($opcr_type == "rated")
-                                            <div>
-                                                <label for="coreFunctions_{{$index}}_personsConcerned"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
-                                                <textarea type="text" id="coreFunctions_{{$index}}_personsConcerned" wire:model.blur="coreFunctions.{{$index}}.personsConcerned"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
-                                                @error('coreFunctions.' . $index . '.personsConcerned')   
-                                                    <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('coreFunctions_{{$index}}_personsConcerned').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_personsConcerned').focus();" >
-                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                    </div> 
-                                                @enderror
-                                            </div>
-                                            <div>
-                                                <label for="coreFunctions_{{$index}}_remark"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
-                                                <textarea type="text" id="coreFunctions_{{$index}}_remark" wire:model.blur="coreFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
-                                                @error('coreFunctions.' . $index . '.remark')   
-                                                    <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('coreFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_remark').focus();" >
-                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                    </div> 
-                                                @enderror
-                                            </div>
+                                                <div>
+                                                    <label for="coreFunctions_{{$index}}_weight"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight (%) <span class="text-red-600">*</span></label>
+                                                    <input type="number" id="coreFunctions_{{$index}}_weight" wire:model.blur="coreFunctions.{{$index}}.weight"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                    @error('coreFunctions.' . $index. '.weight')   
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                            x-data x-init="document.getElementById('coreFunctions_{{$index}}_weight').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_weight').focus();" >
+                                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                    @enderror
+                                                </div>
+                                            @endif
+                                            @if($opcr_type == "rated")
+                                                <div>
+                                                    <label for="coreFunctions_{{$index}}_personsConcerned"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
+                                                    <textarea type="text" id="coreFunctions_{{$index}}_personsConcerned" wire:model.blur="coreFunctions.{{$index}}.personsConcerned"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                                    @error('coreFunctions.' . $index . '.personsConcerned')   
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                            x-data x-init="document.getElementById('coreFunctions_{{$index}}_personsConcerned').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_personsConcerned').focus();" >
+                                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                    @enderror
+                                                </div>
+                                                <div>
+                                                    <label for="coreFunctions_{{$index}}_remark"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
+                                                    <textarea type="text" id="coreFunctions_{{$index}}_remark" wire:model.blur="coreFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                                    @error('coreFunctions.' . $index . '.remark')   
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                            x-data x-init="document.getElementById('coreFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_remark').focus();" >
+                                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                    @enderror
+                                                </div>
                                             @else
-                                            <div>
-                                                <label for="message"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
-                                                <input type="text" id="coreFunctions_{{$index}}_remark" wire:model.blur="coreFunctions.{{$index}}.remark"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                @error('coreFunctions.' . $index . '.remark')   
-                                                    <div class="transition transform alert alert-danger text-sm"
-                                                        x-data x-init="document.getElementById('coreFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_remark').focus();" >
-                                                            <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                    </div> 
-                                                @enderror
-                                            </div>
+                                                <div>
+                                                    <label for="coreFunctions_{{$index}}_personsConcerned"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
+                                                    <textarea rows="1" type="text" id="coreFunctions_{{$index}}_personsConcerned" wire:model.blur="coreFunctions.{{$index}}.personsConcerned"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                                    @error('coreFunctions.' . $index . '.personsConcerned')   
+                                                        <div class="transition transform alert alert-danger text-sm"
+                                                            x-data x-init="document.getElementById('coreFunctions_{{$index}}_personsConcerned').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('coreFunctions_{{$index}}_personsConcerned').focus();" >
+                                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                                        </div> 
+                                                    @enderror
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
@@ -394,7 +394,7 @@
                         {{-- Support/Admnistrative Functions --}}
                         <div class="block flex-wrap w-full col-span-3 p-6 pb-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                             <div class="flex-none pb-4">
-                                <h2><b>Support/Administrative Functions-20%</b></h2>
+                                <h2><b>Support/Administrative Functions-30%</b></h2>
                             </div>
                             @php
                                 $supportCtr = 0;
@@ -552,7 +552,6 @@
                                           
                                         </div>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 col-span-3 min-[1150px]:col-span-5">
-                                            @if($opcr_type == "rated")
                                                 <div>
                                                     <label for="supportiveFunctions_{{$index}}_budget" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget <span class="text-red-600">*</span></label>
                                                     <input type="number" id="supportiveFunctions_{{$index}}_budget" wire:model.blur="supportiveFunctions.{{$index}}.budget" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -562,7 +561,7 @@
                                                         </div> 
                                                     @enderror
                                                 </div>
-                                            @endif
+                                            @if($opcr_type == "rated")
                                             <div>
                                                 <label for="supportiveFunctions_{{$index}}_weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight (%) <span class="text-red-600">*</span></label>
                                                 <input type="number" id="supportiveFunctions_{{$index}}_weight" wire:model.blur="supportiveFunctions.{{$index}}.weight" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -572,6 +571,8 @@
                                                     </div> 
                                                 @enderror
                                             </div>
+                                            @endif
+
                                             @if($opcr_type == "rated")
                                                 <div>
                                                     <label for="supportiveFunctions_{{$index}}_personsConcerned" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
@@ -593,10 +594,10 @@
                                                 </div>
                                             @else
                                                 <div>
-                                                    <label for="supportiveFunctions_{{$index}}_remark" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Remarks <span class="text-red-600">*</span></label>
-                                                    <input type="text" id="supportiveFunctions_{{$index}}_remark" wire:model.blur="supportiveFunctions.{{$index}}.remark" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                    @error('supportiveFunctions.' . $index . '.remark')   
-                                                        <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_remark').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_remark').focus();">
+                                                    <label for="supportiveFunctions_{{$index}}_personsConcerned" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Persons Concerned <span class="text-red-600">*</span></label>
+                                                    <textarea rows="1" type="text" id="supportiveFunctions_{{$index}}_personsConcerned" wire:model.blur="supportiveFunctions.{{$index}}.personsConcerned" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                                    @error('supportiveFunctions.' . $index . '.personsConcerned')   
+                                                        <div class="transition transform alert alert-danger text-sm" x-data x-init="document.getElementById('supportiveFunctions_{{$index}}_personsConcerned').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supportiveFunctions_{{$index}}_personsConcerned').focus();">
                                                             <span class="text-red-500 text-xs" > {{$message}}</span>
                                                         </div> 
                                                     @enderror

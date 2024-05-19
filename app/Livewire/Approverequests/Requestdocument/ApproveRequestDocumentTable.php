@@ -103,6 +103,8 @@ class ApproveRequestDocumentTable extends Component
        $loggedInEmployeeData = Employee::where('employee_id', $loggedInUser->employee_id)->first();
        $employee_id = auth()->user()->employee_id;
        $head = explode(',', $loggedInEmployeeData->is_department_head_or_dean[0] ?? ' ');
+       if ($request == "Others")
+            $requestName = 'other_documents';
        if($documentRequest->$requestName && ($employee_id == $documentRequest->employee_id || $head[0] == 1 || $head[1] == 1 )){
            return "Approved";
        }

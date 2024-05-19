@@ -276,8 +276,8 @@ class ApproveStudyPermitForm extends Component
         // }
 
         $properties = [
-            'signature_recommended_by' => 'required_with:verdict_recommended_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'signature_endorsed_by' => 'required_with:verdict_endorsed_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'signature_recommended_by' => ['required_with:verdict_recommended_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_recommended_by'],
+            'signature_endorsed_by' => ['required_with:verdict_endorsed_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_endorsed_by'],
         ];
 
         // Iterate over the properties
@@ -296,10 +296,11 @@ class ApproveStudyPermitForm extends Component
                 else {
                     // If it's an uploaded file, store it and apply validation rules
                     if($this->$propertyName){
-                    $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Leave Request', 'Signed', $studypermitdata->id, $signedIn));
+                        $name_of_verdict = $validationRule[1];
+                        $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Leave Request', 'Signed', $studypermitdata->id, $signedIn, $this->$name_of_verdict));
                     }
                     $studypermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/studypermit/' . $propertyName, 'local') : '';
-                    $this->validate([$propertyName => $validationRule]);
+                    $this->validate([$propertyName => $validationRule[0]]);
                 }
         }
 

@@ -171,7 +171,7 @@ class ApproveRequestDocumentForm extends Component
             } else {
                 $this->validate([$propertyName => $validationRule]);
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Request Document', 'Signed', $documentrequestdata->id, $signedIn));
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Request Document', 'Signed', $documentrequestdata->id, $signedIn, $documentrequestdata->$propertyName != null ? 1 : 0));
                 }
                 $documentrequestdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/documentrequest/' . $propertyName, 'local') : '';
             }

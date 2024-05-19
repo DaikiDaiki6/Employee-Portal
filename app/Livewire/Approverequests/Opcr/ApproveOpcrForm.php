@@ -285,13 +285,14 @@ class ApproveOpcrForm extends Component
                 // If it's a string, assign it directly
                 $opcr->$propertyName = $this->$propertyName;
             } else {
-                if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Opcr', 'Signed', $opcr->id, $signedIn));
-                }
+                $this->validate([$propertyName => $validationRule]);
                 $nameOfProperty = $propertyName.'_verdict';
                 $opcr->$nameOfProperty = $this->$nameOfProperty;
+                if($this->$propertyName){
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Opcr', 'Signed', $opcr->id, $signedIn, $opcr->$nameOfProperty));
+                }
+
                 $opcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/opcr/' . $propertyName, 'local') : '';
-                $this->validate([$propertyName => $validationRule]);
             }
         }
 

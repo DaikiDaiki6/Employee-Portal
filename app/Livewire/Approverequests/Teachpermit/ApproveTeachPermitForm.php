@@ -179,10 +179,10 @@ class ApproveTeachPermitForm extends Component
 
         $properties = [
             // 'applicant_signature' => 'mimes:jpg,png|extensions:jpg,png,pdf',
-            'signature_of_head_office' => 'required_with:date_of_signature_of_head_office|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'signature_of_human_resource' => 'required_with:date_of_signature_of_human_resource|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'signature_of_vp_for_academic_affair' => 'required_with:date_of_signature_of_vp_for_academic_affair|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
-            'signature_of_university_president' => 'required_with:date_of_signature_of_university_president|mimes:jpg,png,pdf|extensions:jpg,png,pdf',
+            'signature_of_head_office' => ['required_with:date_of_signature_of_head_office|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_of_head_office'],
+            'signature_of_human_resource' => ['required_with:date_of_signature_of_human_resource|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_of_human_resource'] ,
+            'signature_of_vp_for_academic_affair' => ['required_with:date_of_signature_of_vp_for_academic_affair|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_of_vp_for_academic_affair'],
+            'signature_of_university_president' => ['required_with:date_of_signature_of_university_president|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_of_university_president'],
         ];
         
         // Iterate over the properties
@@ -193,11 +193,10 @@ class ApproveTeachPermitForm extends Component
                 // If it's a string, assign it directly
                 $teachpermitdata->$propertyName = $this->$propertyName;
             } else {
-                // If it's an uploaded file, store it and apply validation rules
-                // $this->validate([$propertyName => $validationRule]);
-                $this->validate([$propertyName => $validationRule]);
+                $this->validate([$propertyName => $validationRule[0]]);
+                $name_of_verdict = $validationRule[1];
                 if($this->$propertyName){
-                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Teach Permit', 'Signed', $teachpermitdata->id, $signedIn));
+                $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Teach Permit', 'Signed', $teachpermitdata->id, $signedIn,  $this->$name_of_verdict));
                 }
                 $teachpermitdata->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/teachpermit/' . $propertyName, 'local') : '';
             }

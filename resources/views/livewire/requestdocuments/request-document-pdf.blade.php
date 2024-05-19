@@ -84,17 +84,17 @@
                 
                 <div style="margin-bottom: 10px; display: flex; align-items: center; margin-left: 3%">
                     <input type="checkbox" name="requests[]" value="Certificate of No Pending Administrative Case" style="margin-right: 5px; vertical-align: middle;" {{ in_array('Certificate of No Pending Administrative Case', $requestDocument->requests) ? 'checked' : '' }}>
-                    @if ($legalAffairs->purpose ?? ' ')
-                        <label style="vertical-align: middle;">Certificate of No Pending Administrative Case: __<u>{{$legalAffairs->purpose ?? ' '}}</u>__</label>
-                    @else
-                        <label style="vertical-align: middle;">Certificate of No Pending Administrative Case</label>
-                    @endif
+                    {{-- @if ($legalAffairs->purpose ?? ' ')
+                        <label >Certificate of No Pending Administrative Case: __<span style="text-decoration: underline; text-underline-offset: 0px; text-decoration-thickness: auto">{{$legalAffairs->purpose ?? ' '}}</span>__</label>
+                    @else --}}
+                        <label>Certificate of No Pending Administrative Case</label>
+                    {{-- @endif --}}
                 </div>
                 
                 <div style="margin-bottom: 10px; display: flex; align-items: center; margin-left: 3%">
                     <input type="checkbox" name="requests[]" value="Another Request" style="margin-right: 5px; vertical-align: middle;" {{ in_array('Others', $requestDocument->requests) ? 'checked' : '' }}>
-                    @if (in_array('Another Request', $requestDocument->requests))
-                        <label style="vertical-align: middle;">Others: __<u>{{$requestDocument->other_request}}</u>__</label>
+                    @if (in_array('Others', $requestDocument->requests))
+                        <label >Others: __<span style="text-decoration: underline; text-underline-offset: 0px; text-decoration-thickness: auto">{{$requestDocument->other_request}}</span>__</label>
                     @else
                         <label style="vertical-align: middle;">Others: ___________________________</label>
                     @endif
@@ -149,7 +149,7 @@
                         <!-- Content for this section -->
                         <p>{{$requestDocument->date_of_filling}}</p>
                         <hr style="border: none; border-bottom: 1px solid black; width: 200px;">
-                        <p style="margin: 5px 0;">Specific text for this section</p>
+                        <p style="margin: 5px 0;">Date of Signing</p>
                     </div>
                 </div>
             </div>

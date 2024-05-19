@@ -5,10 +5,23 @@ namespace App\Livewire\Activities;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Activities;
+use Livewire\Attributes\Locked;
 
 class ActivitiesGallery extends Component
 {   
     public $filter;
+
+    #[Locked]
+    public $is_head;
+
+    public function mount(){
+        $loggedInUser = auth()->user();
+        $employeeData = Employee::select('department_id', 'dean_id', 'is_department_head_or_dean')
+                    ->where('employee_id', $loggedInUser->employee_id)
+                    ->first();
+        $head = explode(',', $employeeData->is_department_head_or_dean[0] ?? ' ');
+        $this->is_head = $head[0] == 1 || $head[1] == 1 || $loggedInUser->is_admin  ? true : false;
+    }
 
     public function filterListener(){
         $loggedInUser = auth()->user();

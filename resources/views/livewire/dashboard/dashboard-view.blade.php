@@ -40,14 +40,6 @@
 
         }
     }
-     @media (min-width: 900px) {
-        #good_morning{
-            white-space: nowrap;
-            
-        }
-    }
-    
-
     </style>
 
  

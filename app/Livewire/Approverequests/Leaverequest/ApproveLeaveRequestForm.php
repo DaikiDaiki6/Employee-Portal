@@ -228,9 +228,9 @@ class ApproveLeaveRequestForm extends Component
         $targetUser = User::where('employee_id', $leaveRequest->employee_id)->first();
 
         $properties = [
-            'auth_off_sig_a' => 'required_with:human_resource_verdict_a||mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
-            'auth_off_sig_b' => 'required_with:department_head_verdict|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
-            'auth_off_sig_c_and_d' => 'required_with:human_resource_verdict_cd|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120',
+            'auth_off_sig_a' => ['required_with:human_resource_verdict_a|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120', 'department_head_verdict'],
+            'auth_off_sig_b' => ['required_with:department_head_verdict|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120', 'human_resource_verdict_a'],
+            'auth_off_sig_c_and_d' => ['required_with:human_resource_verdict_cd|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120', 'human_resource_verdict_cd'],
         ];
 
         // Iterate over the properties
@@ -251,10 +251,11 @@ class ApproveLeaveRequestForm extends Component
                 else {
                     // If it's an uploaded file, store it and apply validation rules
                     if($this->$propertyName){
-                    $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Leave Request', 'Signed', $leaveRequest->id, $signedIn));
+                        $name_of_verdict = $validationRule[1];
+                        $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Leave Request', 'Signed', $leaveRequest->id, $signedIn, $this->$name_of_verdict == 'Approved' ? 1 : 0));
                     }
                     $leaveRequest->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/leaverequest/' . $propertyName, 'local') : '';
-                    $this->validate([$propertyName => $validationRule]);
+                    $this->validate([$propertyName => $validationRule[0]]);
                 }
                 
         }
@@ -268,6 +269,7 @@ class ApproveLeaveRequestForm extends Component
                 $leaveRequest->head_disapprove_reason = $this->head_disapprove_reason;
             }
         }
+
         if(isset($this->human_resource_verdict_a)){
             if($this->human_resource_verdict_a == "Approved"){
                 $leaveRequest->human_resource_verdict_a = 1;
