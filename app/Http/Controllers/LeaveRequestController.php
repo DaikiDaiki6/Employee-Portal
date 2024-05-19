@@ -22,7 +22,7 @@ class LeaveRequestController extends Controller
         $pdf = PDF::loadView('livewire.leaverequest.leave-request-pdf', ['leaveRequestData' => $leaveRequestData, 'employees' => $employee, 'image' => $image, 'logo' => $logoUrl]);
         Pdf::setOption(['dpi' => 150, 'defaultFont' => 'arial']);
         $customPaper = array(0, 0, 595.28, 870.89);
-        $pdf->setPaper('A4', 'portrait');
+        $pdf->setPaper($customPaper, 'portrait');
         return $pdf->stream();   
     }
 

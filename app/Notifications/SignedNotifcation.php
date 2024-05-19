@@ -17,15 +17,18 @@ class SignedNotifcation extends Notification
     public $file_id;
     public $signed_in_editor;
 
+    public $verdict;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct($user, $type, $status, $file_id, $signed_in_editor=null)
+    public function __construct($user, $type, $status, $file_id, $signed_in_editor=null, $verdict)
     {
         $this->user = $user;
         $this->type = $type;
         $this->status = $status;
         $this->file_id = $file_id;
+        $this->verdict  = $verdict;
         if($signed_in_editor != null){
             $this->signed_in_editor = $signed_in_editor;
         }
@@ -53,7 +56,9 @@ class SignedNotifcation extends Notification
             'type' => $this->type,
             'status' => $this->status,
             'file_id' => $this->file_id,
+            'verdict' => $this->verdict,
             'signed_in_editor' => $this->signed_in_editor ?? ' '
+            
         ];
     }
 }

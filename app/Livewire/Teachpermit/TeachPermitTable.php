@@ -27,7 +27,6 @@ class TeachPermitTable extends Component
         return view('livewire.teachpermit.teach-permit-table', [
             'TeachPermitData' => Teachpermit::where('employee_id', $loggedInUser->employee_id)->paginate(10),
         ]);
-
     }
 
     public function removeTeachPermit($id){

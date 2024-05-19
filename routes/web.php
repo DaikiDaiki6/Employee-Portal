@@ -67,6 +67,7 @@ use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentForm;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
 use App\Livewire\Leaverequest\LeaveRequestTable;
+use App\Livewire\Sidebar\Notifications\NotificationsTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -139,7 +140,7 @@ Route::middleware('auth')->group(function (){
     
     Route::get('/changeinformationrequests/approve/{index}', ApproveChangeInformationForm::class)->name('ApproveChangeInformationForm');
 
-
+    Route::get('/notifications', NotificationsTable::class)->name('NotificationsTable');
 });
 
 

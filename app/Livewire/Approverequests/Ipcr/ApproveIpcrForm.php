@@ -253,13 +253,13 @@ class ApproveIpcrForm extends Component
                 $ipcr->$propertyName = $this->$propertyName;
             } else {
                 // If it's an uploaded file, store it and apply validation rules
-                if($this->$propertyName){
-                    $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Ipcr', 'Signed', $ipcr->id, $signedIn));
-                }
+                $this->validate([$propertyName => $validationRule]);
                 $nameOfProperty = $propertyName.'_verdict';
                 $ipcr->$nameOfProperty = $this->$nameOfProperty;
                 $ipcr->$propertyName = $this->$propertyName ? $this->$propertyName->store('photos/ipcr/' . $propertyName, 'local') : '';
-                $this->validate([$propertyName => $validationRule]);
+                if($this->$propertyName){
+                    $targetUser->notify(new SignedNotifcation($loggedInUser->employee_id, 'Ipcr', 'Signed', $ipcr->id, $signedIn, $ipcr->$nameOfProperty));
+                }
             }
         }
         

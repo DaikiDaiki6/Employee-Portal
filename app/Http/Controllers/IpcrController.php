@@ -40,7 +40,6 @@ class IpcrController extends Controller
     // }
 
     public function turnToPdf($index){
-
         $images = [];
         $ipcr = Ipcr::query()->where('id', $index)->get(); // Get IPCR Records
         $employee_id = Ipcr::query()->where('id', $index)->value('employee_id'); // Get Employee ID
