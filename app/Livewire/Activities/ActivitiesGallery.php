@@ -14,6 +14,7 @@ class ActivitiesGallery extends Component
     #[Locked]
     public $is_head;
 
+
     public function mount(){
         $loggedInUser = auth()->user();
         $employeeData = Employee::select('department_id', 'dean_id', 'is_department_head_or_dean')

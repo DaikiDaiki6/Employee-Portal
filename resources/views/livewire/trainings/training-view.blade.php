@@ -29,9 +29,14 @@
     </nav> 
     <h2 class="mb-10 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Training Information</h2>
    
+    @if ($is_head == 1)
     <div class="flex justify-end">
         <button type="button" onclick="location.href='{{ route('TrainingUpdate', ['index' => $index]) }}'" class="text-white mb-8 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit Training</button>
     </div>
+    @else
+        <div class="flex justify-end " style="margin-bottom: 40px">
+        </div>
+    @endif
 
     <section class="bg-white  dark:bg-gray-900 pb-24 px-8  rounded-lg">
         <div class=" px-1 mx-auto pt-8">

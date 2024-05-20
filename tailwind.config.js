@@ -25,6 +25,9 @@ export default {
       padding: { // Add padding utility
         '12': '3rem',
       },
+      height: {
+        '4/6': '66.6667%',
+      }
       
     },
   },

@@ -3,8 +3,10 @@
 namespace App\Livewire\Trainings;
 
 use Livewire\Component;
+use App\Models\Employee;
 use App\Models\Training;
 use App\Models\Traininganswer;
+use Livewire\Attributes\Locked;
 
 class TrainingView extends Component
 {
@@ -13,10 +15,18 @@ class TrainingView extends Component
     public $preTestAnswerExists;
     public $postTestAnswerExists;
 
+    #[Locked]
+    public $is_head;
+
     public function mount($index){
         $this->index = $index;
         $this->trainingData = Training::findOrFail($index);
         $loggedInUser = auth()->user();
+        $employeeData = Employee::select('is_department_head_or_dean')
+                ->where('employee_id', $loggedInUser->employee_id)
+                ->first();
+        $head = explode(',', $employeeData->is_department_head_or_dean[0] ?? ' ');
+        $this->is_head = $head[0] == 1 || $head[1] == 1 || $loggedInUser->is_admin ? true : false;
         $this->preTestAnswerExists = Traininganswer::where('employee_id', $loggedInUser->employeeId)
             ->whereNotNull('pre_test_answers')
             ->where('id', $this->trainingData->id)

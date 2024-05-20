@@ -34,7 +34,7 @@ class TrainingGallery extends Component
 
     public function filterListener(){
         $loggedInUser = auth()->user();
-        $employeeData = Employee::select('department_id', 'dean_id', 'is_department_head_or_dean')
+        $employeeData = Employee::select('department_id', 'dean_id', 'is_department_head_or_dean', 'department_name')
                     ->where('employee_id', $loggedInUser->employee_id)
                     ->first();
         $head = explode(',', $employeeData->is_department_head_or_dean[0] ?? ' ');
@@ -44,10 +44,8 @@ class TrainingGallery extends Component
             return Training::whereJsonContains('visible_to_list', $employeeData->department_name)
                         ->whereJsonContains('visible_to_list', $this->filter)
                         ->paginate(10);
-                        // dd($this->filter);
         }
         else {
-            // dd('seal');
             return Training::whereJsonContains('visible_to_list', $employeeData->department_name)->orderBy('created_at', 'desc')->paginate(10);
         }
 

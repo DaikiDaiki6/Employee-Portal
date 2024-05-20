@@ -34,12 +34,26 @@
                 display: none;
             }
         }
-    @media (min-width: 900px) {
-        #good_morning{
-            white-space: nowrap;
+        #good_morning {
+          white-space: noraml; 
+          column-span: 5; 
+      }
 
-        }
+      @media (min-width: 850px){
+          #good_morning {
+          white-space: nowrap; 
+          column-span: 5; 
+      }
+      }
+  
+
+
+    @media (min-width: 1120px) {
+      #good_morning {
+        white-space: nowrap ;
+      }
     }
+   
     </style>
 
  
@@ -84,7 +98,8 @@
   @endif
 </div>
 
-<div wire:ignore class="w-full col-span-2 bg-white rounded-lg shadow pb-4 dark:bg-gray-800 p-4 md:p-4" style="height: 60%; max-height:350px;">
+ <div class="grid grid-cols-3 col-span-3 gap-4 h-auto">
+  <div wire:ignore class="w-full col-span-2 bg-white rounded-lg shadow pb-4 dark:bg-gray-800 p-4 md:p-4 ">
     <div class="flex justify-between ">
       <div>
         <p class=" text-xl font-bold text-gray-800 dark:text-gray-400">Attendance Chart</p>
@@ -127,13 +142,13 @@
     </div>
   </div>
 
-  <div style="margin-bottom:150px; height:100%; max-height:230px" class="grid grid-cols-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-    <div class="grid grid-cols-5  mb-4  items-center">
-        <div class="h-full col-span-2" id="good_morning">
-          <p class=" font-semibold text-blue-500 text-lg min-[1475px]:text-2xl" >Good {{$period}}, {{$firstName}}. </p>
-          <p class="text-base">Ready to Start your Day?</p>
-          <p class="text-sm  mt-4">"<span class="text-blue-500">Tough times</span> never last,</p>
-          <span class="text-sm whitespace-nowrap">but <span class="text-blue-700">tough people</span> do"</span>
+  <div x class="grid grid-cols-1 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div class="grid grid-cols-5 mb-4  items-center">
+        <div class="h-full col-span-2 x" id="good_morning">
+          <h2 class=" font-semibold text-blue-500 text-lg min-[1475px]:text-2xl" >Good {{$period}}, {{$firstName}}. </h2>
+          <h1 class="text-base">Ready to Start your Day?</h1>
+          <p class="text-sm mt-4">"<span class="text-blue-500">Tough times</span> never last,</p>
+          <span class="text-sm ">but <span class="text-blue-700">tough people</span> do"</span>
           <div wire:poll.1s class="text-xl p-0 font-semibold text-blue-700">
             <br> 
             @php
@@ -146,7 +161,7 @@
             </div>
         </div>
        
-        <div class="mb-4 ml-8 col-span-3" id="user_avatar"> 
+        <div class="mb-4 ml-8  col-span-3" id="user_avatar"> 
           @if ($gender == "Female")
             <img src="{{asset('storage\EmployeeImages\girl.png')}}"  style="width:500px ;height: 200px" alt="...">
           @else
@@ -156,7 +171,8 @@
         
     </div>
 </div>
-
+ 
+ </div>
 </div>
 
 <script>

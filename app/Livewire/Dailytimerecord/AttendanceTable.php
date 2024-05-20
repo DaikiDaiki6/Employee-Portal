@@ -10,7 +10,7 @@ use Livewire\WithoutUrlPagination;
 
 class AttendanceTable extends Component
 {
-    use WithPagination, WithoutUrlPagination;
+    use WithPagination;
     
 
     public $options = [];
@@ -19,6 +19,18 @@ class AttendanceTable extends Component
     public $currentYear;
 
     public $currentMonth;
+
+    public $search = "";
+
+    public $filter;
+
+    public $filterName;
+
+    protected $queryString = [
+        'category',
+        'sort',
+    ];
+    
     public function mount()
 {
     $currentYear = Carbon::now()->year;
@@ -63,6 +75,10 @@ class AttendanceTable extends Component
     $this->currentMonth = Carbon::now()->month;
 
 }
+    public function setFilter($filter){
+        $this->filter = $filter;
+    }
+
     public function test(){
         dd('seal');
     }
@@ -91,8 +107,38 @@ class AttendanceTable extends Component
     public function render()
     {
         $loggedInUser = auth()->user();
+        $query = Dailytimerecord::where('employee_id', $loggedInUser->employee_id);
+        switch ($this->filter) {
+            case '1':
+                $query->whereDate('attendance_date',  Carbon::today());
+                $this->filterName = "Today";
+                break;
+            case '2':
+                $query->whereDate('attendance_date', '<=', Carbon::today()->startOfWeek());
+                $this->filterName = "Last 7 Days";
+                break;
+            case '3':
+                $query->whereDate('attendance_date', '<=', Carbon::today()->subDays(30));
+                $this->filterName = "Last Month";
+                break;
+            case '4':
+                $query->whereDate('attendance_date', '<=', Carbon::today()->subMonths(6));
+                $this->filterName = "Last 6 Months";
+                break;
+            case '5':
+                $query->whereDate('attendance_date', '<=', Carbon::today()->subYear());
+                $this->filterName = "Last Year";
+                break;
+        }
+
+
+        if(strlen($this->search) >= 1){
+            $results = $query->where('attendance_date', 'like', '%' . $this->search . '%')->orderBy('created_at', 'desc')->paginate(10);
+        } else {
+            $results = $query->orderBy('created_at', 'desc')->paginate(10);
+        }
         return view('livewire.dailytimerecord.attendance-table', [
-            'DtrData' => Dailytimerecord::where('employee_id', $loggedInUser->employee_id)->orderBy('created_at', 'desc')->paginate(10),
+            'DtrData' => $results,
         ]);
         
     }
