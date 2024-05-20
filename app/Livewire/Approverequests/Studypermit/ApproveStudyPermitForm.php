@@ -276,8 +276,8 @@ class ApproveStudyPermitForm extends Component
         // }
 
         $properties = [
-            'signature_recommended_by' => ['required_with:verdict_recommended_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_recommended_by'],
-            'signature_endorsed_by' => ['required_with:verdict_endorsed_by|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_endorsed_by'],
+            'signature_recommended_by' => ['required_with:verdict_recommended_by|nullable|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_recommended_by'],
+            'signature_endorsed_by' => ['required_with:verdict_endorsed_by|nullable|mimes:jpg,png,pdf|extensions:jpg,png,pdf', 'verdict_endorsed_by'],
         ];
 
         // Iterate over the properties
@@ -305,14 +305,26 @@ class ApproveStudyPermitForm extends Component
         }
 
         $verdictProperties = [
-            'verdict_recommended_by' => 'required_with:signature_recommended_by',
-            'verdict_endorsed_by' => 'required_with:signature_endorsed_by',
+            'verdict_recommended_by' => 'required_unless:signature_recommended_by,null',
+            'verdict_endorsed_by' => 'required_unless:signature_endorsed_by,null',
         ];
 
         // Iterate over the properties
         foreach ($verdictProperties as $propertyName => $validationRule) {
                 $studypermitdata->$propertyName = $this->$propertyName; 
                 $this->validate([$propertyName => $validationRule]);
+        }
+
+        
+        $dateProperties = [
+            'date_recommended_by'  => 'required_unless:signature_recommended_by,null|required_unless:verdict_recommended_by,null|nullable|date' ,
+            'date_endorsed_by'  => 'required_unless:signature_endorsed_by,null|required_unless:verdict_endorsed_by,null|nullable|date',
+        ];
+
+         // Iterate over the properties
+         foreach ($dateProperties as $propertyName => $validationRule) {
+            $studypermitdata->$propertyName = $this->$propertyName; 
+            $this->validate([$propertyName => $validationRule]);
         }
 
         // $studypermitdata->signature_recommended_by = $this->signature_recommended_by->store('photos/studypermit/recommended_by', 'local');
@@ -327,16 +339,19 @@ class ApproveStudyPermitForm extends Component
                 'start_time' => $load['start_time'],
                 'end_time' => $load['end_time'],
                 'number_of_units' => $load['number_of_units'],
-               
-            // ['subject' => '', 'days' => '', 'start_time' => '', 'end_time' => '', 'number_of_units' => '']
-
             ];
         }
 
-        if($studypermitdata->verdict_recommended_by &&  $studypermitdata->verdict_endorsed_by){
+        if($studypermitdata->verdict_recommended_by == 1 &&  $studypermitdata->verdict_endorsed_by == 1){
             if( $studypermitdata->signature_recommended_by &&  $studypermitdata->signature_endorsed_by){
                 $studypermitdata->status = "Approved";
             }
+        } else if($studypermitdata->verdict_recommended_by == 0 &&  $studypermitdata->verdict_endorsed_by == 0){
+            if( $studypermitdata->signature_recommended_by &&  $studypermitdata->signature_endorsed_by){
+                $studypermitdata->status = "Declined";
+            }
+        } else {
+            $studypermitdata->status = "Pending";
         }
 
         $jsonSubjectLoad = json_encode($jsonSubjectLoad);

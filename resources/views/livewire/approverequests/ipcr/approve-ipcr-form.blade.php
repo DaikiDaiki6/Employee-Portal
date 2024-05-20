@@ -41,21 +41,21 @@
                                 <div class="w-full grid grid-cols-1 gap-4 md:grid-cols-3 col-span-3 pt-4">
                                         <div class="w-full ">
                                             <label for="brand"
-                                                class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">First name <span class="text-red-600">*</span></label>
+                                                class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">First name <span class="text-red-600">*</span></label>
                                             <input type="text" name="firstname" id="firstname"  value="{{$employeeRecord[0]->first_name}}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 placeholder="First name" required="" disabled>
                                         </div>
                                     <div class="w-full ">
                                         <label for="brand"
-                                            class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Middle name <span class="text-red-600">*</span></label>
+                                            class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Middle name <span class="text-red-600">*</span></label>
                                         <input type="text" name="middlename" id="middlename" value="{{$employeeRecord[0]->middle_name}}"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Middle name" required="" disabled>
                                     </div>
                                     <div class="w-full">
                                         <label for="brand"
-                                            class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                            class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Last name <span class="text-red-600">*</span></label>
                                         <input type="text" name="lastname" id="lastname"  value="{{$employeeRecord[0]->last_name}}"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             placeholder="Last name" required="" disabled>
@@ -83,7 +83,7 @@
                                     @error('ratee')
                                     <div class="transition transform alert alert-danger"
                                             x-init="$el.closest('form').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                        <span class="text-red-500 text-xs xl:">{{$message }}</span>
                                     </div> 
                                     @enderror
                                 </div>
@@ -106,7 +106,7 @@
                                         @error('start_period')
                                         <div class="transition transform alert alert-danger"
                                                 x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                            <span class="text-red-500 text-xs xl:">{{$message }}</span>
                                         </div> 
                                         @enderror   
                                     </div>
@@ -119,7 +119,7 @@
                                         @error('end_period')   
                                             <div class="transition transform alert alert-danger text-sm "
                                             x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
+                                            <span class="text-red-500 text-xs xl:">{{ $message }}</span>
                                             </div> 
                                          @enderror
                                     </div>
@@ -149,7 +149,7 @@
                                     <div class="grid grid-cols-1 col-span-3 gap-4  border min-[1150px]:grid-cols-5 border-gray-200 p-4" >
                                         <div class="grid col-span-3 gap-4 sm:grid-cols-1 min-[900px]:grid-cols-3">
                                             <div>
-                                                <label for="coreFunctions_{{$index}}_output" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Output <span class="text-red-600">*</span></label>
+                                                <label for="coreFunctions_{{$index}}_output" class="block mb-2 text-sm  font-medium text-gray-900 dark:text-white">Output <span class="text-red-600">*</span></label>
                                                 <textarea disabled type="text" rows="10" id="coreFunctions_{{$index}}_output" name="coreFunctions[{{$index}}][output]" wire:model.blur="coreFunctions.{{$index}}.output" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                                                 {{-- @error('coreFunctions.' . $index . '.output')   
                                                     <div class="transition transform alert alert-danger text-sm"
@@ -166,7 +166,7 @@
                                             </div>
                                             <div>
                                                 <label for="coreFunctions_{{$index}}_indicator"
-                                                    class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Success Indicators <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium  text-gray-900 dark:text-white">Success Indicators <span class="text-red-600">*</span></label>
                                                 <textarea  disabled type="text" rows="10" id="coreFunctions_{{$index}}_indicator" name="coreFunctions[{{$index}}][indicator]" wire:model.blur="coreFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('coreFunctions.' . $index . '.indicator')   
@@ -178,7 +178,7 @@
                                             </div>
                                             <div>
                                                 <label for="coreFunctions_{{$index}}_accomp"
-                                                    class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Accomplishments <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium  text-gray-900 dark:text-white">Accomplishments <span class="text-red-600">*</span></label>
                                                 <textarea disabled type="text" rows="10" id="coreFunctions_{{$index}}_accomp" name="coreFunctions[{{$index}}][accomp]" wire:model.blur="coreFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('coreFunctions.' . $index . '.accomp')   
@@ -359,7 +359,7 @@
                                         <div class="grid col-span-3 gap-4 grid-cols-1 min-[900px]:grid-cols-3">
                                             <div c>
                                                 <label for="message"
-                                                    class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Output <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm  font-medium text-gray-900 dark:text-white">Output <span class="text-red-600">*</span></label>
                                                 <textarea disabled type="text" rows="10"  id="supportiveFunctions_{{$index}}_output" ame="supportiveFunctions[{{$index}}][output]" wire:model.blur="supportiveFunctions.{{$index}}.output"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('supportiveFunctions.' . $index . '.output')   
@@ -372,7 +372,7 @@
                                             
                                             <div>
                                                 <label for="message"
-                                                    class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Success Indicators <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium  text-gray-900 dark:text-white">Success Indicators <span class="text-red-600">*</span></label>
                                                 <textarea disabled type="text" rows="10" id="supportiveFunctions_{{$index}}_indicator" wire:model.blur="supportiveFunctions.{{$index}}.indicator" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('supportiveFunctions.'. $index . '.indicator')   
@@ -384,7 +384,7 @@
                                             </div>
                                             <div>
                                                 <label for="message"
-                                                    class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-900 dark:text-white">Accomplishments <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium  text-gray-900 dark:text-white">Accomplishments <span class="text-red-600">*</span></label>
                                                 <textarea disabled type="text" rows="10" id="supportiveFunctions_{{$index}}_accomp" wire:model.blur="supportiveFunctions.{{$index}}.accomp"   class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 </textarea>
                                                 @error('supportiveFunctions.' . $index . '.accomp')   
@@ -580,7 +580,7 @@
                                         @error('discussed_with')
                                         <div class="transition transform alert alert-danger"
                                                 x-init="$el.closest('form').scrollIntoView()">
-                                            <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                            <span class="text-red-500 text-xs xl:">{{$message }}</span>
                                         </div> 
                                         @enderror
                                     </div> 
@@ -594,7 +594,7 @@
                                     @error('disscused_with_date')
                                             <div class="transition transform alert alert-danger"
                                                     x-init="$el.closest('form').scrollIntoView()">
-                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                <span class="text-red-500 text-xs xl:">{{$message }}</span>
                                             </div> 
                                     @enderror
                                 </div>
@@ -618,12 +618,12 @@
                                 @error('final_average_rating')
                                     <div class="transition transform alert alert-danger"
                                             x-init="$el.closest('form').scrollIntoView()">
-                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                        <span class="text-red-500 text-xs xl:">{{$message }}</span>
                                     </div> 
                                 @enderror
                             </div>
                             <div>
-                                <div>
+                                <div id="comments_and_reco_container">
                                     <label for="comments_and_reco"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Comments and Recommendations For Development Purposes<span class="text-red-600">*</span></label>
                                     <textarea id="comments_and_reco" rows="4" name="comments_and_reco" wire:model="comments_and_reco"
@@ -631,7 +631,7 @@
                                         placeholder="Write your thoughts here..."></textarea>
                                     @error('comments_and_reco')
                                         <div class="transition transform alert alert-danger text-sm"
-                                            x-data x-init="document.getElementById('comments_and_reco').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('comments_and_reco').focus();" >
+                                            x-data x-init="document.getElementById('comments_and_reco_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('comments_and_reco_container').focus();" >
                                                 <span class="text-red-500 text-xs" > {{$message}}</span>
                                         </div> 
                                     @enderror
@@ -651,7 +651,7 @@
                                 </div>
                                 <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                                     <div class="w-full grid grid-cols-1">
+                                     <div class="w-full grid grid-cols-1" id="assessed_by_verdict_container">
                                          <label for="assessed_by_verdict"
                                              class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
                                              <div class="w-full pl-4 items-start">
@@ -662,22 +662,22 @@
                                              <label for="html" class="text-sm font-semibold">Declined</label><br>
                                              @error('assessed_by_verdict')
                                                 <div class="transition transform alert alert-danger text-sm"
-                                                    x-data x-init="document.getElementById('assessed_by_verdict').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by_verdict').focus();" >
+                                                    x-data x-init="document.getElementById('assessed_by_verdict_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by_verdict_container').focus();" >
                                                         <span class="text-red-500 text-xs" > {{$message}}</span>
                                                 </div> 
                                              @enderror   
                                              </div>
                                      </div>
-                                     <div class="w-full pr-4">
+                                     <div class="w-full pr-4" id="assessed_by_date_container">
                                          <label for="assessed_date"
                                              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed Date<span class="text-red-600">*</span></label>
                                          <input type="date" name="assessed_by_date" id="assessed_by_date" value="{{$employeeRecordDate}}" wire:model="assessed_by_date"
                                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                          @error('assessed_by_date')
-                                             <div class="transition transform alert alert-danger"
-                                                     x-init="$el.closest('label').scrollIntoView()">
-                                                 <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                             </div> 
+                                            <div class="transition transform alert alert-danger text-sm"
+                                            x-data x-init="document.getElementById('assessed_by_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by_date_container').focus();" >
+                                                <span class="text-red-500 text-xs" > {{$message}}</span>
+                                            </div> 
                                          @enderror
                                      </div>
                                     </div>
@@ -685,7 +685,7 @@
                                      <div>
                                          <label for="assessed_by"
                                          class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Assessed By <span class="text-red-600">*</span></label>
-                                         <div class="grid grid-cols-1 items-center justify-center w-full">
+                                         <div class="grid grid-cols-1 items-center justify-center w-full" id="assessed_by_container">
                                              @if($assessed_by)
                                              <label for="assessed_by" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                  @if(is_string($assessed_by) == True)
@@ -717,7 +717,7 @@
                                              @endif
                                              @error('assessed_by')
                                                     <div class="transition transform alert alert-danger text-sm"
-                                                x-data x-init="document.getElementById('assessed_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by').focus();" >
+                                                x-data x-init="document.getElementById('assessed_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by_container').focus();" >
                                                     <span class="text-red-500 text-xs" > {{$message}}</span>
                                                     </div> 
                                              @enderror
@@ -778,7 +778,7 @@
                                     <div>
                                         <label for="final_rating_by"
                                                 class="block text-sm mb-2 font-medium text-gray-900 dark:text-white">Final Rating By<span class="text-red-600">*</span></label>
-                                        <div class="grid grid-cols-1 items-center justify-center w-full">
+                                        <div class="grid grid-cols-1 items-center justify-center w-full" id="final_rating_by_container">
                                             @if($final_rating_by)
                                             <label for="final_rating_by" class="relative flex flex-col  items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                 @if(is_string($final_rating_by) == True)
@@ -811,9 +811,9 @@
                                             @endif
                                             @error('final_rating_by')
                                                 <div class="transition transform alert alert-danger text-sm"
-                                                x-data x-init="document.getElementById('final_rating_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by').focus();" >
+                                                x-data x-init="document.getElementById('final_rating_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_container').focus();" >
                                                     <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                    </div> 
+                                                </div> 
                                             @enderror
                                         </div>
                                     </div>

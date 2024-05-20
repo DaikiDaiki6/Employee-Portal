@@ -149,7 +149,7 @@
                                     <div class="grid grid-cols-1 w-full col-span-1 gap-4 min-[902px]:grid-cols-2 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                         <div class="w-full col-span-2">
                                             <label id="type_of_leave_sub_category" name="type_of_leave_sub_category" wire:model.live="type_of_leave_sub_category" 
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Leave Type<span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Leave Type Sub Category<span class="text-red-600">*</span></label>
                                             <select disabled id="type_of_leave_sub_category" name="type_of_leave_sub_category" wire:model.live="type_of_leave_sub_category" 
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                 @if($type_of_leave == "Vacation Leave" || $type_of_leave == "Special Privilege Leave" )

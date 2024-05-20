@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" /> --}}
-    <title>Work Request</title>
+    <title>Document Request</title>
     <style>
         /* Add your CSS styles here */
         table {

@@ -258,6 +258,11 @@
                         <div class="flex justify-center">
                             <button type="button" name="add" wire:click.prevent="addEmployeeHistory" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add a History</button>
                         </div>
+                        @php
+                            if(isset($index) == False){
+                                $index = 0;
+                            }
+                        @endphp
                         @error('employeeHistory')   
                             <div class="transition transform alert alert-danger text-sm"
                                     x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date_container').focus();">

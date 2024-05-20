@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>IPCR Report</title>
+    <title>OPCR Report</title>
     <style>
         .container {
             width: 100%;
@@ -81,7 +81,7 @@
             
             <tbody>
                 <tr>
-                    <td colspan="9"><b>A. Core Functions - 80%</b></td>
+                    <td colspan="9"><b>A. Core Functions - 70%</b></td>
                 </tr>  
                 @php
                     $coreFunctions = json_decode($opcrData['core_functions']);

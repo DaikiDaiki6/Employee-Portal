@@ -156,19 +156,17 @@ class ApproveTeachPermitForm extends Component
                 ->get();   
 
         $dates = [
-            'date_of_signature_of_head_office' => 'required_with:signature_of_head_office|nullable|date|after_or_equal:application_date',
-            'date_of_signature_of_human_resource' => 'required_with:signature_of_human_resource|nullable|date|after_or_equal:application_date',
-            'date_of_signature_of_vp_for_academic_affair' => 'required_with:signature_of_vp_for_academic_affair|nullable|date|after_or_equal:application_date',
-            'date_of_signature_of_university_president' => 'required_with:signature_of_university_president|nullable|date|after_or_equal:application_date',
+            'date_of_signature_of_head_office' => 'required_unless:signature_of_head_office,null|required_unless:verdict_of_head_office,null|nullable|date|after_or_equal:application_date',
+            'date_of_signature_of_human_resource' => 'required_unless:signature_of_human_resource,null|required_unless:verdict_of_human_resource,null|nullable|date|after_or_equal:application_date',
+            'date_of_signature_of_vp_for_academic_affair' => 'required_unless:signature_of_vp_for_academic_affair,null|required_unless:verdict_of_vp_for_academic_affair,null|nullable|date|after_or_equal:application_date',
+            'date_of_signature_of_university_president' => 'required_unless:signature_of_university_president,null|required_unless:verdict_of_university_president,null|nullable|date|after_or_equal:application_date',
         ];
 
         foreach ($dates as $date => $validationRule){
-            // if($this->$date){
             $this->validate([$date => $validationRule]);
-            // dd('test');
             $teachpermitdata->$date = $this->$date;
-            // }
         }
+
 
         $Names = Employee::select('first_name', 'middle_name', 'last_name')
         ->where('employee_id', $loggedInUser->employee_id)
@@ -188,7 +186,6 @@ class ApproveTeachPermitForm extends Component
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
             // Check if the current property value is a string or an uploaded file
-
             if (is_string($this->$propertyName)) {
                 // If it's a string, assign it directly
                 $teachpermitdata->$propertyName = $this->$propertyName;
@@ -213,6 +210,9 @@ class ApproveTeachPermitForm extends Component
             $this->validate([$verdict => 'nullable|in:1,0']);
             $teachpermitdata->$verdict = $this->$verdict;
         }
+
+        
+
         if($teachpermitdata->verdict_of_head_office == 1 && $teachpermitdata->verdict_of_human_resource == 1 
             && $teachpermitdata->verdict_of_vp_for_academic_affair == 1 && $teachpermitdata->verdict_of_university_president == 1){
                 if($teachpermitdata->signature_of_head_office && $teachpermitdata->signature_of_human_resource 
@@ -220,8 +220,15 @@ class ApproveTeachPermitForm extends Component
                     $teachpermitdata->status = "Approved";
                 }
             }
-
-       
+        else if($teachpermitdata->verdict_of_head_office == 0 && $teachpermitdata->verdict_of_human_resource == 0 
+        && $teachpermitdata->verdict_of_vp_for_academic_affair == 0 && $teachpermitdata->verdict_of_university_president == 0){
+            if($teachpermitdata->signature_of_head_office && $teachpermitdata->signature_of_human_resource 
+            && $teachpermitdata->signature_of_vp_for_academic_affair && $teachpermitdata->signature_of_university_president ){
+                $teachpermitdata->status = "Declined";
+            }
+        } else {
+            $teachpermitdata->status = "Pending";
+        }
 
         foreach($this->subjectLoad as $load){
             $jsonSubjectLoad[] = [

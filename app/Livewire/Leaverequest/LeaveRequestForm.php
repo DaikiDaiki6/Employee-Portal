@@ -105,6 +105,12 @@ class LeaveRequestForm extends Component
 
     }
 
+    
+    public function removeImage($item){
+        $this->$item = null;
+    }
+
+
     protected $rules = [
         'type_of_leave' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
         'type_of_leave_others' => 'required_if:type_of_leave,Others|max:100',

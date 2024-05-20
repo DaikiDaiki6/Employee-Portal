@@ -378,7 +378,7 @@
                                 <h2><b>Signed By:</b></h2>
                                 <div class="grid grid-cols-5 gap-2">
                                     <div class="grid grid-cols-1 gap-4 col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700" >
-                                        <div class="w-full grid grid-cols-1 mt-10" id="verdict_of_head_office_container">
+                                        <div class="w-full grid grid-cols-1 " id="verdict_of_head_office_container">
                                             <label for="verdict_of_head_office"
                                                 class="text-sm font-medium text-gray-900 dark:text-white">Approved/Declined <span class="text-red-600">*</span></label>
                                                 <div class="w-full pl-4 items-start">
@@ -462,7 +462,7 @@
                                 {{-- Human Resource  --}}
                                 <div class="grid grid-cols-5 gap-2" id="signature_of_human_resource_container">
                                     <div class="grid grid-cols-1 gap-4 col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                        <div class="w-full grid grid-cols-1 mt-10" id="verdict_of_human_resource_container">
+                                        <div class="w-full grid grid-cols-1" id="verdict_of_human_resource_container">
                                             <label for="verdict_of_human_resource"
                                                 class="text-sm font-medium text-gray-900 dark:text-white">Approved/Declined <span class="text-red-600">*</span></label>
                                                 <div class="w-full pl-4 items-start">
@@ -625,7 +625,7 @@
                                 {{-- University President --}}
                                 <div class="grid grid-cols-5 gap-2" id="signature_of_university_president_container">
                                     <div class="grid grid-cols-1  gap-4 col-span-2 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
-                                        <div class="w-full grid grid-cols-1 mt-10" id="verdict_of_university_president_container">
+                                        <div class="w-full grid grid-cols-1 " id="verdict_of_university_president_container">
                                             <label for="verdict_of_university_president"
                                                 class="text-sm font-medium text-gray-900 dark:text-white">Approved/Declined <span class="text-red-600">*</span></label>
                                                 <div class="w-full pl-4 items-start">

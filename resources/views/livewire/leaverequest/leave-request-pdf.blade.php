@@ -196,14 +196,14 @@
                             </div>
                             <div style="margin-bottom: 0px; display: flex; align-items: center; margin-left: 3%">
                                 <input type="checkbox" name="requests[]" value="Certificate of Employment" style="margin-right: 5px; vertical-align: middle;" {{ $leaveRequestData->type_of_leave == 'Adoption Leave' ? 'checked' : '' }}>
-                                <label style="vertical-align: middle; font-size: 0.6em;">Adoption Leave(R.A. No. 8552)</label>
+                                <label style="vertical-align: middle; font-size: 0.6em;">Adoption Leave (R.A. No. 8552)</label>
                             </div>
                             <br>
                          
                             <div style="margin-bottom: 0px; display: flex; align-items: center; margin-left: 3%">
                                 <input type="checkbox" name="requests[]" value="Certificate of Employment" style="margin-right: 5px; vertical-align: middle;" {{ $leaveRequestData->type_of_leave == 'Others' ? 'checked' : '' }}>
                                 @if ( $leaveRequestData->type_of_leave_others)
-                                    <label style="vertical-align: middle; font-size: 0.6em;">Others:<br><u style="vertical-align: middle; font-size: 1.0em;">{{str_pad($employees->type_of_leave_description, 60, '_', STR_PAD_BOTH)}}_</label>
+                                    <label style="vertical-align: middle; font-size: 0.6em;">Others:<br><u style="vertical-align: middle; font-size: 1.0em;">{{str_pad($leaveRequestData->type_of_leave_description, 60, '_', STR_PAD_BOTH)}}_</label>
                                 @else
                                 <label style="vertical-align: middle; font-size: 0.6em;">Others:<br>_________________________</label>
                                 @endif

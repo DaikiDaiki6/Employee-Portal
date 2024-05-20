@@ -42,14 +42,14 @@
                             <div class="w-full grid grid-cols-1 gap-4 md:grid-cols-2 col-span-3 pt-4">
                                     <div class="w-full ">
                                         <label for="brand"
-                                            class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Department Name <span class="text-red-600">*</span></label>
+                                            class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Department Name <span class="text-red-600">*</span></label>
                                         <input type="text" name="department_name" id="department_name" value="{{$department_name}}"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                              disabled>
                                     </div>
                                 <div class="w-full ">
                                     <label for="brand"
-                                        class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Department Head <span class="text-red-600">*</span></label>
+                                        class="block mb-2  text-sm font-medium text-gray-900 dark:text-white">Department Head <span class="text-red-600">*</span></label>
                                     <input type="text" name="department_head" id="department_head" value="{{$department_head}}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                          disabled>
@@ -778,24 +778,24 @@
                                          @enderror   
                                          </div>
                                  </div>
-                                 <div class="w-full pr-4">
+                                 <div class="w-full pr-4" id="assessed_by_date_container">
                                      <label for="assessed_date"
                                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assessed Date<span class="text-red-600">*</span></label>
                                      <input type="date" name="assessed_by_date" id="assessed_by_date" value="{{$employeeRecordDate}}" wire:model="assessed_by_date"
                                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                          placeholder="Last name" >
                                      @error('assessed_by_date')
-                                         <div class="transition transform alert alert-danger"
-                                                 x-init="$el.closest('form').scrollIntoView()">
-                                             <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                         </div> 
+                                        <div class="transition transform alert alert-danger text-sm"
+                                        x-data x-init="document.getElementById('assessed_by_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by_date_container').focus();" >
+                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                        </div> 
                                      @enderror
                                  </div>
                                  </div>
                                  <div>
                                      <label for="assessed_by"
                                      class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Assessed By <span class="text-red-600">*</span></label>
-                                     <div class="grid grid-cols-1 items-center justify-center w-full">
+                                     <div class="grid grid-cols-1 items-center justify-center w-full" id="assessed_by_container">
                                          @if($assessed_by)
                                          <label for="assessed_by" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                              @if(is_string($assessed_by) == True)
@@ -827,7 +827,7 @@
                                          @endif
                                          @error('assessed_by')
                                                 <div class="transition transform alert alert-danger text-sm"
-                                            x-data x-init="document.getElementById('assessed_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by').focus();" >
+                                            x-data x-init="document.getElementById('assessed_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assessed_by_container').focus();" >
                                                 <span class="text-red-500 text-xs" > {{$message}}</span>
                                                 </div> 
                                          @enderror
@@ -859,28 +859,28 @@
                                             </div>
                                     </div>
                                     <div class="grid grid-cols-1 w-full gap-4">
-                                        <div>
+                                        <div id="final_rating_container">
                                             <label for="final_rating" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating<span class="text-red-600">*</span></label>
                                             <input type="number" id="final_rating" name="final_rating" value={{$final_rating}}
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                 placeholder="{{$final_rating}}" disabled/>
                                             @error('final_rating')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('final_rating_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
-                                        <div class="w-full ">
+                                        <div class="w-full" id="final_rating_by_date_container">
                                             <label for="brand"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Final Rating by Date<span class="text-red-600">*</span></label>
                                             <input type="date" name="final_rating_by_date" id="final_rating_by_date" value="{{$employeeRecordDate}}" wire:model="final_rating_by_date"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 placeholder="Last name">
                                             @error('final_rating_by_date')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                <div class="transition transform alert alert-danger text-sm"
+                                                x-data x-init="document.getElementById('final_rating_by_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_date_container').focus();" >
+                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
                                                 </div> 
                                             @enderror
                                         </div>
@@ -889,7 +889,7 @@
                                 <div>
                                     <label for="final_rating_by"
                                             class="block text-sm mb-2 font-medium text-gray-900 dark:text-white">Final Rating By<span class="text-red-600">*</span></label>
-                                    <div class="grid grid-cols-1 items-center justify-center w-full">
+                                    <div class="grid grid-cols-1 items-center justify-center w-full"  id="final_rating_by_container">
                                         @if($final_rating_by)
                                         <label for="final_rating_by" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                             @if(is_string($final_rating_by) == True)
@@ -921,9 +921,9 @@
                                         @endif
                                         @error('final_rating_by')
                                             <div class="transition transform alert alert-danger text-sm"
-                                            x-data x-init="document.getElementById('final_rating_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by').focus();" >
+                                            x-data x-init="document.getElementById('final_rating_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('final_rating_by_container').focus();" >
                                                 <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                </div> 
+                                            </div> 
                                         @enderror
                                     </div>
                                 </div>

@@ -208,13 +208,13 @@ class ApproveIpcrForm extends Component
         'supportiveFunctions.*.remark' => 'min:10|max:2048',
         'supp_admin_rating' => 'required|numeric|min:1|max:5',
         'final_average_rating' => 'required|numeric|min:1|max:5',
-        'comments_and_reco' => 'required|min:10|max:2048', 
-        'assessed_by_verdict' => 'required|in:1,0',
-        'final_rating_by_verdict' => 'required|in:1,0',
+        'comments_and_reco' => 'nullable|min:10|max:2048', 
+        // 'assessed_by_verdict' => 'required|in:1,0',
+        // 'final_rating_by_verdict' => 'required|in:1,0',
         // 'disscused_with_date' => 'required|date',
-        'assessed_by_date' => 'required|date|after_or_equal:start_period',
+        // 'assessed_by_date' => 'required|date|after_or_equal:start_period',
         // 'final_rating' => 'required|numeric',
-        'final_rating_by_date' => 'required|date|after_or_equal:start_period',
+        // 'final_rating_by_date' => 'required|date|after_or_equal:start_period',
     ];
 
     public function submit(){
@@ -237,20 +237,26 @@ class ApproveIpcrForm extends Component
         $targetUser = User::where('employee_id', $ipcr->employee_id)->first();
 
         $properties = [
-            'assessed_by'  => 'required_with:assessed_by_verdict|mimes:jpg,png|extensions:jpg,png|max:5120' ,
-            'final_rating_by'  => 'required_with:final_rating_by_verdict|mimes:jpg,png|extensions:jpg,png|max:5120',
-            // 'discussed_with' => 'mimes:jpg,png|extensions:jpg,png',
+            'assessed_by'  => 'required_unless:assessed_by_verdict,null|nullable|mimes:jpg,png|extensions:jpg,png|max:5120' ,
+            'final_rating_by'  => 'required_unless:final_rating_by_verdict,null|nullable|mimes:jpg,png|extensions:jpg,png|max:5120',
         ];
         
-
         // Iterate over the properties
         foreach ($properties as $propertyName => $validationRule) {
             // Check if the current property value is a string or an uploaded file
             if (is_string($this->$propertyName)) {
                 // If it's a string, assign it directly
+                $this->validate([$propertyName => $validationRule]);
+                $nameOfProperty = $propertyName.'_verdict';
+                $ipcr->$nameOfProperty = $this->$nameOfProperty;
                 $ipcr->$propertyName = $this->$propertyName;
-            } else {
-                // If it's an uploaded file, store it and apply validation rules
+            } else if(is_null($this->$propertyName)){
+                $this->validate([$propertyName => $validationRule]);
+                $nameOfProperty = $propertyName.'_verdict';
+                $ipcr->$nameOfProperty = $this->$nameOfProperty;
+                $ipcr->$propertyName = $this->$propertyName;
+            } 
+            else {
                 $this->validate([$propertyName => $validationRule]);
                 $nameOfProperty = $propertyName.'_verdict';
                 $ipcr->$nameOfProperty = $this->$nameOfProperty;
@@ -260,18 +266,45 @@ class ApproveIpcrForm extends Component
                 }
             }
         }
+
+        $verdictProperties = [
+            'assessed_by_verdict'  => 'required_unless:assessed_by,null|nullable|in:1,0' ,
+            'final_rating_by_verdict'  => 'required_unless:final_rating_by,null|nullable|in:1,0',
+        ];
+
+         // Iterate over the properties
+        foreach ($verdictProperties as $propertyName => $validationRule) {
+            $ipcr->$propertyName = $this->$propertyName; 
+            $this->validate([$propertyName => $validationRule]);
+        }
+
+        $dateProperties = [
+            'assessed_by_date'  => 'required_unless:assessed_by,null|required_unless:assessed_by_verdict,null|nullable|date' ,
+            'final_rating_by_date'  => 'required_unless:final_rating_by,null|required_unless:final_rating_by_verdict,null|nullable|date',
+        ];
+
+         // Iterate over the properties
+         foreach ($dateProperties as $propertyName => $validationRule) {
+            $ipcr->$propertyName = $this->$propertyName; 
+            $this->validate([$propertyName => $validationRule]);
+        }
+
+        $ipcr->assessed_by_date = $this->assessed_by_date;
+        $ipcr->final_rating = $this->final_rating;       
+        $ipcr->final_rating_by_date = $this->final_rating_by_date;
         
         if($ipcr->assessed_by_verdict == 1 && $ipcr->final_rating_by_verdict == 1){
             if($ipcr->final_rating_by &&  $ipcr->assessed_by){
                 $ipcr->status = "Approved";
             }
+        } else if ($ipcr->assessed_by_verdict == 0 && $ipcr->final_rating_by_verdict == 0){
+            if($ipcr->final_rating_by &&  $ipcr->assessed_by){
+                $ipcr->status = "Declined";
+            }
         }
-        
-
-        $ipcr->disscused_with_date = $this->disscused_with_date;       
-        $ipcr->assessed_by_date = $this->assessed_by_date;
-        $ipcr->final_rating = $this->final_rating;       
-        $ipcr->final_rating_by_date = $this->final_rating_by_date;
+        else {
+            $ipcr->status = "Pending";
+        }
 
         $jsonCoreData = [];
         $jsonSupportiveData = [];

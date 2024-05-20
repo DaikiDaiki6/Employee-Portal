@@ -1586,7 +1586,7 @@
                                     </div>
                                     <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                         <div class="grid grid-cols-2">
-                                            <div class="w-full grid grid-cols-1">
+                                            <div class="w-full grid grid-cols-1" id="verdict_recommended_by_container">
                                                 <label for="verdict_recommended_by"
                                                     class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
                                                     <div class="w-full pl-4 items-start">
@@ -1597,22 +1597,22 @@
                                                     <label for="html" class="text-sm font-semibold">Declined</label><br>
                                                     @error('verdict_recommended_by')
                                                         <div class="transition transform alert alert-danger text-sm"
-                                                            x-data x-init="document.getElementById('verdict_recommended_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_recommended_by').focus();" >
+                                                            x-data x-init="document.getElementById('verdict_recommended_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_recommended_by_container').focus();" >
                                                                 <span class="text-red-500 text-xs" > {{$message}}</span>
                                                         </div> 
                                                     @enderror   
                                                     </div>
                                             </div>
 
-                                            <div class="w-full pr-4">
+                                            <div class="w-full pr-4" id="date_recommended_by_container">
                                                 <label for="date_recommended_by"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Recommended Date<span class="text-red-600">*</span></label>
                                                 <input type="date" name="date_recommended_by" id="date_recommended_by" wire:model="date_recommended_by"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                 @error('date_recommended_by')
-                                                    <div class="transition transform alert alert-danger"
-                                                            x-init="$el.closest('label').scrollIntoView()">
-                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('date_recommended_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_recommended_by_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
                                                     </div> 
                                                 @enderror
                                             </div>
@@ -1621,7 +1621,7 @@
                                          <div>
                                              <label for="signature_recommended_by"
                                              class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Recommended By Signature<span class="text-red-600">*</span></label>
-                                             <div class="grid grid-cols-1 items-center justify-center w-full">
+                                             <div class="grid grid-cols-1 items-center justify-center w-full" id="signature_recommended_by_container">
                                                  @if($signature_recommended_by)
                                                  <label for="signature_recommended_by" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                      @if(is_string($signature_recommended_by) == True)
@@ -1672,7 +1672,7 @@
                                                  @endif
                                                  @error('signature_recommended_by')
                                                         <div class="transition transform alert alert-danger text-sm"
-                                                    x-data x-init="document.getElementById('signature_recommended_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_recommended_by').focus();" >
+                                                    x-data x-init="document.getElementById('signature_recommended_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_recommended_by_container').focus();" >
                                                         <span class="text-red-500 text-xs" > {{$message}}</span>
                                                         </div> 
                                                  @enderror
@@ -1687,7 +1687,7 @@
                                     </div>
                                     <div class="grid sm:grid-cols-1 min-[738px]:grid-cols-2 gap-8 w-full p-6  bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700">
                                         <div class="grid grid-cols-2">
-                                            <div class="w-full grid grid-cols-1">
+                                            <div class="w-full grid grid-cols-1" id="verdict_endorsed_by_container">
                                                 <label for="verdict_endorsed_by"
                                                     class="mb-2 text-sm font-medium text-gray-900 dark:text-white ">Approved/Declined <span class="text-red-600">*</span></label>
                                                     <div class="w-full pl-4 items-start">
@@ -1698,22 +1698,22 @@
                                                     <label for="html" class="text-sm font-semibold">Declined</label><br>
                                                     @error('verdict_endorsed_by')
                                                         <div class="transition transform alert alert-danger text-sm"
-                                                            x-data x-init="document.getElementById('verdict_endorsed_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_endorsed_by').focus();" >
+                                                            x-data x-init="document.getElementById('verdict_endorsed_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_endorsed_by_container').focus();" >
                                                                 <span class="text-red-500 text-xs" > {{$message}}</span>
                                                         </div> 
                                                     @enderror   
                                                     </div>
                                             </div>
 
-                                            <div class="w-full pr-4">
+                                            <div class="w-full pr-4" id="verdict_endorsed_by_date_container">
                                                 <label for="date_endorsed_by"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Endorsed Date<span class="text-red-600">*</span></label>
                                                 <input type="date" name="date_endorsed_by" id="date_endorsed_by" wire:model="date_endorsed_by"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                 @error('date_endorsed_by')
-                                                    <div class="transition transform alert alert-danger"
-                                                            x-init="$el.closest('label').scrollIntoView()">
-                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                    <div class="transition transform alert alert-danger text-sm"
+                                                    x-data x-init="document.getElementById('verdict_endorsed_by_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('verdict_endorsed_by_date_container').focus();" >
+                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
                                                     </div> 
                                                 @enderror
                                             </div>
@@ -1722,7 +1722,7 @@
                                          <div>
                                              <label for="signature_endorsed_by"
                                              class="block text-sm font-medium text-gray-900 dark:text-white mb-2">Endorsed By Signature <span class="text-red-600">*</span></label>
-                                             <div class="grid grid-cols-1 items-center justify-center w-full">
+                                             <div class="grid grid-cols-1 items-center justify-center w-full" id="signature_endorsed_by_container">
                                                  @if($signature_endorsed_by)
                                                  <label for="signature_endorsed_by" class="relative flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                                                      @if(is_string($signature_endorsed_by) == True)
@@ -1773,7 +1773,7 @@
                                                  @endif
                                                  @error('signature_endorsed_by')
                                                         <div class="transition transform alert alert-danger text-sm"
-                                                    x-data x-init="document.getElementById('signature_endorsed_by').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_endorsed_by').focus();" >
+                                                    x-data x-init="document.getElementById('signature_endorsed_by_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('signature_endorsed_by_container').focus();" >
                                                         <span class="text-red-500 text-xs" > {{$message}}</span>
                                                         </div> 
                                                  @enderror
@@ -1782,9 +1782,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>

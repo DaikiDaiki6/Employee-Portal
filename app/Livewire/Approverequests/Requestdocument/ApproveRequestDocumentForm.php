@@ -213,14 +213,23 @@ class ApproveRequestDocumentForm extends Component
             }
             $documentrequestdata->$field = $fileNames;
         }
+        
         $flag = False;
         foreach($documentrequestdata->requests as $request){
-            if(is_null($documentrequestdata->$request)){
-                $flag = True;
+            $requestName = str_replace(' ', '_', $request);
+            $requestName = strtolower($requestName);
+            if($request == "Others"){
+                $requestName = 'other_documents';
+            }
+            
+            if(is_null($documentrequestdata->$requestName) || $documentrequestdata->$requestName == ""){
+                $flag = True; 
             }
         }
-        if($flag == True){
+        if($flag == False){
             $documentrequestdata->status = "Approved";
+        } else {
+            $documentrequestdata->status = "Pending";
         }
 
         $this->js("alert('Document Request has been submitted!')"); 

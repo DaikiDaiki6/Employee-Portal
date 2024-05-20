@@ -295,6 +295,12 @@ class ApproveLeaveRequestForm extends Component
             if($leaveRequest->auth_off_sig_b && $leaveRequest->auth_off_sig_a && $leaveRequest->auth_off_sig_c_and_d){
                 $leaveRequest->status = "Approved";
             }
+        } else if($leaveRequest->human_resource_verdict_cd == 0 && $leaveRequest->human_resource_verdict_a == 0 && $leaveRequest->department_head_verdict == 0 ){
+            if($leaveRequest->auth_off_sig_b && $leaveRequest->auth_off_sig_a && $leaveRequest->auth_off_sig_c_and_d){
+                $leaveRequest->status = "Declined";
+            }
+        } else {
+            $leaveRequest->status = "Pending";
         }
 
 

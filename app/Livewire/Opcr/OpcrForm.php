@@ -237,7 +237,7 @@ class OpcrForm extends Component
 
     public function submit(){
 
-        $this->validate();
+        // $this->validate();
 
         $loggedInUser = auth()->user();
         $department_id = Employee::select('department_id')
@@ -266,7 +266,6 @@ class OpcrForm extends Component
         
         $jsonCoreData = [];
         $jsonSupportiveData = [];
-        
         if($opcr->opcr_type == 'target'){
             foreach($this->coreFunctions as $coreFunction){
                 $jsonCoreData[] = [
