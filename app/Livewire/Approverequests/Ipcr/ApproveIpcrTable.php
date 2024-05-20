@@ -74,6 +74,7 @@ class ApproveIpcrTable extends Component
                 })
                 ->select('ipcrs.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($head[0] == 1) {
@@ -83,6 +84,7 @@ class ApproveIpcrTable extends Component
                 })
                 ->select('ipcrs.*') // Select only Ipcr columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
 
@@ -94,10 +96,11 @@ class ApproveIpcrTable extends Component
                 })
                 ->select('ipcrs.*') // Select only Ipcr columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($loggedInUser->is_admin == 1) {
-            $ipcrData = Ipcr::paginate(10);
+            $ipcrData = Ipcr::orderBy('created_at', 'desc')->paginate(10);
         } 
         else{
             abort(404);

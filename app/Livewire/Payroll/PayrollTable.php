@@ -27,7 +27,7 @@ class PayrollTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.payroll.payroll-table', [
-            'PayrollData' => Payroll::where('employee_id', $loggedInUser->employee_id)->paginate(10),
+            'PayrollData' => Payroll::where('employee_id', $loggedInUser->employee_id)->orderBy('created_at', 'desc')->paginate(10),
         ]);
         
     }

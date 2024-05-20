@@ -41,6 +41,7 @@ class ApproveStudyPermitTable extends Component
                 })
                 ->select('studypermits.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($head[0] == 1) {
@@ -50,6 +51,7 @@ class ApproveStudyPermitTable extends Component
                 })
                 ->select('studypermits.*') // Select only Studypermit columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
 
@@ -61,10 +63,11 @@ class ApproveStudyPermitTable extends Component
                 })
                 ->select('studypermits.*') // Select only Studypermit columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($loggedInUser->is_admin == 1) {
-            $studyPermitData = Studypermit::paginate(10);
+            $studyPermitData = Studypermit::orderBy('created_at', 'desc')->paginate(10);
         } 
         else{
             abort(404);

@@ -40,6 +40,7 @@ class ApproveTeachPermitTable extends Component
                 })
                 ->select('teachpermits.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($head[0] == 1) {
@@ -49,6 +50,7 @@ class ApproveTeachPermitTable extends Component
                 })
                 ->select('teachpermits.*') // Select only Teachpermit columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
 
@@ -60,10 +62,11 @@ class ApproveTeachPermitTable extends Component
                 })
                 ->select('teachpermits.*') // Select only Teachpermit columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($loggedInUser->is_admin == 1) {
-            $teachPermitData = Teachpermit::paginate(10);
+            $teachPermitData = Teachpermit::orderBy('created_at', 'desc')->paginate(10);
         } 
         else{
             abort(404);

@@ -31,7 +31,7 @@ class IpcrTable extends Component
         // $ipcrs = Ipcr::paginate(5)
         // return view('livewire.ipcrtable');
         return view('livewire.ipcr.ipcr-table', [
-            'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employee_id)->paginate(10),
+            'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employee_id)->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 

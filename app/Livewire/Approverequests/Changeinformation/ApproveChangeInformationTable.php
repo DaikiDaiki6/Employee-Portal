@@ -13,7 +13,7 @@ class ApproveChangeInformationTable extends Component
 
         if($loggedInUser->is_admin){
             return view('livewire.approverequests.changeinformation.approve-change-information-table', [
-                'ChangeInformationData' => ChangeInformation::paginate(10),
+                'ChangeInformationData' => ChangeInformation::orderBy('created_at', 'desc')->paginate(10),
             ]);
         } else {
             abort(404);

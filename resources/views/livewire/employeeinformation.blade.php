@@ -21,7 +21,7 @@
                     </div>
                     <div class="grid grid-cols-1 min-[900px]:grid-cols-2 p-4 ">
                         <div class="flex justify-center min-[900px]:flex min-[900px]:justify-end">
-                            <img class="ml-8 w-36 h-36 mb-3 shadow-xl rounded-full" src="{{asset('storage/'. $employeeImage)}}" alt="Bonnie image"/> 
+                            <img class="ml-8 w-36 h-36 mb-3 shadow-xl rounded-full" src="{{ asset($employeeImage ? 'storage/' . $employeeImage : 'photos/avatar/default.png') }}" alt="Employee Image"/> 
                         </div>
                         <div class="inline-flex items-center justify-center min-[900px]:justify-start">
                            <div class="ml-8 text-center">
@@ -92,6 +92,7 @@
                        </div>
                        <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-900 dark:divide-gray-700">
+                                @if ($employeeImage)
                                 <li class="py-1 sm:py-2">
                                     <a target="_blank" href="{{route('downloadFile', ['file' => 'photo'])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
                                         <div class="flex items-center ml-4">
@@ -107,6 +108,22 @@
                                         </div>
                                     </a>
                                 </li>
+                                @else
+                                <li class="py-1 sm:py-2">
+                                        <div class="flex items-center ml-4">
+                                            <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                                                  </svg>
+                                                                             
+                                            </div>
+                                            <div class="flex-1 min-w-0 truncate">
+                                                Nothing to See here.
+                                            </div>
+                                        </div>
+                                </li>
+
+                                @endif
                                 @foreach ($empDiploma as $index => $item )
                                     <li class="py-1 sm:py-2">
                                         <a target="_blank" href="{{route('downloadFile', ['file' => 'diploma', 'index' => $index])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
@@ -297,7 +314,7 @@
                                                       
                                                 </div>
                                                 <div class="flex-1 min-w-0 truncate">
-                                                    Other Document @if (count($empPSAMarriageCertif) > 1) {{$index + 1}} @endif
+                                                    Other Document @if (count($otherDocuments) > 1) {{$index + 1}} @endif
                                                 </div>
                                             </div>
                                         </a>

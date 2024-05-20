@@ -7,11 +7,14 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Activities;
 use App\Models\Dailytimerecord;
+use App\Models\Training;
 use Illuminate\Support\Facades\DB;
 
 class DashboardView extends Component
 {
     public $activities;
+
+    public $trainings;
     public $data;
     public $dateData = [];
     public $weeklyCountsArray = [];
@@ -48,6 +51,8 @@ class DashboardView extends Component
         $this->sickCredits = $employeeInformation[0]->sick_credits;
         $this->gender = $employeeInformation[0]->gender;
         $this->activities = Activities::whereJsonContains('visible_to_list', $employeeInformation[0]->department_name)->get();
+        $this->trainings = Training::whereJsonContains('visible_to_list', $employeeInformation[0]->department_name)->get();
+
         $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
         // $this->currentHourMinuteSecond = Carbon::now();
         $currentTime = Carbon::now();

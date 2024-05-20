@@ -30,7 +30,7 @@ class RequestDocumentTable extends Component
         if ($loggedInUser->is_admin) {
             $documentRequestData = Documentrequest::paginate(10);
         } else {
-            $documentRequestData = Documentrequest::where('employee_id', $loggedInUser->employee_id)->paginate(10);
+            $documentRequestData = Documentrequest::where('employee_id', $loggedInUser->employee_id)->orderBy('created_at', 'desc')->paginate(10);
         }
         
         return view('livewire.requestdocuments.request-document-table', [

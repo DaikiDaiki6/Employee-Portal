@@ -30,30 +30,35 @@ class ActivitiesGallery extends Component
         if($this->filter == "Announcement"){
                 return Activities::whereJsonContains('visible_to_list', $departmentName)
                         ->where('type', 'Announcement') // Add additional conditions if needed
+                        ->orderBy('created_at', 'desc')
                         ->paginate(10);
         }
         else if($this->filter == "Event"){
                 return Activities::whereJsonContains('visible_to_list', $departmentName)
                         ->where('type', 'Event') // Add additional conditions if needed
+                        ->orderBy('created_at', 'desc')
                         ->paginate(10);
         }
         else if($this->filter == "Seminar"){
                 return Activities::whereJsonContains('visible_to_list', $departmentName)
                         ->where('type', 'Seminar') // Add additional conditions if needed
+                        ->orderBy('created_at', 'desc')
                         ->paginate(10);
         }
         else if($this->filter == "Training"){
             return Activities::whereJsonContains('visible_to_list', $departmentName)
                     ->where('type', 'Training') // Add additional conditions if needed
+                    ->orderBy('created_at', 'desc')
                     ->paginate(10);
         }
         else if($this->filter == "Others"){
             return Activities::whereJsonContains('visible_to_list', $departmentName)
                     ->where('type', 'Others') // Add additional conditions if needed
+                    ->orderBy('created_at', 'desc')
                     ->paginate(10);
         }
         else{
-            return Activities::whereJsonContains('visible_to_list', $departmentName)->paginate(10);
+            return Activities::whereJsonContains('visible_to_list', $departmentName)->orderBy('created_at', 'desc')->paginate(10);
         }
     }
 

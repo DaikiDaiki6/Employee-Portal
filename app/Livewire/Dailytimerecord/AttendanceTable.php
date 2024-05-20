@@ -63,12 +63,6 @@ class AttendanceTable extends Component
     $this->currentMonth = Carbon::now()->month;
 
 }
-
-
-    
-
-    
-
     public function test(){
         dd('seal');
     }
@@ -98,7 +92,7 @@ class AttendanceTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.dailytimerecord.attendance-table', [
-            'DtrData' => Dailytimerecord::where('employee_id', $loggedInUser->employee_id)->paginate(10),
+            'DtrData' => Dailytimerecord::where('employee_id', $loggedInUser->employee_id)->orderBy('created_at', 'desc')->paginate(10),
         ]);
         
     }

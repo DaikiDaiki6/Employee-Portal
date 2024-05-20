@@ -78,6 +78,7 @@ class ApproveChangeInformationForm extends Component
         $this->emp_psa_marriage_certif = $employee->emp_psa_marriage_certif ?? [];
         $this->emp_service_record_from_other_govt_agency = $employee->emp_service_record_from_other_govt_agency ?? [];
         $this->emp_approved_clearance_prev_employer = $employee->emp_approved_clearance_prev_employer ?? [];
+        $this->other_documents = $employee->other_documents ?? [];
         if($employee->employee_history != null){
             $this->employeeHistory = json_decode($employee->employee_history, true);
         }

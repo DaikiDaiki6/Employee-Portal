@@ -40,6 +40,7 @@ class ApproveLeaveRequestTable extends Component
                 })
                 ->select('leaverequests.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($head[0] == 1) {
@@ -49,6 +50,7 @@ class ApproveLeaveRequestTable extends Component
                 })
                 ->select('leaverequests.*') // Select only Leaverequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
 
@@ -60,10 +62,11 @@ class ApproveLeaveRequestTable extends Component
                 })
                 ->select('leaverequests.*') // Select only Leaverequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($loggedInUser->is_admin == 1) {
-            $leaveRequestData = Leaverequest::paginate(10);
+            $leaveRequestData = Leaverequest::orderBy('created_at', 'desc')->paginate(10);
         } 
         else{
             abort(404);

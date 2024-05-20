@@ -43,6 +43,7 @@ class ApproveRequestDocumentTable extends Component
                 })
                 ->select('documentrequests.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($head[0] == 1) {
@@ -52,6 +53,7 @@ class ApproveRequestDocumentTable extends Component
                 })
                 ->select('documentrequests.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
 
@@ -63,10 +65,11 @@ class ApproveRequestDocumentTable extends Component
                 })
                 ->select('documentrequests.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($loggedInUser->is_admin == 1) {
-            $documentRequestData = Documentrequest::paginate(10);
+            $documentRequestData = Documentrequest::orderBy('created_at', 'desc')->paginate(10);
         } 
         else{
             abort(404);

@@ -26,7 +26,7 @@ class StudyPermitTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.studypermit.study-permit-table', [
-            'StudyPermitData' => Studypermit::where('employee_id', $loggedInUser->employee_id)->paginate(10),
+            'StudyPermitData' => Studypermit::where('employee_id', $loggedInUser->employee_id)->orderBy('created_at', 'desc')->paginate(10),
         ]);
 
     }

@@ -44,7 +44,7 @@
                     <button type="button" wire:click="fillerSetter('Training')" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700  focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Training' ? 'bg-blue-500 text-white' : 'bg-white' }}">Training</button>
                     <button type="button" wire:click="fillerSetter('Others')" class="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700  focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Others' ? 'bg-blue-500 text-white' : 'bg-white' }}">Others</button>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full ">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full h-auto">
                     @foreach ($ActivitiesData as $data)
                         <div >
                             <a href="{{route('ActivitiesView', ['index' => $data->id])}}"><img class="h-full w-full object-cover rounded-lg" src="{{ asset('storage/' . $data->poster) }}" alt=""></a>

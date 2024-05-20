@@ -53,6 +53,7 @@ class ApproveOpcrTable extends Component
                 })
                 ->select('opcrs.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($head[0] == 1) {
@@ -62,6 +63,7 @@ class ApproveOpcrTable extends Component
                 })
                 ->select('opcrs.*') // Select only Opcr columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
 
@@ -73,10 +75,11 @@ class ApproveOpcrTable extends Component
                 })
                 ->select('opcrs.*') // Select only Opcr columns
                 ->distinct() // Ensure unique records
+                ->orderBy('created_at', 'desc')
                 ->paginate(10);
         }
         else if ($loggedInUser->is_admin == 1) {
-            $opcrData = Opcr::paginate(10);
+            $opcrData = Opcr::orderBy('created_at', 'desc')->paginate(10);
         } 
         else{
             abort(404);

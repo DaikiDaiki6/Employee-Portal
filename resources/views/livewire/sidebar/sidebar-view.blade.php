@@ -175,8 +175,9 @@
                </div> --}}
                <button type="button" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown">
                    <span class="sr-only">Open user menu</span>
-                   
-                   <img src="{{asset('storage/'. $employeeImage)}}" class=" w-10 h-10  shadow-xl rounded-full" alt="User Avatar" />
+                   <img src="{{ asset($employeeImage ? 'storage/' . $employeeImage : 'photos/avatar/default.png') }}" class="w-10 h-10 shadow-xl rounded-full" alt="User Avatar" />
+
+                   {{-- <img src="{{asset('storage/'. $employeeImage)}}" class=" w-10 h-10  shadow-xl rounded-full" alt="User Avatar" /> --}}
                </button>
                <!-- Dropdown menu -->
                <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
@@ -409,7 +410,7 @@
                      @php
                      $isActive = Route::currentRouteName() == 'ApproveChangeInformationTable';
                       @endphp
-                      <li class="pl-4 pr-1">
+                      <li class="">
                           <a href="{{ route('ApproveChangeInformationTable') }}"
                               class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 {{ $isActive ? 'bg-gray-200 dark:bg-gray-800' : '' }}">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

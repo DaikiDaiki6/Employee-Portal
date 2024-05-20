@@ -81,11 +81,11 @@ class UserSeeder extends Seeder
 
         // $employee->employee_history = "[{\"end_date\": \"2024-03-02\", \"start_date\": \"2024-03-02\", \"prev_position\": \"Software Engineer\", \"name_of_company\": "Accenture"}, {"end_date": "2023-03-02", "start_date": "2022-03-02", "prev_position": "Junior Developer", "name_of_company": "IBM"}, {"end_date": "2022-03-02", "start_date": "2021-02-07", "prev_position": "Intern Developer", "name_of_company": "EasyPC"}]';
         
-        // Emp Image
-        $imageContent = file_get_contents(public_path('storage/photos/demofiles/Picture.webp'));
-        $destinationPath = 'photos/avatar/Picture.webp';
-        Storage::disk('public')->put($destinationPath, $imageContent);
-        $employee->emp_image = $destinationPath;
+    // Emp Image
+    $imageContent = file_get_contents(public_path('storage/photos/demofiles/Picture.webp'));
+    $destinationPath = 'photos/avatar/Picture.webp';
+    Storage::disk('public')->put($destinationPath, $imageContent);
+    $employee->emp_image = $destinationPath;
 
     //    // Emp Image 
     //    $path = Storage::putFile('photos/avatar', new File('public\storage\photos\demofiles\Picture.webp'), 'public');
@@ -203,32 +203,7 @@ class UserSeeder extends Seeder
         // $employee->save();
 
         
-        $employee = new Employee();
-        $employee->employee_id = '202121054';
-        $employee->employee_type = 'Permanent';
-        $employee->department_name = 'College of Information System and Technology Management';
-        $employee->employee_role = 2;
-        $employee->department_id = 3;
-        $employee->dean_id = 1;
-        $employee->is_department_head_or_dean = ['0,1'];
-        $employee->first_name = 'College';
-        $employee->middle_name = 'Dean';
-        $employee->last_name = '3';
-        $employee->age = 25;
-        $employee->gender = 'Male';
-        $employee->personal_email = 'juandelacruz@gmail\.com';
-        $employee->phone = '09323123232';
-        $employee->birth_date = '2023-12-06';
-        $employee->address = 'Sampaloc, Manila';
-        $employee->current_position = 'Part-time';
-        $employee->salary = 510;
-        $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
-        $employee->end_of_employment = Carbon::createFromDate(2024, 4, 9);
-        $employee->faculty_or_not = true;
-        $employee->faculty_or_not = true;
-        $employee->school_email = 'comsci@plm.edu.ph';
-        $employee->save();
-
+      
 
         $employee = new Employee();
         $employee->employee_id = '200000001';
@@ -248,6 +223,10 @@ class UserSeeder extends Seeder
         $employee->address = 'PLM';
         $employee->current_position = 'Permanent';
         $employee->salary = 0;
+        $employee->study_available_units = 20;
+        $employee->teach_available_units = 10;
+        $employee->vacation_credits = 20;
+        $employee->sick_credits = 20;
         $employee->start_of_employment = Carbon::createFromDate(2022, 4, 9);
         $employee->faculty_or_not = false;
         $employee->school_email = 'admin@plm.edu.ph';
@@ -269,12 +248,7 @@ class UserSeeder extends Seeder
             'employee_id' => '202189212',
         ]);
 
-        User::create([
-            'name'     => 'College Dean 3',
-            'email'    => 'collgeDean@plm.edu.ph',
-            'password' => bcrypt('collegedean'),
-            'employee_id' => '202121054',
-        ]);
+      
 
         User::create([
             'name'     => 'Employee',

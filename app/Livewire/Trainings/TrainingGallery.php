@@ -48,7 +48,7 @@ class TrainingGallery extends Component
         }
         else {
             // dd('seal');
-            return Training::whereJsonContains('visible_to_list', $employeeData->department_name)->paginate(10);
+            return Training::whereJsonContains('visible_to_list', $employeeData->department_name)->orderBy('created_at', 'desc')->paginate(10);
         }
 
     }

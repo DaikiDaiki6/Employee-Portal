@@ -129,7 +129,7 @@ class ChangeInformation extends Component
         'birth_date' => 'required|date',
         'personal_email' => 'required|email:rfc,dns',
         'address' => 'required|min:10|max:500',
-        'employeeHistory' => 'required|array|min:1|max:5',
+        'employeeHistory' => 'nullable|array|max:5',
         'employeeHistory.*.name_of_company' => 'required|string|min:2|max:75',
         'employeeHistory.*.prev_position' => 'required|string|min:2|max:75',
         'employeeHistory.*.start_date' => 'required|date|before_or_equal:employeeHistory.*.end_date',

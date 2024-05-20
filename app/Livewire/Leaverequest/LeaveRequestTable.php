@@ -41,7 +41,7 @@ class LeaveRequestTable extends Component
     {
         $loggedInUser = auth()->user();
         return view('livewire.leaverequest.leave-request-table', [
-            'LeaveRequestData' => Leaverequest::where('employee_id', $loggedInUser->employee_id)->paginate(10),
+            'LeaveRequestData' => Leaverequest::where('employee_id', $loggedInUser->employee_id)->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 
