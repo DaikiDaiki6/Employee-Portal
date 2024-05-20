@@ -16,7 +16,7 @@ class Employeeinformation extends Component
     public $employeeImage;
 
     public $empDiploma;
-    public $empTOR;
+    public $emp_tor;
     public $empCertOfTrainingsSeminars;
     public $empAuthCopyOfCscOrPrc;
     public $empAuthCopyOfPrcBoardRating;
@@ -34,7 +34,7 @@ class Employeeinformation extends Component
         $this->employeeImage = $employee->emp_image;
         $this->employeeRecord = Employee::where('employee_id', $employee_id)->first();
         $this->empDiploma = $employee->emp_diploma ?? [];
-        $this->empTOR = $employee->emp_TOR ?? [];
+        $this->emp_tor = $employee->emp_tor ?? [];
         $this->empCertOfTrainingsSeminars = $employee->emp_cert_of_trainings_seminars ?? [];
         $this->empAuthCopyOfCscOrPrc = $employee->emp_auth_copy_of_csc_or_prc ?? [];
         $this->empAuthCopyOfPrcBoardRating = $employee->emp_auth_copy_of_prc_board_rating ?? [];

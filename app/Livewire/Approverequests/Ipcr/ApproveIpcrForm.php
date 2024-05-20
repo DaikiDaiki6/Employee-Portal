@@ -246,7 +246,8 @@ class ApproveIpcrForm extends Component
             // Check if the current property value is a string or an uploaded file
             if (is_string($this->$propertyName)) {
                 // If it's a string, assign it directly
-                $this->validate([$propertyName => $validationRule]);
+                // $this->validate([$propertyName => $validationRule]);
+                $this->validate([$propertyName => 'String']);
                 $nameOfProperty = $propertyName.'_verdict';
                 $ipcr->$nameOfProperty = $this->$nameOfProperty;
                 $ipcr->$propertyName = $this->$propertyName;
@@ -297,7 +298,7 @@ class ApproveIpcrForm extends Component
             if($ipcr->final_rating_by &&  $ipcr->assessed_by){
                 $ipcr->status = "Approved";
             }
-        } else if ($ipcr->assessed_by_verdict == 0 && $ipcr->final_rating_by_verdict == 0){
+        } else if ($ipcr->assessed_by_verdict == 0 || $ipcr->final_rating_by_verdict == 0){
             if($ipcr->final_rating_by &&  $ipcr->assessed_by){
                 $ipcr->status = "Declined";
             }

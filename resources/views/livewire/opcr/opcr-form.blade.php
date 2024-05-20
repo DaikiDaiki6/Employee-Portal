@@ -127,7 +127,7 @@
                     <div class="grid grid-cols-1 gap-4 w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="block flex-wrap w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                             <div class="flex-none pb-4">
-                                <h2><b>Core Functions-70%</b></h2>
+                                <h2><b>Core Functions-80%</b></h2>
                             </div>
                             @php
                                 $coreCtr = 0;
@@ -394,7 +394,7 @@
                         {{-- Support/Admnistrative Functions --}}
                         <div class="block flex-wrap w-full col-span-3 p-6 pb-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                             <div class="flex-none pb-4">
-                                <h2><b>Support/Administrative Functions-30%</b></h2>
+                                <h2><b>Support/Administrative Functions-20%</b></h2>
                             </div>
                             @php
                                 $supportCtr = 0;

@@ -22,6 +22,10 @@ export default {
         '902px': '902px',
         '1150px' : '1150px',
       },
+      padding: { // Add padding utility
+        '12': '3rem',
+      },
+      
     },
   },
   plugins: [],

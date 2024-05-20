@@ -346,7 +346,7 @@ class ApproveStudyPermitForm extends Component
             if( $studypermitdata->signature_recommended_by &&  $studypermitdata->signature_endorsed_by){
                 $studypermitdata->status = "Approved";
             }
-        } else if($studypermitdata->verdict_recommended_by == 0 &&  $studypermitdata->verdict_endorsed_by == 0){
+        } else if($studypermitdata->verdict_recommended_by == 0 ||  $studypermitdata->verdict_endorsed_by == 0){
             if( $studypermitdata->signature_recommended_by &&  $studypermitdata->signature_endorsed_by){
                 $studypermitdata->status = "Declined";
             }

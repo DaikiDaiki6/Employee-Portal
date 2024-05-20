@@ -142,7 +142,7 @@
                                         </a>
                                     </li>
                                 @endforeach
-                                @foreach ($empTOR as $index => $item )
+                                @foreach ($emp_tor as $index => $item )
                                 <li class="py-1 sm:py-2">
                                     <a target="_blank" href="{{route('downloadFile', ['file' => 'tor', 'index' => $index])}}" class="text-sm cursor-pointer font-medium text-gray-900 truncate dark:text-white">
                                         <div class="flex items-center ml-4">
@@ -152,7 +152,7 @@
                                                   </svg>                                                  
                                             </div>
                                             <div class="flex-1 min-w-0 truncate ">
-                                                Transcript of Records @if (count($empTOR) > 1) {{$index + 1}} @endif
+                                                Transcript of Records @if (count($emp_tor) > 1) {{$index + 1}} @endif
                                             </div>
                                         </div>
                                     </a>

@@ -268,7 +268,7 @@ class ApproveOpcrForm extends Component
         // $opcr->comments_and_reco = $this->comments_and_reco;
 
         $properties = [
-            'assessed_by'  => 'required_unless:assessed_by_verdict,null|nullable|mimes:jpg,png|extensions:jpg,png|max:5120' ,
+            'assessed_by'  => 'required_unless:assessed_by_verdict,null|nullable|sometimes|mimes:jpg,png|extensions:jpg,png|max:5120' ,
             'final_rating_by'  => 'required_unless:final_rating_by_verdict,null|nullable|mimes:jpg,png|extensions:jpg,png|max:5120',
         ];
 
@@ -284,7 +284,8 @@ class ApproveOpcrForm extends Component
             // Check if the current property value is a string or an uploaded file
             if (is_string($this->$propertyName)) {
                 // If it's a string, assign it directly
-                $this->validate([$propertyName => $validationRule]);
+                // $this->validate([$propertyName => $validationRule]);
+                $this->validate([$propertyName => 'String']);
                 $nameOfProperty = $propertyName.'_verdict';
                 $opcr->$nameOfProperty = $this->$nameOfProperty;
                 $opcr->$propertyName = $this->$propertyName;
@@ -331,7 +332,7 @@ class ApproveOpcrForm extends Component
             if($opcr->final_rating_by &&  $opcr->assessed_by){
                 $opcr->status = "Approved";
             }
-        } else if ($opcr->assessed_by_verdict == 0 && $opcr->final_rating_by_verdict == 0){
+        } else if ($opcr->assessed_by_verdict == 0 || $opcr->final_rating_by_verdict == 0){
             if($opcr->final_rating_by &&  $opcr->assessed_by){
                 $opcr->status = "Declined";
             }

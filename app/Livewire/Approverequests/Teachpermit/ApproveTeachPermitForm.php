@@ -220,10 +220,10 @@ class ApproveTeachPermitForm extends Component
                     $teachpermitdata->status = "Approved";
                 }
             }
-        else if($teachpermitdata->verdict_of_head_office == 0 && $teachpermitdata->verdict_of_human_resource == 0 
-        && $teachpermitdata->verdict_of_vp_for_academic_affair == 0 && $teachpermitdata->verdict_of_university_president == 0){
-            if($teachpermitdata->signature_of_head_office && $teachpermitdata->signature_of_human_resource 
-            && $teachpermitdata->signature_of_vp_for_academic_affair && $teachpermitdata->signature_of_university_president ){
+        else if($teachpermitdata->verdict_of_head_office == 0 || $teachpermitdata->verdict_of_human_resource == 0 
+        || $teachpermitdata->verdict_of_vp_for_academic_affair == 0 || $teachpermitdata->verdict_of_university_president == 0){
+            if($teachpermitdata->signature_of_head_office || $teachpermitdata->signature_of_human_resource 
+            || $teachpermitdata->signature_of_vp_for_academic_affair || $teachpermitdata->signature_of_university_president ){
                 $teachpermitdata->status = "Declined";
             }
         } else {
