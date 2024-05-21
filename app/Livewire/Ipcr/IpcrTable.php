@@ -22,6 +22,8 @@ class IpcrTable extends Component
 
     public $filter;
 
+    public $ipcrCount;
+
     public function search()
     {
         $this->resetPage();
@@ -68,6 +70,8 @@ class IpcrTable extends Component
         } else {
             $results = $query->orderBy('date_of_filling', 'desc')->paginate(5);
         }
+
+        $this->ipcrCount = count($results);
 
         return view('livewire.ipcr.ipcr-table', [
             'ipcrs' => $results,

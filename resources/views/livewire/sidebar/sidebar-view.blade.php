@@ -9,7 +9,7 @@
             }
         }
     </style>
-    @vite(['resources/css/app.css','resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css','resources/js/app.js']) --}}
 {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" /> --}}
 <header class="antialiased">
    <nav class="fixed top-0 z-50 w-full pb-4 bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">

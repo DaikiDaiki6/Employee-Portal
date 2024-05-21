@@ -139,7 +139,7 @@
                     <div>
                         <div>
                           
-                            @if (count($ipcrs) == 0)
+                            @if ($ipcrCount == 0)
                                 <tbody class="pb-4">
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
                                         <th scope="col" colspan="11" class="justify-center" style="padding-bottom: 40px"> 

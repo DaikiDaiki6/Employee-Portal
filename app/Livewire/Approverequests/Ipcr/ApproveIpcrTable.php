@@ -53,18 +53,6 @@ class ApproveIpcrTable extends Component
 
     public function render()
     {   
-        // $id = Employee::Select('dean_id', 'department_id')->where('employee_id', $loggedInUser)->get();
-        // // dd($id[0]->dean_id);
-        // // dd(DeanNamesEnum::cases());
-        // $ipcrRecords = Ipcr::join('employees', 'employees.employee_id', 'ipcrs.employee_id')
-        //                 ->where(function ($query) use ($id) {
-        //                     $query->where('employees.department_id', $id[0]->dean_id)
-        //                         ->orWhere('employees.dean_id', $id[0]->department_id);
-        //                 })
-        //                 ->select('ipcrs.*') // Select only ipcrs columns
-        //                 ->distinct() // Ensure unique records
-        //                 ->paginate(10);
-    
         $loggedInUser = auth()->user();
         
         $loggedInEmployeeData = Employee::where('employee_id', $loggedInUser->employee_id)->first();
