@@ -114,19 +114,22 @@ class AttendanceTable extends Component
                 $this->filterName = "Today";
                 break;
             case '2':
-                $query->whereDate('attendance_date', '<=', Carbon::today()->startOfWeek());
+                $query->whereBetween('attendance_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
                 $this->filterName = "Last 7 Days";
                 break;
             case '3':
-                $query->whereDate('attendance_date', '<=', Carbon::today()->subDays(30));
+                $query->whereBetween('attendance_date', [Carbon::today()->subDays(30), Carbon::today()]);
+                // $query->whereDate('attendance_date', '>=', Carbon::today()->subDays(30), '<=', Carbon::today());
                 $this->filterName = "Last Month";
                 break;
             case '4':
-                $query->whereDate('attendance_date', '<=', Carbon::today()->subMonths(6));
+                $query->whereBetween('attendance_date', [Carbon::today()->subMonths(6), Carbon::today()]);
+                // $query->whereDate('attendance_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
                 $this->filterName = "Last 6 Months";
                 break;
             case '5':
-                $query->whereDate('attendance_date', '<=', Carbon::today()->subYear());
+                $query->whereBetween('attendance_date', [Carbon::today()->subYear(), Carbon::today()]);
+                // $query->whereDate('attendance_date', '>=', Carbon::today()->subYear(), '<=', Carbon::today());
                 $this->filterName = "Last Year";
                 break;
         }
@@ -135,7 +138,7 @@ class AttendanceTable extends Component
         if(strlen($this->search) >= 1){
             $results = $query->where('attendance_date', 'like', '%' . $this->search . '%')->orderBy('created_at', 'desc')->paginate(10);
         } else {
-            $results = $query->orderBy('created_at', 'desc')->paginate(10);
+            $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
         }
         return view('livewire.dailytimerecord.attendance-table', [
             'DtrData' => $results,
