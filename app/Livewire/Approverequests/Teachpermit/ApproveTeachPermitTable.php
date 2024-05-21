@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Approverequests\Teachpermit;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Teachpermit;
@@ -11,6 +12,14 @@ use Livewire\WithoutUrlPagination;
 class ApproveTeachPermitTable extends Component
 {
     use WithPagination, WithoutUrlPagination;
+
+    
+    public $filterName;
+
+    public $filter;
+
+    public $search = "";
+
     
     public function search()
     {
@@ -40,8 +49,7 @@ class ApproveTeachPermitTable extends Component
                 })
                 ->select('teachpermits.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
         else if ($head[0] == 1) {
             $teachPermitData = Teachpermit::join('employees', 'employees.employee_id', 'teachpermits.employee_id')
@@ -50,8 +58,7 @@ class ApproveTeachPermitTable extends Component
                 })
                 ->select('teachpermits.*') // Select only Teachpermit columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
 
         // Check if condition for college dean is true
@@ -62,18 +69,49 @@ class ApproveTeachPermitTable extends Component
                 })
                 ->select('teachpermits.*') // Select only Teachpermit columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
         else if ($loggedInUser->is_admin == 1) {
-            $teachPermitData = Teachpermit::orderBy('created_at', 'desc')->paginate(10);
+            $teachPermitData = Teachpermit::orderBy('created_at', 'desc');
         } 
         else{
             abort(404);
         }
 
+        switch ($this->filter) {
+            case '1':
+                $teachPermitData->whereDate('application_date',  Carbon::today());
+                $this->filterName = "Today";
+                break;
+            case '2':
+                $teachPermitData->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
+                $this->filterName = "Last 7 Days";
+                break;
+            case '3':
+                $teachPermitData->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
+                // $teachPermitData->whereDate('application_date', '>=', Carbon::today()->subDays(30), '<=', Carbon::today());
+                $this->filterName = "Last 30 days";
+                break;
+            case '4':
+                $teachPermitData->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
+                // $teachPermitData->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+                $this->filterName = "Last 6 Months";
+                break;
+            case '5':
+                $teachPermitData->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
+                // $teachPermitData->whereDate('application_date', '>=', Carbon::today()->subYear(), '<=', Carbon::today());
+                $this->filterName = "Last Year";
+                break;
+        }
+
+        if(strlen($this->search) >= 1){
+            $teachPermitData = $teachPermitData->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc');
+        } else {
+            $teachPermitData = $teachPermitData->orderBy('application_date', 'desc');
+        }
+
         return view('livewire.approverequests.teachpermit.approve-teach-permit-table', [
-            'TeachPermitData' => $teachPermitData,
+            'TeachPermitData' => $teachPermitData->paginate(5),
         ]);
 
         // $loggedInUser = auth()->user()->employee_id;

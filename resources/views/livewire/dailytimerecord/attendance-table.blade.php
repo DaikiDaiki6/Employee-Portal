@@ -103,7 +103,7 @@
 </script>
     <div class=" overflow-x-auto shadow-md rounded-t-lg bg-white">
         <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4 p-4">
-        <div>
+            <div>
                 <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class=" z-50 inline-flex items-center text-gray-500 bg-white border h-10  border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
                     <svg class="w-3 h-3 text-gray-500 dark:text-gray-400 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
@@ -206,6 +206,20 @@
             </thead>
             <div>
                 <div>
+                    @if (count($DtrData) == 0)
+                        <tbody class="pb-4">
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
+                                <th scope="col" colspan="7" class="justify-center" style="padding-bottom: 40px"> 
+                                    <div class="flex justify-center " style="padding-top: 40px">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                        </svg>
+                                        <p class="text-blue-500 text-xl font-semibold items-center "> Nothing to show</p>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    @else
                     <div wire:ignore>
                         @php
                             $ctr = 0;
@@ -257,6 +271,7 @@
                         
                     </tbody>
                     @endforeach
+                    @endif
                     
                 </div>
                 

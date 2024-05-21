@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Approverequests\Opcr;
 
+use Carbon\Carbon;
 use App\Models\Opcr;
 use Livewire\Component;
 use App\Models\Employee;
@@ -12,6 +13,13 @@ use Livewire\WithoutUrlPagination;
 class ApproveOpcrTable extends Component
 {
     use WithPagination, WithoutUrlPagination;
+
+    public $filterName;
+
+    public $filter;
+
+    public $search = "";
+
 
     // public function turnToPdf($index){
     //     $ipcr = Opcr::query()->where('id', $index)->get(); // Get IPCR Records
@@ -53,8 +61,7 @@ class ApproveOpcrTable extends Component
                 })
                 ->select('opcrs.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
         else if ($head[0] == 1) {
             $opcrData= Opcr::join('employees', 'employees.employee_id', 'opcrs.employee_id')
@@ -63,8 +70,7 @@ class ApproveOpcrTable extends Component
                 })
                 ->select('opcrs.*') // Select only Opcr columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
 
         // Check if condition for college dean is true
@@ -75,17 +81,49 @@ class ApproveOpcrTable extends Component
                 })
                 ->select('opcrs.*') // Select only Opcr columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
         else if ($loggedInUser->is_admin == 1) {
-            $opcrData = Opcr::orderBy('created_at', 'desc')->paginate(10);
+            $opcrData = Opcr::orderBy('created_at', 'desc');
         } 
         else{
             abort(404);
         }
+
+        switch ($this->filter) {
+            case '1':
+                $opcrData->whereDate('date_of_filling',  Carbon::today());
+                $this->filterName = "Today";
+                break;
+            case '2':
+                $opcrData->whereBetween('date_of_filling', [Carbon::today()->startOfWeek(), Carbon::today()]);
+                $this->filterName = "Last 7 Days";
+                break;
+            case '3':
+                $opcrData->whereBetween('date_of_filling', [Carbon::today()->subDays(30), Carbon::today()]);
+                // $opcrData->whereDate('date_of_filling', '>=', Carbon::today()->subDays(30), '<=', Carbon::today());
+                $this->filterName = "Last 30 days";
+                break;
+            case '4':
+                $opcrData->whereBetween('date_of_filling', [Carbon::today()->subMonths(6), Carbon::today()]);
+                // $opcrData->whereDate('date_of_filling', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+                $this->filterName = "Last 6 Months";
+                break;
+            case '5':
+                $opcrData->whereBetween('date_of_filling', [Carbon::today()->subYear(), Carbon::today()]);
+                // $opcrData->whereDate('date_of_filling', '>=', Carbon::today()->subYear(), '<=', Carbon::today());
+                $this->filterName = "Last Year";
+                break;
+        }
+
+        if(strlen($this->search) >= 1){
+            $opcrData = $opcrData->where('date_of_filling', 'like', '%' . $this->search . '%')->orderBy('date_of_filling', 'desc');
+        } else {
+            $opcrData = $opcrData->orderBy('date_of_filling', 'desc');
+        }
+
         return view('livewire.approverequests.opcr.approve-opcr-table', [
-            'opcrs' => $opcrData,
+            'opcrs' => $opcrData->paginate(5),
         ]);
     }
 

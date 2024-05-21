@@ -120,7 +120,7 @@ class AttendanceTable extends Component
             case '3':
                 $query->whereBetween('attendance_date', [Carbon::today()->subDays(30), Carbon::today()]);
                 // $query->whereDate('attendance_date', '>=', Carbon::today()->subDays(30), '<=', Carbon::today());
-                $this->filterName = "Last Month";
+                $this->filterName = "Last 30 days";
                 break;
             case '4':
                 $query->whereBetween('attendance_date', [Carbon::today()->subMonths(6), Carbon::today()]);
@@ -136,10 +136,11 @@ class AttendanceTable extends Component
 
 
         if(strlen($this->search) >= 1){
-            $results = $query->where('attendance_date', 'like', '%' . $this->search . '%')->orderBy('created_at', 'desc')->paginate(10);
+            $results = $query->where('attendance_date', 'like', '%' . $this->search . '%')->orderBy('attendance_date', 'desc')->paginate(5);
         } else {
             $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
         }
+        
         return view('livewire.dailytimerecord.attendance-table', [
             'DtrData' => $results,
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Approverequests\Ipcr;
 
+use Carbon\Carbon;
 use App\Models\Ipcr;
 use Livewire\Component;
 use App\Models\Employee;
@@ -28,6 +29,12 @@ class ApproveIpcrTable extends Component
     // }
 
     public $counter;
+
+    public $filterName;
+
+    public $filter;
+
+    public $search = "";
 
     public function search()
     {
@@ -65,6 +72,8 @@ class ApproveIpcrTable extends Component
         $departmentHeadId = $loggedInEmployeeData->department_id;
         $collgeDeanId = $loggedInEmployeeData->dean_id;
 
+
+
         // Check if condition for department head is true
         if ($head[0] == 1 && $head[1] == 1){
             $ipcrData = Ipcr::join('employees', 'employees.employee_id', 'ipcrs.employee_id')
@@ -74,8 +83,7 @@ class ApproveIpcrTable extends Component
                 })
                 ->select('ipcrs.*') // Select only documentrequest columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
         else if ($head[0] == 1) {
             $ipcrData= Ipcr::join('employees', 'employees.employee_id', 'ipcrs.employee_id')
@@ -84,8 +92,7 @@ class ApproveIpcrTable extends Component
                 })
                 ->select('ipcrs.*') // Select only Ipcr columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
 
         // Check if condition for college dean is true
@@ -96,18 +103,49 @@ class ApproveIpcrTable extends Component
                 })
                 ->select('ipcrs.*') // Select only Ipcr columns
                 ->distinct() // Ensure unique records
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+                ->orderBy('created_at', 'desc');
         }
         else if ($loggedInUser->is_admin == 1) {
-            $ipcrData = Ipcr::orderBy('created_at', 'desc')->paginate(10);
+            $ipcrData = Ipcr::orderBy('created_at', 'desc');
         } 
         else{
             abort(404);
         }
-        
+
+        switch ($this->filter) {
+            case '1':
+                $ipcrData->whereDate('date_of_filling',  Carbon::today());
+                $this->filterName = "Today";
+                break;
+            case '2':
+                $ipcrData->whereBetween('date_of_filling', [Carbon::today()->startOfWeek(), Carbon::today()]);
+                $this->filterName = "Last 7 Days";
+                break;
+            case '3':
+                $ipcrData->whereBetween('date_of_filling', [Carbon::today()->subDays(30), Carbon::today()]);
+                // $ipcrData->whereDate('date_of_filling', '>=', Carbon::today()->subDays(30), '<=', Carbon::today());
+                $this->filterName = "Last 30 days";
+                break;
+            case '4':
+                $ipcrData->whereBetween('date_of_filling', [Carbon::today()->subMonths(6), Carbon::today()]);
+                // $ipcrData->whereDate('date_of_filling', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+                $this->filterName = "Last 6 Months";
+                break;
+            case '5':
+                $ipcrData->whereBetween('date_of_filling', [Carbon::today()->subYear(), Carbon::today()]);
+                // $ipcrData->whereDate('date_of_filling', '>=', Carbon::today()->subYear(), '<=', Carbon::today());
+                $this->filterName = "Last Year";
+                break;
+        }
+
+        if(strlen($this->search) >= 1){
+            $ipcrData = $ipcrData->where('date_of_filling', 'like', '%' . $this->search . '%')->orderBy('date_of_filling', 'desc');
+        } else {
+            $ipcrData = $ipcrData->orderBy('date_of_filling', 'desc');
+        }
+
         return view('livewire.approverequests.ipcr.approve-ipcr-table', [
-            'ipcrs' => $ipcrData,
+            'ipcrs' => $ipcrData->paginate(5),
             // 'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employee_id)->paginate(10),
 
         ]);

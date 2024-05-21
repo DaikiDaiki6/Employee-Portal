@@ -33,9 +33,6 @@
     <div class="flex justify-end">
         <button type="button" onclick="location.href='{{ route('TrainingUpdate', ['index' => $index]) }}'" class="text-white mb-8 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit Training</button>
     </div>
-    @else
-        <div class="flex justify-end " style="margin-bottom: 40px">
-        </div>
     @endif
 
     <section class="bg-white  dark:bg-gray-900 pb-24 px-8  rounded-lg">
@@ -66,8 +63,10 @@
                             </div>
                         </dl>
                     </div>
+                <!--
                     <hr class="h-px my-8 bg-gray-600 border-0 dark:bg-gray-700">
-                <div class="w-full grid grid-cols-2">
+
+                    <div class="w-full grid grid-cols-2">
                     <div class="text-center col-span-1">
                         <p class="mb-1text-gray-800 font-bold text-2xl py-4 ">Pre-Test</p>
                         <dl class="max-w-full text-gray-900 divide-y divide-gray-200 dark:text-white dark:divide-gray-700">
@@ -85,7 +84,6 @@
                                     {{ $trainingData->pre_test_rating ? $trainingData->pre_test_rating : 'Not Yet Rated' }}
                                 </dd>
                                 
-                                {{-- <dd class="text-lg font-semibold">{{$trainingData->pre_test_rating ? $trainingData->pre_test_rating : 'Not Yet Rated'  }}</dd> --}}
                             </div>
                             @php
                                
@@ -130,6 +128,7 @@
                     </div>
 
                 </div>
+                -->
                  
                 </div>
                
